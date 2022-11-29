@@ -1,4 +1,5 @@
 import { Button } from "ui";
+import { FollowersRequest, useFollowersQuery } from "lens";
 
 export default function Web() {
   return (
