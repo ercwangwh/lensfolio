@@ -3722,6 +3722,30 @@ export type WorldcoinIdentity = {
   isHuman: Scalars["Boolean"];
 };
 
+export type ExploreProfilesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ExploreProfilesQuery = {
+  __typename?: "Query";
+  exploreProfiles: {
+    __typename?: "ExploreProfileResult";
+    items: Array<{
+      __typename?: "Profile";
+      id: any;
+      name?: string | null;
+      bio?: string | null;
+      handle: any;
+      picture?:
+        | {
+            __typename?: "MediaSet";
+            original: { __typename?: "Media"; url: any };
+          }
+        | { __typename?: "NftImage" }
+        | null;
+      stats: { __typename?: "ProfileStats"; totalFollowers: number };
+    }>;
+  };
+};
+
 export type FollowersQueryVariables = Exact<{
   request: FollowersRequest;
 }>;
@@ -3805,6 +3829,78 @@ const result: PossibleTypesResultData = {
 };
 export default result;
 
+export const ExploreProfilesDocument = gql`
+  query ExploreProfiles {
+    exploreProfiles(request: { sortCriteria: MOST_FOLLOWERS }) {
+      items {
+        id
+        name
+        bio
+        handle
+        picture {
+          ... on MediaSet {
+            original {
+              url
+            }
+          }
+        }
+        stats {
+          totalFollowers
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useExploreProfilesQuery__
+ *
+ * To run a query within a React component, call `useExploreProfilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExploreProfilesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExploreProfilesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useExploreProfilesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ExploreProfilesQuery,
+    ExploreProfilesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ExploreProfilesQuery, ExploreProfilesQueryVariables>(
+    ExploreProfilesDocument,
+    options
+  );
+}
+export function useExploreProfilesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ExploreProfilesQuery,
+    ExploreProfilesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    ExploreProfilesQuery,
+    ExploreProfilesQueryVariables
+  >(ExploreProfilesDocument, options);
+}
+export type ExploreProfilesQueryHookResult = ReturnType<
+  typeof useExploreProfilesQuery
+>;
+export type ExploreProfilesLazyQueryHookResult = ReturnType<
+  typeof useExploreProfilesLazyQuery
+>;
+export type ExploreProfilesQueryResult = Apollo.QueryResult<
+  ExploreProfilesQuery,
+  ExploreProfilesQueryVariables
+>;
 export const FollowersDocument = gql`
   query Followers($request: FollowersRequest!) {
     followers(request: $request) {
