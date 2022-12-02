@@ -1,10 +1,13 @@
 /* pages/index.js */
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 // import { client, exploreProfiles } from "../api";
-import client from "../../apollo";
-import type { Profile } from "lens";
-import { useExploreProfilesQuery } from "lens";
-import Link from "next/link";
+import client from '../../apollo';
+import type { Profile } from 'lens';
+import { useExploreProfilesQuery } from 'lens';
+import Link from 'next/link';
+// import LoginButton from "@components/Common/Header/LoginButton";
+import Header from '@components/Common/Header';
+import ViewProfile from '@components/Profile';
 
 function Home() {
   /* create initial state to hold array of profiles */
@@ -53,32 +56,9 @@ function Home() {
   // }
   return (
     <div className="pt-20">
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-5xl mb-6 font-bold">Hello Lens 🌿</h1>
-        {profiles?.map((profile) => (
-          <div
-            key={profile.id}
-            className="w-2/3 shadow-md p-6 rounded-lg mb-8 flex flex-col items-center"
-          >
-            {/* <img
-              className="w-48"
-              src={profile.avataurl || "https://picsum.photos/200"}
-            /> */}
-            <p className="text-xl text-center mt-6">{profile.name}</p>
-            <p className="text-base text-gray-400  text-center mt-2">
-              {profile.bio}
-            </p>
-            <Link href={`/profile/${profile.handle}`}>
-              <p className="cursor-pointer text-violet-600 text-lg font-medium text-center mt-2 mb-2">
-                {profile.handle}
-              </p>
-            </Link>
-            <p className="text-pink-600 text-sm font-medium text-center">
-              {profile.stats.totalFollowers} followers
-            </p>
-          </div>
-        ))}
-      </div>
+      {/* <LoginButton /> */}
+      <Header />
+      <ViewProfile />
     </div>
   );
 }

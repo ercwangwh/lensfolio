@@ -938,6 +938,10 @@ export type CreateUnfollowBroadcastItemResult = {
   typedData: CreateBurnEip712TypedData;
 };
 
+export type CurRequest = {
+  secret: Scalars["String"];
+};
+
 /** The custom filters types */
 export enum CustomFiltersTypes {
   Gardeners = "GARDENERS",
@@ -1544,6 +1548,12 @@ export type HasTxHashBeenIndexedRequest = {
   txId?: InputMaybe<Scalars["TxId"]>;
 };
 
+export type HelRequest = {
+  handle: Scalars["Handle"];
+  remove: Scalars["Boolean"];
+  secret: Scalars["String"];
+};
+
 export type HidePublicationRequest = {
   /** Publication id */
   publicationId: Scalars["InternalPublicationId"];
@@ -1868,6 +1878,7 @@ export type Mutation = {
   createSetProfileMetadataViaDispatcher: RelayResult;
   createToggleFollowTypedData: CreateToggleFollowBroadcastItemResult;
   createUnfollowTypedData: CreateUnfollowBroadcastItemResult;
+  hel?: Maybe<Scalars["Void"]>;
   hidePublication?: Maybe<Scalars["Void"]>;
   proxyAction: Scalars["ProxyActionId"];
   refresh: AuthenticationResult;
@@ -1997,6 +2008,10 @@ export type MutationCreateToggleFollowTypedDataArgs = {
 export type MutationCreateUnfollowTypedDataArgs = {
   options?: InputMaybe<TypedDataOptions>;
   request: UnfollowRequest;
+};
+
+export type MutationHelArgs = {
+  request: HelRequest;
 };
 
 export type MutationHidePublicationArgs = {
@@ -3019,6 +3034,7 @@ export type Query = {
   challenge: AuthChallengeResult;
   claimableHandles: ClaimableHandles;
   claimableStatus: ClaimStatus;
+  cur: Array<Scalars["String"]>;
   defaultProfile?: Maybe<Profile>;
   doesFollow: Array<DoesFollowResponse>;
   enabledModuleCurrencies: Array<Erc20>;
@@ -3078,6 +3094,10 @@ export type QueryApprovedModuleAllowanceAmountArgs = {
 
 export type QueryChallengeArgs = {
   request: ChallengeRequest;
+};
+
+export type QueryCurArgs = {
+  request: CurRequest;
 };
 
 export type QueryDefaultProfileArgs = {
@@ -3774,6 +3794,77 @@ export type FollowersQuery = {
   };
 };
 
+export type ProfileQueryVariables = Exact<{
+  request: SingleProfileQueryRequest;
+}>;
+
+export type ProfileQuery = {
+  __typename?: "Query";
+  profile?: {
+    __typename?: "Profile";
+    id: any;
+    handle: any;
+    ownedBy: any;
+    name?: string | null;
+    bio?: string | null;
+    metadata?: any | null;
+    followNftAddress?: any | null;
+    isFollowedByMe: boolean;
+    isFollowing: boolean;
+    attributes?: Array<{
+      __typename?: "Attribute";
+      key: string;
+      value: string;
+    }> | null;
+    dispatcher?: { __typename?: "Dispatcher"; canUseRelay: boolean } | null;
+    onChainIdentity: {
+      __typename?: "OnChainIdentity";
+      proofOfHumanity: boolean;
+      sybilDotOrg: {
+        __typename?: "SybilDotOrgIdentity";
+        verified: boolean;
+        source: {
+          __typename?: "SybilDotOrgIdentitySource";
+          twitter: {
+            __typename?: "SybilDotOrgTwitterIdentity";
+            handle?: string | null;
+          };
+        };
+      };
+      ens?: { __typename?: "EnsOnChainIdentity"; name?: any | null } | null;
+      worldcoin: { __typename?: "WorldcoinIdentity"; isHuman: boolean };
+    };
+    stats: {
+      __typename?: "ProfileStats";
+      totalFollowers: number;
+      totalFollowing: number;
+      totalPosts: number;
+      totalComments: number;
+      totalMirrors: number;
+    };
+    picture?:
+      | {
+          __typename?: "MediaSet";
+          original: { __typename?: "Media"; url: any };
+        }
+      | { __typename?: "NftImage"; uri: any }
+      | null;
+    coverPicture?:
+      | {
+          __typename?: "MediaSet";
+          original: { __typename?: "Media"; url: any };
+        }
+      | { __typename?: "NftImage" }
+      | null;
+    followModule?:
+      | { __typename: "FeeFollowModuleSettings" }
+      | { __typename: "ProfileFollowModuleSettings" }
+      | { __typename: "RevertFollowModuleSettings" }
+      | { __typename: "UnknownFollowModuleSettings" }
+      | null;
+  } | null;
+};
+
 export interface PossibleTypesResultData {
   possibleTypes: {
     [key: string]: string[];
@@ -3965,4 +4056,111 @@ export type FollowersLazyQueryHookResult = ReturnType<
 export type FollowersQueryResult = Apollo.QueryResult<
   FollowersQuery,
   FollowersQueryVariables
+>;
+export const ProfileDocument = gql`
+  query Profile($request: SingleProfileQueryRequest!) {
+    profile(request: $request) {
+      id
+      handle
+      ownedBy
+      name
+      bio
+      metadata
+      followNftAddress
+      isFollowedByMe
+      isFollowing
+      attributes {
+        key
+        value
+      }
+      dispatcher {
+        canUseRelay
+      }
+      onChainIdentity {
+        proofOfHumanity
+        sybilDotOrg {
+          verified
+          source {
+            twitter {
+              handle
+            }
+          }
+        }
+        ens {
+          name
+        }
+        worldcoin {
+          isHuman
+        }
+      }
+      stats {
+        totalFollowers
+        totalFollowing
+        totalPosts
+        totalComments
+        totalMirrors
+      }
+      picture {
+        ... on MediaSet {
+          original {
+            url
+          }
+        }
+        ... on NftImage {
+          uri
+        }
+      }
+      coverPicture {
+        ... on MediaSet {
+          original {
+            url
+          }
+        }
+      }
+      followModule {
+        __typename
+      }
+    }
+  }
+`;
+
+/**
+ * __useProfileQuery__
+ *
+ * To run a query within a React component, call `useProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useProfileQuery(
+  baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(
+    ProfileDocument,
+    options
+  );
+}
+export function useProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(
+    ProfileDocument,
+    options
+  );
+}
+export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
+export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
+export type ProfileQueryResult = Apollo.QueryResult<
+  ProfileQuery,
+  ProfileQueryVariables
 >;
