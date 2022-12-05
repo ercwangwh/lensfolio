@@ -7,7 +7,7 @@ const ViewProfile: FC = () => {
     variables: { request: { handle: 'ercwang.lens' } }
   });
   const profile = data?.profile;
-  console.log(profile);
+  // console.log(profile);
   return (
     <div>
       <Details profile={profile as any}></Details>

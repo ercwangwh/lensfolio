@@ -1,8 +1,8 @@
-import React from "react";
-import LoginButton from "./LoginButton";
-import Search from "./Search";
-import type { FC } from "react";
-import NavItems from "./NavItems";
+import React from 'react';
+import Login from '../Auth/Login';
+import Search from './Search';
+import type { FC } from 'react';
+import NavItems from './NavItems';
 
 const Header: FC = () => {
   return (
@@ -12,7 +12,7 @@ const Header: FC = () => {
           <Search />
           <NavItems />
         </div>
-        <LoginButton />
+        <Login />
       </div>
     </div>
   );
