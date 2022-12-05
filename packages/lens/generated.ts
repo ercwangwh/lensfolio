@@ -1,16 +1,10 @@
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -86,7 +80,7 @@ export type AccessConditionInput = {
 
 /** The access conditions for the publication */
 export type AccessConditionOutput = {
-  __typename?: "AccessConditionOutput";
+  __typename?: 'AccessConditionOutput';
   /** AND condition */
   and?: Maybe<AndConditionOutput>;
   /** Profile follow condition */
@@ -106,28 +100,28 @@ export type AccessConditionOutput = {
 };
 
 export type AchRequest = {
-  ethereumAddress: Scalars["EthereumAddress"];
-  freeTextHandle?: InputMaybe<Scalars["Boolean"]>;
-  handle?: InputMaybe<Scalars["CreateHandle"]>;
-  overrideAlreadyClaimed: Scalars["Boolean"];
-  overrideTradeMark: Scalars["Boolean"];
-  secret: Scalars["String"];
+  ethereumAddress: Scalars['EthereumAddress'];
+  freeTextHandle?: InputMaybe<Scalars['Boolean']>;
+  handle?: InputMaybe<Scalars['CreateHandle']>;
+  overrideAlreadyClaimed: Scalars['Boolean'];
+  overrideTradeMark: Scalars['Boolean'];
+  secret: Scalars['String'];
 };
 
 /** The request object to add interests to a profile */
 export type AddProfileInterestsRequest = {
   /** The profile interest to add */
-  interests: Array<Scalars["ProfileInterest"]>;
+  interests: Array<Scalars['ProfileInterest']>;
   /** The profileId to add interests to */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type AllPublicationsTagsRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   sort: TagSortCriteria;
   /** The App Id */
-  source?: InputMaybe<Scalars["Sources"]>;
+  source?: InputMaybe<Scalars['Sources']>;
 };
 
 export type AndConditionInput = {
@@ -136,125 +130,125 @@ export type AndConditionInput = {
 };
 
 export type AndConditionOutput = {
-  __typename?: "AndConditionOutput";
+  __typename?: 'AndConditionOutput';
   /** The list of conditions to apply AND to. You can only use nested boolean conditions at the root level. */
   criteria: Array<AccessConditionOutput>;
 };
 
 export type ApprovedAllowanceAmount = {
-  __typename?: "ApprovedAllowanceAmount";
-  allowance: Scalars["String"];
-  contractAddress: Scalars["ContractAddress"];
-  currency: Scalars["ContractAddress"];
-  module: Scalars["String"];
+  __typename?: 'ApprovedAllowanceAmount';
+  allowance: Scalars['String'];
+  contractAddress: Scalars['ContractAddress'];
+  currency: Scalars['ContractAddress'];
+  module: Scalars['String'];
 };
 
 export type ApprovedModuleAllowanceAmountRequest = {
   collectModules?: InputMaybe<Array<CollectModules>>;
   /** The contract addresses for the module approved currencies you want to find information on about the user */
-  currencies: Array<Scalars["ContractAddress"]>;
+  currencies: Array<Scalars['ContractAddress']>;
   followModules?: InputMaybe<Array<FollowModules>>;
   referenceModules?: InputMaybe<Array<ReferenceModules>>;
-  unknownCollectModules?: InputMaybe<Array<Scalars["ContractAddress"]>>;
-  unknownFollowModules?: InputMaybe<Array<Scalars["ContractAddress"]>>;
-  unknownReferenceModules?: InputMaybe<Array<Scalars["ContractAddress"]>>;
+  unknownCollectModules?: InputMaybe<Array<Scalars['ContractAddress']>>;
+  unknownFollowModules?: InputMaybe<Array<Scalars['ContractAddress']>>;
+  unknownReferenceModules?: InputMaybe<Array<Scalars['ContractAddress']>>;
 };
 
 /** The Profile */
 export type Attribute = {
-  __typename?: "Attribute";
+  __typename?: 'Attribute';
   /** The display type */
-  displayType?: Maybe<Scalars["String"]>;
+  displayType?: Maybe<Scalars['String']>;
   /** identifier of this attribute, we will update by this id  */
-  key: Scalars["String"];
+  key: Scalars['String'];
   /** The trait type - can be anything its the name it will render so include spaces */
-  traitType?: Maybe<Scalars["String"]>;
+  traitType?: Maybe<Scalars['String']>;
   /** Value attribute */
-  value: Scalars["String"];
+  value: Scalars['String'];
 };
 
 /** The auth challenge result */
 export type AuthChallengeResult = {
-  __typename?: "AuthChallengeResult";
+  __typename?: 'AuthChallengeResult';
   /** The text to sign */
-  text: Scalars["String"];
+  text: Scalars['String'];
 };
 
 /** The authentication result */
 export type AuthenticationResult = {
-  __typename?: "AuthenticationResult";
+  __typename?: 'AuthenticationResult';
   /** The access token */
-  accessToken: Scalars["Jwt"];
+  accessToken: Scalars['Jwt'];
   /** The refresh token */
-  refreshToken: Scalars["Jwt"];
+  refreshToken: Scalars['Jwt'];
 };
 
 export type BroadcastRequest = {
-  id: Scalars["BroadcastId"];
-  signature: Scalars["Signature"];
+  id: Scalars['BroadcastId'];
+  signature: Scalars['Signature'];
 };
 
 export type BurnProfileRequest = {
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type CanCommentResponse = {
-  __typename?: "CanCommentResponse";
-  result: Scalars["Boolean"];
+  __typename?: 'CanCommentResponse';
+  result: Scalars['Boolean'];
 };
 
 export type CanDecryptResponse = {
-  __typename?: "CanDecryptResponse";
+  __typename?: 'CanDecryptResponse';
   reasons?: Maybe<DecryptFailReason>;
-  result: Scalars["Boolean"];
+  result: Scalars['Boolean'];
 };
 
 export type CanMirrorResponse = {
-  __typename?: "CanMirrorResponse";
-  result: Scalars["Boolean"];
+  __typename?: 'CanMirrorResponse';
+  result: Scalars['Boolean'];
 };
 
 /** The challenge request */
 export type ChallengeRequest = {
   /** The ethereum address you want to login with */
-  address: Scalars["EthereumAddress"];
+  address: Scalars['EthereumAddress'];
 };
 
 export type ClaimHandleRequest = {
   /** The follow module */
   followModule?: InputMaybe<FollowModuleParams>;
-  freeTextHandle?: InputMaybe<Scalars["CreateHandle"]>;
-  id?: InputMaybe<Scalars["HandleClaimIdScalar"]>;
+  freeTextHandle?: InputMaybe<Scalars['CreateHandle']>;
+  id?: InputMaybe<Scalars['HandleClaimIdScalar']>;
 };
 
 /** The claim status */
 export enum ClaimStatus {
-  AlreadyClaimed = "ALREADY_CLAIMED",
-  ClaimFailed = "CLAIM_FAILED",
-  NotClaimed = "NOT_CLAIMED",
+  AlreadyClaimed = 'ALREADY_CLAIMED',
+  ClaimFailed = 'CLAIM_FAILED',
+  NotClaimed = 'NOT_CLAIMED'
 }
 
 export type ClaimableHandles = {
-  __typename?: "ClaimableHandles";
-  canClaimFreeTextHandle: Scalars["Boolean"];
+  __typename?: 'ClaimableHandles';
+  canClaimFreeTextHandle: Scalars['Boolean'];
   reservedHandles: Array<ReservedClaimableHandle>;
 };
 
 /** Condition that signifies if address or profile has collected a publication */
 export type CollectConditionInput = {
   /** The publication id that has to be collected to unlock content */
-  publicationId?: InputMaybe<Scalars["ProfileId"]>;
+  publicationId?: InputMaybe<Scalars['ProfileId']>;
   /** True if the content will be unlocked for this specific publication */
-  thisPublication?: InputMaybe<Scalars["Boolean"]>;
+  thisPublication?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Condition that signifies if address or profile has collected a publication */
 export type CollectConditionOutput = {
-  __typename?: "CollectConditionOutput";
+  __typename?: 'CollectConditionOutput';
   /** The publication id that has to be collected to unlock content */
-  publicationId?: Maybe<Scalars["ProfileId"]>;
+  publicationId?: Maybe<Scalars['ProfileId']>;
   /** True if the content will be unlocked for this specific publication */
-  thisPublication?: Maybe<Scalars["Boolean"]>;
+  thisPublication?: Maybe<Scalars['Boolean']>;
 };
 
 export type CollectModule =
@@ -276,7 +270,7 @@ export type CollectModuleParams = {
   /** The collect limited timed fee collect module */
   limitedTimedFeeCollectModule?: InputMaybe<LimitedTimedFeeCollectModuleParams>;
   /** The collect revert collect module */
-  revertCollectModule?: InputMaybe<Scalars["Boolean"]>;
+  revertCollectModule?: InputMaybe<Scalars['Boolean']>;
   /** The collect timed fee collect module */
   timedFeeCollectModule?: InputMaybe<TimedFeeCollectModuleParams>;
   /** A unknown collect module */
@@ -285,13 +279,13 @@ export type CollectModuleParams = {
 
 /** The collect module types */
 export enum CollectModules {
-  FeeCollectModule = "FeeCollectModule",
-  FreeCollectModule = "FreeCollectModule",
-  LimitedFeeCollectModule = "LimitedFeeCollectModule",
-  LimitedTimedFeeCollectModule = "LimitedTimedFeeCollectModule",
-  RevertCollectModule = "RevertCollectModule",
-  TimedFeeCollectModule = "TimedFeeCollectModule",
-  UnknownCollectModule = "UnknownCollectModule",
+  FeeCollectModule = 'FeeCollectModule',
+  FreeCollectModule = 'FreeCollectModule',
+  LimitedFeeCollectModule = 'LimitedFeeCollectModule',
+  LimitedTimedFeeCollectModule = 'LimitedTimedFeeCollectModule',
+  RevertCollectModule = 'RevertCollectModule',
+  TimedFeeCollectModule = 'TimedFeeCollectModule',
+  UnknownCollectModule = 'UnknownCollectModule'
 }
 
 export type CollectProxyAction = {
@@ -299,45 +293,45 @@ export type CollectProxyAction = {
 };
 
 export type CollectedEvent = {
-  __typename?: "CollectedEvent";
+  __typename?: 'CollectedEvent';
   profile: Profile;
-  timestamp: Scalars["DateTime"];
+  timestamp: Scalars['DateTime'];
 };
 
 /** The social comment */
 export type Comment = {
-  __typename?: "Comment";
+  __typename?: 'Comment';
   /** ID of the source */
-  appId?: Maybe<Scalars["Sources"]>;
+  appId?: Maybe<Scalars['Sources']>;
   canComment: CanCommentResponse;
   canDecrypt: CanDecryptResponse;
   canMirror: CanMirrorResponse;
   /** The collect module */
   collectModule: CollectModule;
   /** The contract address for the collect nft.. if its null it means nobody collected yet as it lazy deployed */
-  collectNftAddress?: Maybe<Scalars["ContractAddress"]>;
+  collectNftAddress?: Maybe<Scalars['ContractAddress']>;
   /** Who collected it, this is used for timeline results and like this for better caching for the client */
   collectedBy?: Maybe<Wallet>;
   /** Which comment this points to if its null the pointer too deep so do another query to find it out */
   commentOn?: Maybe<Publication>;
   /** The date the post was created on */
-  createdAt: Scalars["DateTime"];
+  createdAt: Scalars['DateTime'];
   /** This will bring back the first comment of a comment and only be defined if using `publication` query and `commentOf` */
   firstComment?: Maybe<Comment>;
-  hasCollectedByMe: Scalars["Boolean"];
+  hasCollectedByMe: Scalars['Boolean'];
   /** If the publication has been hidden if it has then the content and media is not available */
-  hidden: Scalars["Boolean"];
+  hidden: Scalars['Boolean'];
   /** The internal publication id */
-  id: Scalars["InternalPublicationId"];
+  id: Scalars['InternalPublicationId'];
   /** Indicates if the publication is gated behind some access criteria */
-  isGated: Scalars["Boolean"];
+  isGated: Scalars['Boolean'];
   /** The top level post/mirror this comment lives on */
   mainPost: MainPostReference;
   /** The metadata for the post */
   metadata: MetadataOutput;
-  mirrors: Array<Scalars["InternalPublicationId"]>;
+  mirrors: Array<Scalars['InternalPublicationId']>;
   /** The on chain content uri could be `ipfs://` or `https` */
-  onChainContentURI: Scalars["String"];
+  onChainContentURI: Scalars['String'];
   /** The profile ref */
   profile: Profile;
   reaction?: Maybe<ReactionTypes>;
@@ -349,28 +343,28 @@ export type Comment = {
 
 /** The social comment */
 export type CommentCanCommentArgs = {
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social comment */
 export type CommentCanDecryptArgs = {
-  address?: InputMaybe<Scalars["EthereumAddress"]>;
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  address?: InputMaybe<Scalars['EthereumAddress']>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social comment */
 export type CommentCanMirrorArgs = {
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social comment */
 export type CommentHasCollectedByMeArgs = {
-  isFinalisedOnChain?: InputMaybe<Scalars["Boolean"]>;
+  isFinalisedOnChain?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** The social comment */
 export type CommentMirrorsArgs = {
-  by?: InputMaybe<Scalars["ProfileId"]>;
+  by?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social comment */
@@ -380,14 +374,14 @@ export type CommentReactionArgs = {
 
 /** The gated publication access criteria contract types */
 export enum ContractType {
-  Erc20 = "ERC20",
-  Erc721 = "ERC721",
-  Erc1155 = "ERC1155",
+  Erc20 = 'ERC20',
+  Erc721 = 'ERC721',
+  Erc1155 = 'ERC1155'
 }
 
 /** The create burn eip 712 typed data */
 export type CreateBurnEip712TypedData = {
-  __typename?: "CreateBurnEIP712TypedData";
+  __typename?: 'CreateBurnEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -398,43 +392,43 @@ export type CreateBurnEip712TypedData = {
 
 /** The create burn eip 712 typed data types */
 export type CreateBurnEip712TypedDataTypes = {
-  __typename?: "CreateBurnEIP712TypedDataTypes";
+  __typename?: 'CreateBurnEIP712TypedDataTypes';
   BurnWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The create burn eip 712 typed data value */
 export type CreateBurnEip712TypedDataValue = {
-  __typename?: "CreateBurnEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  nonce: Scalars["Nonce"];
-  tokenId: Scalars["String"];
+  __typename?: 'CreateBurnEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  nonce: Scalars['Nonce'];
+  tokenId: Scalars['String'];
 };
 
 /** The broadcast item */
 export type CreateBurnProfileBroadcastItemResult = {
-  __typename?: "CreateBurnProfileBroadcastItemResult";
+  __typename?: 'CreateBurnProfileBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateBurnEip712TypedData;
 };
 
 /** The broadcast item */
 export type CreateCollectBroadcastItemResult = {
-  __typename?: "CreateCollectBroadcastItemResult";
+  __typename?: 'CreateCollectBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateCollectEip712TypedData;
 };
 
 /** The collect eip 712 typed data */
 export type CreateCollectEip712TypedData = {
-  __typename?: "CreateCollectEIP712TypedData";
+  __typename?: 'CreateCollectEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -445,40 +439,40 @@ export type CreateCollectEip712TypedData = {
 
 /** The collect eip 712 typed data types */
 export type CreateCollectEip712TypedDataTypes = {
-  __typename?: "CreateCollectEIP712TypedDataTypes";
+  __typename?: 'CreateCollectEIP712TypedDataTypes';
   CollectWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The collect eip 712 typed data value */
 export type CreateCollectEip712TypedDataValue = {
-  __typename?: "CreateCollectEIP712TypedDataValue";
-  data: Scalars["BlockchainData"];
-  deadline: Scalars["UnixTimestamp"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
-  pubId: Scalars["PublicationId"];
+  __typename?: 'CreateCollectEIP712TypedDataValue';
+  data: Scalars['BlockchainData'];
+  deadline: Scalars['UnixTimestamp'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
+  pubId: Scalars['PublicationId'];
 };
 
 export type CreateCollectRequest = {
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
   /** The encoded data to collect with if using an unknown module */
-  unknownModuleData?: InputMaybe<Scalars["BlockchainData"]>;
+  unknownModuleData?: InputMaybe<Scalars['BlockchainData']>;
 };
 
 /** The broadcast item */
 export type CreateCommentBroadcastItemResult = {
-  __typename?: "CreateCommentBroadcastItemResult";
+  __typename?: 'CreateCommentBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateCommentEip712TypedData;
 };
 
 /** The create comment eip 712 typed data */
 export type CreateCommentEip712TypedData = {
-  __typename?: "CreateCommentEIP712TypedData";
+  __typename?: 'CreateCommentEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -489,40 +483,40 @@ export type CreateCommentEip712TypedData = {
 
 /** The create comment eip 712 typed data types */
 export type CreateCommentEip712TypedDataTypes = {
-  __typename?: "CreateCommentEIP712TypedDataTypes";
+  __typename?: 'CreateCommentEIP712TypedDataTypes';
   CommentWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The create comment eip 712 typed data value */
 export type CreateCommentEip712TypedDataValue = {
-  __typename?: "CreateCommentEIP712TypedDataValue";
-  collectModule: Scalars["ContractAddress"];
-  collectModuleInitData: Scalars["CollectModuleData"];
-  contentURI: Scalars["PublicationUrl"];
-  deadline: Scalars["UnixTimestamp"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
-  profileIdPointed: Scalars["ProfileId"];
-  pubIdPointed: Scalars["PublicationId"];
-  referenceModule: Scalars["ContractAddress"];
-  referenceModuleData: Scalars["ReferenceModuleData"];
-  referenceModuleInitData: Scalars["ReferenceModuleData"];
+  __typename?: 'CreateCommentEIP712TypedDataValue';
+  collectModule: Scalars['ContractAddress'];
+  collectModuleInitData: Scalars['CollectModuleData'];
+  contentURI: Scalars['PublicationUrl'];
+  deadline: Scalars['UnixTimestamp'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
+  profileIdPointed: Scalars['ProfileId'];
+  pubIdPointed: Scalars['PublicationId'];
+  referenceModule: Scalars['ContractAddress'];
+  referenceModuleData: Scalars['ReferenceModuleData'];
+  referenceModuleInitData: Scalars['ReferenceModuleData'];
 };
 
 /** The broadcast item */
 export type CreateFollowBroadcastItemResult = {
-  __typename?: "CreateFollowBroadcastItemResult";
+  __typename?: 'CreateFollowBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateFollowEip712TypedData;
 };
 
 /** The create follow eip 712 typed data */
 export type CreateFollowEip712TypedData = {
-  __typename?: "CreateFollowEIP712TypedData";
+  __typename?: 'CreateFollowEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -533,33 +527,33 @@ export type CreateFollowEip712TypedData = {
 
 /** The create follow eip 712 typed data types */
 export type CreateFollowEip712TypedDataTypes = {
-  __typename?: "CreateFollowEIP712TypedDataTypes";
+  __typename?: 'CreateFollowEIP712TypedDataTypes';
   FollowWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The create follow eip 712 typed data value */
 export type CreateFollowEip712TypedDataValue = {
-  __typename?: "CreateFollowEIP712TypedDataValue";
-  datas: Array<Scalars["BlockchainData"]>;
-  deadline: Scalars["UnixTimestamp"];
-  nonce: Scalars["Nonce"];
-  profileIds: Array<Scalars["ProfileId"]>;
+  __typename?: 'CreateFollowEIP712TypedDataValue';
+  datas: Array<Scalars['BlockchainData']>;
+  deadline: Scalars['UnixTimestamp'];
+  nonce: Scalars['Nonce'];
+  profileIds: Array<Scalars['ProfileId']>;
 };
 
 /** The broadcast item */
 export type CreateMirrorBroadcastItemResult = {
-  __typename?: "CreateMirrorBroadcastItemResult";
+  __typename?: 'CreateMirrorBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateMirrorEip712TypedData;
 };
 
 /** The mirror eip 712 typed data */
 export type CreateMirrorEip712TypedData = {
-  __typename?: "CreateMirrorEIP712TypedData";
+  __typename?: 'CreateMirrorEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -570,46 +564,46 @@ export type CreateMirrorEip712TypedData = {
 
 /** The mirror eip 712 typed data types */
 export type CreateMirrorEip712TypedDataTypes = {
-  __typename?: "CreateMirrorEIP712TypedDataTypes";
+  __typename?: 'CreateMirrorEIP712TypedDataTypes';
   MirrorWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The mirror eip 712 typed data value */
 export type CreateMirrorEip712TypedDataValue = {
-  __typename?: "CreateMirrorEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
-  profileIdPointed: Scalars["ProfileId"];
-  pubIdPointed: Scalars["PublicationId"];
-  referenceModule: Scalars["ContractAddress"];
-  referenceModuleData: Scalars["ReferenceModuleData"];
-  referenceModuleInitData: Scalars["ReferenceModuleData"];
+  __typename?: 'CreateMirrorEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
+  profileIdPointed: Scalars['ProfileId'];
+  pubIdPointed: Scalars['PublicationId'];
+  referenceModule: Scalars['ContractAddress'];
+  referenceModuleData: Scalars['ReferenceModuleData'];
+  referenceModuleInitData: Scalars['ReferenceModuleData'];
 };
 
 export type CreateMirrorRequest = {
   /** Profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** Publication id of what you want to mirror on remember if this is a comment it will be that as the id */
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
   /** The reference module info */
   referenceModule?: InputMaybe<ReferenceModuleParams>;
 };
 
 /** The broadcast item */
 export type CreatePostBroadcastItemResult = {
-  __typename?: "CreatePostBroadcastItemResult";
+  __typename?: 'CreatePostBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreatePostEip712TypedData;
 };
 
 /** The create post eip 712 typed data */
 export type CreatePostEip712TypedData = {
-  __typename?: "CreatePostEIP712TypedData";
+  __typename?: 'CreatePostEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -620,44 +614,44 @@ export type CreatePostEip712TypedData = {
 
 /** The create post eip 712 typed data types */
 export type CreatePostEip712TypedDataTypes = {
-  __typename?: "CreatePostEIP712TypedDataTypes";
+  __typename?: 'CreatePostEIP712TypedDataTypes';
   PostWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The create post eip 712 typed data value */
 export type CreatePostEip712TypedDataValue = {
-  __typename?: "CreatePostEIP712TypedDataValue";
-  collectModule: Scalars["ContractAddress"];
-  collectModuleInitData: Scalars["CollectModuleData"];
-  contentURI: Scalars["PublicationUrl"];
-  deadline: Scalars["UnixTimestamp"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
-  referenceModule: Scalars["ContractAddress"];
-  referenceModuleInitData: Scalars["ReferenceModuleData"];
+  __typename?: 'CreatePostEIP712TypedDataValue';
+  collectModule: Scalars['ContractAddress'];
+  collectModuleInitData: Scalars['CollectModuleData'];
+  contentURI: Scalars['PublicationUrl'];
+  deadline: Scalars['UnixTimestamp'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
+  referenceModule: Scalars['ContractAddress'];
+  referenceModuleInitData: Scalars['ReferenceModuleData'];
 };
 
 export type CreateProfileRequest = {
   /** The follow module */
   followModule?: InputMaybe<FollowModuleParams>;
   /** The follow NFT URI is the NFT metadata your followers will mint when they follow you. This can be updated at all times. If you do not pass in anything it will create a super cool changing NFT which will show the last publication of your profile as the NFT which looks awesome! This means people do not have to worry about writing this logic but still have the ability to customise it for their followers */
-  followNFTURI?: InputMaybe<Scalars["Url"]>;
-  handle: Scalars["CreateHandle"];
+  followNFTURI?: InputMaybe<Scalars['Url']>;
+  handle: Scalars['CreateHandle'];
   /** The profile picture uri */
-  profilePictureUri?: InputMaybe<Scalars["Url"]>;
+  profilePictureUri?: InputMaybe<Scalars['Url']>;
 };
 
 export type CreatePublicCommentRequest = {
   /** The collect module */
   collectModule: CollectModuleParams;
   /** The metadata uploaded somewhere passing in the url to reach it */
-  contentURI: Scalars["Url"];
+  contentURI: Scalars['Url'];
   /** The criteria to access the publication data */
   gated?: InputMaybe<GatedPublicationParamsInput>;
   /** Profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** Publication id of what your comments on remember if this is a comment you commented on it will be that as the id */
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
   /** The reference module */
   referenceModule?: InputMaybe<ReferenceModuleParams>;
 };
@@ -666,41 +660,41 @@ export type CreatePublicPostRequest = {
   /** The collect module */
   collectModule: CollectModuleParams;
   /** The metadata uploaded somewhere passing in the url to reach it */
-  contentURI: Scalars["Url"];
+  contentURI: Scalars['Url'];
   /** The criteria to access the publication data */
   gated?: InputMaybe<GatedPublicationParamsInput>;
   /** Profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The reference module */
   referenceModule?: InputMaybe<ReferenceModuleParams>;
 };
 
 export type CreatePublicSetProfileMetadataUriRequest = {
   /** The metadata uploaded somewhere passing in the url to reach it */
-  metadata: Scalars["Url"];
+  metadata: Scalars['Url'];
   /** Profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type CreateSetDefaultProfileRequest = {
   /** Profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The broadcast item */
 export type CreateSetDispatcherBroadcastItemResult = {
-  __typename?: "CreateSetDispatcherBroadcastItemResult";
+  __typename?: 'CreateSetDispatcherBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateSetDispatcherEip712TypedData;
 };
 
 /** The set dispatcher eip 712 typed data */
 export type CreateSetDispatcherEip712TypedData = {
-  __typename?: "CreateSetDispatcherEIP712TypedData";
+  __typename?: 'CreateSetDispatcherEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -711,33 +705,33 @@ export type CreateSetDispatcherEip712TypedData = {
 
 /** The set dispatcher eip 712 typed data types */
 export type CreateSetDispatcherEip712TypedDataTypes = {
-  __typename?: "CreateSetDispatcherEIP712TypedDataTypes";
+  __typename?: 'CreateSetDispatcherEIP712TypedDataTypes';
   SetDispatcherWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The set dispatcher eip 712 typed data value */
 export type CreateSetDispatcherEip712TypedDataValue = {
-  __typename?: "CreateSetDispatcherEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  dispatcher: Scalars["EthereumAddress"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
+  __typename?: 'CreateSetDispatcherEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  dispatcher: Scalars['EthereumAddress'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The broadcast item */
 export type CreateSetFollowModuleBroadcastItemResult = {
-  __typename?: "CreateSetFollowModuleBroadcastItemResult";
+  __typename?: 'CreateSetFollowModuleBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateSetFollowModuleEip712TypedData;
 };
 
 /** The set follow module eip 712 typed data */
 export type CreateSetFollowModuleEip712TypedData = {
-  __typename?: "CreateSetFollowModuleEIP712TypedData";
+  __typename?: 'CreateSetFollowModuleEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -748,40 +742,40 @@ export type CreateSetFollowModuleEip712TypedData = {
 
 /** The set follow module eip 712 typed data types */
 export type CreateSetFollowModuleEip712TypedDataTypes = {
-  __typename?: "CreateSetFollowModuleEIP712TypedDataTypes";
+  __typename?: 'CreateSetFollowModuleEIP712TypedDataTypes';
   SetFollowModuleWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The set follow module eip 712 typed data value */
 export type CreateSetFollowModuleEip712TypedDataValue = {
-  __typename?: "CreateSetFollowModuleEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  followModule: Scalars["ContractAddress"];
-  followModuleInitData: Scalars["FollowModuleData"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
+  __typename?: 'CreateSetFollowModuleEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  followModule: Scalars['ContractAddress'];
+  followModuleInitData: Scalars['FollowModuleData'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
 };
 
 export type CreateSetFollowModuleRequest = {
   /** The follow module info */
   followModule: FollowModuleParams;
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The broadcast item */
 export type CreateSetFollowNftUriBroadcastItemResult = {
-  __typename?: "CreateSetFollowNFTUriBroadcastItemResult";
+  __typename?: 'CreateSetFollowNFTUriBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateSetFollowNftUriEip712TypedData;
 };
 
 /** The set follow nft uri eip 712 typed data */
 export type CreateSetFollowNftUriEip712TypedData = {
-  __typename?: "CreateSetFollowNFTUriEIP712TypedData";
+  __typename?: 'CreateSetFollowNFTUriEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -792,39 +786,39 @@ export type CreateSetFollowNftUriEip712TypedData = {
 
 /** The set follow nft uri eip 712 typed data types */
 export type CreateSetFollowNftUriEip712TypedDataTypes = {
-  __typename?: "CreateSetFollowNFTUriEIP712TypedDataTypes";
+  __typename?: 'CreateSetFollowNFTUriEIP712TypedDataTypes';
   SetFollowNFTURIWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The set follow nft uri eip 712 typed data value */
 export type CreateSetFollowNftUriEip712TypedDataValue = {
-  __typename?: "CreateSetFollowNFTUriEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  followNFTURI: Scalars["Url"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
+  __typename?: 'CreateSetFollowNFTUriEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  followNFTURI: Scalars['Url'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
 };
 
 export type CreateSetFollowNftUriRequest = {
   /** The follow NFT URI is the NFT metadata your followers will mint when they follow you. This can be updated at all times. If you do not pass in anything it will create a super cool changing NFT which will show the last publication of your profile as the NFT which looks awesome! This means people do not have to worry about writing this logic but still have the ability to customise it for their followers */
-  followNFTURI?: InputMaybe<Scalars["Url"]>;
-  profileId: Scalars["ProfileId"];
+  followNFTURI?: InputMaybe<Scalars['Url']>;
+  profileId: Scalars['ProfileId'];
 };
 
 /** The broadcast item */
 export type CreateSetProfileImageUriBroadcastItemResult = {
-  __typename?: "CreateSetProfileImageUriBroadcastItemResult";
+  __typename?: 'CreateSetProfileImageUriBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateSetProfileImageUriEip712TypedData;
 };
 
 /** The set profile uri eip 712 typed data */
 export type CreateSetProfileImageUriEip712TypedData = {
-  __typename?: "CreateSetProfileImageUriEIP712TypedData";
+  __typename?: 'CreateSetProfileImageUriEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -835,33 +829,33 @@ export type CreateSetProfileImageUriEip712TypedData = {
 
 /** The set profile image uri eip 712 typed data types */
 export type CreateSetProfileImageUriEip712TypedDataTypes = {
-  __typename?: "CreateSetProfileImageUriEIP712TypedDataTypes";
+  __typename?: 'CreateSetProfileImageUriEIP712TypedDataTypes';
   SetProfileImageURIWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The set profile uri eip 712 typed data value */
 export type CreateSetProfileImageUriEip712TypedDataValue = {
-  __typename?: "CreateSetProfileImageUriEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  imageURI: Scalars["Url"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
+  __typename?: 'CreateSetProfileImageUriEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  imageURI: Scalars['Url'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The broadcast item */
 export type CreateSetProfileMetadataUriBroadcastItemResult = {
-  __typename?: "CreateSetProfileMetadataURIBroadcastItemResult";
+  __typename?: 'CreateSetProfileMetadataURIBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateSetProfileMetadataUrieip712TypedData;
 };
 
 /** The set follow nft uri eip 712 typed data */
 export type CreateSetProfileMetadataUrieip712TypedData = {
-  __typename?: "CreateSetProfileMetadataURIEIP712TypedData";
+  __typename?: 'CreateSetProfileMetadataURIEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -872,33 +866,33 @@ export type CreateSetProfileMetadataUrieip712TypedData = {
 
 /** The set follow nft uri eip 712 typed data types */
 export type CreateSetProfileMetadataUrieip712TypedDataTypes = {
-  __typename?: "CreateSetProfileMetadataURIEIP712TypedDataTypes";
+  __typename?: 'CreateSetProfileMetadataURIEIP712TypedDataTypes';
   SetProfileMetadataURIWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The set follow nft uri eip 712 typed data value */
 export type CreateSetProfileMetadataUrieip712TypedDataValue = {
-  __typename?: "CreateSetProfileMetadataURIEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  metadata: Scalars["Url"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
+  __typename?: 'CreateSetProfileMetadataURIEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  metadata: Scalars['Url'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The broadcast item */
 export type CreateToggleFollowBroadcastItemResult = {
-  __typename?: "CreateToggleFollowBroadcastItemResult";
+  __typename?: 'CreateToggleFollowBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateToggleFollowEip712TypedData;
 };
 
 /** The create toggle follows eip 712 typed data */
 export type CreateToggleFollowEip712TypedData = {
-  __typename?: "CreateToggleFollowEIP712TypedData";
+  __typename?: 'CreateToggleFollowEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -909,98 +903,98 @@ export type CreateToggleFollowEip712TypedData = {
 
 /** The create toggle follows eip 712 typed data types */
 export type CreateToggleFollowEip712TypedDataTypes = {
-  __typename?: "CreateToggleFollowEIP712TypedDataTypes";
+  __typename?: 'CreateToggleFollowEIP712TypedDataTypes';
   ToggleFollowWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The create toggle follow eip 712 typed data value */
 export type CreateToggleFollowEip712TypedDataValue = {
-  __typename?: "CreateToggleFollowEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  enables: Array<Scalars["Boolean"]>;
-  nonce: Scalars["Nonce"];
-  profileIds: Array<Scalars["ProfileId"]>;
+  __typename?: 'CreateToggleFollowEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  enables: Array<Scalars['Boolean']>;
+  nonce: Scalars['Nonce'];
+  profileIds: Array<Scalars['ProfileId']>;
 };
 
 export type CreateToggleFollowRequest = {
-  enables: Array<Scalars["Boolean"]>;
-  profileIds: Array<Scalars["ProfileId"]>;
+  enables: Array<Scalars['Boolean']>;
+  profileIds: Array<Scalars['ProfileId']>;
 };
 
 /** The broadcast item */
 export type CreateUnfollowBroadcastItemResult = {
-  __typename?: "CreateUnfollowBroadcastItemResult";
+  __typename?: 'CreateUnfollowBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: CreateBurnEip712TypedData;
 };
 
 export type CurRequest = {
-  secret: Scalars["String"];
+  secret: Scalars['String'];
 };
 
 /** The custom filters types */
 export enum CustomFiltersTypes {
-  Gardeners = "GARDENERS",
+  Gardeners = 'GARDENERS'
 }
 
 /** The reason why a profile cannot decrypt a publication */
 export enum DecryptFailReason {
-  CollectNotFinalisedOnChain = "COLLECT_NOT_FINALISED_ON_CHAIN",
-  DoesNotFollowProfile = "DOES_NOT_FOLLOW_PROFILE",
-  DoesNotOwnNft = "DOES_NOT_OWN_NFT",
-  DoesNotOwnProfile = "DOES_NOT_OWN_PROFILE",
-  FollowNotFinalisedOnChain = "FOLLOW_NOT_FINALISED_ON_CHAIN",
-  HasNotCollectedPublication = "HAS_NOT_COLLECTED_PUBLICATION",
-  MissingEncryptionParams = "MISSING_ENCRYPTION_PARAMS",
-  ProfileDoesNotExist = "PROFILE_DOES_NOT_EXIST",
-  UnauthorizedAddress = "UNAUTHORIZED_ADDRESS",
-  UnauthorizedBalance = "UNAUTHORIZED_BALANCE",
+  CollectNotFinalisedOnChain = 'COLLECT_NOT_FINALISED_ON_CHAIN',
+  DoesNotFollowProfile = 'DOES_NOT_FOLLOW_PROFILE',
+  DoesNotOwnNft = 'DOES_NOT_OWN_NFT',
+  DoesNotOwnProfile = 'DOES_NOT_OWN_PROFILE',
+  FollowNotFinalisedOnChain = 'FOLLOW_NOT_FINALISED_ON_CHAIN',
+  HasNotCollectedPublication = 'HAS_NOT_COLLECTED_PUBLICATION',
+  MissingEncryptionParams = 'MISSING_ENCRYPTION_PARAMS',
+  ProfileDoesNotExist = 'PROFILE_DOES_NOT_EXIST',
+  UnauthorizedAddress = 'UNAUTHORIZED_ADDRESS',
+  UnauthorizedBalance = 'UNAUTHORIZED_BALANCE'
 }
 
 export type DefaultProfileRequest = {
-  ethereumAddress: Scalars["EthereumAddress"];
+  ethereumAddress: Scalars['EthereumAddress'];
 };
 
 export type DegreesOfSeparationReferenceModuleParams = {
   /** Applied to comments */
-  commentsRestricted: Scalars["Boolean"];
+  commentsRestricted: Scalars['Boolean'];
   /** Degrees of separation */
-  degreesOfSeparation: Scalars["Int"];
+  degreesOfSeparation: Scalars['Int'];
   /** Applied to mirrors */
-  mirrorsRestricted: Scalars["Boolean"];
+  mirrorsRestricted: Scalars['Boolean'];
 };
 
 export type DegreesOfSeparationReferenceModuleSettings = {
-  __typename?: "DegreesOfSeparationReferenceModuleSettings";
+  __typename?: 'DegreesOfSeparationReferenceModuleSettings';
   /** Applied to comments */
-  commentsRestricted: Scalars["Boolean"];
-  contractAddress: Scalars["ContractAddress"];
+  commentsRestricted: Scalars['Boolean'];
+  contractAddress: Scalars['ContractAddress'];
   /** Degrees of separation */
-  degreesOfSeparation: Scalars["Int"];
+  degreesOfSeparation: Scalars['Int'];
   /** Applied to mirrors */
-  mirrorsRestricted: Scalars["Boolean"];
+  mirrorsRestricted: Scalars['Boolean'];
   /** The reference modules enum */
   type: ReferenceModules;
 };
 
 /** The dispatcher */
 export type Dispatcher = {
-  __typename?: "Dispatcher";
+  __typename?: 'Dispatcher';
   /** The dispatcher address */
-  address: Scalars["EthereumAddress"];
+  address: Scalars['EthereumAddress'];
   /** If the dispatcher can use the relay */
-  canUseRelay: Scalars["Boolean"];
+  canUseRelay: Scalars['Boolean'];
 };
 
 export type DoesFollow = {
   /** The follower address remember wallets follow profiles */
-  followerAddress: Scalars["EthereumAddress"];
+  followerAddress: Scalars['EthereumAddress'];
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type DoesFollowRequest = {
@@ -1010,58 +1004,58 @@ export type DoesFollowRequest = {
 
 /** The does follow response */
 export type DoesFollowResponse = {
-  __typename?: "DoesFollowResponse";
+  __typename?: 'DoesFollowResponse';
   /** The follower address remember wallets follow profiles */
-  followerAddress: Scalars["EthereumAddress"];
+  followerAddress: Scalars['EthereumAddress'];
   /** If the user does follow */
-  follows: Scalars["Boolean"];
+  follows: Scalars['Boolean'];
   /** Is finalised on-chain */
-  isFinalisedOnChain: Scalars["Boolean"];
+  isFinalisedOnChain: Scalars['Boolean'];
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The eip 712 typed data domain */
 export type Eip712TypedDataDomain = {
-  __typename?: "EIP712TypedDataDomain";
+  __typename?: 'EIP712TypedDataDomain';
   /** The chainId */
-  chainId: Scalars["ChainId"];
+  chainId: Scalars['ChainId'];
   /** The name of the typed data domain */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** The verifying contract */
-  verifyingContract: Scalars["ContractAddress"];
+  verifyingContract: Scalars['ContractAddress'];
   /** The version */
-  version: Scalars["String"];
+  version: Scalars['String'];
 };
 
 /** The eip 712 typed data field */
 export type Eip712TypedDataField = {
-  __typename?: "EIP712TypedDataField";
+  __typename?: 'EIP712TypedDataField';
   /** The name of the typed data field */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** The type of the typed data field */
-  type: Scalars["String"];
+  type: Scalars['String'];
 };
 
 export type ElectedMirror = {
-  __typename?: "ElectedMirror";
-  mirrorId: Scalars["InternalPublicationId"];
+  __typename?: 'ElectedMirror';
+  mirrorId: Scalars['InternalPublicationId'];
   profile: Profile;
-  timestamp: Scalars["DateTime"];
+  timestamp: Scalars['DateTime'];
 };
 
 export type EnabledModule = {
-  __typename?: "EnabledModule";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'EnabledModule';
+  contractAddress: Scalars['ContractAddress'];
   inputParams: Array<ModuleInfo>;
-  moduleName: Scalars["String"];
+  moduleName: Scalars['String'];
   redeemParams: Array<ModuleInfo>;
   returnDataParms: Array<ModuleInfo>;
 };
 
 /** The enabled modules */
 export type EnabledModules = {
-  __typename?: "EnabledModules";
+  __typename?: 'EnabledModules';
   collectModules: Array<EnabledModule>;
   followModules: Array<EnabledModule>;
   referenceModules: Array<EnabledModule>;
@@ -1069,41 +1063,41 @@ export type EnabledModules = {
 
 /** The encrypted fields */
 export type EncryptedFieldsOutput = {
-  __typename?: "EncryptedFieldsOutput";
+  __typename?: 'EncryptedFieldsOutput';
   /** The encrypted animation_url field */
-  animation_url?: Maybe<Scalars["EncryptedValueScalar"]>;
+  animation_url?: Maybe<Scalars['EncryptedValueScalar']>;
   /** The encrypted content field */
-  content?: Maybe<Scalars["EncryptedValueScalar"]>;
+  content?: Maybe<Scalars['EncryptedValueScalar']>;
   /** The encrypted external_url field */
-  external_url?: Maybe<Scalars["EncryptedValueScalar"]>;
+  external_url?: Maybe<Scalars['EncryptedValueScalar']>;
   /** The encrypted image field */
-  image?: Maybe<Scalars["EncryptedValueScalar"]>;
+  image?: Maybe<Scalars['EncryptedValueScalar']>;
   /** The encrypted media field */
   media?: Maybe<Array<EncryptedMediaSet>>;
 };
 
 /** The Encrypted Media url and metadata */
 export type EncryptedMedia = {
-  __typename?: "EncryptedMedia";
+  __typename?: 'EncryptedMedia';
   /** The encrypted alt tags for accessibility */
-  altTag?: Maybe<Scalars["EncryptedValueScalar"]>;
+  altTag?: Maybe<Scalars['EncryptedValueScalar']>;
   /** The encrypted cover for any video or audio you attached */
-  cover?: Maybe<Scalars["EncryptedValueScalar"]>;
+  cover?: Maybe<Scalars['EncryptedValueScalar']>;
   /** Height - will always be null on the public API */
-  height?: Maybe<Scalars["Int"]>;
+  height?: Maybe<Scalars['Int']>;
   /** The image/audio/video mime type for the publication */
-  mimeType?: Maybe<Scalars["MimeType"]>;
+  mimeType?: Maybe<Scalars['MimeType']>;
   /** Size - will always be null on the public API */
-  size?: Maybe<Scalars["Int"]>;
+  size?: Maybe<Scalars['Int']>;
   /** The encrypted value for the URL */
-  url: Scalars["Url"];
+  url: Scalars['Url'];
   /** Width - will always be null on the public API */
-  width?: Maybe<Scalars["Int"]>;
+  width?: Maybe<Scalars['Int']>;
 };
 
 /** The encrypted media set */
 export type EncryptedMediaSet = {
-  __typename?: "EncryptedMediaSet";
+  __typename?: 'EncryptedMediaSet';
   /**
    * Medium media - will always be null on the public API
    * @deprecated should not be used will always be null
@@ -1120,7 +1114,7 @@ export type EncryptedMediaSet = {
 
 /** The metadata encryption params */
 export type EncryptionParamsOutput = {
-  __typename?: "EncryptionParamsOutput";
+  __typename?: 'EncryptionParamsOutput';
   /** The access conditions */
   accessCondition: AccessConditionOutput;
   /** The encrypted fields */
@@ -1133,109 +1127,109 @@ export type EncryptionParamsOutput = {
 
 /** The gated publication encryption provider */
 export enum EncryptionProvider {
-  LitProtocol = "LIT_PROTOCOL",
+  LitProtocol = 'LIT_PROTOCOL'
 }
 
 export type EnsOnChainIdentity = {
-  __typename?: "EnsOnChainIdentity";
+  __typename?: 'EnsOnChainIdentity';
   /** The default ens mapped to this address */
-  name?: Maybe<Scalars["Ens"]>;
+  name?: Maybe<Scalars['Ens']>;
 };
 
 export type EoaOwnershipInput = {
   /** The address that will have access to the content */
-  address: Scalars["EthereumAddress"];
+  address: Scalars['EthereumAddress'];
 };
 
 export type EoaOwnershipOutput = {
-  __typename?: "EoaOwnershipOutput";
+  __typename?: 'EoaOwnershipOutput';
   /** The address that will have access to the content */
-  address: Scalars["EthereumAddress"];
+  address: Scalars['EthereumAddress'];
 };
 
 /** The erc20 type */
 export type Erc20 = {
-  __typename?: "Erc20";
+  __typename?: 'Erc20';
   /** The erc20 address */
-  address: Scalars["ContractAddress"];
+  address: Scalars['ContractAddress'];
   /** Decimal places for the token */
-  decimals: Scalars["Int"];
+  decimals: Scalars['Int'];
   /** Name of the symbol */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** Symbol for the token */
-  symbol: Scalars["String"];
+  symbol: Scalars['String'];
 };
 
 export type Erc20Amount = {
-  __typename?: "Erc20Amount";
+  __typename?: 'Erc20Amount';
   /** The erc20 token info */
   asset: Erc20;
   /** Floating point number as string (e.g. 42.009837). It could have the entire precision of the Asset or be truncated to the last significant decimal. */
-  value: Scalars["String"];
+  value: Scalars['String'];
 };
 
 export type Erc20OwnershipInput = {
   /** The amount of tokens required to access the content */
-  amount: Scalars["String"];
+  amount: Scalars['String'];
   /** The amount of tokens required to access the content */
-  chainID: Scalars["ChainId"];
+  chainID: Scalars['ChainId'];
   /** The operator to use when comparing the amount of tokens */
   condition: ScalarOperator;
   /** The ERC20 token's ethereum address */
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The amount of decimals of the ERC20 contract */
-  decimals: Scalars["Float"];
+  decimals: Scalars['Float'];
 };
 
 export type Erc20OwnershipOutput = {
-  __typename?: "Erc20OwnershipOutput";
+  __typename?: 'Erc20OwnershipOutput';
   /** The amount of tokens required to access the content */
-  amount: Scalars["String"];
+  amount: Scalars['String'];
   /** The amount of tokens required to access the content */
-  chainID: Scalars["ChainId"];
+  chainID: Scalars['ChainId'];
   /** The operator to use when comparing the amount of tokens */
   condition: ScalarOperator;
   /** The ERC20 token's ethereum address */
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The amount of decimals of the ERC20 contract */
-  decimals: Scalars["Float"];
+  decimals: Scalars['Float'];
 };
 
 /** The paginated publication result */
 export type ExploreProfileResult = {
-  __typename?: "ExploreProfileResult";
+  __typename?: 'ExploreProfileResult';
   items: Array<Profile>;
   pageInfo: PaginatedResultInfo;
 };
 
 export type ExploreProfilesRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   customFilters?: InputMaybe<Array<CustomFiltersTypes>>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   sortCriteria: ProfileSortCriteria;
-  timestamp?: InputMaybe<Scalars["TimestampScalar"]>;
+  timestamp?: InputMaybe<Scalars['TimestampScalar']>;
 };
 
 export type ExplorePublicationRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   customFilters?: InputMaybe<Array<CustomFiltersTypes>>;
   /** If you wish to exclude any results for profile ids */
-  excludeProfileIds?: InputMaybe<Array<Scalars["ProfileId"]>>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  excludeProfileIds?: InputMaybe<Array<Scalars['ProfileId']>>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** If you want the randomizer off (default on) */
-  noRandomize?: InputMaybe<Scalars["Boolean"]>;
+  noRandomize?: InputMaybe<Scalars['Boolean']>;
   /** The publication types you want to query */
   publicationTypes?: InputMaybe<Array<PublicationTypes>>;
   sortCriteria: PublicationSortCriteria;
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
-  timestamp?: InputMaybe<Scalars["TimestampScalar"]>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
+  timestamp?: InputMaybe<Scalars['TimestampScalar']>;
 };
 
 /** The paginated publication result */
 export type ExplorePublicationResult = {
-  __typename?: "ExplorePublicationResult";
+  __typename?: 'ExplorePublicationResult';
   items: Array<Publication>;
   pageInfo: PaginatedResultInfo;
 };
@@ -1244,24 +1238,24 @@ export type FeeCollectModuleParams = {
   /** The collect module amount info */
   amount: ModuleFeeAmountParams;
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
 };
 
 export type FeeCollectModuleSettings = {
-  __typename?: "FeeCollectModuleSettings";
+  __typename?: 'FeeCollectModuleSettings';
   /** The collect module amount info */
   amount: ModuleFeeAmount;
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
   /** The collect modules enum */
   type: CollectModules;
 };
@@ -1270,7 +1264,7 @@ export type FeeFollowModuleParams = {
   /** The follow module amount info */
   amount: ModuleFeeAmountParams;
   /** The follow module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
 };
 
 export type FeeFollowModuleRedeemParams = {
@@ -1279,39 +1273,39 @@ export type FeeFollowModuleRedeemParams = {
 };
 
 export type FeeFollowModuleSettings = {
-  __typename?: "FeeFollowModuleSettings";
+  __typename?: 'FeeFollowModuleSettings';
   /** The collect module amount info */
   amount: ModuleFeeAmount;
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The follow modules enum */
   type: FollowModules;
 };
 
 /** The feed event item filter types */
 export enum FeedEventItemType {
-  CollectComment = "COLLECT_COMMENT",
-  CollectPost = "COLLECT_POST",
-  Comment = "COMMENT",
-  Mirror = "MIRROR",
-  Post = "POST",
-  ReactionComment = "REACTION_COMMENT",
-  ReactionPost = "REACTION_POST",
+  CollectComment = 'COLLECT_COMMENT',
+  CollectPost = 'COLLECT_POST',
+  Comment = 'COMMENT',
+  Mirror = 'MIRROR',
+  Post = 'POST',
+  ReactionComment = 'REACTION_COMMENT',
+  ReactionPost = 'REACTION_POST'
 }
 
 export type FeedHighlightsRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
 };
 
 export type FeedItem = {
-  __typename?: "FeedItem";
+  __typename?: 'FeedItem';
   /** Sorted by most recent first. Resolves defaultProfile and if null omits the wallet collect event from the list. */
   collects: Array<CollectedEvent>;
   /** Sorted by most recent first. Up to page size - 1 comments. */
@@ -1328,31 +1322,31 @@ export type FeedItem = {
 export type FeedItemRoot = Comment | Post;
 
 export type FeedRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   /** Filter your feed to whatever you wish */
   feedEventItemTypes?: InputMaybe<Array<FeedEventItemType>>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
 };
 
 export type Follow = {
   followModule?: InputMaybe<FollowModuleRedeemParams>;
-  profile: Scalars["ProfileId"];
+  profile: Scalars['ProfileId'];
 };
 
 export type FollowConditionInput = {
   /** The profile id of the gated profile */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type FollowConditionOutput = {
-  __typename?: "FollowConditionOutput";
+  __typename?: 'FollowConditionOutput';
   /** The profile id of the gated profile */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type FollowModule =
@@ -1365,11 +1359,11 @@ export type FollowModuleParams = {
   /** The follower fee follower module */
   feeFollowModule?: InputMaybe<FeeFollowModuleParams>;
   /** The empty follow module */
-  freeFollowModule?: InputMaybe<Scalars["Boolean"]>;
+  freeFollowModule?: InputMaybe<Scalars['Boolean']>;
   /** The profile follow module */
-  profileFollowModule?: InputMaybe<Scalars["Boolean"]>;
+  profileFollowModule?: InputMaybe<Scalars['Boolean']>;
   /** The revert follow module */
-  revertFollowModule?: InputMaybe<Scalars["Boolean"]>;
+  revertFollowModule?: InputMaybe<Scalars['Boolean']>;
   /** A unknown follow module */
   unknownFollowModule?: InputMaybe<UnknownFollowModuleParams>;
 };
@@ -1385,15 +1379,15 @@ export type FollowModuleRedeemParams = {
 
 /** The follow module types */
 export enum FollowModules {
-  FeeFollowModule = "FeeFollowModule",
-  ProfileFollowModule = "ProfileFollowModule",
-  RevertFollowModule = "RevertFollowModule",
-  UnknownFollowModule = "UnknownFollowModule",
+  FeeFollowModule = 'FeeFollowModule',
+  ProfileFollowModule = 'ProfileFollowModule',
+  RevertFollowModule = 'RevertFollowModule',
+  UnknownFollowModule = 'UnknownFollowModule'
 }
 
 export type FollowOnlyReferenceModuleSettings = {
-  __typename?: "FollowOnlyReferenceModuleSettings";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'FollowOnlyReferenceModuleSettings';
+  contractAddress: Scalars['ContractAddress'];
   /** The reference modules enum */
   type: ReferenceModules;
 };
@@ -1407,43 +1401,43 @@ export type FollowRequest = {
 };
 
 export type FollowRevenueResult = {
-  __typename?: "FollowRevenueResult";
+  __typename?: 'FollowRevenueResult';
   revenues: Array<RevenueAggregate>;
 };
 
 export type Follower = {
-  __typename?: "Follower";
-  totalAmountOfTimesFollowed: Scalars["Int"];
+  __typename?: 'Follower';
+  totalAmountOfTimesFollowed: Scalars['Int'];
   wallet: Wallet;
 };
 
 export type FollowerNftOwnedTokenIds = {
-  __typename?: "FollowerNftOwnedTokenIds";
-  followerNftAddress: Scalars["ContractAddress"];
-  tokensIds: Array<Scalars["String"]>;
+  __typename?: 'FollowerNftOwnedTokenIds';
+  followerNftAddress: Scalars['ContractAddress'];
+  tokensIds: Array<Scalars['String']>;
 };
 
 export type FollowerNftOwnedTokenIdsRequest = {
-  address: Scalars["EthereumAddress"];
-  profileId: Scalars["ProfileId"];
+  address: Scalars['EthereumAddress'];
+  profileId: Scalars['ProfileId'];
 };
 
 export type FollowersRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
-  profileId: Scalars["ProfileId"];
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
+  profileId: Scalars['ProfileId'];
 };
 
 export type Following = {
-  __typename?: "Following";
+  __typename?: 'Following';
   profile: Profile;
-  totalAmountOfTimesFollowing: Scalars["Int"];
+  totalAmountOfTimesFollowing: Scalars['Int'];
 };
 
 export type FollowingRequest = {
-  address: Scalars["EthereumAddress"];
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  address: Scalars['EthereumAddress'];
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
 };
 
 export type FraudReasonInputParams = {
@@ -1453,24 +1447,24 @@ export type FraudReasonInputParams = {
 
 export type FreeCollectModuleParams = {
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
 };
 
 export type FreeCollectModuleSettings = {
-  __typename?: "FreeCollectModuleSettings";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'FreeCollectModuleSettings';
+  contractAddress: Scalars['ContractAddress'];
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect modules enum */
   type: CollectModules;
 };
 
 export type FreeCollectProxyAction = {
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
 };
 
 export type FreeFollowProxyAction = {
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The access conditions for the publication */
@@ -1480,7 +1474,7 @@ export type GatedPublicationParamsInput = {
   /** Profile follow condition */
   collect?: InputMaybe<CollectConditionInput>;
   /** The LIT Protocol encrypted symmetric key */
-  encryptedSymmetricKey: Scalars["ContentEncryptionKey"];
+  encryptedSymmetricKey: Scalars['ContentEncryptionKey'];
   /** EOA ownership condition */
   eoa?: InputMaybe<EoaOwnershipInput>;
   /** Profile follow condition */
@@ -1496,67 +1490,67 @@ export type GatedPublicationParamsInput = {
 };
 
 export type GenerateModuleCurrencyApproval = {
-  __typename?: "GenerateModuleCurrencyApproval";
-  data: Scalars["BlockchainData"];
-  from: Scalars["EthereumAddress"];
-  to: Scalars["ContractAddress"];
+  __typename?: 'GenerateModuleCurrencyApproval';
+  data: Scalars['BlockchainData'];
+  from: Scalars['EthereumAddress'];
+  to: Scalars['ContractAddress'];
 };
 
 export type GenerateModuleCurrencyApprovalDataRequest = {
   collectModule?: InputMaybe<CollectModules>;
-  currency: Scalars["ContractAddress"];
+  currency: Scalars['ContractAddress'];
   followModule?: InputMaybe<FollowModules>;
   referenceModule?: InputMaybe<ReferenceModules>;
-  unknownCollectModule?: InputMaybe<Scalars["ContractAddress"]>;
-  unknownFollowModule?: InputMaybe<Scalars["ContractAddress"]>;
-  unknownReferenceModule?: InputMaybe<Scalars["ContractAddress"]>;
+  unknownCollectModule?: InputMaybe<Scalars['ContractAddress']>;
+  unknownFollowModule?: InputMaybe<Scalars['ContractAddress']>;
+  unknownReferenceModule?: InputMaybe<Scalars['ContractAddress']>;
   /** Floating point number as string (e.g. 42.009837). The server will move its decimal places for you */
-  value: Scalars["String"];
+  value: Scalars['String'];
 };
 
 export type GetPublicationMetadataStatusRequest = {
-  publicationId?: InputMaybe<Scalars["InternalPublicationId"]>;
-  txHash?: InputMaybe<Scalars["TxHash"]>;
-  txId?: InputMaybe<Scalars["TxId"]>;
+  publicationId?: InputMaybe<Scalars['InternalPublicationId']>;
+  txHash?: InputMaybe<Scalars['TxHash']>;
+  txId?: InputMaybe<Scalars['TxId']>;
 };
 
 export type GlobalProtocolStats = {
-  __typename?: "GlobalProtocolStats";
-  totalBurntProfiles: Scalars["Int"];
-  totalCollects: Scalars["Int"];
-  totalComments: Scalars["Int"];
-  totalFollows: Scalars["Int"];
-  totalMirrors: Scalars["Int"];
-  totalPosts: Scalars["Int"];
-  totalProfiles: Scalars["Int"];
+  __typename?: 'GlobalProtocolStats';
+  totalBurntProfiles: Scalars['Int'];
+  totalCollects: Scalars['Int'];
+  totalComments: Scalars['Int'];
+  totalFollows: Scalars['Int'];
+  totalMirrors: Scalars['Int'];
+  totalPosts: Scalars['Int'];
+  totalProfiles: Scalars['Int'];
   totalRevenue: Array<Erc20Amount>;
 };
 
 export type GlobalProtocolStatsRequest = {
   /** Unix time from timestamp - if not supplied it will go from 0 timestamp */
-  fromTimestamp?: InputMaybe<Scalars["UnixTimestamp"]>;
+  fromTimestamp?: InputMaybe<Scalars['UnixTimestamp']>;
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
   /** Unix time to timestamp - if not supplied it go to the present timestamp */
-  toTimestamp?: InputMaybe<Scalars["UnixTimestamp"]>;
+  toTimestamp?: InputMaybe<Scalars['UnixTimestamp']>;
 };
 
 export type HasTxHashBeenIndexedRequest = {
   /** Tx hash.. if your using the broadcaster you should use txId due to gas price upgrades */
-  txHash?: InputMaybe<Scalars["TxHash"]>;
+  txHash?: InputMaybe<Scalars['TxHash']>;
   /** Tx id.. if your using the broadcaster you should always use this field */
-  txId?: InputMaybe<Scalars["TxId"]>;
+  txId?: InputMaybe<Scalars['TxId']>;
 };
 
 export type HelRequest = {
-  handle: Scalars["Handle"];
-  remove: Scalars["Boolean"];
-  secret: Scalars["String"];
+  handle: Scalars['Handle'];
+  remove: Scalars['Boolean'];
+  secret: Scalars['String'];
 };
 
 export type HidePublicationRequest = {
   /** Publication id */
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
 };
 
 export type IllegalReasonInputParams = {
@@ -1565,44 +1559,44 @@ export type IllegalReasonInputParams = {
 };
 
 export type InternalPublicationsFilterRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   /** must be DD/MM/YYYY */
-  fromDate: Scalars["String"];
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  fromDate: Scalars['String'];
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   /** The shared secret */
-  secret: Scalars["String"];
+  secret: Scalars['String'];
   /** The App Id */
-  source: Scalars["Sources"];
+  source: Scalars['Sources'];
   /** must be DD/MM/YYYY */
-  toDate: Scalars["String"];
+  toDate: Scalars['String'];
 };
 
 export type LimitedFeeCollectModuleParams = {
   /** The collect module amount info */
   amount: ModuleFeeAmountParams;
   /** The collect module limit */
-  collectLimit: Scalars["String"];
+  collectLimit: Scalars['String'];
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
 };
 
 export type LimitedFeeCollectModuleSettings = {
-  __typename?: "LimitedFeeCollectModuleSettings";
+  __typename?: 'LimitedFeeCollectModuleSettings';
   /** The collect module amount info */
   amount: ModuleFeeAmount;
   /** The collect module limit */
-  collectLimit: Scalars["String"];
-  contractAddress: Scalars["ContractAddress"];
+  collectLimit: Scalars['String'];
+  contractAddress: Scalars['ContractAddress'];
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
   /** The collect modules enum */
   type: CollectModules;
 };
@@ -1611,84 +1605,84 @@ export type LimitedTimedFeeCollectModuleParams = {
   /** The collect module amount info */
   amount: ModuleFeeAmountParams;
   /** The collect module limit */
-  collectLimit: Scalars["String"];
+  collectLimit: Scalars['String'];
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
 };
 
 export type LimitedTimedFeeCollectModuleSettings = {
-  __typename?: "LimitedTimedFeeCollectModuleSettings";
+  __typename?: 'LimitedTimedFeeCollectModuleSettings';
   /** The collect module amount info */
   amount: ModuleFeeAmount;
   /** The collect module limit */
-  collectLimit: Scalars["String"];
-  contractAddress: Scalars["ContractAddress"];
+  collectLimit: Scalars['String'];
+  contractAddress: Scalars['ContractAddress'];
   /** The collect module end timestamp */
-  endTimestamp: Scalars["DateTime"];
+  endTimestamp: Scalars['DateTime'];
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
   /** The collect modules enum */
   type: CollectModules;
 };
 
 export type Log = {
-  __typename?: "Log";
-  address: Scalars["ContractAddress"];
-  blockHash: Scalars["String"];
-  blockNumber: Scalars["Int"];
-  data: Scalars["String"];
-  logIndex: Scalars["Int"];
-  removed: Scalars["Boolean"];
-  topics: Array<Scalars["String"]>;
-  transactionHash: Scalars["TxHash"];
-  transactionIndex: Scalars["Int"];
+  __typename?: 'Log';
+  address: Scalars['ContractAddress'];
+  blockHash: Scalars['String'];
+  blockNumber: Scalars['Int'];
+  data: Scalars['String'];
+  logIndex: Scalars['Int'];
+  removed: Scalars['Boolean'];
+  topics: Array<Scalars['String']>;
+  transactionHash: Scalars['TxHash'];
+  transactionIndex: Scalars['Int'];
 };
 
 export type MainPostReference = Mirror | Post;
 
 /** The Media url */
 export type Media = {
-  __typename?: "Media";
+  __typename?: 'Media';
   /** The alt tags for accessibility */
-  altTag?: Maybe<Scalars["String"]>;
+  altTag?: Maybe<Scalars['String']>;
   /** The cover for any video or audio you attached */
-  cover?: Maybe<Scalars["Url"]>;
+  cover?: Maybe<Scalars['Url']>;
   /** Height - will always be null on the public API */
-  height?: Maybe<Scalars["Int"]>;
+  height?: Maybe<Scalars['Int']>;
   /** The image/audio/video mime type for the publication */
-  mimeType?: Maybe<Scalars["MimeType"]>;
+  mimeType?: Maybe<Scalars['MimeType']>;
   /** Size - will always be null on the public API */
-  size?: Maybe<Scalars["Int"]>;
+  size?: Maybe<Scalars['Int']>;
   /** The token image nft */
-  url: Scalars["Url"];
+  url: Scalars['Url'];
   /** Width - will always be null on the public API */
-  width?: Maybe<Scalars["Int"]>;
+  width?: Maybe<Scalars['Int']>;
 };
 
 /** Media object output */
 export type MediaOutput = {
-  __typename?: "MediaOutput";
+  __typename?: 'MediaOutput';
   /** The alt tags for accessibility */
-  altTag?: Maybe<Scalars["String"]>;
+  altTag?: Maybe<Scalars['String']>;
   /** The cover for any video or audio you attached */
-  cover?: Maybe<Scalars["Url"]>;
-  item: Scalars["Url"];
+  cover?: Maybe<Scalars['Url']>;
+  item: Scalars['Url'];
   source?: Maybe<PublicationMediaSource>;
   /** This is the mime type of media */
-  type?: Maybe<Scalars["MimeType"]>;
+  type?: Maybe<Scalars['MimeType']>;
 };
 
 /** The Media Set */
 export type MediaSet = {
-  __typename?: "MediaSet";
+  __typename?: 'MediaSet';
   /**
    * Medium media - will always be null on the public API
    * @deprecated should not be used will always be null
@@ -1710,80 +1704,80 @@ export type MetadataAttributeInput = {
   /** The display type */
   displayType?: InputMaybe<PublicationMetadataDisplayTypes>;
   /** The trait type - can be anything its the name it will render so include spaces */
-  traitType: Scalars["String"];
+  traitType: Scalars['String'];
   /** The value */
-  value: Scalars["String"];
+  value: Scalars['String'];
 };
 
 /** The metadata attribute output */
 export type MetadataAttributeOutput = {
-  __typename?: "MetadataAttributeOutput";
+  __typename?: 'MetadataAttributeOutput';
   /** The display type */
   displayType?: Maybe<PublicationMetadataDisplayTypes>;
   /** The trait type - can be anything its the name it will render so include spaces */
-  traitType?: Maybe<Scalars["String"]>;
+  traitType?: Maybe<Scalars['String']>;
   /** The value */
-  value?: Maybe<Scalars["String"]>;
+  value?: Maybe<Scalars['String']>;
 };
 
 /** The metadata output */
 export type MetadataOutput = {
-  __typename?: "MetadataOutput";
+  __typename?: 'MetadataOutput';
   /** The main focus of the publication */
-  animatedUrl?: Maybe<Scalars["Url"]>;
+  animatedUrl?: Maybe<Scalars['Url']>;
   /** The attributes */
   attributes: Array<MetadataAttributeOutput>;
   /** This is the metadata content for the publication, should be markdown */
-  content?: Maybe<Scalars["Markdown"]>;
+  content?: Maybe<Scalars['Markdown']>;
   /** The content warning for the publication */
   contentWarning?: Maybe<PublicationContentWarning>;
   /** The image cover for video/music publications */
   cover?: Maybe<MediaSet>;
   /** This is the metadata description */
-  description?: Maybe<Scalars["Markdown"]>;
+  description?: Maybe<Scalars['Markdown']>;
   /** The publication's encryption params in case it's encrypted */
   encryptionParams?: Maybe<EncryptionParamsOutput>;
   /** This is the image attached to the metadata and the property used to show the NFT! */
-  image?: Maybe<Scalars["Url"]>;
+  image?: Maybe<Scalars['Url']>;
   /** The locale of the publication,  */
-  locale?: Maybe<Scalars["Locale"]>;
+  locale?: Maybe<Scalars['Locale']>;
   /** The main focus of the publication */
   mainContentFocus: PublicationMainFocus;
   /** The images/audios/videos for the publication */
   media: Array<MediaSet>;
   /** The metadata name */
-  name?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars['String']>;
   /** The tags for the publication */
-  tags: Array<Scalars["String"]>;
+  tags: Array<Scalars['String']>;
 };
 
 /** The social mirror */
 export type Mirror = {
-  __typename?: "Mirror";
+  __typename?: 'Mirror';
   /** ID of the source */
-  appId?: Maybe<Scalars["Sources"]>;
+  appId?: Maybe<Scalars['Sources']>;
   canComment: CanCommentResponse;
   canDecrypt: CanDecryptResponse;
   canMirror: CanMirrorResponse;
   /** The collect module */
   collectModule: CollectModule;
   /** The contract address for the collect nft.. if its null it means nobody collected yet as it lazy deployed */
-  collectNftAddress?: Maybe<Scalars["ContractAddress"]>;
+  collectNftAddress?: Maybe<Scalars['ContractAddress']>;
   /** The date the post was created on */
-  createdAt: Scalars["DateTime"];
-  hasCollectedByMe: Scalars["Boolean"];
+  createdAt: Scalars['DateTime'];
+  hasCollectedByMe: Scalars['Boolean'];
   /** If the publication has been hidden if it has then the content and media is not available */
-  hidden: Scalars["Boolean"];
+  hidden: Scalars['Boolean'];
   /** The internal publication id */
-  id: Scalars["InternalPublicationId"];
+  id: Scalars['InternalPublicationId'];
   /** Indicates if the publication is gated behind some access criteria */
-  isGated: Scalars["Boolean"];
+  isGated: Scalars['Boolean'];
   /** The metadata for the post */
   metadata: MetadataOutput;
   /** The mirror publication */
   mirrorOf: MirrorablePublication;
   /** The on chain content uri could be `ipfs://` or `https` */
-  onChainContentURI: Scalars["String"];
+  onChainContentURI: Scalars['String'];
   /** The profile ref */
   profile: Profile;
   reaction?: Maybe<ReactionTypes>;
@@ -1795,23 +1789,23 @@ export type Mirror = {
 
 /** The social mirror */
 export type MirrorCanCommentArgs = {
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social mirror */
 export type MirrorCanDecryptArgs = {
-  address?: InputMaybe<Scalars["EthereumAddress"]>;
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  address?: InputMaybe<Scalars['EthereumAddress']>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social mirror */
 export type MirrorCanMirrorArgs = {
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social mirror */
 export type MirrorHasCollectedByMeArgs = {
-  isFinalisedOnChain?: InputMaybe<Scalars["Boolean"]>;
+  isFinalisedOnChain?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** The social mirror */
@@ -1820,40 +1814,40 @@ export type MirrorReactionArgs = {
 };
 
 export type MirrorEvent = {
-  __typename?: "MirrorEvent";
+  __typename?: 'MirrorEvent';
   profile: Profile;
-  timestamp: Scalars["DateTime"];
+  timestamp: Scalars['DateTime'];
 };
 
 export type MirrorablePublication = Comment | Post;
 
 export type ModuleFeeAmount = {
-  __typename?: "ModuleFeeAmount";
+  __typename?: 'ModuleFeeAmount';
   /** The erc20 token info */
   asset: Erc20;
   /** Floating point number as string (e.g. 42.009837). It could have the entire precision of the Asset or be truncated to the last significant decimal. */
-  value: Scalars["String"];
+  value: Scalars['String'];
 };
 
 export type ModuleFeeAmountParams = {
   /** The currency address */
-  currency: Scalars["ContractAddress"];
+  currency: Scalars['ContractAddress'];
   /** Floating point number as string (e.g. 42.009837). It could have the entire precision of the Asset or be truncated to the last significant decimal. */
-  value: Scalars["String"];
+  value: Scalars['String'];
 };
 
 export type ModuleInfo = {
-  __typename?: "ModuleInfo";
-  name: Scalars["String"];
-  type: Scalars["String"];
+  __typename?: 'ModuleInfo';
+  name: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type Mutation = {
-  __typename?: "Mutation";
-  ach?: Maybe<Scalars["Void"]>;
+  __typename?: 'Mutation';
+  ach?: Maybe<Scalars['Void']>;
   /** Adds profile interests to the given profile */
-  addProfileInterests?: Maybe<Scalars["Void"]>;
-  addReaction?: Maybe<Scalars["Void"]>;
+  addProfileInterests?: Maybe<Scalars['Void']>;
+  addReaction?: Maybe<Scalars['Void']>;
   authenticate: AuthenticationResult;
   broadcast: RelayResult;
   claim: RelayResult;
@@ -1878,14 +1872,14 @@ export type Mutation = {
   createSetProfileMetadataViaDispatcher: RelayResult;
   createToggleFollowTypedData: CreateToggleFollowBroadcastItemResult;
   createUnfollowTypedData: CreateUnfollowBroadcastItemResult;
-  hel?: Maybe<Scalars["Void"]>;
-  hidePublication?: Maybe<Scalars["Void"]>;
-  proxyAction: Scalars["ProxyActionId"];
+  hel?: Maybe<Scalars['Void']>;
+  hidePublication?: Maybe<Scalars['Void']>;
+  proxyAction: Scalars['ProxyActionId'];
   refresh: AuthenticationResult;
   /** Removes profile interests from the given profile */
-  removeProfileInterests?: Maybe<Scalars["Void"]>;
-  removeReaction?: Maybe<Scalars["Void"]>;
-  reportPublication?: Maybe<Scalars["Void"]>;
+  removeProfileInterests?: Maybe<Scalars['Void']>;
+  removeReaction?: Maybe<Scalars['Void']>;
+  reportPublication?: Maybe<Scalars['Void']>;
 };
 
 export type MutationAchArgs = {
@@ -2039,124 +2033,124 @@ export type MutationReportPublicationArgs = {
 };
 
 export type MutualFollowersProfilesQueryRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   /** The profile id your viewing */
-  viewingProfileId: Scalars["ProfileId"];
+  viewingProfileId: Scalars['ProfileId'];
   /** The profile id you want the result to come back as your viewing from */
-  yourProfileId: Scalars["ProfileId"];
+  yourProfileId: Scalars['ProfileId'];
 };
 
 /** The nft type */
 export type Nft = {
-  __typename?: "NFT";
+  __typename?: 'NFT';
   /** aka "1"  */
-  chainId: Scalars["ChainId"];
+  chainId: Scalars['ChainId'];
   /** aka "CryptoKitties"  */
-  collectionName: Scalars["String"];
+  collectionName: Scalars['String'];
   /** aka "https://api.criptokitt..."  */
-  contentURI: Scalars["String"];
+  contentURI: Scalars['String'];
   /** aka 0x057Ec652A4F150f7FF94f089A38008f49a0DF88e  */
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** aka us CryptoKitties */
-  contractName: Scalars["String"];
+  contractName: Scalars['String'];
   /** aka "Hey cutie! I m Beard Coffee. ....  */
-  description: Scalars["String"];
+  description: Scalars['String'];
   /** aka "ERC721"  */
-  ercType: Scalars["String"];
+  ercType: Scalars['String'];
   /** aka "Beard Coffee"  */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** aka "{ uri:"https://ipfs....", metaType:"image/png" }"  */
   originalContent: NftContent;
   /** aka { address: 0x057Ec652A4F150f7FF94f089A38008f49a0DF88e, amount:"2" }  */
   owners: Array<Owner>;
   /** aka RARI */
-  symbol: Scalars["String"];
+  symbol: Scalars['String'];
   /** aka "13"  */
-  tokenId: Scalars["String"];
+  tokenId: Scalars['String'];
 };
 
 /** The NFT content uri */
 export type NftContent = {
-  __typename?: "NFTContent";
+  __typename?: 'NFTContent';
   /** The animated url */
-  animatedUrl?: Maybe<Scalars["String"]>;
+  animatedUrl?: Maybe<Scalars['String']>;
   /** The meta type content */
-  metaType: Scalars["String"];
+  metaType: Scalars['String'];
   /** The token uri  nft */
-  uri: Scalars["String"];
+  uri: Scalars['String'];
 };
 
 export type NftData = {
   /** Id of the nft ownership challenge */
-  id: Scalars["NftOwnershipId"];
+  id: Scalars['NftOwnershipId'];
   /** The signature */
-  signature: Scalars["Signature"];
+  signature: Scalars['Signature'];
 };
 
 export type NfTsRequest = {
   /** Chain Ids */
-  chainIds: Array<Scalars["ChainId"]>;
+  chainIds: Array<Scalars['ChainId']>;
   /** Filter by contract address */
-  contractAddress?: InputMaybe<Scalars["ContractAddress"]>;
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  contractAddress?: InputMaybe<Scalars['ContractAddress']>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   /** Filter by owner address */
-  ownerAddress: Scalars["EthereumAddress"];
+  ownerAddress: Scalars['EthereumAddress'];
 };
 
 /** Paginated nft results */
 export type NfTsResult = {
-  __typename?: "NFTsResult";
+  __typename?: 'NFTsResult';
   items: Array<Nft>;
   pageInfo: PaginatedResultInfo;
 };
 
 export type NewCollectNotification = {
-  __typename?: "NewCollectNotification";
+  __typename?: 'NewCollectNotification';
   collectedPublication: Publication;
-  createdAt: Scalars["DateTime"];
-  notificationId: Scalars["NotificationId"];
+  createdAt: Scalars['DateTime'];
+  notificationId: Scalars['NotificationId'];
   wallet: Wallet;
 };
 
 export type NewCommentNotification = {
-  __typename?: "NewCommentNotification";
+  __typename?: 'NewCommentNotification';
   comment: Comment;
-  createdAt: Scalars["DateTime"];
-  notificationId: Scalars["NotificationId"];
+  createdAt: Scalars['DateTime'];
+  notificationId: Scalars['NotificationId'];
   /** The profile */
   profile: Profile;
 };
 
 export type NewFollowerNotification = {
-  __typename?: "NewFollowerNotification";
-  createdAt: Scalars["DateTime"];
-  isFollowedByMe: Scalars["Boolean"];
-  notificationId: Scalars["NotificationId"];
+  __typename?: 'NewFollowerNotification';
+  createdAt: Scalars['DateTime'];
+  isFollowedByMe: Scalars['Boolean'];
+  notificationId: Scalars['NotificationId'];
   wallet: Wallet;
 };
 
 export type NewMentionNotification = {
-  __typename?: "NewMentionNotification";
-  createdAt: Scalars["DateTime"];
+  __typename?: 'NewMentionNotification';
+  createdAt: Scalars['DateTime'];
   mentionPublication: MentionPublication;
-  notificationId: Scalars["NotificationId"];
+  notificationId: Scalars['NotificationId'];
 };
 
 export type NewMirrorNotification = {
-  __typename?: "NewMirrorNotification";
-  createdAt: Scalars["DateTime"];
-  notificationId: Scalars["NotificationId"];
+  __typename?: 'NewMirrorNotification';
+  createdAt: Scalars['DateTime'];
+  notificationId: Scalars['NotificationId'];
   /** The profile */
   profile: Profile;
   publication: MirrorablePublication;
 };
 
 export type NewReactionNotification = {
-  __typename?: "NewReactionNotification";
-  createdAt: Scalars["DateTime"];
-  notificationId: Scalars["NotificationId"];
+  __typename?: 'NewReactionNotification';
+  createdAt: Scalars['DateTime'];
+  notificationId: Scalars['NotificationId'];
   /** The profile */
   profile: Profile;
   publication: Publication;
@@ -2165,65 +2159,65 @@ export type NewReactionNotification = {
 
 /** The NFT image */
 export type NftImage = {
-  __typename?: "NftImage";
+  __typename?: 'NftImage';
   /** The token image nft */
-  chainId: Scalars["Int"];
+  chainId: Scalars['Int'];
   /** The contract address */
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The token id of the nft */
-  tokenId: Scalars["String"];
+  tokenId: Scalars['String'];
   /** The token image nft */
-  uri: Scalars["Url"];
+  uri: Scalars['Url'];
   /** If the NFT is verified */
-  verified: Scalars["Boolean"];
+  verified: Scalars['Boolean'];
 };
 
 export type NftOwnershipChallenge = {
   /** Chain Id */
-  chainId: Scalars["ChainId"];
+  chainId: Scalars['ChainId'];
   /** ContractAddress for nft */
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** Token id for NFT */
-  tokenId: Scalars["String"];
+  tokenId: Scalars['String'];
 };
 
 export type NftOwnershipChallengeRequest = {
   /** The wallet address which owns the NFT */
-  ethereumAddress: Scalars["EthereumAddress"];
+  ethereumAddress: Scalars['EthereumAddress'];
   nfts: Array<NftOwnershipChallenge>;
 };
 
 /** NFT ownership challenge result */
 export type NftOwnershipChallengeResult = {
-  __typename?: "NftOwnershipChallengeResult";
+  __typename?: 'NftOwnershipChallengeResult';
   /** Id of the nft ownership challenge */
-  id: Scalars["NftOwnershipId"];
-  text: Scalars["String"];
+  id: Scalars['NftOwnershipId'];
+  text: Scalars['String'];
   /** Timeout of the validation */
-  timeout: Scalars["TimestampScalar"];
+  timeout: Scalars['TimestampScalar'];
 };
 
 export type NftOwnershipInput = {
   /** The NFT chain id */
-  chainID: Scalars["ChainId"];
+  chainID: Scalars['ChainId'];
   /** The NFT collection's ethereum address */
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The unlocker contract type */
   contractType: ContractType;
   /** The optional token ID(s) to check for ownership */
-  tokenIds?: InputMaybe<Scalars["TokenId"]>;
+  tokenIds?: InputMaybe<Scalars['TokenId']>;
 };
 
 export type NftOwnershipOutput = {
-  __typename?: "NftOwnershipOutput";
+  __typename?: 'NftOwnershipOutput';
   /** The NFT chain id */
-  chainID: Scalars["ChainId"];
+  chainID: Scalars['ChainId'];
   /** The NFT collection's ethereum address */
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The unlocker contract type */
   contractType: ContractType;
   /** The optional token ID(s) to check for ownership */
-  tokenIds?: Maybe<Scalars["TokenId"]>;
+  tokenIds?: Maybe<Scalars['TokenId']>;
 };
 
 export type Notification =
@@ -2235,39 +2229,39 @@ export type Notification =
   | NewReactionNotification;
 
 export type NotificationRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   customFilters?: InputMaybe<Array<CustomFiltersTypes>>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** The profile id */
   notificationTypes?: InputMaybe<Array<NotificationTypes>>;
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
 };
 
 /** The notification filter types */
 export enum NotificationTypes {
-  CollectedComment = "COLLECTED_COMMENT",
-  CollectedPost = "COLLECTED_POST",
-  CommentedComment = "COMMENTED_COMMENT",
-  CommentedPost = "COMMENTED_POST",
-  Followed = "FOLLOWED",
-  MentionComment = "MENTION_COMMENT",
-  MentionPost = "MENTION_POST",
-  MirroredComment = "MIRRORED_COMMENT",
-  MirroredPost = "MIRRORED_POST",
-  ReactionComment = "REACTION_COMMENT",
-  ReactionPost = "REACTION_POST",
+  CollectedComment = 'COLLECTED_COMMENT',
+  CollectedPost = 'COLLECTED_POST',
+  CommentedComment = 'COMMENTED_COMMENT',
+  CommentedPost = 'COMMENTED_POST',
+  Followed = 'FOLLOWED',
+  MentionComment = 'MENTION_COMMENT',
+  MentionPost = 'MENTION_POST',
+  MirroredComment = 'MIRRORED_COMMENT',
+  MirroredPost = 'MIRRORED_POST',
+  ReactionComment = 'REACTION_COMMENT',
+  ReactionPost = 'REACTION_POST'
 }
 
 export type OnChainIdentity = {
-  __typename?: "OnChainIdentity";
+  __typename?: 'OnChainIdentity';
   /** The ens information */
   ens?: Maybe<EnsOnChainIdentity>;
   /** The POH status */
-  proofOfHumanity: Scalars["Boolean"];
+  proofOfHumanity: Scalars['Boolean'];
   /** The sybil dot org information */
   sybilDotOrg: SybilDotOrgIdentity;
   /** The worldcoin identity */
@@ -2280,149 +2274,149 @@ export type OrConditionInput = {
 };
 
 export type OrConditionOutput = {
-  __typename?: "OrConditionOutput";
+  __typename?: 'OrConditionOutput';
   /** The list of conditions to apply OR to. You can only use nested boolean conditions at the root level. */
   criteria: Array<AccessConditionOutput>;
 };
 
 /** The nft type */
 export type Owner = {
-  __typename?: "Owner";
+  __typename?: 'Owner';
   /** aka 0x057Ec652A4F150f7FF94f089A38008f49a0DF88e  */
-  address: Scalars["EthereumAddress"];
+  address: Scalars['EthereumAddress'];
   /** number of tokens owner */
-  amount: Scalars["Float"];
+  amount: Scalars['Float'];
 };
 
 /** The paginated wallet result */
 export type PaginatedAllPublicationsTagsResult = {
-  __typename?: "PaginatedAllPublicationsTagsResult";
+  __typename?: 'PaginatedAllPublicationsTagsResult';
   items: Array<TagResult>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated feed result */
 export type PaginatedFeedResult = {
-  __typename?: "PaginatedFeedResult";
+  __typename?: 'PaginatedFeedResult';
   items: Array<FeedItem>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated followers result */
 export type PaginatedFollowersResult = {
-  __typename?: "PaginatedFollowersResult";
+  __typename?: 'PaginatedFollowersResult';
   items: Array<Follower>;
   pageInfo: PaginatedResultInfo;
 };
 
 export type PaginatedFollowingResult = {
-  __typename?: "PaginatedFollowingResult";
+  __typename?: 'PaginatedFollowingResult';
   items: Array<Following>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated notification result */
 export type PaginatedNotificationResult = {
-  __typename?: "PaginatedNotificationResult";
+  __typename?: 'PaginatedNotificationResult';
   items: Array<Notification>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated wallet result */
 export type PaginatedProfilePublicationsForSaleResult = {
-  __typename?: "PaginatedProfilePublicationsForSaleResult";
+  __typename?: 'PaginatedProfilePublicationsForSaleResult';
   items: Array<PublicationForSale>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated profile result */
 export type PaginatedProfileResult = {
-  __typename?: "PaginatedProfileResult";
+  __typename?: 'PaginatedProfileResult';
   items: Array<Profile>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated publication result */
 export type PaginatedPublicationResult = {
-  __typename?: "PaginatedPublicationResult";
+  __typename?: 'PaginatedPublicationResult';
   items: Array<Publication>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated result info */
 export type PaginatedResultInfo = {
-  __typename?: "PaginatedResultInfo";
+  __typename?: 'PaginatedResultInfo';
   /** Cursor to query next results */
-  next?: Maybe<Scalars["Cursor"]>;
+  next?: Maybe<Scalars['Cursor']>;
   /** Cursor to query the actual results */
-  prev?: Maybe<Scalars["Cursor"]>;
+  prev?: Maybe<Scalars['Cursor']>;
   /** The total number of entities the pagination iterates over. If null it means it can not work it out due to dynamic or aggregated query e.g. For a query that requests all nfts with more than 10 likes, this field gives the total amount of nfts with more than 10 likes, not the total amount of nfts */
-  totalCount?: Maybe<Scalars["Int"]>;
+  totalCount?: Maybe<Scalars['Int']>;
 };
 
 /** The paginated timeline result */
 export type PaginatedTimelineResult = {
-  __typename?: "PaginatedTimelineResult";
+  __typename?: 'PaginatedTimelineResult';
   items: Array<Publication>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The paginated wallet result */
 export type PaginatedWhoCollectedResult = {
-  __typename?: "PaginatedWhoCollectedResult";
+  __typename?: 'PaginatedWhoCollectedResult';
   items: Array<Wallet>;
   pageInfo: PaginatedResultInfo;
 };
 
 export type PaginatedWhoReactedResult = {
-  __typename?: "PaginatedWhoReactedResult";
+  __typename?: 'PaginatedWhoReactedResult';
   items: Array<WhoReactedResult>;
   pageInfo: PaginatedResultInfo;
 };
 
 export type PendingApprovalFollowsRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
 };
 
 /** The paginated follow result */
 export type PendingApproveFollowsResult = {
-  __typename?: "PendingApproveFollowsResult";
+  __typename?: 'PendingApproveFollowsResult';
   items: Array<Profile>;
   pageInfo: PaginatedResultInfo;
 };
 
 /** The social post */
 export type Post = {
-  __typename?: "Post";
+  __typename?: 'Post';
   /** ID of the source */
-  appId?: Maybe<Scalars["Sources"]>;
+  appId?: Maybe<Scalars['Sources']>;
   canComment: CanCommentResponse;
   canDecrypt: CanDecryptResponse;
   canMirror: CanMirrorResponse;
   /** The collect module */
   collectModule: CollectModule;
   /** The contract address for the collect nft.. if its null it means nobody collected yet as it lazy deployed */
-  collectNftAddress?: Maybe<Scalars["ContractAddress"]>;
+  collectNftAddress?: Maybe<Scalars['ContractAddress']>;
   /**
    * Who collected it, this is used for timeline results and like this for better caching for the client
    * @deprecated use `feed` query, timeline query will be killed on the 15th November. This includes this field.
    */
   collectedBy?: Maybe<Wallet>;
   /** The date the post was created on */
-  createdAt: Scalars["DateTime"];
-  hasCollectedByMe: Scalars["Boolean"];
+  createdAt: Scalars['DateTime'];
+  hasCollectedByMe: Scalars['Boolean'];
   /** If the publication has been hidden if it has then the content and media is not available */
-  hidden: Scalars["Boolean"];
+  hidden: Scalars['Boolean'];
   /** The internal publication id */
-  id: Scalars["InternalPublicationId"];
+  id: Scalars['InternalPublicationId'];
   /** Indicates if the publication is gated behind some access criteria */
-  isGated: Scalars["Boolean"];
+  isGated: Scalars['Boolean'];
   /** The metadata for the post */
   metadata: MetadataOutput;
-  mirrors: Array<Scalars["InternalPublicationId"]>;
+  mirrors: Array<Scalars['InternalPublicationId']>;
   /** The on chain content uri could be `ipfs://` or `https` */
-  onChainContentURI: Scalars["String"];
+  onChainContentURI: Scalars['String'];
   /** The profile ref */
   profile: Profile;
   reaction?: Maybe<ReactionTypes>;
@@ -2434,28 +2428,28 @@ export type Post = {
 
 /** The social post */
 export type PostCanCommentArgs = {
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social post */
 export type PostCanDecryptArgs = {
-  address?: InputMaybe<Scalars["EthereumAddress"]>;
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  address?: InputMaybe<Scalars['EthereumAddress']>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social post */
 export type PostCanMirrorArgs = {
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social post */
 export type PostHasCollectedByMeArgs = {
-  isFinalisedOnChain?: InputMaybe<Scalars["Boolean"]>;
+  isFinalisedOnChain?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** The social post */
 export type PostMirrorsArgs = {
-  by?: InputMaybe<Scalars["ProfileId"]>;
+  by?: InputMaybe<Scalars['ProfileId']>;
 };
 
 /** The social post */
@@ -2465,11 +2459,11 @@ export type PostReactionArgs = {
 
 /** The Profile */
 export type Profile = {
-  __typename?: "Profile";
+  __typename?: 'Profile';
   /** Optionals param to add extra attributes on the metadata */
   attributes?: Maybe<Array<Attribute>>;
   /** Bio of the profile */
-  bio?: Maybe<Scalars["String"]>;
+  bio?: Maybe<Scalars['String']>;
   /** The cover picture for the profile */
   coverPicture?: Maybe<ProfileMedia>;
   /** The dispatcher */
@@ -2477,25 +2471,25 @@ export type Profile = {
   /** The follow module */
   followModule?: Maybe<FollowModule>;
   /** Follow nft address */
-  followNftAddress?: Maybe<Scalars["ContractAddress"]>;
+  followNftAddress?: Maybe<Scalars['ContractAddress']>;
   /** The profile handle */
-  handle: Scalars["Handle"];
+  handle: Scalars['Handle'];
   /** The profile id */
-  id: Scalars["ProfileId"];
+  id: Scalars['ProfileId'];
   /** The profile interests */
-  interests?: Maybe<Array<Scalars["ProfileInterest"]>>;
+  interests?: Maybe<Array<Scalars['ProfileInterest']>>;
   /** Is the profile default */
-  isDefault: Scalars["Boolean"];
-  isFollowedByMe: Scalars["Boolean"];
-  isFollowing: Scalars["Boolean"];
+  isDefault: Scalars['Boolean'];
+  isFollowedByMe: Scalars['Boolean'];
+  isFollowing: Scalars['Boolean'];
   /** Metadata url */
-  metadata?: Maybe<Scalars["Url"]>;
+  metadata?: Maybe<Scalars['Url']>;
   /** Name of the profile */
-  name?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars['String']>;
   /** The on chain identity */
   onChainIdentity: OnChainIdentity;
   /** Who owns the profile */
-  ownedBy: Scalars["EthereumAddress"];
+  ownedBy: Scalars['EthereumAddress'];
   /** The picture for the profile */
   picture?: Maybe<ProfileMedia>;
   /** Profile stats */
@@ -2504,100 +2498,100 @@ export type Profile = {
 
 /** The Profile */
 export type ProfileIsFollowedByMeArgs = {
-  isFinalisedOnChain?: InputMaybe<Scalars["Boolean"]>;
+  isFinalisedOnChain?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** The Profile */
 export type ProfileIsFollowingArgs = {
-  who?: InputMaybe<Scalars["ProfileId"]>;
+  who?: InputMaybe<Scalars['ProfileId']>;
 };
 
 export type ProfileFollowModuleBeenRedeemedRequest = {
-  followProfileId: Scalars["ProfileId"];
-  redeemingProfileId: Scalars["ProfileId"];
+  followProfileId: Scalars['ProfileId'];
+  redeemingProfileId: Scalars['ProfileId'];
 };
 
 export type ProfileFollowModuleRedeemParams = {
   /** The profile id to use to follow this profile */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type ProfileFollowModuleSettings = {
-  __typename?: "ProfileFollowModuleSettings";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'ProfileFollowModuleSettings';
+  contractAddress: Scalars['ContractAddress'];
   /** The follow module enum */
   type: FollowModules;
 };
 
 export type ProfileFollowRevenueQueryRequest = {
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type ProfileMedia = MediaSet | NftImage;
 
 export type ProfileOnChainIdentityRequest = {
-  profileIds: Array<Scalars["ProfileId"]>;
+  profileIds: Array<Scalars['ProfileId']>;
 };
 
 /** Condition that signifies if address has access to profile */
 export type ProfileOwnershipInput = {
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 /** Condition that signifies if address has access to profile */
 export type ProfileOwnershipOutput = {
-  __typename?: "ProfileOwnershipOutput";
+  __typename?: 'ProfileOwnershipOutput';
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type ProfilePublicationRevenueQueryRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
   /** The revenue types */
   types?: InputMaybe<Array<PublicationTypes>>;
 };
 
 /** The paginated revenue result */
 export type ProfilePublicationRevenueResult = {
-  __typename?: "ProfilePublicationRevenueResult";
+  __typename?: 'ProfilePublicationRevenueResult';
   items: Array<PublicationRevenue>;
   pageInfo: PaginatedResultInfo;
 };
 
 export type ProfilePublicationsForSaleRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** Profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
 };
 
 export type ProfileQueryRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   /** The handles for the profile */
-  handles?: InputMaybe<Array<Scalars["Handle"]>>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  handles?: InputMaybe<Array<Scalars['Handle']>>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   /** The ethereum addresses */
-  ownedBy?: InputMaybe<Array<Scalars["EthereumAddress"]>>;
+  ownedBy?: InputMaybe<Array<Scalars['EthereumAddress']>>;
   /** The profile ids */
-  profileIds?: InputMaybe<Array<Scalars["ProfileId"]>>;
+  profileIds?: InputMaybe<Array<Scalars['ProfileId']>>;
   /** The mirrored publication id */
-  whoMirroredPublicationId?: InputMaybe<Scalars["InternalPublicationId"]>;
+  whoMirroredPublicationId?: InputMaybe<Scalars['InternalPublicationId']>;
 };
 
 /** Profile search results */
 export type ProfileSearchResult = {
-  __typename?: "ProfileSearchResult";
+  __typename?: 'ProfileSearchResult';
   items: Array<Profile>;
   pageInfo: PaginatedResultInfo;
   type: SearchRequestTypes;
@@ -2605,76 +2599,76 @@ export type ProfileSearchResult = {
 
 /** profile sort criteria */
 export enum ProfileSortCriteria {
-  CreatedOn = "CREATED_ON",
-  LatestCreated = "LATEST_CREATED",
-  MostCollects = "MOST_COLLECTS",
-  MostComments = "MOST_COMMENTS",
-  MostFollowers = "MOST_FOLLOWERS",
-  MostMirrors = "MOST_MIRRORS",
-  MostPosts = "MOST_POSTS",
-  MostPublication = "MOST_PUBLICATION",
+  CreatedOn = 'CREATED_ON',
+  LatestCreated = 'LATEST_CREATED',
+  MostCollects = 'MOST_COLLECTS',
+  MostComments = 'MOST_COMMENTS',
+  MostFollowers = 'MOST_FOLLOWERS',
+  MostMirrors = 'MOST_MIRRORS',
+  MostPosts = 'MOST_POSTS',
+  MostPublication = 'MOST_PUBLICATION'
 }
 
 /** The Profile Stats */
 export type ProfileStats = {
-  __typename?: "ProfileStats";
-  commentsTotal: Scalars["Int"];
-  id: Scalars["ProfileId"];
-  mirrorsTotal: Scalars["Int"];
-  postsTotal: Scalars["Int"];
-  publicationsTotal: Scalars["Int"];
+  __typename?: 'ProfileStats';
+  commentsTotal: Scalars['Int'];
+  id: Scalars['ProfileId'];
+  mirrorsTotal: Scalars['Int'];
+  postsTotal: Scalars['Int'];
+  publicationsTotal: Scalars['Int'];
   /** Total collects count */
-  totalCollects: Scalars["Int"];
+  totalCollects: Scalars['Int'];
   /** Total comment count */
-  totalComments: Scalars["Int"];
+  totalComments: Scalars['Int'];
   /** Total follower count */
-  totalFollowers: Scalars["Int"];
+  totalFollowers: Scalars['Int'];
   /** Total following count (remember the wallet follows not profile so will be same for every profile they own) */
-  totalFollowing: Scalars["Int"];
+  totalFollowing: Scalars['Int'];
   /** Total mirror count */
-  totalMirrors: Scalars["Int"];
+  totalMirrors: Scalars['Int'];
   /** Total post count */
-  totalPosts: Scalars["Int"];
+  totalPosts: Scalars['Int'];
   /** Total publication count */
-  totalPublications: Scalars["Int"];
+  totalPublications: Scalars['Int'];
 };
 
 /** The Profile Stats */
 export type ProfileStatsCommentsTotalArgs = {
-  forSources: Array<Scalars["Sources"]>;
+  forSources: Array<Scalars['Sources']>;
 };
 
 /** The Profile Stats */
 export type ProfileStatsMirrorsTotalArgs = {
-  forSources: Array<Scalars["Sources"]>;
+  forSources: Array<Scalars['Sources']>;
 };
 
 /** The Profile Stats */
 export type ProfileStatsPostsTotalArgs = {
-  forSources: Array<Scalars["Sources"]>;
+  forSources: Array<Scalars['Sources']>;
 };
 
 /** The Profile Stats */
 export type ProfileStatsPublicationsTotalArgs = {
-  forSources: Array<Scalars["Sources"]>;
+  forSources: Array<Scalars['Sources']>;
 };
 
 /** The provider-specific encryption params */
 export type ProviderSpecificParamsOutput = {
-  __typename?: "ProviderSpecificParamsOutput";
+  __typename?: 'ProviderSpecificParamsOutput';
   /** The encryption key */
-  encryptionKey: Scalars["ContentEncryptionKey"];
+  encryptionKey: Scalars['ContentEncryptionKey'];
 };
 
 export type ProxyActionError = {
-  __typename?: "ProxyActionError";
-  lastKnownTxId?: Maybe<Scalars["TxId"]>;
-  reason: Scalars["String"];
+  __typename?: 'ProxyActionError';
+  lastKnownTxId?: Maybe<Scalars['TxId']>;
+  reason: Scalars['String'];
 };
 
 export type ProxyActionQueued = {
-  __typename?: "ProxyActionQueued";
-  queuedAt: Scalars["DateTime"];
+  __typename?: 'ProxyActionQueued';
+  queuedAt: Scalars['DateTime'];
 };
 
 export type ProxyActionRequest = {
@@ -2683,69 +2677,66 @@ export type ProxyActionRequest = {
 };
 
 export type ProxyActionStatusResult = {
-  __typename?: "ProxyActionStatusResult";
+  __typename?: 'ProxyActionStatusResult';
   status: ProxyActionStatusTypes;
-  txHash: Scalars["TxHash"];
-  txId: Scalars["TxId"];
+  txHash: Scalars['TxHash'];
+  txId: Scalars['TxId'];
 };
 
-export type ProxyActionStatusResultUnion =
-  | ProxyActionError
-  | ProxyActionQueued
-  | ProxyActionStatusResult;
+export type ProxyActionStatusResultUnion = ProxyActionError | ProxyActionQueued | ProxyActionStatusResult;
 
 /** The proxy action status */
 export enum ProxyActionStatusTypes {
-  Complete = "COMPLETE",
-  Minting = "MINTING",
-  Transferring = "TRANSFERRING",
+  Complete = 'COMPLETE',
+  Minting = 'MINTING',
+  Transferring = 'TRANSFERRING'
 }
 
 export type PublicMediaRequest = {
   /** The alt tags for accessibility */
-  altTag?: InputMaybe<Scalars["String"]>;
+  altTag?: InputMaybe<Scalars['String']>;
   /** The cover for any video or audio you attached */
-  cover?: InputMaybe<Scalars["Url"]>;
+  cover?: InputMaybe<Scalars['Url']>;
   /** Pre calculated cid of the file to push */
-  itemCid: Scalars["IfpsCid"];
+  itemCid: Scalars['IfpsCid'];
   /** This is the mime type of media */
-  type?: InputMaybe<Scalars["MimeType"]>;
+  type?: InputMaybe<Scalars['MimeType']>;
 };
 
 /** The response to upload the attached file */
 export type PublicMediaResults = {
-  __typename?: "PublicMediaResults";
+  __typename?: 'PublicMediaResults';
   /** ipfs uri to add on the metadata */
   media: MediaOutput;
   /** Signed url to push the file */
-  signedUrl: Scalars["String"];
+  signedUrl: Scalars['String'];
 };
 
 export type Publication = Comment | Mirror | Post;
 
 /** The publication content warning */
 export enum PublicationContentWarning {
-  Nsfw = "NSFW",
-  Sensitive = "SENSITIVE",
-  Spoiler = "SPOILER",
+  Nsfw = 'NSFW',
+  Sensitive = 'SENSITIVE',
+  Spoiler = 'SPOILER'
 }
 
 export type PublicationForSale = Comment | Post;
 
 /** The publication main focus */
 export enum PublicationMainFocus {
-  Article = "ARTICLE",
-  Audio = "AUDIO",
-  Embed = "EMBED",
-  Image = "IMAGE",
-  Link = "LINK",
-  TextOnly = "TEXT_ONLY",
-  Video = "VIDEO",
+  Article = 'ARTICLE',
+  Audio = 'AUDIO',
+  Embed = 'EMBED',
+  Image = 'IMAGE',
+  Link = 'LINK',
+  TextOnly = 'TEXT_ONLY',
+  Video = 'VIDEO'
 }
 
 /** The source of the media */
 export enum PublicationMediaSource {
-  Lens = "LENS",
+  Lens = 'LENS'
 }
 
 /** Publication metadata content waring filters */
@@ -2756,16 +2747,16 @@ export type PublicationMetadataContentWarningFilter = {
 
 /** The publication metadata display types */
 export enum PublicationMetadataDisplayTypes {
-  Date = "date",
-  Number = "number",
-  String = "string",
+  Date = 'date',
+  Number = 'number',
+  String = 'string'
 }
 
 /** Publication metadata filters */
 export type PublicationMetadataFilters = {
   contentWarning?: InputMaybe<PublicationMetadataContentWarningFilter>;
   /** IOS 639-1 language code aka en or it and ISO 3166-1 alpha-2 region code aka US or IT aka en-US or it-IT. You can just filter on language if you wish. */
-  locale?: InputMaybe<Scalars["Locale"]>;
+  locale?: InputMaybe<Scalars['Locale']>;
   mainContentFocus?: InputMaybe<Array<PublicationMainFocus>>;
   tags?: InputMaybe<PublicationMetadataTagsFilter>;
 };
@@ -2773,36 +2764,36 @@ export type PublicationMetadataFilters = {
 /** The metadata attribute input */
 export type PublicationMetadataMediaInput = {
   /** The alt tags for accessibility */
-  altTag?: InputMaybe<Scalars["String"]>;
+  altTag?: InputMaybe<Scalars['String']>;
   /** The cover for any video or audio you attached */
-  cover?: InputMaybe<Scalars["Url"]>;
-  item: Scalars["Url"];
+  cover?: InputMaybe<Scalars['Url']>;
+  item: Scalars['Url'];
   source?: InputMaybe<PublicationMediaSource>;
   /** This is the mime type of media */
-  type?: InputMaybe<Scalars["MimeType"]>;
+  type?: InputMaybe<Scalars['MimeType']>;
 };
 
 export type PublicationMetadataStatus = {
-  __typename?: "PublicationMetadataStatus";
+  __typename?: 'PublicationMetadataStatus';
   /** If metadata validation failed it will put a reason why here */
-  reason?: Maybe<Scalars["String"]>;
+  reason?: Maybe<Scalars['String']>;
   status: PublicationMetadataStatusType;
 };
 
 /** publication metadata status type */
 export enum PublicationMetadataStatusType {
-  MetadataValidationFailed = "METADATA_VALIDATION_FAILED",
-  NotFound = "NOT_FOUND",
-  Pending = "PENDING",
-  Success = "SUCCESS",
+  MetadataValidationFailed = 'METADATA_VALIDATION_FAILED',
+  NotFound = 'NOT_FOUND',
+  Pending = 'PENDING',
+  Success = 'SUCCESS'
 }
 
 /** Publication metadata tag filter */
 export type PublicationMetadataTagsFilter = {
   /** Needs to only match all */
-  all?: InputMaybe<Array<Scalars["String"]>>;
+  all?: InputMaybe<Array<Scalars['String']>>;
   /** Needs to only match one of */
-  oneOf?: InputMaybe<Array<Scalars["String"]>>;
+  oneOf?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type PublicationMetadataV1Input = {
@@ -2812,34 +2803,34 @@ export type PublicationMetadataV1Input = {
    *       Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas,
    *       WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.
    */
-  animation_url?: InputMaybe<Scalars["Url"]>;
+  animation_url?: InputMaybe<Scalars['Url']>;
   /**  This is the appId the content belongs to */
-  appId?: InputMaybe<Scalars["Sources"]>;
+  appId?: InputMaybe<Scalars['Sources']>;
   /**  These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item. */
   attributes: Array<MetadataAttributeInput>;
   /** The content of a publication. If this is blank `media` must be defined or its out of spec */
-  content?: InputMaybe<Scalars["Markdown"]>;
+  content?: InputMaybe<Scalars['Markdown']>;
   /** A human-readable description of the item. */
-  description?: InputMaybe<Scalars["Markdown"]>;
+  description?: InputMaybe<Scalars['Markdown']>;
   /**
    * This is the URL that will appear below the asset's image on OpenSea and others etc
    *       and will allow users to leave OpenSea and view the item on the site.
    */
-  external_url?: InputMaybe<Scalars["Url"]>;
+  external_url?: InputMaybe<Scalars['Url']>;
   /** legacy to support OpenSea will store any NFT image here. */
-  image?: InputMaybe<Scalars["Url"]>;
+  image?: InputMaybe<Scalars['Url']>;
   /** This is the mime type of the image. This is used if your uploading more advanced cover images as sometimes ipfs does not emit the content header so this solves that */
-  imageMimeType?: InputMaybe<Scalars["MimeType"]>;
+  imageMimeType?: InputMaybe<Scalars['MimeType']>;
   /**  This is lens supported attached media items to the publication */
   media?: InputMaybe<Array<PublicationMetadataMediaInput>>;
   /** The metadata id can be anything but if your uploading to ipfs you will want it to be random.. using uuid could be an option! */
-  metadata_id: Scalars["String"];
+  metadata_id: Scalars['String'];
   /** Name of the item. */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** Signed metadata to validate the owner */
   signatureContext?: InputMaybe<PublicationSignatureContextInput>;
   /** The metadata version. (1.0.0 | 2.0.0) */
-  version: Scalars["String"];
+  version: Scalars['String'];
 };
 
 export type PublicationMetadataV2Input = {
@@ -2849,106 +2840,106 @@ export type PublicationMetadataV2Input = {
    *       Animation_url also supports HTML pages, allowing you to build rich experiences and interactive NFTs using JavaScript canvas,
    *       WebGL, and more. Scripts and relative paths within the HTML page are now supported. However, access to browser extensions is not supported.
    */
-  animation_url?: InputMaybe<Scalars["Url"]>;
+  animation_url?: InputMaybe<Scalars['Url']>;
   /**  This is the appId the content belongs to */
-  appId?: InputMaybe<Scalars["Sources"]>;
+  appId?: InputMaybe<Scalars['Sources']>;
   /**  These are the attributes for the item, which will show up on the OpenSea and others NFT trading websites on the item. */
   attributes: Array<MetadataAttributeInput>;
   /** The content of a publication. If this is blank `media` must be defined or its out of spec */
-  content?: InputMaybe<Scalars["Markdown"]>;
+  content?: InputMaybe<Scalars['Markdown']>;
   /** Ability to add a content warning */
   contentWarning?: InputMaybe<PublicationContentWarning>;
   /** A human-readable description of the item. */
-  description?: InputMaybe<Scalars["Markdown"]>;
+  description?: InputMaybe<Scalars['Markdown']>;
   /**
    * This is the URL that will appear below the asset's image on OpenSea and others etc
    *       and will allow users to leave OpenSea and view the item on the site.
    */
-  external_url?: InputMaybe<Scalars["Url"]>;
+  external_url?: InputMaybe<Scalars['Url']>;
   /** legacy to support OpenSea will store any NFT image here. */
-  image?: InputMaybe<Scalars["Url"]>;
+  image?: InputMaybe<Scalars['Url']>;
   /** This is the mime type of the image. This is used if your uploading more advanced cover images as sometimes ipfs does not emit the content header so this solves that */
-  imageMimeType?: InputMaybe<Scalars["MimeType"]>;
+  imageMimeType?: InputMaybe<Scalars['MimeType']>;
   /** IOS 639-1 language code aka en or it and ISO 3166-1 alpha-2 region code aka US or IT aka en-US or it-IT */
-  locale: Scalars["Locale"];
+  locale: Scalars['Locale'];
   /** Main content focus that for this publication */
   mainContentFocus: PublicationMainFocus;
   /**  This is lens supported attached media items to the publication */
   media?: InputMaybe<Array<PublicationMetadataMediaInput>>;
   /** The metadata id can be anything but if your uploading to ipfs you will want it to be random.. using uuid could be an option! */
-  metadata_id: Scalars["String"];
+  metadata_id: Scalars['String'];
   /** Name of the item. */
-  name: Scalars["String"];
+  name: Scalars['String'];
   /** Signed metadata to validate the owner */
   signatureContext?: InputMaybe<PublicationSignatureContextInput>;
   /** Ability to tag your publication */
-  tags?: InputMaybe<Array<Scalars["String"]>>;
+  tags?: InputMaybe<Array<Scalars['String']>>;
   /** The metadata version. (1.0.0 | 2.0.0) */
-  version: Scalars["String"];
+  version: Scalars['String'];
 };
 
 export type PublicationQueryRequest = {
   /** The publication id */
-  publicationId?: InputMaybe<Scalars["InternalPublicationId"]>;
+  publicationId?: InputMaybe<Scalars['InternalPublicationId']>;
   /** The tx hash */
-  txHash?: InputMaybe<Scalars["TxHash"]>;
+  txHash?: InputMaybe<Scalars['TxHash']>;
 };
 
 /** Publication reporting fraud subreason */
 export enum PublicationReportingFraudSubreason {
-  Impersonation = "IMPERSONATION",
-  Scam = "SCAM",
+  Impersonation = 'IMPERSONATION',
+  Scam = 'SCAM'
 }
 
 /** Publication reporting illegal subreason */
 export enum PublicationReportingIllegalSubreason {
-  AnimalAbuse = "ANIMAL_ABUSE",
-  DirectThreat = "DIRECT_THREAT",
-  HumanAbuse = "HUMAN_ABUSE",
-  ThreatIndividual = "THREAT_INDIVIDUAL",
-  Violence = "VIOLENCE",
+  AnimalAbuse = 'ANIMAL_ABUSE',
+  DirectThreat = 'DIRECT_THREAT',
+  HumanAbuse = 'HUMAN_ABUSE',
+  ThreatIndividual = 'THREAT_INDIVIDUAL',
+  Violence = 'VIOLENCE'
 }
 
 /** Publication reporting reason */
 export enum PublicationReportingReason {
-  Fraud = "FRAUD",
-  Illegal = "ILLEGAL",
-  Sensitive = "SENSITIVE",
-  Spam = "SPAM",
+  Fraud = 'FRAUD',
+  Illegal = 'ILLEGAL',
+  Sensitive = 'SENSITIVE',
+  Spam = 'SPAM'
 }
 
 /** Publication reporting sensitive subreason */
 export enum PublicationReportingSensitiveSubreason {
-  Nsfw = "NSFW",
-  Offensive = "OFFENSIVE",
+  Nsfw = 'NSFW',
+  Offensive = 'OFFENSIVE'
 }
 
 /** Publication reporting spam subreason */
 export enum PublicationReportingSpamSubreason {
-  FakeEngagement = "FAKE_ENGAGEMENT",
-  ManipulationAlgo = "MANIPULATION_ALGO",
-  Misleading = "MISLEADING",
-  MisuseHashtags = "MISUSE_HASHTAGS",
-  Repetitive = "REPETITIVE",
-  SomethingElse = "SOMETHING_ELSE",
-  Unrelated = "UNRELATED",
+  FakeEngagement = 'FAKE_ENGAGEMENT',
+  ManipulationAlgo = 'MANIPULATION_ALGO',
+  Misleading = 'MISLEADING',
+  MisuseHashtags = 'MISUSE_HASHTAGS',
+  Repetitive = 'REPETITIVE',
+  SomethingElse = 'SOMETHING_ELSE',
+  Unrelated = 'UNRELATED'
 }
 
 /** The social comment */
 export type PublicationRevenue = {
-  __typename?: "PublicationRevenue";
+  __typename?: 'PublicationRevenue';
   publication: Publication;
   revenue: RevenueAggregate;
 };
 
 export type PublicationRevenueQueryRequest = {
   /** The publication id */
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
 };
 
 /** Publication search results */
 export type PublicationSearchResult = {
-  __typename?: "PublicationSearchResult";
+  __typename?: 'PublicationSearchResult';
   items: Array<PublicationSearchResultItem>;
   pageInfo: PaginatedResultInfo;
   type: SearchRequestTypes;
@@ -2957,84 +2948,84 @@ export type PublicationSearchResult = {
 export type PublicationSearchResultItem = Comment | Post;
 
 export type PublicationSignatureContextInput = {
-  signature: Scalars["String"];
+  signature: Scalars['String'];
 };
 
 /** Publication sort criteria */
 export enum PublicationSortCriteria {
-  CuratedProfiles = "CURATED_PROFILES",
-  Latest = "LATEST",
-  TopCollected = "TOP_COLLECTED",
-  TopCommented = "TOP_COMMENTED",
-  TopMirrored = "TOP_MIRRORED",
+  CuratedProfiles = 'CURATED_PROFILES',
+  Latest = 'LATEST',
+  TopCollected = 'TOP_COLLECTED',
+  TopCommented = 'TOP_COMMENTED',
+  TopMirrored = 'TOP_MIRRORED'
 }
 
 /** The publication stats */
 export type PublicationStats = {
-  __typename?: "PublicationStats";
-  commentsTotal: Scalars["Int"];
+  __typename?: 'PublicationStats';
+  commentsTotal: Scalars['Int'];
   /** The publication id */
-  id: Scalars["InternalPublicationId"];
+  id: Scalars['InternalPublicationId'];
   /** The total amount of collects */
-  totalAmountOfCollects: Scalars["Int"];
+  totalAmountOfCollects: Scalars['Int'];
   /** The total amount of comments */
-  totalAmountOfComments: Scalars["Int"];
+  totalAmountOfComments: Scalars['Int'];
   /** The total amount of mirrors */
-  totalAmountOfMirrors: Scalars["Int"];
+  totalAmountOfMirrors: Scalars['Int'];
   /** The total amount of upvotes */
-  totalDownvotes: Scalars["Int"];
+  totalDownvotes: Scalars['Int'];
   /** The total amount of downvotes */
-  totalUpvotes: Scalars["Int"];
+  totalUpvotes: Scalars['Int'];
 };
 
 /** The publication stats */
 export type PublicationStatsCommentsTotalArgs = {
-  forSources: Array<Scalars["Sources"]>;
+  forSources: Array<Scalars['Sources']>;
 };
 
 /** The publication types */
 export enum PublicationTypes {
-  Comment = "COMMENT",
-  Mirror = "MIRROR",
-  Post = "POST",
+  Comment = 'COMMENT',
+  Mirror = 'MIRROR',
+  Post = 'POST'
 }
 
 export type PublicationValidateMetadataResult = {
-  __typename?: "PublicationValidateMetadataResult";
+  __typename?: 'PublicationValidateMetadataResult';
   /** If `valid` is false it will put a reason why here */
-  reason?: Maybe<Scalars["String"]>;
-  valid: Scalars["Boolean"];
+  reason?: Maybe<Scalars['String']>;
+  valid: Scalars['Boolean'];
 };
 
 export type PublicationsQueryRequest = {
   /** The ethereum address */
-  collectedBy?: InputMaybe<Scalars["EthereumAddress"]>;
+  collectedBy?: InputMaybe<Scalars['EthereumAddress']>;
   /** The publication id you wish to get comments for */
-  commentsOf?: InputMaybe<Scalars["InternalPublicationId"]>;
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  commentsOf?: InputMaybe<Scalars['InternalPublicationId']>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   customFilters?: InputMaybe<Array<CustomFiltersTypes>>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** Profile id */
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
   /** Profile ids */
-  profileIds?: InputMaybe<Array<Scalars["ProfileId"]>>;
+  profileIds?: InputMaybe<Array<Scalars['ProfileId']>>;
   /** The publication id */
-  publicationIds?: InputMaybe<Array<Scalars["InternalPublicationId"]>>;
+  publicationIds?: InputMaybe<Array<Scalars['InternalPublicationId']>>;
   /** The publication types you want to query */
   publicationTypes?: InputMaybe<Array<PublicationTypes>>;
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
 };
 
 export type Query = {
-  __typename?: "Query";
+  __typename?: 'Query';
   allPublicationsTags: PaginatedAllPublicationsTagsResult;
   approvedModuleAllowanceAmount: Array<ApprovedAllowanceAmount>;
   challenge: AuthChallengeResult;
   claimableHandles: ClaimableHandles;
   claimableStatus: ClaimStatus;
-  cur: Array<Scalars["String"]>;
+  cur: Array<Scalars['String']>;
   defaultProfile?: Maybe<Profile>;
   doesFollow: Array<DoesFollowResponse>;
   enabledModuleCurrencies: Array<Erc20>;
@@ -3055,12 +3046,12 @@ export type Query = {
   nfts: NfTsResult;
   notifications: PaginatedNotificationResult;
   pendingApprovalFollows: PendingApproveFollowsResult;
-  ping: Scalars["String"];
+  ping: Scalars['String'];
   profile?: Maybe<Profile>;
-  profileFollowModuleBeenRedeemed: Scalars["Boolean"];
+  profileFollowModuleBeenRedeemed: Scalars['Boolean'];
   profileFollowRevenue: FollowRevenueResult;
   /** Get the list of profile interests */
-  profileInterests: Array<Scalars["ProfileInterest"]>;
+  profileInterests: Array<Scalars['ProfileInterest']>;
   profileOnChainIdentity: Array<OnChainIdentity>;
   profilePublicationRevenue: ProfilePublicationRevenueResult;
   profilePublicationsForSale: PaginatedProfilePublicationsForSaleResult;
@@ -3071,15 +3062,15 @@ export type Query = {
   publicationRevenue?: Maybe<PublicationRevenue>;
   publications: PaginatedPublicationResult;
   recommendedProfiles: Array<Profile>;
-  rel?: Maybe<Scalars["Void"]>;
+  rel?: Maybe<Scalars['Void']>;
   search: SearchResult;
   /** @deprecated You should be using feed, this will not be supported after 15th November 2021, please migrate. */
   timeline: PaginatedTimelineResult;
-  txIdToTxHash: Scalars["TxHash"];
+  txIdToTxHash: Scalars['TxHash'];
   unknownEnabledModules: EnabledModules;
   userSigNonces: UserSigNonces;
   validatePublicationMetadata: PublicationValidateMetadataResult;
-  verify: Scalars["Boolean"];
+  verify: Scalars['Boolean'];
   whoCollectedPublication: PaginatedWhoCollectedResult;
   whoReactedPublication: PaginatedWhoReactedResult;
 };
@@ -3201,7 +3192,7 @@ export type QueryProfilesArgs = {
 };
 
 export type QueryProxyActionStatusArgs = {
-  proxyActionId: Scalars["ProxyActionId"];
+  proxyActionId: Scalars['ProxyActionId'];
 };
 
 export type QueryPublicationArgs = {
@@ -3237,7 +3228,7 @@ export type QueryTimelineArgs = {
 };
 
 export type QueryTxIdToTxHashArgs = {
-  txId: Scalars["TxId"];
+  txId: Scalars['TxId'];
 };
 
 export type QueryValidatePublicationMetadataArgs = {
@@ -3257,37 +3248,37 @@ export type QueryWhoReactedPublicationArgs = {
 };
 
 export type ReactionEvent = {
-  __typename?: "ReactionEvent";
+  __typename?: 'ReactionEvent';
   profile: Profile;
   reaction: ReactionTypes;
-  timestamp: Scalars["DateTime"];
+  timestamp: Scalars['DateTime'];
 };
 
 export type ReactionFieldResolverRequest = {
   /** Profile id */
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 export type ReactionRequest = {
   /** Profile id to perform the action */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The internal publication id */
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
   /** The reaction */
   reaction: ReactionTypes;
 };
 
 /** Reaction types */
 export enum ReactionTypes {
-  Downvote = "DOWNVOTE",
-  Upvote = "UPVOTE",
+  Downvote = 'DOWNVOTE',
+  Upvote = 'UPVOTE'
 }
 
 export type RecommendedProfileOptions = {
   /** If you wish to turn ML off */
-  disableML?: InputMaybe<Scalars["Boolean"]>;
+  disableML?: InputMaybe<Scalars['Boolean']>;
   /** If you wish to shuffle the results */
-  shuffle?: InputMaybe<Scalars["Boolean"]>;
+  shuffle?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ReferenceModule =
@@ -3299,65 +3290,65 @@ export type ReferenceModuleParams = {
   /** The degrees of seperation reference module */
   degreesOfSeparationReferenceModule?: InputMaybe<DegreesOfSeparationReferenceModuleParams>;
   /** The follower only reference module */
-  followerOnlyReferenceModule?: InputMaybe<Scalars["Boolean"]>;
+  followerOnlyReferenceModule?: InputMaybe<Scalars['Boolean']>;
   /** A unknown reference module */
   unknownReferenceModule?: InputMaybe<UnknownReferenceModuleParams>;
 };
 
 /** The reference module types */
 export enum ReferenceModules {
-  DegreesOfSeparationReferenceModule = "DegreesOfSeparationReferenceModule",
-  FollowerOnlyReferenceModule = "FollowerOnlyReferenceModule",
-  UnknownReferenceModule = "UnknownReferenceModule",
+  DegreesOfSeparationReferenceModule = 'DegreesOfSeparationReferenceModule',
+  FollowerOnlyReferenceModule = 'FollowerOnlyReferenceModule',
+  UnknownReferenceModule = 'UnknownReferenceModule'
 }
 
 /** The refresh request */
 export type RefreshRequest = {
   /** The refresh token */
-  refreshToken: Scalars["Jwt"];
+  refreshToken: Scalars['Jwt'];
 };
 
 export type RelRequest = {
-  ethereumAddress: Scalars["EthereumAddress"];
-  secret: Scalars["String"];
+  ethereumAddress: Scalars['EthereumAddress'];
+  secret: Scalars['String'];
 };
 
 export type RelayError = {
-  __typename?: "RelayError";
+  __typename?: 'RelayError';
   reason: RelayErrorReasons;
 };
 
 /** Relay error reason */
 export enum RelayErrorReasons {
-  Expired = "EXPIRED",
-  HandleTaken = "HANDLE_TAKEN",
-  NotAllowed = "NOT_ALLOWED",
-  Rejected = "REJECTED",
-  WrongWalletSigned = "WRONG_WALLET_SIGNED",
+  Expired = 'EXPIRED',
+  HandleTaken = 'HANDLE_TAKEN',
+  NotAllowed = 'NOT_ALLOWED',
+  Rejected = 'REJECTED',
+  WrongWalletSigned = 'WRONG_WALLET_SIGNED'
 }
 
 export type RelayResult = RelayError | RelayerResult;
 
 /** The relayer result */
 export type RelayerResult = {
-  __typename?: "RelayerResult";
+  __typename?: 'RelayerResult';
   /** The tx hash - you should use the `txId` as your identifier as gas prices can be upgraded meaning txHash will change */
-  txHash: Scalars["TxHash"];
+  txHash: Scalars['TxHash'];
   /** The tx id */
-  txId: Scalars["TxId"];
+  txId: Scalars['TxId'];
 };
 
 /** The request object to remove interests from a profile */
 export type RemoveProfileInterestsRequest = {
   /** The profile interest to add */
-  interests: Array<Scalars["ProfileInterest"]>;
+  interests: Array<Scalars['ProfileInterest']>;
   /** The profileId to add interests to */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 export type ReportPublicationRequest = {
-  additionalComments?: InputMaybe<Scalars["String"]>;
-  publicationId: Scalars["InternalPublicationId"];
+  additionalComments?: InputMaybe<Scalars['String']>;
+  publicationId: Scalars['InternalPublicationId'];
   reason: ReportingReasonInputParams;
 };
 
@@ -3369,57 +3360,57 @@ export type ReportingReasonInputParams = {
 };
 
 export type ReservedClaimableHandle = {
-  __typename?: "ReservedClaimableHandle";
-  expiry: Scalars["DateTime"];
-  handle: Scalars["Handle"];
-  id: Scalars["HandleClaimIdScalar"];
-  source: Scalars["String"];
+  __typename?: 'ReservedClaimableHandle';
+  expiry: Scalars['DateTime'];
+  handle: Scalars['Handle'];
+  id: Scalars['HandleClaimIdScalar'];
+  source: Scalars['String'];
 };
 
 export type RevenueAggregate = {
-  __typename?: "RevenueAggregate";
+  __typename?: 'RevenueAggregate';
   total: Erc20Amount;
 };
 
 export type RevertCollectModuleSettings = {
-  __typename?: "RevertCollectModuleSettings";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'RevertCollectModuleSettings';
+  contractAddress: Scalars['ContractAddress'];
   /** The collect modules enum */
   type: CollectModules;
 };
 
 export type RevertFollowModuleSettings = {
-  __typename?: "RevertFollowModuleSettings";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'RevertFollowModuleSettings';
+  contractAddress: Scalars['ContractAddress'];
   /** The follow module enum */
   type: FollowModules;
 };
 
 /** The gated publication access criteria scalar operators */
 export enum ScalarOperator {
-  Equal = "EQUAL",
-  GreaterThan = "GREATER_THAN",
-  GreaterThanOrEqual = "GREATER_THAN_OR_EQUAL",
-  LessThan = "LESS_THAN",
-  LessThanOrEqual = "LESS_THAN_OR_EQUAL",
-  NotEqual = "NOT_EQUAL",
+  Equal = 'EQUAL',
+  GreaterThan = 'GREATER_THAN',
+  GreaterThanOrEqual = 'GREATER_THAN_OR_EQUAL',
+  LessThan = 'LESS_THAN',
+  LessThanOrEqual = 'LESS_THAN_OR_EQUAL',
+  NotEqual = 'NOT_EQUAL'
 }
 
 export type SearchQueryRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
   customFilters?: InputMaybe<Array<CustomFiltersTypes>>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   /** The search term */
-  query: Scalars["Search"];
+  query: Scalars['Search'];
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
   type: SearchRequestTypes;
 };
 
 /** Search request types */
 export enum SearchRequestTypes {
-  Profile = "PROFILE",
-  Publication = "PUBLICATION",
+  Profile = 'PROFILE',
+  Publication = 'PUBLICATION'
 }
 
 export type SearchResult = ProfileSearchResult | PublicationSearchResult;
@@ -3431,18 +3422,18 @@ export type SensitiveReasonInputParams = {
 
 /** The broadcast item */
 export type SetDefaultProfileBroadcastItemResult = {
-  __typename?: "SetDefaultProfileBroadcastItemResult";
+  __typename?: 'SetDefaultProfileBroadcastItemResult';
   /** The date the broadcast item expiries */
-  expiresAt: Scalars["DateTime"];
+  expiresAt: Scalars['DateTime'];
   /** This broadcast item ID */
-  id: Scalars["BroadcastId"];
+  id: Scalars['BroadcastId'];
   /** The typed data */
   typedData: SetDefaultProfileEip712TypedData;
 };
 
 /** The default profile eip 712 typed data */
 export type SetDefaultProfileEip712TypedData = {
-  __typename?: "SetDefaultProfileEIP712TypedData";
+  __typename?: 'SetDefaultProfileEIP712TypedData';
   /** The typed data domain */
   domain: Eip712TypedDataDomain;
   /** The types */
@@ -3453,41 +3444,41 @@ export type SetDefaultProfileEip712TypedData = {
 
 /** The default profile eip 712 typed data types */
 export type SetDefaultProfileEip712TypedDataTypes = {
-  __typename?: "SetDefaultProfileEIP712TypedDataTypes";
+  __typename?: 'SetDefaultProfileEIP712TypedDataTypes';
   SetDefaultProfileWithSig: Array<Eip712TypedDataField>;
 };
 
 /** The default profile eip 712 typed data value */
 export type SetDefaultProfileEip712TypedDataValue = {
-  __typename?: "SetDefaultProfileEIP712TypedDataValue";
-  deadline: Scalars["UnixTimestamp"];
-  nonce: Scalars["Nonce"];
-  profileId: Scalars["ProfileId"];
-  wallet: Scalars["EthereumAddress"];
+  __typename?: 'SetDefaultProfileEIP712TypedDataValue';
+  deadline: Scalars['UnixTimestamp'];
+  nonce: Scalars['Nonce'];
+  profileId: Scalars['ProfileId'];
+  wallet: Scalars['EthereumAddress'];
 };
 
 export type SetDispatcherRequest = {
   /** The dispatcher address - they can post, comment, mirror, set follow module, change your profile picture on your behalf, if left as none it will use the built in dispatcher address. */
-  dispatcher?: InputMaybe<Scalars["EthereumAddress"]>;
+  dispatcher?: InputMaybe<Scalars['EthereumAddress']>;
   /** If you want to enable or disable it */
-  enable?: InputMaybe<Scalars["Boolean"]>;
+  enable?: InputMaybe<Scalars['Boolean']>;
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
 };
 
 /** The signed auth challenge */
 export type SignedAuthChallenge = {
   /** The ethereum address you signed the signature with */
-  address: Scalars["EthereumAddress"];
+  address: Scalars['EthereumAddress'];
   /** The signature */
-  signature: Scalars["Signature"];
+  signature: Scalars['Signature'];
 };
 
 export type SingleProfileQueryRequest = {
   /** The handle for the profile */
-  handle?: InputMaybe<Scalars["Handle"]>;
+  handle?: InputMaybe<Scalars['Handle']>;
   /** The profile id */
-  profileId?: InputMaybe<Scalars["ProfileId"]>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
 };
 
 export type SpamReasonInputParams = {
@@ -3496,184 +3487,184 @@ export type SpamReasonInputParams = {
 };
 
 export type SybilDotOrgIdentity = {
-  __typename?: "SybilDotOrgIdentity";
+  __typename?: 'SybilDotOrgIdentity';
   source: SybilDotOrgIdentitySource;
   /** The sybil dot org status */
-  verified: Scalars["Boolean"];
+  verified: Scalars['Boolean'];
 };
 
 export type SybilDotOrgIdentitySource = {
-  __typename?: "SybilDotOrgIdentitySource";
+  __typename?: 'SybilDotOrgIdentitySource';
   twitter: SybilDotOrgTwitterIdentity;
 };
 
 export type SybilDotOrgTwitterIdentity = {
-  __typename?: "SybilDotOrgTwitterIdentity";
-  handle?: Maybe<Scalars["String"]>;
+  __typename?: 'SybilDotOrgTwitterIdentity';
+  handle?: Maybe<Scalars['String']>;
 };
 
 /** The social comment */
 export type TagResult = {
-  __typename?: "TagResult";
+  __typename?: 'TagResult';
   /** The tag */
-  tag: Scalars["PublicationTag"];
+  tag: Scalars['PublicationTag'];
   /** The total amount of publication tagged */
-  total: Scalars["Int"];
+  total: Scalars['Int'];
 };
 
 /** The publications tags sort criteria */
 export enum TagSortCriteria {
-  Alphabetical = "ALPHABETICAL",
-  MostPopular = "MOST_POPULAR",
+  Alphabetical = 'ALPHABETICAL',
+  MostPopular = 'MOST_POPULAR'
 }
 
 export type TimedFeeCollectModuleParams = {
   /** The collect module amount info */
   amount: ModuleFeeAmountParams;
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
 };
 
 export type TimedFeeCollectModuleSettings = {
-  __typename?: "TimedFeeCollectModuleSettings";
+  __typename?: 'TimedFeeCollectModuleSettings';
   /** The collect module amount info */
   amount: ModuleFeeAmount;
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The collect module end timestamp */
-  endTimestamp: Scalars["DateTime"];
+  endTimestamp: Scalars['DateTime'];
   /** Follower only */
-  followerOnly: Scalars["Boolean"];
+  followerOnly: Scalars['Boolean'];
   /** The collect module recipient address */
-  recipient: Scalars["EthereumAddress"];
+  recipient: Scalars['EthereumAddress'];
   /** The collect module referral fee */
-  referralFee: Scalars["Float"];
+  referralFee: Scalars['Float'];
   /** The collect modules enum */
   type: CollectModules;
 };
 
 export type TimelineRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   metadata?: InputMaybe<PublicationMetadataFilters>;
   /** The profile id */
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The App Id */
-  sources?: InputMaybe<Array<Scalars["Sources"]>>;
+  sources?: InputMaybe<Array<Scalars['Sources']>>;
   /** The timeline types you wish to include, if nothing passed in will bring back all */
   timelineTypes?: InputMaybe<Array<TimelineType>>;
 };
 
 /** Timeline types */
 export enum TimelineType {
-  CollectComment = "COLLECT_COMMENT",
-  CollectPost = "COLLECT_POST",
-  Comment = "COMMENT",
-  Mirror = "MIRROR",
-  Post = "POST",
+  CollectComment = 'COLLECT_COMMENT',
+  CollectPost = 'COLLECT_POST',
+  Comment = 'COMMENT',
+  Mirror = 'MIRROR',
+  Post = 'POST'
 }
 
 export type TransactionError = {
-  __typename?: "TransactionError";
+  __typename?: 'TransactionError';
   reason: TransactionErrorReasons;
   txReceipt?: Maybe<TransactionReceipt>;
 };
 
 /** Transaction error reason */
 export enum TransactionErrorReasons {
-  Reverted = "REVERTED",
+  Reverted = 'REVERTED'
 }
 
 export type TransactionIndexedResult = {
-  __typename?: "TransactionIndexedResult";
-  indexed: Scalars["Boolean"];
+  __typename?: 'TransactionIndexedResult';
+  indexed: Scalars['Boolean'];
   /** Publications can be indexed but the ipfs link for example not findable for x time. This allows you to work that out for publications. If its not a publication tx then it always be null. */
   metadataStatus?: Maybe<PublicationMetadataStatus>;
-  txHash: Scalars["TxHash"];
+  txHash: Scalars['TxHash'];
   txReceipt?: Maybe<TransactionReceipt>;
 };
 
 export type TransactionReceipt = {
-  __typename?: "TransactionReceipt";
-  blockHash: Scalars["String"];
-  blockNumber: Scalars["Int"];
-  byzantium: Scalars["Boolean"];
-  confirmations: Scalars["Int"];
-  contractAddress?: Maybe<Scalars["ContractAddress"]>;
-  cumulativeGasUsed: Scalars["String"];
-  effectiveGasPrice: Scalars["String"];
-  from: Scalars["EthereumAddress"];
-  gasUsed: Scalars["String"];
+  __typename?: 'TransactionReceipt';
+  blockHash: Scalars['String'];
+  blockNumber: Scalars['Int'];
+  byzantium: Scalars['Boolean'];
+  confirmations: Scalars['Int'];
+  contractAddress?: Maybe<Scalars['ContractAddress']>;
+  cumulativeGasUsed: Scalars['String'];
+  effectiveGasPrice: Scalars['String'];
+  from: Scalars['EthereumAddress'];
+  gasUsed: Scalars['String'];
   logs: Array<Log>;
-  logsBloom: Scalars["String"];
-  root?: Maybe<Scalars["String"]>;
-  status?: Maybe<Scalars["Int"]>;
-  to?: Maybe<Scalars["EthereumAddress"]>;
-  transactionHash: Scalars["TxHash"];
-  transactionIndex: Scalars["Int"];
-  type: Scalars["Int"];
+  logsBloom: Scalars['String'];
+  root?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+  to?: Maybe<Scalars['EthereumAddress']>;
+  transactionHash: Scalars['TxHash'];
+  transactionIndex: Scalars['Int'];
+  type: Scalars['Int'];
 };
 
 export type TransactionResult = TransactionError | TransactionIndexedResult;
 
 export type TypedDataOptions = {
   /** If you wish to override the nonce for the sig if you want to do some clever stuff in the client */
-  overrideSigNonce: Scalars["Nonce"];
+  overrideSigNonce: Scalars['Nonce'];
 };
 
 export type UnfollowRequest = {
-  profile: Scalars["ProfileId"];
+  profile: Scalars['ProfileId'];
 };
 
 export type UnknownCollectModuleParams = {
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The encoded data to submit with the module */
-  data: Scalars["BlockchainData"];
+  data: Scalars['BlockchainData'];
 };
 
 export type UnknownCollectModuleSettings = {
-  __typename?: "UnknownCollectModuleSettings";
+  __typename?: 'UnknownCollectModuleSettings';
   /** The data used to setup the module which you can decode with your known ABI  */
-  collectModuleReturnData: Scalars["CollectModuleData"];
-  contractAddress: Scalars["ContractAddress"];
+  collectModuleReturnData: Scalars['CollectModuleData'];
+  contractAddress: Scalars['ContractAddress'];
   /** The collect modules enum */
   type: CollectModules;
 };
 
 export type UnknownFollowModuleParams = {
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The encoded data to submit with the module */
-  data: Scalars["BlockchainData"];
+  data: Scalars['BlockchainData'];
 };
 
 export type UnknownFollowModuleRedeemParams = {
   /** The encoded data to submit with the module */
-  data: Scalars["BlockchainData"];
+  data: Scalars['BlockchainData'];
 };
 
 export type UnknownFollowModuleSettings = {
-  __typename?: "UnknownFollowModuleSettings";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'UnknownFollowModuleSettings';
+  contractAddress: Scalars['ContractAddress'];
   /** The data used to setup the module which you can decode with your known ABI  */
-  followModuleReturnData: Scalars["FollowModuleData"];
+  followModuleReturnData: Scalars['FollowModuleData'];
   /** The follow modules enum */
   type: FollowModules;
 };
 
 export type UnknownReferenceModuleParams = {
-  contractAddress: Scalars["ContractAddress"];
+  contractAddress: Scalars['ContractAddress'];
   /** The encoded data to submit with the module */
-  data: Scalars["BlockchainData"];
+  data: Scalars['BlockchainData'];
 };
 
 export type UnknownReferenceModuleSettings = {
-  __typename?: "UnknownReferenceModuleSettings";
-  contractAddress: Scalars["ContractAddress"];
+  __typename?: 'UnknownReferenceModuleSettings';
+  contractAddress: Scalars['ContractAddress'];
   /** The data used to setup the module which you can decode with your known ABI  */
-  referenceModuleReturnData: Scalars["ReferenceModuleData"];
+  referenceModuleReturnData: Scalars['ReferenceModuleData'];
   /** The reference modules enum */
   type: ReferenceModules;
 };
@@ -3681,15 +3672,15 @@ export type UnknownReferenceModuleSettings = {
 export type UpdateProfileImageRequest = {
   /** The nft data */
   nftData?: InputMaybe<NftData>;
-  profileId: Scalars["ProfileId"];
+  profileId: Scalars['ProfileId'];
   /** The url to the image if offline */
-  url?: InputMaybe<Scalars["Url"]>;
+  url?: InputMaybe<Scalars['Url']>;
 };
 
 export type UserSigNonces = {
-  __typename?: "UserSigNonces";
-  lensHubOnChainSigNonce: Scalars["Nonce"];
-  peripheryOnChainSigNonce: Scalars["Nonce"];
+  __typename?: 'UserSigNonces';
+  lensHubOnChainSigNonce: Scalars['Nonce'];
+  peripheryOnChainSigNonce: Scalars['Nonce'];
 };
 
 export type ValidatePublicationMetadataRequest = {
@@ -3700,68 +3691,105 @@ export type ValidatePublicationMetadataRequest = {
 /** The access request */
 export type VerifyRequest = {
   /** The access token */
-  accessToken: Scalars["Jwt"];
+  accessToken: Scalars['Jwt'];
 };
 
 export type Wallet = {
-  __typename?: "Wallet";
-  address: Scalars["EthereumAddress"];
+  __typename?: 'Wallet';
+  address: Scalars['EthereumAddress'];
   /** The default profile for the wallet for now it is just their first profile, this will be the default profile they picked soon enough */
   defaultProfile?: Maybe<Profile>;
 };
 
 export type WhoCollectedPublicationRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   /** Internal publication id */
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
 };
 
 export type WhoReactedPublicationRequest = {
-  cursor?: InputMaybe<Scalars["Cursor"]>;
-  limit?: InputMaybe<Scalars["LimitScalar"]>;
+  cursor?: InputMaybe<Scalars['Cursor']>;
+  limit?: InputMaybe<Scalars['LimitScalar']>;
   /** Internal publication id */
-  publicationId: Scalars["InternalPublicationId"];
+  publicationId: Scalars['InternalPublicationId'];
 };
 
 /** The Profile */
 export type WhoReactedResult = {
-  __typename?: "WhoReactedResult";
+  __typename?: 'WhoReactedResult';
   profile: Profile;
   /** The reaction */
   reaction: ReactionTypes;
   /** The reaction */
-  reactionAt: Scalars["DateTime"];
+  reactionAt: Scalars['DateTime'];
   /** The reaction id */
-  reactionId: Scalars["ReactionId"];
+  reactionId: Scalars['ReactionId'];
 };
 
 export type WorldcoinIdentity = {
-  __typename?: "WorldcoinIdentity";
+  __typename?: 'WorldcoinIdentity';
   /** If the profile has verified as a user */
-  isHuman: Scalars["Boolean"];
+  isHuman: Scalars['Boolean'];
+};
+
+export type ProfileFieldsFragment = {
+  __typename?: 'Profile';
+  id: any;
+  name?: string | null;
+  handle: any;
+  bio?: string | null;
+  ownedBy: any;
+  isFollowedByMe: boolean;
+  stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
+  attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+  picture?:
+    | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+    | { __typename?: 'NftImage'; uri: any }
+    | null;
+  followModule?:
+    | { __typename: 'FeeFollowModuleSettings' }
+    | { __typename: 'ProfileFollowModuleSettings' }
+    | { __typename: 'RevertFollowModuleSettings' }
+    | { __typename: 'UnknownFollowModuleSettings' }
+    | null;
+};
+
+export type AuthenticateMutationVariables = Exact<{
+  request: SignedAuthChallenge;
+}>;
+
+export type AuthenticateMutation = {
+  __typename?: 'Mutation';
+  authenticate: { __typename?: 'AuthenticationResult'; accessToken: any; refreshToken: any };
+};
+
+export type ChallengeQueryVariables = Exact<{
+  request: ChallengeRequest;
+}>;
+
+export type ChallengeQuery = {
+  __typename?: 'Query';
+  challenge: { __typename?: 'AuthChallengeResult'; text: string };
 };
 
 export type ExploreProfilesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ExploreProfilesQuery = {
-  __typename?: "Query";
+  __typename?: 'Query';
   exploreProfiles: {
-    __typename?: "ExploreProfileResult";
+    __typename?: 'ExploreProfileResult';
     items: Array<{
-      __typename?: "Profile";
+      __typename?: 'Profile';
       id: any;
       name?: string | null;
       bio?: string | null;
       handle: any;
       picture?:
-        | {
-            __typename?: "MediaSet";
-            original: { __typename?: "Media"; url: any };
-          }
-        | { __typename?: "NftImage" }
+        | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+        | { __typename?: 'NftImage' }
         | null;
-      stats: { __typename?: "ProfileStats"; totalFollowers: number };
+      stats: { __typename?: 'ProfileStats'; totalFollowers: number };
     }>;
   };
 };
@@ -3771,26 +3799,19 @@ export type FollowersQueryVariables = Exact<{
 }>;
 
 export type FollowersQuery = {
-  __typename?: "Query";
+  __typename?: 'Query';
   followers: {
-    __typename?: "PaginatedFollowersResult";
+    __typename?: 'PaginatedFollowersResult';
     items: Array<{
-      __typename?: "Follower";
+      __typename?: 'Follower';
       totalAmountOfTimesFollowed: number;
       wallet: {
-        __typename?: "Wallet";
+        __typename?: 'Wallet';
         address: any;
-        defaultProfile?: {
-          __typename?: "Profile";
-          isFollowedByMe: boolean;
-        } | null;
+        defaultProfile?: { __typename?: 'Profile'; isFollowedByMe: boolean } | null;
       };
     }>;
-    pageInfo: {
-      __typename?: "PaginatedResultInfo";
-      next?: any | null;
-      totalCount?: number | null;
-    };
+    pageInfo: { __typename?: 'PaginatedResultInfo'; next?: any | null; totalCount?: number | null };
   };
 };
 
@@ -3799,9 +3820,9 @@ export type ProfileQueryVariables = Exact<{
 }>;
 
 export type ProfileQuery = {
-  __typename?: "Query";
+  __typename?: 'Query';
   profile?: {
-    __typename?: "Profile";
+    __typename?: 'Profile';
     id: any;
     handle: any;
     ownedBy: any;
@@ -3811,31 +3832,24 @@ export type ProfileQuery = {
     followNftAddress?: any | null;
     isFollowedByMe: boolean;
     isFollowing: boolean;
-    attributes?: Array<{
-      __typename?: "Attribute";
-      key: string;
-      value: string;
-    }> | null;
-    dispatcher?: { __typename?: "Dispatcher"; canUseRelay: boolean } | null;
+    attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+    dispatcher?: { __typename?: 'Dispatcher'; canUseRelay: boolean } | null;
     onChainIdentity: {
-      __typename?: "OnChainIdentity";
+      __typename?: 'OnChainIdentity';
       proofOfHumanity: boolean;
       sybilDotOrg: {
-        __typename?: "SybilDotOrgIdentity";
+        __typename?: 'SybilDotOrgIdentity';
         verified: boolean;
         source: {
-          __typename?: "SybilDotOrgIdentitySource";
-          twitter: {
-            __typename?: "SybilDotOrgTwitterIdentity";
-            handle?: string | null;
-          };
+          __typename?: 'SybilDotOrgIdentitySource';
+          twitter: { __typename?: 'SybilDotOrgTwitterIdentity'; handle?: string | null };
         };
       };
-      ens?: { __typename?: "EnsOnChainIdentity"; name?: any | null } | null;
-      worldcoin: { __typename?: "WorldcoinIdentity"; isHuman: boolean };
+      ens?: { __typename?: 'EnsOnChainIdentity'; name?: any | null } | null;
+      worldcoin: { __typename?: 'WorldcoinIdentity'; isHuman: boolean };
     };
     stats: {
-      __typename?: "ProfileStats";
+      __typename?: 'ProfileStats';
       totalFollowers: number;
       totalFollowing: number;
       totalPosts: number;
@@ -3843,26 +3857,123 @@ export type ProfileQuery = {
       totalMirrors: number;
     };
     picture?:
-      | {
-          __typename?: "MediaSet";
-          original: { __typename?: "Media"; url: any };
-        }
-      | { __typename?: "NftImage"; uri: any }
+      | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+      | { __typename?: 'NftImage'; uri: any }
       | null;
     coverPicture?:
-      | {
-          __typename?: "MediaSet";
-          original: { __typename?: "Media"; url: any };
-        }
-      | { __typename?: "NftImage" }
+      | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+      | { __typename?: 'NftImage' }
       | null;
     followModule?:
-      | { __typename: "FeeFollowModuleSettings" }
-      | { __typename: "ProfileFollowModuleSettings" }
-      | { __typename: "RevertFollowModuleSettings" }
-      | { __typename: "UnknownFollowModuleSettings" }
+      | { __typename: 'FeeFollowModuleSettings' }
+      | { __typename: 'ProfileFollowModuleSettings' }
+      | { __typename: 'RevertFollowModuleSettings' }
+      | { __typename: 'UnknownFollowModuleSettings' }
       | null;
   } | null;
+};
+
+export type ProfilesQueryVariables = Exact<{
+  ownedBy?: InputMaybe<Array<Scalars['EthereumAddress']> | Scalars['EthereumAddress']>;
+}>;
+
+export type ProfilesQuery = {
+  __typename?: 'Query';
+  profiles: {
+    __typename?: 'PaginatedProfileResult';
+    items: Array<{
+      __typename?: 'Profile';
+      id: any;
+      name?: string | null;
+      bio?: string | null;
+      followNftAddress?: any | null;
+      metadata?: any | null;
+      isDefault: boolean;
+      handle: any;
+      ownedBy: any;
+      attributes?: Array<{
+        __typename?: 'Attribute';
+        displayType?: string | null;
+        traitType?: string | null;
+        key: string;
+        value: string;
+      }> | null;
+      picture?:
+        | { __typename: 'MediaSet'; original: { __typename?: 'Media'; url: any; mimeType?: any | null } }
+        | { __typename: 'NftImage'; contractAddress: any; tokenId: string; uri: any; verified: boolean }
+        | null;
+      coverPicture?:
+        | { __typename: 'MediaSet'; original: { __typename?: 'Media'; url: any; mimeType?: any | null } }
+        | { __typename: 'NftImage'; contractAddress: any; tokenId: string; uri: any; verified: boolean }
+        | null;
+      dispatcher?: { __typename?: 'Dispatcher'; address: any; canUseRelay: boolean } | null;
+      stats: {
+        __typename?: 'ProfileStats';
+        totalFollowers: number;
+        totalFollowing: number;
+        totalPosts: number;
+        totalComments: number;
+        totalMirrors: number;
+        totalPublications: number;
+        totalCollects: number;
+      };
+      followModule?:
+        | {
+            __typename?: 'FeeFollowModuleSettings';
+            type: FollowModules;
+            recipient: any;
+            amount: {
+              __typename?: 'ModuleFeeAmount';
+              value: string;
+              asset: { __typename?: 'Erc20'; symbol: string; name: string; decimals: number; address: any };
+            };
+          }
+        | { __typename?: 'ProfileFollowModuleSettings'; type: FollowModules }
+        | { __typename?: 'RevertFollowModuleSettings'; type: FollowModules }
+        | { __typename?: 'UnknownFollowModuleSettings' }
+        | null;
+    }>;
+    pageInfo: {
+      __typename?: 'PaginatedResultInfo';
+      prev?: any | null;
+      next?: any | null;
+      totalCount?: number | null;
+    };
+  };
+};
+
+export type UserProfilesQueryVariables = Exact<{
+  ownedBy?: InputMaybe<Array<Scalars['EthereumAddress']> | Scalars['EthereumAddress']>;
+}>;
+
+export type UserProfilesQuery = {
+  __typename?: 'Query';
+  profiles: {
+    __typename?: 'PaginatedProfileResult';
+    items: Array<{
+      __typename?: 'Profile';
+      isDefault: boolean;
+      id: any;
+      name?: string | null;
+      handle: any;
+      bio?: string | null;
+      ownedBy: any;
+      isFollowedByMe: boolean;
+      stats: { __typename?: 'ProfileStats'; totalFollowing: number; totalFollowers: number };
+      dispatcher?: { __typename?: 'Dispatcher'; canUseRelay: boolean } | null;
+      attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+      picture?:
+        | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+        | { __typename?: 'NftImage'; uri: any }
+        | null;
+      followModule?:
+        | { __typename: 'FeeFollowModuleSettings' }
+        | { __typename: 'ProfileFollowModuleSettings' }
+        | { __typename: 'RevertFollowModuleSettings' }
+        | { __typename: 'UnknownFollowModuleSettings' }
+        | null;
+    }>;
+  };
 };
 
 export interface PossibleTypesResultData {
@@ -3873,53 +3984,164 @@ export interface PossibleTypesResultData {
 const result: PossibleTypesResultData = {
   possibleTypes: {
     CollectModule: [
-      "FeeCollectModuleSettings",
-      "FreeCollectModuleSettings",
-      "LimitedFeeCollectModuleSettings",
-      "LimitedTimedFeeCollectModuleSettings",
-      "RevertCollectModuleSettings",
-      "TimedFeeCollectModuleSettings",
-      "UnknownCollectModuleSettings",
+      'FeeCollectModuleSettings',
+      'FreeCollectModuleSettings',
+      'LimitedFeeCollectModuleSettings',
+      'LimitedTimedFeeCollectModuleSettings',
+      'RevertCollectModuleSettings',
+      'TimedFeeCollectModuleSettings',
+      'UnknownCollectModuleSettings'
     ],
-    FeedItemRoot: ["Comment", "Post"],
+    FeedItemRoot: ['Comment', 'Post'],
     FollowModule: [
-      "FeeFollowModuleSettings",
-      "ProfileFollowModuleSettings",
-      "RevertFollowModuleSettings",
-      "UnknownFollowModuleSettings",
+      'FeeFollowModuleSettings',
+      'ProfileFollowModuleSettings',
+      'RevertFollowModuleSettings',
+      'UnknownFollowModuleSettings'
     ],
-    MainPostReference: ["Mirror", "Post"],
-    MentionPublication: ["Comment", "Post"],
-    MirrorablePublication: ["Comment", "Post"],
+    MainPostReference: ['Mirror', 'Post'],
+    MentionPublication: ['Comment', 'Post'],
+    MirrorablePublication: ['Comment', 'Post'],
     Notification: [
-      "NewCollectNotification",
-      "NewCommentNotification",
-      "NewFollowerNotification",
-      "NewMentionNotification",
-      "NewMirrorNotification",
-      "NewReactionNotification",
+      'NewCollectNotification',
+      'NewCommentNotification',
+      'NewFollowerNotification',
+      'NewMentionNotification',
+      'NewMirrorNotification',
+      'NewReactionNotification'
     ],
-    ProfileMedia: ["MediaSet", "NftImage"],
-    ProxyActionStatusResultUnion: [
-      "ProxyActionError",
-      "ProxyActionQueued",
-      "ProxyActionStatusResult",
-    ],
-    Publication: ["Comment", "Mirror", "Post"],
-    PublicationForSale: ["Comment", "Post"],
-    PublicationSearchResultItem: ["Comment", "Post"],
+    ProfileMedia: ['MediaSet', 'NftImage'],
+    ProxyActionStatusResultUnion: ['ProxyActionError', 'ProxyActionQueued', 'ProxyActionStatusResult'],
+    Publication: ['Comment', 'Mirror', 'Post'],
+    PublicationForSale: ['Comment', 'Post'],
+    PublicationSearchResultItem: ['Comment', 'Post'],
     ReferenceModule: [
-      "DegreesOfSeparationReferenceModuleSettings",
-      "FollowOnlyReferenceModuleSettings",
-      "UnknownReferenceModuleSettings",
+      'DegreesOfSeparationReferenceModuleSettings',
+      'FollowOnlyReferenceModuleSettings',
+      'UnknownReferenceModuleSettings'
     ],
-    RelayResult: ["RelayError", "RelayerResult"],
-    SearchResult: ["ProfileSearchResult", "PublicationSearchResult"],
-    TransactionResult: ["TransactionError", "TransactionIndexedResult"],
-  },
+    RelayResult: ['RelayError', 'RelayerResult'],
+    SearchResult: ['ProfileSearchResult', 'PublicationSearchResult'],
+    TransactionResult: ['TransactionError', 'TransactionIndexedResult']
+  }
 };
 export default result;
 
+export const ProfileFieldsFragmentDoc = gql`
+  fragment ProfileFields on Profile {
+    id
+    name
+    handle
+    bio
+    ownedBy
+    isFollowedByMe
+    stats {
+      totalFollowers
+      totalFollowing
+    }
+    attributes {
+      key
+      value
+    }
+    picture {
+      ... on MediaSet {
+        original {
+          url
+        }
+      }
+      ... on NftImage {
+        uri
+      }
+    }
+    followModule {
+      __typename
+    }
+  }
+`;
+export const AuthenticateDocument = gql`
+  mutation Authenticate($request: SignedAuthChallenge!) {
+    authenticate(request: $request) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
+export type AuthenticateMutationFn = Apollo.MutationFunction<
+  AuthenticateMutation,
+  AuthenticateMutationVariables
+>;
+
+/**
+ * __useAuthenticateMutation__
+ *
+ * To run a mutation, you first call `useAuthenticateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthenticateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authenticateMutation, { data, loading, error }] = useAuthenticateMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useAuthenticateMutation(
+  baseOptions?: Apollo.MutationHookOptions<AuthenticateMutation, AuthenticateMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AuthenticateMutation, AuthenticateMutationVariables>(
+    AuthenticateDocument,
+    options
+  );
+}
+export type AuthenticateMutationHookResult = ReturnType<typeof useAuthenticateMutation>;
+export type AuthenticateMutationResult = Apollo.MutationResult<AuthenticateMutation>;
+export type AuthenticateMutationOptions = Apollo.BaseMutationOptions<
+  AuthenticateMutation,
+  AuthenticateMutationVariables
+>;
+export const ChallengeDocument = gql`
+  query Challenge($request: ChallengeRequest!) {
+    challenge(request: $request) {
+      text
+    }
+  }
+`;
+
+/**
+ * __useChallengeQuery__
+ *
+ * To run a query within a React component, call `useChallengeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChallengeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChallengeQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useChallengeQuery(
+  baseOptions: Apollo.QueryHookOptions<ChallengeQuery, ChallengeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ChallengeQuery, ChallengeQueryVariables>(ChallengeDocument, options);
+}
+export function useChallengeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ChallengeQuery, ChallengeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ChallengeQuery, ChallengeQueryVariables>(ChallengeDocument, options);
+}
+export type ChallengeQueryHookResult = ReturnType<typeof useChallengeQuery>;
+export type ChallengeLazyQueryHookResult = ReturnType<typeof useChallengeLazyQuery>;
+export type ChallengeQueryResult = Apollo.QueryResult<ChallengeQuery, ChallengeQueryVariables>;
 export const ExploreProfilesDocument = gql`
   query ExploreProfiles {
     exploreProfiles(request: { sortCriteria: MOST_FOLLOWERS }) {
@@ -3959,10 +4181,7 @@ export const ExploreProfilesDocument = gql`
  * });
  */
 export function useExploreProfilesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    ExploreProfilesQuery,
-    ExploreProfilesQueryVariables
-  >
+  baseOptions?: Apollo.QueryHookOptions<ExploreProfilesQuery, ExploreProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ExploreProfilesQuery, ExploreProfilesQueryVariables>(
@@ -3971,23 +4190,16 @@ export function useExploreProfilesQuery(
   );
 }
 export function useExploreProfilesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ExploreProfilesQuery,
-    ExploreProfilesQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<ExploreProfilesQuery, ExploreProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    ExploreProfilesQuery,
-    ExploreProfilesQueryVariables
-  >(ExploreProfilesDocument, options);
+  return Apollo.useLazyQuery<ExploreProfilesQuery, ExploreProfilesQueryVariables>(
+    ExploreProfilesDocument,
+    options
+  );
 }
-export type ExploreProfilesQueryHookResult = ReturnType<
-  typeof useExploreProfilesQuery
->;
-export type ExploreProfilesLazyQueryHookResult = ReturnType<
-  typeof useExploreProfilesLazyQuery
->;
+export type ExploreProfilesQueryHookResult = ReturnType<typeof useExploreProfilesQuery>;
+export type ExploreProfilesLazyQueryHookResult = ReturnType<typeof useExploreProfilesLazyQuery>;
 export type ExploreProfilesQueryResult = Apollo.QueryResult<
   ExploreProfilesQuery,
   ExploreProfilesQueryVariables
@@ -4032,31 +4244,17 @@ export function useFollowersQuery(
   baseOptions: Apollo.QueryHookOptions<FollowersQuery, FollowersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<FollowersQuery, FollowersQueryVariables>(
-    FollowersDocument,
-    options
-  );
+  return Apollo.useQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
 }
 export function useFollowersLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    FollowersQuery,
-    FollowersQueryVariables
-  >
+  baseOptions?: Apollo.LazyQueryHookOptions<FollowersQuery, FollowersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<FollowersQuery, FollowersQueryVariables>(
-    FollowersDocument,
-    options
-  );
+  return Apollo.useLazyQuery<FollowersQuery, FollowersQueryVariables>(FollowersDocument, options);
 }
 export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
-export type FollowersLazyQueryHookResult = ReturnType<
-  typeof useFollowersLazyQuery
->;
-export type FollowersQueryResult = Apollo.QueryResult<
-  FollowersQuery,
-  FollowersQueryVariables
->;
+export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
+export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
 export const ProfileDocument = gql`
   query Profile($request: SingleProfileQueryRequest!) {
     profile(request: $request) {
@@ -4140,27 +4338,188 @@ export const ProfileDocument = gql`
  *   },
  * });
  */
-export function useProfileQuery(
-  baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>
-) {
+export function useProfileQuery(baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    options
-  );
+  return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
 }
 export function useProfileLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    options
-  );
+  return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
 }
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
-export type ProfileQueryResult = Apollo.QueryResult<
-  ProfileQuery,
-  ProfileQueryVariables
->;
+export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
+export const ProfilesDocument = gql`
+  query Profiles($ownedBy: [EthereumAddress!]) {
+    profiles(request: { ownedBy: $ownedBy, limit: 10 }) {
+      items {
+        id
+        name
+        bio
+        attributes {
+          displayType
+          traitType
+          key
+          value
+        }
+        followNftAddress
+        metadata
+        isDefault
+        picture {
+          ... on NftImage {
+            contractAddress
+            tokenId
+            uri
+            verified
+          }
+          ... on MediaSet {
+            original {
+              url
+              mimeType
+            }
+          }
+          __typename
+        }
+        handle
+        coverPicture {
+          ... on NftImage {
+            contractAddress
+            tokenId
+            uri
+            verified
+          }
+          ... on MediaSet {
+            original {
+              url
+              mimeType
+            }
+          }
+          __typename
+        }
+        ownedBy
+        dispatcher {
+          address
+          canUseRelay
+        }
+        stats {
+          totalFollowers
+          totalFollowing
+          totalPosts
+          totalComments
+          totalMirrors
+          totalPublications
+          totalCollects
+        }
+        followModule {
+          ... on FeeFollowModuleSettings {
+            type
+            amount {
+              asset {
+                symbol
+                name
+                decimals
+                address
+              }
+              value
+            }
+            recipient
+          }
+          ... on ProfileFollowModuleSettings {
+            type
+          }
+          ... on RevertFollowModuleSettings {
+            type
+          }
+        }
+      }
+      pageInfo {
+        prev
+        next
+        totalCount
+      }
+    }
+  }
+`;
+
+/**
+ * __useProfilesQuery__
+ *
+ * To run a query within a React component, call `useProfilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfilesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfilesQuery({
+ *   variables: {
+ *      ownedBy: // value for 'ownedBy'
+ *   },
+ * });
+ */
+export function useProfilesQuery(
+  baseOptions?: Apollo.QueryHookOptions<ProfilesQuery, ProfilesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProfilesQuery, ProfilesQueryVariables>(ProfilesDocument, options);
+}
+export function useProfilesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfilesQuery, ProfilesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProfilesQuery, ProfilesQueryVariables>(ProfilesDocument, options);
+}
+export type ProfilesQueryHookResult = ReturnType<typeof useProfilesQuery>;
+export type ProfilesLazyQueryHookResult = ReturnType<typeof useProfilesLazyQuery>;
+export type ProfilesQueryResult = Apollo.QueryResult<ProfilesQuery, ProfilesQueryVariables>;
+export const UserProfilesDocument = gql`
+  query UserProfiles($ownedBy: [EthereumAddress!]) {
+    profiles(request: { ownedBy: $ownedBy, limit: 10 }) {
+      items {
+        ...ProfileFields
+        stats {
+          totalFollowing
+        }
+        isDefault
+        dispatcher {
+          canUseRelay
+        }
+      }
+    }
+  }
+  ${ProfileFieldsFragmentDoc}
+`;
+
+/**
+ * __useUserProfilesQuery__
+ *
+ * To run a query within a React component, call `useUserProfilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserProfilesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserProfilesQuery({
+ *   variables: {
+ *      ownedBy: // value for 'ownedBy'
+ *   },
+ * });
+ */
+export function useUserProfilesQuery(
+  baseOptions?: Apollo.QueryHookOptions<UserProfilesQuery, UserProfilesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserProfilesQuery, UserProfilesQueryVariables>(UserProfilesDocument, options);
+}
+export function useUserProfilesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<UserProfilesQuery, UserProfilesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserProfilesQuery, UserProfilesQueryVariables>(UserProfilesDocument, options);
+}
+export type UserProfilesQueryHookResult = ReturnType<typeof useUserProfilesQuery>;
+export type UserProfilesLazyQueryHookResult = ReturnType<typeof useUserProfilesLazyQuery>;
+export type UserProfilesQueryResult = Apollo.QueryResult<UserProfilesQuery, UserProfilesQueryVariables>;

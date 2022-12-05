@@ -1,0 +1,14 @@
+query UserProfiles($ownedBy: [EthereumAddress!]) {
+  profiles(request: { ownedBy: $ownedBy, limit: 10 }) {
+    items {
+      ...ProfileFields
+      stats {
+        totalFollowing
+      }
+      isDefault
+      dispatcher {
+        canUseRelay
+      }
+    }
+  }
+}

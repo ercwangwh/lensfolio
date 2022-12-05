@@ -1,5 +1,6 @@
 schema: https://api-mumbai.lens.dev
-documents: ["./documents/queries/*.graphql"]
+documents:
+  ['./documents/queries/*.graphql', './documents/mutations/*.graphql', './documents/fragments/*.graphql']
 
 hooks:
   afterAllFileWrite:
