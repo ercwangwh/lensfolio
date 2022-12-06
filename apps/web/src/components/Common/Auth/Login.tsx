@@ -1,3 +1,4 @@
+import { useAppStore, useAppPersistStore } from 'src/store/app';
 import React, { useEffect, useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { FC } from 'react';
@@ -16,6 +17,11 @@ import UserMenu from './UserMenu';
 
 const Login: FC = () => {
   const [loading, setLoading] = useState(false);
+
+  const setProfiles = useAppStore((state) => state.setProfiles);
+  const setCurrentProfile = useAppStore((state) => state.setCurrentProfile);
+  const setProfileId = useAppPersistStore((state) => state.setProfileId);
+
   const { address } = useAccount();
   const [challengequery, { error: errorChallenge }] = useChallengeLazyQuery({ fetchPolicy: 'no-cache' });
   const [authenticate, { error: errorAuthenticate }] = useAuthenticateMutation();
@@ -57,14 +63,29 @@ const Login: FC = () => {
       const { data: profilesData } = await getProfiles({
         variables: { ownedBy: address }
       });
-      //   console.log(address);
-      setLoading(false);
-      console.log('items', profilesData?.profiles.items);
+
+      if (profilesData?.profiles?.items?.length === 0) {
+        console.log('NO PROFILES');
+      } else {
+        const profiles: any = profilesData?.profiles?.items
+          ?.slice()
+          ?.sort((a, b) => Number(a.id) - Number(b.id))
+          ?.sort((a, b) => (a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1));
+        const currentProfile = profiles[0];
+        setProfiles(profiles);
+        setCurrentProfile(currentProfile);
+        setProfileId(currentProfile.id);
+
+        console.log('currentProfile', currentProfile, 'profileid', currentProfile.id);
+      }
+
+      // console.log('items', profilesData?.profiles.items);
       //   profilesData?.profiles?.items?.handle;
-      console.log(profilesData);
+      // console.log(profilesData);
     } catch (error) {
-      setLoading(false);
       toast.error('Sign in failed');
+    } finally {
+      setLoading(false);
     }
   };
   return <LoginButton handleSign={() => handleSign()} signing={loading}></LoginButton>;

@@ -1,3 +1,4 @@
+import { useAppStore, useAppPersistStore } from 'src/store/app';
 import React, { useEffect, useState } from 'react';
 import { Button } from '@components/UI/Button';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
@@ -13,7 +14,8 @@ interface LoginProps {
 
 const LoginButton = ({ handleSign, signing }: LoginProps) => {
   // const [loading, setLoading] = useState(false);
-
+  const profiles = useAppStore((state) => state.profiles);
+  const currentProfile = useAppStore((state) => state.currentProfile);
   const { connector, isConnected } = useAccount();
   const { switchNetwork } = useSwitchNetwork();
   const { chain } = useNetwork();
@@ -24,8 +26,8 @@ const LoginButton = ({ handleSign, signing }: LoginProps) => {
   // });
   return connector?.id && isConnected ? (
     chain?.id === POLYGON_CHAIN_ID ? (
-      false ? (
-        <div>False</div>
+      profiles && currentProfile?.id ? (
+        <UserMenu />
       ) : (
         <Button loading={signing} onClick={() => handleSign()} disabled={signing}>
           Sign In

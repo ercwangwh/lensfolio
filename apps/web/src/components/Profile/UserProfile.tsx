@@ -7,6 +7,7 @@ import type { Profile } from 'lens';
 import Link from 'next/link';
 import type { FC } from 'react';
 import { useState } from 'react';
+import Badges from './Badges';
 
 // import Follow from "./Follow";
 // import Markup from "./Markup";
@@ -42,92 +43,39 @@ const UserProfile: FC<Props> = ({
   //   const hasStatus = statusEmoji && statusMessage;
 
   const UserAvatar = () => (
-    <img
-      src={getAvatar(profile)}
-      loading="lazy"
-      className={clsx(
-        isBig ? 'w-14 h-14' : 'w-10 h-10',
-        'bg-gray-200 rounded-full border dark:border-gray-700/80'
-      )}
-      height={isBig ? 56 : 40}
-      width={isBig ? 56 : 40}
-      alt={profile?.handle}
-    />
+    <div className="flex-none z-[1] mr-4 md:mr-6">
+      <img
+        src={getAvatar(profile)}
+        loading="lazy"
+        className="object-cover w-24 h-24 bg-white border-4 border-white dark:border-black rounded-xl dark:bg-gray-900 md:-mt-10 md:w-32 md:h-32"
+        draggable={false}
+        alt={profile?.handle}
+      />
+    </div>
   );
 
-  const UserName = () => (
-    <>
+  const UserInfo = () => (
+    <div className="flex flex-col items-start mr-3">
       <div className="flex items-center max-w-sm truncate">
-        <div className={clsx(isBig ? 'font-bold' : 'text-md')}>{profile?.name ?? profile?.handle}</div>
-        {/* {isVerified(profile?.id) && <BadgeCheckIcon className="w-4 h-4 text-brand ml-1" />}
-        {showStatus && hasStatus ? (
-          <div className="flex items-center text-gray-500">
-            <span className="mx-1.5">·</span>
-            <span className="text-xs flex items-center space-x-1 max-w-[10rem]">
-              <span>{statusEmoji}</span>
-              <span className="truncate">{statusMessage}</span>
-            </span>
-          </div>
-        ) : null} */}
+        <h1 className="flex items-center space-x-1.5 font-semibold md:text-2xl">
+          <span>{profile?.handle}</span>
+        </h1>
       </div>
-      {/* <Slug className="text-sm" slug={profile?.handle} prefix="@" /> */}
-    </>
-  );
-
-  const UserFollow = () => (
-    <>
       <div className="flex items-center max-w-sm truncate">
-        <div className={clsx(isBig ? 'font-bold' : 'text-md')}>{profile?.stats?.totalFollowing}</div>
-        <div className={clsx(isBig ? 'font-bold' : 'text-md')}>{profile?.stats?.totalFollowers}</div>
-        {/* {isVerified(profile?.id) && <BadgeCheckIcon className="w-4 h-4 text-brand ml-1" />}
-        {showStatus && hasStatus ? (
-          <div className="flex items-center text-gray-500">
-            <span className="mx-1.5">·</span>
-            <span className="text-xs flex items-center space-x-1 max-w-[10rem]">
-              <span>{statusEmoji}</span>
-              <span className="truncate">{statusMessage}</span>
-            </span>
-          </div>
-        ) : null} */}
+        <span className="px-2 py-0.5 text-xs dark:bg-gray-700 bg-gray-200 rounded-full">
+          {profile?.stats?.totalFollowing} Following
+        </span>
+        <span className="px-2 py-0.5 text-xs dark:bg-gray-700 bg-gray-200 rounded-full">
+          {profile?.stats?.totalFollowers} Followers
+        </span>
       </div>
-      {/* <Slug className="text-sm" slug={profile?.handle} prefix="@" /> */}
-    </>
+      <Badges profile={profile} />
+    </div>
   );
-
-  const UserInfo: FC = () => {
-    return (
-      <div className="flex items-center space-x-3">
-        <UserAvatar />
-        <div>
-          <UserName />
-          {showBio && profile?.bio && (
-            <div className={clsx(isBig ? 'text-base' : 'text-sm', 'mt-2', 'linkify leading-6')}>
-              <div>{profile?.bio}</div>
-            </div>
-          )}
-        </div>
-        <UserFollow />
-      </div>
-    );
-  };
 
   return (
-    <div className="flex justify-between items-center">
-      {/* {linkToProfile ? (
-        <Link href={`/u/${profile?.handle}`}>
-          <UserInfo />
-        </Link>
-      ) : (
-        <UserInfo />
-      )}
-      {showFollow &&
-        (followStatusLoading ? (
-          <div className="w-10 h-8 rounded-lg shimmer" />
-        ) : following ? null : profile?.followModule?.__typename === 'FeeFollowModuleSettings' ? (
-          <SuperFollow profile={profile} setFollowing={setFollowing} />
-        ) : (
-          <Follow profile={profile} setFollowing={setFollowing} />
-        ))} */}
+    <div className="flex justify-start items-center pt-2 md:pt-0 md:pl-4">
+      <UserAvatar />
       <UserInfo />
     </div>
   );

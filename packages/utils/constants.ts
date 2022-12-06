@@ -120,3 +120,11 @@ export const API_ORIGINS = ['https://lenstube.xyz', 'https://testnet.lenstube.xy
 export const AVATAR = 'avatar';
 export const COVER = 'cover';
 export const ATTACHMENT = 'attachment';
+
+// Localstorage keys
+export const LS_KEYS = {
+  LENSFOILIO_STORE: 'lensfoilio.store',
+  TRANSACTION_STORE: 'transaction.store',
+  TIMELINE_STORE: 'timeline.store',
+  MESSAGE_STORE: 'message.store'
+};

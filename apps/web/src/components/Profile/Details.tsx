@@ -10,16 +10,18 @@ interface Props {
 
 const Details: FC<Props> = ({ profile }) => {
   return (
-    <div>
-      <Cover
-        cover={
-          profile?.coverPicture?.__typename === 'MediaSet'
-            ? profile?.coverPicture?.original?.url
-            : `${STATIC_IMAGES_URL}/patterns/2.svg`
-        }
-      />
-      <Badges profile={profile} />
-      <UserProfile profile={profile} showBio={true} isBig={true}></UserProfile>
+    <div className="flex">
+      <div className="relative w-full">
+        <Cover
+          cover={
+            profile?.coverPicture?.__typename === 'MediaSet'
+              ? profile?.coverPicture?.original?.url
+              : `${STATIC_IMAGES_URL}/patterns/2.svg`
+          }
+        />
+        {/* <Badges profile={profile} /> */}
+        <UserProfile profile={profile} showBio={true} isBig={true}></UserProfile>
+      </div>
     </div>
   );
 };

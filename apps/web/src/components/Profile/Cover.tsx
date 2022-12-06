@@ -10,7 +10,7 @@ interface Props {
 const Cover: FC<Props> = ({ cover }) => {
   return (
     <div
-      className="h-52 sm:h-80"
+      className="h-52 sm:h-80 rounded-lg"
       style={{
         backgroundImage: `url(${
           cover ? imageProxy(getIPFSLink(cover), COVER) : `${STATIC_IMAGES_URL}/patterns/2.svg`

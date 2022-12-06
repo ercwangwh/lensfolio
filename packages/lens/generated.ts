@@ -316,6 +316,7 @@ export type Comment = {
   commentOn?: Maybe<Publication>;
   /** The date the post was created on */
   createdAt: Scalars['DateTime'];
+  dataAvailabilityProofs?: Maybe<Scalars['String']>;
   /** This will bring back the first comment of a comment and only be defined if using `publication` query and `commentOf` */
   firstComment?: Maybe<Comment>;
   hasCollectedByMe: Scalars['Boolean'];
@@ -323,6 +324,8 @@ export type Comment = {
   hidden: Scalars['Boolean'];
   /** The internal publication id */
   id: Scalars['InternalPublicationId'];
+  /** Indicates if the publication is data availability post */
+  isDataAvailability: Scalars['Boolean'];
   /** Indicates if the publication is gated behind some access criteria */
   isGated: Scalars['Boolean'];
   /** The top level post/mirror this comment lives on */
@@ -1765,11 +1768,14 @@ export type Mirror = {
   collectNftAddress?: Maybe<Scalars['ContractAddress']>;
   /** The date the post was created on */
   createdAt: Scalars['DateTime'];
+  dataAvailabilityProofs?: Maybe<Scalars['String']>;
   hasCollectedByMe: Scalars['Boolean'];
   /** If the publication has been hidden if it has then the content and media is not available */
   hidden: Scalars['Boolean'];
   /** The internal publication id */
   id: Scalars['InternalPublicationId'];
+  /** Indicates if the publication is data availability post */
+  isDataAvailability: Scalars['Boolean'];
   /** Indicates if the publication is gated behind some access criteria */
   isGated: Scalars['Boolean'];
   /** The metadata for the post */
@@ -2405,11 +2411,14 @@ export type Post = {
   collectedBy?: Maybe<Wallet>;
   /** The date the post was created on */
   createdAt: Scalars['DateTime'];
+  dataAvailabilityProofs?: Maybe<Scalars['String']>;
   hasCollectedByMe: Scalars['Boolean'];
   /** If the publication has been hidden if it has then the content and media is not available */
   hidden: Scalars['Boolean'];
   /** The internal publication id */
   id: Scalars['InternalPublicationId'];
+  /** Indicates if the publication is data availability post */
+  isDataAvailability: Scalars['Boolean'];
   /** Indicates if the publication is gated behind some access criteria */
   isGated: Scalars['Boolean'];
   /** The metadata for the post */
@@ -3764,6 +3773,34 @@ export type AuthenticateMutation = {
   authenticate: { __typename?: 'AuthenticationResult'; accessToken: any; refreshToken: any };
 };
 
+export type CreateUnfollowTypedDataMutationVariables = Exact<{
+  request: UnfollowRequest;
+}>;
+
+export type CreateUnfollowTypedDataMutation = {
+  __typename?: 'Mutation';
+  createUnfollowTypedData: {
+    __typename?: 'CreateUnfollowBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateBurnEIP712TypedData';
+      types: {
+        __typename?: 'CreateBurnEIP712TypedDataTypes';
+        BurnWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        version: string;
+        chainId: any;
+        name: string;
+        verifyingContract: any;
+      };
+      value: { __typename?: 'CreateBurnEIP712TypedDataValue'; nonce: any; deadline: any; tokenId: string };
+    };
+  };
+};
+
 export type ChallengeQueryVariables = Exact<{
   request: ChallengeRequest;
 }>;
@@ -4102,6 +4139,73 @@ export type AuthenticateMutationResult = Apollo.MutationResult<AuthenticateMutat
 export type AuthenticateMutationOptions = Apollo.BaseMutationOptions<
   AuthenticateMutation,
   AuthenticateMutationVariables
+>;
+export const CreateUnfollowTypedDataDocument = gql`
+  mutation CreateUnfollowTypedData($request: UnfollowRequest!) {
+    createUnfollowTypedData(request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          BurnWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          version
+          chainId
+          name
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          tokenId
+        }
+      }
+    }
+  }
+`;
+export type CreateUnfollowTypedDataMutationFn = Apollo.MutationFunction<
+  CreateUnfollowTypedDataMutation,
+  CreateUnfollowTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateUnfollowTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateUnfollowTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUnfollowTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUnfollowTypedDataMutation, { data, loading, error }] = useCreateUnfollowTypedDataMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateUnfollowTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateUnfollowTypedDataMutation,
+    CreateUnfollowTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateUnfollowTypedDataMutation, CreateUnfollowTypedDataMutationVariables>(
+    CreateUnfollowTypedDataDocument,
+    options
+  );
+}
+export type CreateUnfollowTypedDataMutationHookResult = ReturnType<typeof useCreateUnfollowTypedDataMutation>;
+export type CreateUnfollowTypedDataMutationResult = Apollo.MutationResult<CreateUnfollowTypedDataMutation>;
+export type CreateUnfollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateUnfollowTypedDataMutation,
+  CreateUnfollowTypedDataMutationVariables
 >;
 export const ChallengeDocument = gql`
   query Challenge($request: ChallengeRequest!) {
