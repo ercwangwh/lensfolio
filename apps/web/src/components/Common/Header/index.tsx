@@ -3,6 +3,7 @@ import Login from '../Auth/Login';
 import Search from './Search';
 import type { FC } from 'react';
 import NavItems from './NavItems';
+import Post from '@components/Post';
 
 const Header: FC = () => {
   return (
@@ -12,6 +13,7 @@ const Header: FC = () => {
           <Search />
           <NavItems />
         </div>
+        <Post></Post>
         <Login />
       </div>
     </div>

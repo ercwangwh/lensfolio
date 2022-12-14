@@ -9,7 +9,7 @@ import {
   useUserProfilesLazyQuery,
   useProfilesLazyQuery
 } from 'lens';
-import { useAccount, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage, useNetwork } from 'wagmi';
 import { ERROR_MESSAGE } from 'utils';
 import LoginButton from './LoginButton';
 import { profile } from 'console';
@@ -23,6 +23,7 @@ const Login: FC = () => {
   const setProfileId = useAppPersistStore((state) => state.setProfileId);
 
   const { address } = useAccount();
+  const { chain } = useNetwork();
   const [challengequery, { error: errorChallenge }] = useChallengeLazyQuery({ fetchPolicy: 'no-cache' });
   const [authenticate, { error: errorAuthenticate }] = useAuthenticateMutation();
   const [getProfiles, { error: errorProfiles }] = useUserProfilesLazyQuery();
@@ -76,7 +77,7 @@ const Login: FC = () => {
         setCurrentProfile(currentProfile);
         setProfileId(currentProfile.id);
 
-        console.log('currentProfile', currentProfile, 'profileid', currentProfile.id);
+        console.log('currentProfile', currentProfile, 'profileid', currentProfile.id, 'profiles', profiles);
       }
 
       // console.log('items', profilesData?.profiles.items);

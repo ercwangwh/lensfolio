@@ -1,8 +1,8 @@
 import { CustomFiltersTypes } from 'lens';
 
-export const LENSTUBE_APP_NAME = 'Lenstube';
+export const LENSTUBE_APP_NAME = 'Lensfoliio';
 export const LENSTUBE_APP_DESCRIPTION =
-  'Lenstube is a decentralized video-sharing social media platform built with Lens protocol.';
+  'Lensfolio is a decentralized artist platform built with Lens protocol.';
 
 export const LENS_ENV = process.env.NEXT_PUBLIC_ENVIRONMENT;
 export const IS_MAINNET = LENS_ENV === 'mainnet';
@@ -22,12 +22,12 @@ export const TESTNET_API_URL = 'https://api-mumbai.lens.dev';
 export const STAGING_MAINNET_API_URL = 'https://staging-api-social-polygon.lens.crtlkey.com';
 export const STAGING_TESTNET_API_URL = 'https://staging-api-social-mumbai.lens.crtlkey.com';
 export const STAGING_API_URL = IS_MAINNET ? STAGING_MAINNET_API_URL : STAGING_TESTNET_API_URL;
+export const LENS_API_URL = IS_MAINNET ? MAINNET_API_URL : TESTNET_API_URL;
 
 // lenstube api
 export const LENSTUBE_MAINNET_API_URL = 'https://api.lenstube.xyz';
 export const LENSTUBE_TESTNET_API_URL = 'https://api-testnet.lenstube.xyz';
 export const LENSTUBE_DEV_API_URL = 'http://localhost:5555';
-export const LENSTUBE_API_URL = IS_MAINNET ? 'https://api.lenstube.xyz' : 'https://api-testnet.lenstube.xyz';
 
 export const API_URL = IS_MAINNET ? MAINNET_API_URL : TESTNET_API_URL;
 export const LENSHUB_PROXY_ADDRESS = IS_MAINNET
@@ -99,7 +99,7 @@ export const ADMIN_IDS = IS_MAINNET ? ['0x2d'] : ['0x2f'];
 
 // lens
 export const LENS_CUSTOM_FILTERS = [CustomFiltersTypes.Gardeners];
-export const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/mpeg', 'video/ogg', 'video/webm', 'video/quicktime'];
+// export const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/mpeg', 'video/ogg', 'video/webm', 'video/quicktime'];
 
 // other apps
 export const LENSTER_WEBSITE_URL = IS_MAINNET ? 'https://lenster.xyz' : 'https://testnet.lenster.xyz';
@@ -128,3 +128,5 @@ export const LS_KEYS = {
   TIMELINE_STORE: 'timeline.store',
   MESSAGE_STORE: 'message.store'
 };
+
+export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];

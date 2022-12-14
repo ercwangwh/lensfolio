@@ -199,7 +199,7 @@ export type CanCommentResponse = {
 
 export type CanDecryptResponse = {
   __typename?: 'CanDecryptResponse';
-  reasons?: Maybe<DecryptFailReason>;
+  reasons?: Maybe<Array<DecryptFailReason>>;
   result: Scalars['Boolean'];
 };
 
@@ -237,7 +237,7 @@ export type ClaimableHandles = {
 /** Condition that signifies if address or profile has collected a publication */
 export type CollectConditionInput = {
   /** The publication id that has to be collected to unlock content */
-  publicationId?: InputMaybe<Scalars['ProfileId']>;
+  publicationId?: InputMaybe<Scalars['InternalPublicationId']>;
   /** True if the content will be unlocked for this specific publication */
   thisPublication?: InputMaybe<Scalars['Boolean']>;
 };
@@ -246,7 +246,7 @@ export type CollectConditionInput = {
 export type CollectConditionOutput = {
   __typename?: 'CollectConditionOutput';
   /** The publication id that has to be collected to unlock content */
-  publicationId?: Maybe<Scalars['ProfileId']>;
+  publicationId?: Maybe<Scalars['InternalPublicationId']>;
   /** True if the content will be unlocked for this specific publication */
   thisPublication?: Maybe<Scalars['Boolean']>;
 };
@@ -2211,7 +2211,7 @@ export type NftOwnershipInput = {
   /** The unlocker contract type */
   contractType: ContractType;
   /** The optional token ID(s) to check for ownership */
-  tokenIds?: InputMaybe<Scalars['TokenId']>;
+  tokenIds?: InputMaybe<Array<Scalars['TokenId']>>;
 };
 
 export type NftOwnershipOutput = {
@@ -2223,7 +2223,7 @@ export type NftOwnershipOutput = {
   /** The unlocker contract type */
   contractType: ContractType;
   /** The optional token ID(s) to check for ownership */
-  tokenIds?: Maybe<Scalars['TokenId']>;
+  tokenIds?: Maybe<Array<Scalars['TokenId']>>;
 };
 
 export type Notification =
@@ -3764,6 +3764,14 @@ export type ProfileFieldsFragment = {
     | null;
 };
 
+type RelayerResultFields_RelayError_Fragment = { __typename?: 'RelayError'; reason: RelayErrorReasons };
+
+type RelayerResultFields_RelayerResult_Fragment = { __typename?: 'RelayerResult'; txHash: any; txId: any };
+
+export type RelayerResultFieldsFragment =
+  | RelayerResultFields_RelayError_Fragment
+  | RelayerResultFields_RelayerResult_Fragment;
+
 export type AuthenticateMutationVariables = Exact<{
   request: SignedAuthChallenge;
 }>;
@@ -3771,6 +3779,67 @@ export type AuthenticateMutationVariables = Exact<{
 export type AuthenticateMutation = {
   __typename?: 'Mutation';
   authenticate: { __typename?: 'AuthenticationResult'; accessToken: any; refreshToken: any };
+};
+
+export type BroadcastMutationVariables = Exact<{
+  request: BroadcastRequest;
+}>;
+
+export type BroadcastMutation = {
+  __typename?: 'Mutation';
+  broadcast:
+    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
+    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
+};
+
+export type CreatePostTypedDataMutationVariables = Exact<{
+  options?: InputMaybe<TypedDataOptions>;
+  request: CreatePublicPostRequest;
+}>;
+
+export type CreatePostTypedDataMutation = {
+  __typename?: 'Mutation';
+  createPostTypedData: {
+    __typename?: 'CreatePostBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreatePostEIP712TypedData';
+      types: {
+        __typename?: 'CreatePostEIP712TypedDataTypes';
+        PostWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      value: {
+        __typename?: 'CreatePostEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        profileId: any;
+        contentURI: any;
+        collectModule: any;
+        collectModuleInitData: any;
+        referenceModule: any;
+        referenceModuleInitData: any;
+      };
+    };
+  };
+};
+
+export type CreateProfileMutationVariables = Exact<{
+  request: CreateProfileRequest;
+}>;
+
+export type CreateProfileMutation = {
+  __typename?: 'Mutation';
+  createProfile:
+    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
+    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
 };
 
 export type CreateUnfollowTypedDataMutationVariables = Exact<{
@@ -4095,6 +4164,17 @@ export const ProfileFieldsFragmentDoc = gql`
     }
   }
 `;
+export const RelayerResultFieldsFragmentDoc = gql`
+  fragment RelayerResultFields on RelayResult {
+    ... on RelayerResult {
+      txHash
+      txId
+    }
+    ... on RelayError {
+      reason
+    }
+  }
+`;
 export const AuthenticateDocument = gql`
   mutation Authenticate($request: SignedAuthChallenge!) {
     authenticate(request: $request) {
@@ -4139,6 +4219,165 @@ export type AuthenticateMutationResult = Apollo.MutationResult<AuthenticateMutat
 export type AuthenticateMutationOptions = Apollo.BaseMutationOptions<
   AuthenticateMutation,
   AuthenticateMutationVariables
+>;
+export const BroadcastDocument = gql`
+  mutation Broadcast($request: BroadcastRequest!) {
+    broadcast(request: $request) {
+      ... on RelayerResult {
+        txHash
+        txId
+      }
+      ... on RelayError {
+        reason
+      }
+    }
+  }
+`;
+export type BroadcastMutationFn = Apollo.MutationFunction<BroadcastMutation, BroadcastMutationVariables>;
+
+/**
+ * __useBroadcastMutation__
+ *
+ * To run a mutation, you first call `useBroadcastMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBroadcastMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [broadcastMutation, { data, loading, error }] = useBroadcastMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useBroadcastMutation(
+  baseOptions?: Apollo.MutationHookOptions<BroadcastMutation, BroadcastMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<BroadcastMutation, BroadcastMutationVariables>(BroadcastDocument, options);
+}
+export type BroadcastMutationHookResult = ReturnType<typeof useBroadcastMutation>;
+export type BroadcastMutationResult = Apollo.MutationResult<BroadcastMutation>;
+export type BroadcastMutationOptions = Apollo.BaseMutationOptions<
+  BroadcastMutation,
+  BroadcastMutationVariables
+>;
+export const CreatePostTypedDataDocument = gql`
+  mutation CreatePostTypedData($options: TypedDataOptions, $request: CreatePublicPostRequest!) {
+    createPostTypedData(options: $options, request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          PostWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          contentURI
+          collectModule
+          collectModuleInitData
+          referenceModule
+          referenceModuleInitData
+        }
+      }
+    }
+  }
+`;
+export type CreatePostTypedDataMutationFn = Apollo.MutationFunction<
+  CreatePostTypedDataMutation,
+  CreatePostTypedDataMutationVariables
+>;
+
+/**
+ * __useCreatePostTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreatePostTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostTypedDataMutation, { data, loading, error }] = useCreatePostTypedDataMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreatePostTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>(
+    CreatePostTypedDataDocument,
+    options
+  );
+}
+export type CreatePostTypedDataMutationHookResult = ReturnType<typeof useCreatePostTypedDataMutation>;
+export type CreatePostTypedDataMutationResult = Apollo.MutationResult<CreatePostTypedDataMutation>;
+export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreatePostTypedDataMutation,
+  CreatePostTypedDataMutationVariables
+>;
+export const CreateProfileDocument = gql`
+  mutation CreateProfile($request: CreateProfileRequest!) {
+    createProfile(request: $request) {
+      ...RelayerResultFields
+    }
+  }
+  ${RelayerResultFieldsFragmentDoc}
+`;
+export type CreateProfileMutationFn = Apollo.MutationFunction<
+  CreateProfileMutation,
+  CreateProfileMutationVariables
+>;
+
+/**
+ * __useCreateProfileMutation__
+ *
+ * To run a mutation, you first call `useCreateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createProfileMutation, { data, loading, error }] = useCreateProfileMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateProfileMutation(
+  baseOptions?: Apollo.MutationHookOptions<CreateProfileMutation, CreateProfileMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateProfileMutation, CreateProfileMutationVariables>(
+    CreateProfileDocument,
+    options
+  );
+}
+export type CreateProfileMutationHookResult = ReturnType<typeof useCreateProfileMutation>;
+export type CreateProfileMutationResult = Apollo.MutationResult<CreateProfileMutation>;
+export type CreateProfileMutationOptions = Apollo.BaseMutationOptions<
+  CreateProfileMutation,
+  CreateProfileMutationVariables
 >;
 export const CreateUnfollowTypedDataDocument = gql`
   mutation CreateUnfollowTypedData($request: UnfollowRequest!) {

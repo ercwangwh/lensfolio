@@ -5,6 +5,7 @@ import { Button } from '@components/UI/Button';
 import getAvatar from '@lib/getAvatar';
 import { useAccount, useDisconnect } from 'wagmi';
 import type { Profile } from 'lens';
+import { CreateProfileMutation } from 'lens';
 import type { CustomErrorWithData } from 'utils';
 import clearLocalStorage from '@lib/clearLocalStorage';
 import { toast } from 'react-hot-toast';
@@ -33,6 +34,8 @@ const UserMenu = () => {
     clearLocalStorage();
     disconnect?.();
   };
+
+  const createProfile = () => {};
   return (
     <DropMenu
       trigger={
@@ -46,14 +49,24 @@ const UserMenu = () => {
         </Button>
       }
     >
-      <button
-        type="button"
-        className="flex items-center w-full px-2.5 py-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-        onClick={() => logout()}
-      >
-        {/* <HandWaveOutline className="w-4 h-4" /> */}
-        <span className="truncate whitespace-nowrap">Disconnect</span>
-      </button>
+      <div>
+        <button
+          type="button"
+          className="flex items-center w-full px-2.5 py-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          // onClick={() => logout()}
+        >
+          {/* <HandWaveOutline className="w-4 h-4" /> */}
+          <span className="truncate whitespace-nowrap">Switch Account</span>
+        </button>
+        <button
+          type="button"
+          className="flex items-center w-full px-2.5 py-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          onClick={() => logout()}
+        >
+          {/* <HandWaveOutline className="w-4 h-4" /> */}
+          <span className="truncate whitespace-nowrap">Disconnect</span>
+        </button>
+      </div>
     </DropMenu>
   );
 };
