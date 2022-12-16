@@ -1,5 +1,7 @@
 // import UploadOutline from '@components/Common/Icons/UploadOutline'
 // import MetaTags from '@components/Common/MetaTags'
+import { readFileSync } from 'fs';
+// const FormData = require('form-data')
 import { useAppStore } from 'src/store/app';
 import clsx from 'clsx';
 // import fileReaderStream from 'filereader-stream'
@@ -7,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ALLOWED_IMAGE_TYPES } from 'utils';
 import useDragAndDrop from 'utils/hooks/useDragAndDrop';
+import uploadToIPFS from '@lib/uploadToIPFS';
 
 // import logger from 'utils/logger';
 const DropZone = () => {
@@ -60,6 +63,19 @@ const DropZone = () => {
     // if (e.target.files?.length) setFiles([...files]);
   };
 
+  const upload = async () => {
+    const uri = await uploadToIPFS(files);
+    // const _file = Array.from(files);
+    // const uris = Promise.all(
+    //   _file.map(async (file: any, index: number) => {
+    //     const uri = await uploadToIPFS(file);
+    //     // return uri;
+    //   })
+    // );
+    console.log(files);
+    console.log(uri);
+  };
+
   return (
     <div>
       {/* <MetaTags title="Select Video" /> */}
@@ -73,13 +89,19 @@ const DropZone = () => {
           <span>Description</span>
           <input id="description"></input>
         </div>
-        {Array.from(files).map((file, index) => {
-          return (
-            <div key={index}>
-              <img src={URL.createObjectURL(file)} alt="placeholder" />
-            </div>
-          );
-        })}
+        <form>
+          {Array.from(files).map((file, index) => {
+            return (
+              // <input type="file">
+              //   input
+              <img key={index} src={URL.createObjectURL(file)} alt="placeholder" />
+              // </input>
+            );
+          })}
+          <button type="button" onClick={upload}>
+            Upload
+          </button>
+        </form>
         <label
           className={clsx(
             'w-full p-10 md:p-20 md:w-2/3 focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-3xl',
@@ -125,6 +147,7 @@ const DropZone = () => {
             {fileDropError && <div className="font-medium text-red-500">{fileDropError}</div>}
           </span>
         </label>
+        {/* <button onClick={upload}></button> */}
       </div>
     </div>
   );
