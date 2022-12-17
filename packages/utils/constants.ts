@@ -16,6 +16,8 @@ export const LENSTUBE_EMBED_URL = IS_MAINNET
   ? 'https://embed.lenstube.xyz'
   : 'https://test-embed.lenstube.xyz';
 
+export const EVER_API = 'https://endpoint.4everland.co';
+
 // lens
 export const MAINNET_API_URL = 'https://api.lens.dev';
 export const TESTNET_API_URL = 'https://api-mumbai.lens.dev';
@@ -62,12 +64,12 @@ export const IPFS_FREE_UPLOAD_LIMIT = IS_MAINNET ? 1000 : 100;
 export const IPFS_GATEWAY = 'https://lens.infura-ipfs.io/ipfs/';
 export const EVER_ENDPOINT = 'https://endpoint.4everland.co';
 export const EVER_REGION = 'us-west-2';
-export const EVER_ACCESS_KEY = process.env.EVER_ACCESS_KEY as string;
-export const EVER_ACCESS_SECRET = process.env.EVER_ACCESS_SECRET as string;
+// export const EVER_ACCESS_KEY = process.env.EVER_ACCESS_KEY as string;
+// export const EVER_ACCESS_SECRET = process.env.EVER_ACCESS_SECRET as string;
 export const NEXT_PUBLIC_EVER_BUCKET_NAME = IS_MAINNET ? 'lenstube' : 'testnet';
 
 // livepeer
-export const LIVEPEER_API_KEY = process.env.LIVEPEER_API_KEY as string;
+// export const LIVEPEER_API_KEY = process.env.LIVEPEER_API_KEY as string;
 
 // bundlr
 export const BUNDLR_NODE_URL = IS_MAINNET ? 'https://node1.bundlr.network' : 'https://devnet.bundlr.network';
@@ -77,7 +79,7 @@ export const BUNDLR_METADATA_UPLOAD_URL = IS_MAINNET
 export const BUNDLR_CURRENCY = 'matic';
 export const BUNDLR_WEBSITE_URL = 'https://bundlr.network';
 export const ARWEAVE_WEBSITE_URL = 'https://arweave.net';
-export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
+// export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
 export const BUNDLR_CONNECT_MESSAGE = 'Sign to initialize & estimate upload...';
 
 // error messages
@@ -108,11 +110,11 @@ export const RARIBLE_MARKETPLACE_URL = IS_MAINNET ? 'https://rarible.com' : 'htt
 export const LENSPORT_MARKETPLACE_URL = 'https://lensport.io';
 
 // misc
-export const GIT_DEPLOYED_COMMIT_SHA = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA;
-export const GIT_DEPLOYED_BRANCH = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF;
-export const VERCEL_DEPLOYED_ENV = process.env.NEXT_PUBLIC_VERCEL_ENV;
-export const MIXPANEL_API_HOST = '/collect';
-export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
+// export const GIT_DEPLOYED_COMMIT_SHA = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA;
+// export const GIT_DEPLOYED_BRANCH = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF;
+// export const VERCEL_DEPLOYED_ENV = process.env.NEXT_PUBLIC_VERCEL_ENV;
+// export const MIXPANEL_API_HOST = '/collect';
+// export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 
 export const API_ORIGINS = ['https://lenstube.xyz', 'https://testnet.lenstube.xyz', 'http://localhost:4783'];
 
@@ -132,3 +134,9 @@ export const LS_KEYS = {
 export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 export const SERVERLESS_URL = 'http://localhost:3001';
+
+// S3 bucket
+export const S3_BUCKET = {
+  LENSFOLIO_MEDIA: 'lensfolio-media',
+  LENSFOLIO_METADATA: 'lensfolio-metadata'
+};

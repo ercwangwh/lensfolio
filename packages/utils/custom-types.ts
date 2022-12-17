@@ -137,3 +137,9 @@ export interface ProfileInterest {
   category: { label: string; id: string };
   subCategories: Array<{ label: string; id: string }>;
 }
+
+export interface LensfolioAttachment {
+  item: string;
+  type: string;
+  altTag: string;
+}

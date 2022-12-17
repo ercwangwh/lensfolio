@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "13.0.7",
-    "@thirdweb-dev/storage": "^1.0.6",
+    "@aws-sdk/client-s3": "^3.231.0",
+    "@aws-sdk/client-sts": "^3.231.0",
     "@types/node": "18.11.15",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.9",
+    "axios": "^1.2.1",
+    "dotenv": "^16.0.3",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.7",
     "next": "13.0.7",
@@ -25,10 +27,10 @@
     "@types/react": "^18.0.23",
     "@types/react-dom": "^18.0.9",
     "@types/uuid": "^9.0.0",
-    "utils": "*",
     "eslint-config-weblint": "*",
     "lens": "*",
     "tsconfig": "*",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "utils": "*"
   }
 }

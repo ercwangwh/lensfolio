@@ -1,6 +1,5 @@
 // import UploadOutline from '@components/Common/Icons/UploadOutline'
 // import MetaTags from '@components/Common/MetaTags'
-import { readFileSync } from 'fs';
 // const FormData = require('form-data')
 import { useAppStore } from 'src/store/app';
 import clsx from 'clsx';
@@ -22,7 +21,7 @@ const DropZone = () => {
   //     Analytics.track('Pageview', { path: TRACK.PAGE_VIEW.UPLOAD.DROPZONE });
   //   }, []);
 
-  const uploadImage = (files: any) => {
+  const uploadImage = async (files: any) => {
     setFiles(files);
     // try {
     //   if (file) {
@@ -37,6 +36,11 @@ const DropZone = () => {
     // } catch (error) {
     //   toast.error('Error uploading file');
     //   logger.error('[Error Upload Video]', error);
+    const results = await uploadToIPFS(files);
+    for (const result of results) {
+      console.log(result.item, result.type, result.altTag);
+    }
+
     // }
   };
 
@@ -63,19 +67,6 @@ const DropZone = () => {
     // if (e.target.files?.length) setFiles([...files]);
   };
 
-  const upload = async () => {
-    const uri = await uploadToIPFS(files);
-    // const _file = Array.from(files);
-    // const uris = Promise.all(
-    //   _file.map(async (file: any, index: number) => {
-    //     const uri = await uploadToIPFS(file);
-    //     // return uri;
-    //   })
-    // );
-    console.log(files);
-    console.log(uri);
-  };
-
   return (
     <div>
       {/* <MetaTags title="Select Video" /> */}
@@ -89,19 +80,16 @@ const DropZone = () => {
           <span>Description</span>
           <input id="description"></input>
         </div>
-        <form>
-          {Array.from(files).map((file, index) => {
-            return (
-              // <input type="file">
-              //   input
-              <img key={index} src={URL.createObjectURL(file)} alt="placeholder" />
-              // </input>
-            );
-          })}
-          <button type="button" onClick={upload}>
-            Upload
-          </button>
-        </form>
+
+        {Array.from(files).map((file, index) => {
+          return (
+            // <input type="file">
+            //   input
+            <img key={index} src={URL.createObjectURL(file)} alt="placeholder" />
+            // </input>
+          );
+        })}
+
         <label
           className={clsx(
             'w-full p-10 md:p-20 md:w-2/3 focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-3xl',

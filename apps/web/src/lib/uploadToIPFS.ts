@@ -1,41 +1,82 @@
+import { S3 } from '@aws-sdk/client-s3';
+import type { LensfolioAttachment } from 'utils';
 import axios from 'axios';
-import FormData from 'form-data';
-import { ERROR_MESSAGE, SERVERLESS_URL } from 'utils';
-import toast from 'react-hot-toast';
+import { EVER_API, S3_BUCKET, SERVERLESS_URL } from 'utils';
+import { v4 as uuid } from 'uuid';
+
+const getS3Client = async () => {
+  const token = await axios.get(`${SERVERLESS_URL}/sts/token`);
+  const client = new S3({
+    endpoint: EVER_API,
+    credentials: {
+      accessKeyId: token.data?.accessKeyId,
+      secretAccessKey: token.data?.secretAccessKey,
+      sessionToken: token.data?.sessionToken
+    },
+    region: 'us-west-2',
+    maxAttempts: 3
+  });
+
+  return client;
+};
 
 /**
  *
- * @param data - Data to upload to ipfs
- * @returns ipfs transaction id
+ * @param data - Data to upload to IPFS
+ * @returns attachment array
  */
-const uploadToIPFS = async (data: any): Promise<string> => {
+const uploadToIPFS = async (data: any): Promise<LensfolioAttachment[]> => {
   try {
-    const formData = new FormData();
+    const client = await getS3Client();
     const files = Array.from(data);
-    formData.append('files', files);
+    const attachments = await Promise.all(
+      files.map(async (_: any, i: number) => {
+        const file = data.item(i);
+        const params = {
+          Bucket: S3_BUCKET.LENSFOLIO_MEDIA,
+          Key: uuid()
+        };
+        await client.putObject({ ...params, Body: file, ContentType: file.type });
+        const result = await client.headObject(params);
+        const metadata = result.Metadata;
 
-    // const uris = Promise.all(
-    //   files.map(async (file: any, index: number) => {
-    //     const uri = await uploadToIPFS(file);
-    //     // return uri;
-    //   })
-    // );
-    // console.log(uris);
-    console.log(formData);
-    // console.log(formData.getHeaders());
-    const upload = await axios(`${SERVERLESS_URL}/api/uploadFiles`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      data: formData
-    });
-    const { uri } = upload.data;
-    // const  = upload.data;
-    return uri;
+        return {
+          item: `ipfs://${metadata?.['ipfs-hash']}`,
+          type: file.type || 'image/jpeg',
+          altTag: ''
+        };
+      })
+    );
+
+    return attachments;
   } catch {
-    toast.error(ERROR_MESSAGE);
-    throw new Error(ERROR_MESSAGE);
+    return [];
+  }
+};
+
+/**
+ *
+ * @param file - File object
+ * @returns attachment or null
+ */
+export const uploadFileToIPFS = async (file: File): Promise<LensfolioAttachment | null> => {
+  try {
+    const client = await getS3Client();
+    const params = {
+      Bucket: S3_BUCKET.LENSFOLIO_MEDIA,
+      Key: uuid()
+    };
+    await client.putObject({ ...params, Body: file, ContentType: file.type });
+    const result = await client.headObject(params);
+    const metadata = result.Metadata;
+
+    return {
+      item: `ipfs://${metadata?.['ipfs-hash']}`,
+      type: file.type || 'image/jpeg',
+      altTag: ''
+    };
+  } catch {
+    return null;
   }
 };
 
