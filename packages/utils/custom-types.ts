@@ -12,11 +12,11 @@ import type {
   TimedFeeCollectModuleSettings
 } from 'lens';
 
-export type VideoDraft = {
-  preview: string;
-  title: string;
-  description: string;
-};
+// export type VideoDraft = {
+//   preview: string;
+//   title: string;
+//   description: string;
+// };
 
 // export type BundlrDataState = {
 //   instance: WebBundlr | null;
@@ -88,7 +88,7 @@ export type HLSData = {
   type: string;
 };
 
-export type LenstubePublication = Post & Comment & Mirror & { hls: HLSData };
+export type LensfolioPublication = Post & Comment & Mirror;
 
 export type IPFSUploadResult = {
   url: string;

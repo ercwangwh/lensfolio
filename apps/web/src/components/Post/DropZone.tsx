@@ -4,14 +4,18 @@
 import { useAppStore } from 'src/store/app';
 import clsx from 'clsx';
 // import fileReaderStream from 'filereader-stream'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Dispatch, FC } from 'react';
 import toast from 'react-hot-toast';
-import { ALLOWED_IMAGE_TYPES } from 'utils';
+import { ALLOWED_IMAGE_TYPES, LensfolioAttachment } from 'utils';
 import useDragAndDrop from 'utils/hooks/useDragAndDrop';
 import uploadToIPFS from '@lib/uploadToIPFS';
 
+interface Props {
+  attachments: LensfolioAttachment[];
+  setAttachments: Dispatch<LensfolioAttachment[]>;
+}
 // import logger from 'utils/logger';
-const DropZone = () => {
+const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
   //   const setUploadedVideo = useAppStore((state) => state.setUploadedVideo);
   const [files, setFiles] = useState<File[]>([]);
   const { dragOver, setDragOver, onDragOver, onDragLeave, fileDropError, setFileDropError } =
@@ -22,7 +26,6 @@ const DropZone = () => {
   //   }, []);
 
   const uploadImage = async (files: any) => {
-    setFiles(files);
     // try {
     //   if (file) {
     //     const preview = URL.createObjectURL(file);
@@ -36,12 +39,19 @@ const DropZone = () => {
     // } catch (error) {
     //   toast.error('Error uploading file');
     //   logger.error('[Error Upload Video]', error);
+    setFiles(files);
     const results = await uploadToIPFS(files);
     for (const result of results) {
       console.log(result.item, result.type, result.altTag);
     }
-
+    setAttachments(results);
     // }
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setDragOver(false);
+    validateFile(e?.dataTransfer?.files);
   };
 
   const validateFile = (files: any) => {
@@ -53,12 +63,6 @@ const DropZone = () => {
       }
     }
     uploadImage(files);
-  };
-
-  const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    setDragOver(false);
-    validateFile(e?.dataTransfer?.files);
   };
 
   const onChooseFile = (e: React.ChangeEvent<HTMLInputElement>) => {

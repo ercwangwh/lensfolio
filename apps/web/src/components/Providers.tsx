@@ -18,7 +18,7 @@ import {
   rainbowWallet,
   walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets';
-import { IS_MAINNET, LENSTUBE_APP_NAME, POLYGON_RPC_URL } from 'utils';
+import { IS_MAINNET, LENSFOLIO_APP_NAME, POLYGON_RPC_URL } from 'utils';
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import client from '../apollo';
@@ -65,7 +65,7 @@ const connectors = connectorsForWallets([
       injectedWallet({ chains, shimDisconnect: true }),
       metaMaskWallet({ chains, shimDisconnect: true }),
       rainbowWallet({ chains }),
-      coinbaseWallet({ appName: LENSTUBE_APP_NAME, chains }),
+      coinbaseWallet({ appName: LENSFOLIO_APP_NAME, chains }),
       walletConnectWallet({ chains })
     ]
   }

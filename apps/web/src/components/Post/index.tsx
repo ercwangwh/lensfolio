@@ -3,6 +3,7 @@ import DropZone from './DropZone';
 import { Modal } from '@components/UI/Modal';
 import { Button } from '@components/UI/Button';
 import { BeakerIcon } from '@heroicons/react/24/outline';
+import NewPost from './NewPost';
 const Post: FC = () => {
   const [showUploadModal, setUploadModal] = useState(false);
   return (
@@ -11,25 +12,26 @@ const Post: FC = () => {
     //   <button onClick={}></button>
     //   <DropZone />
     // </div>
-    <>
-      <Modal
-        title="Upload"
-        icon={<BeakerIcon className="w-5 h-5 text-brand" />}
-        show={showUploadModal}
-        onClose={() => setUploadModal(false)}
-      >
-        <DropZone />
-      </Modal>
-      <Button
-        icon={<img className="mr-0.5 w-4 h-4" height={16} width={16} />}
-        onClick={() => {
-          setUploadModal(!showUploadModal);
-          // Leafwatch.track(USER.LOGIN);
-        }}
-      >
-        Upload
-      </Button>
-    </>
+    // <>
+    //   <Modal
+    //     title="Upload"
+    //     icon={<BeakerIcon className="w-5 h-5 text-brand" />}
+    //     show={showUploadModal}
+    //     onClose={() => setUploadModal(false)}
+    //   >
+    //     {/* <DropZone attachments={attachments} setAttachments={setAttachments}/> */}
+    //   </Modal>
+    //   <Button
+    //     icon={<img className="mr-0.5 w-4 h-4" height={16} width={16} />}
+    //     onClick={() => {
+    //       setUploadModal(!showUploadModal);
+    //       // Leafwatch.track(USER.LOGIN);
+    //     }}
+    //   >
+    //     Upload
+    //   </Button>
+    // </>
+    <NewPost></NewPost>
   );
 };
 

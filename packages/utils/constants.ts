@@ -1,7 +1,7 @@
 import { CustomFiltersTypes } from 'lens';
 
-export const LENSTUBE_APP_NAME = 'Lensfoliio';
-export const LENSTUBE_APP_DESCRIPTION =
+export const LENSFOLIO_APP_NAME = 'Lensfoliio';
+export const LENSFOLIO_APP_DESCRIPTION =
   'Lensfolio is a decentralized artist platform built with Lens protocol.';
 
 export const LENS_ENV = process.env.NEXT_PUBLIC_ENVIRONMENT;
@@ -87,8 +87,8 @@ export const ERROR_MESSAGE = 'Oops, something went wrong!';
 export const SIGN_IN_REQUIRED_MESSAGE = 'Sign in required';
 
 // App Ids
-export const LENSTUBE_APP_ID = 'lenstube';
-export const LENSTUBE_BYTES_APP_ID = 'lenstube-bytes';
+export const LENSFOLIO_APP_ID = 'lensfolio';
+export const LENSFOLIO_BYTES_APP_ID = 'lensfolio-bytes';
 
 // official
 export const LENSTUBE_TWITTER_HANDLE = 'lenstubexyz';
@@ -139,4 +139,10 @@ export const SERVERLESS_URL = 'http://localhost:3001';
 export const S3_BUCKET = {
   LENSFOLIO_MEDIA: 'lensfolio-media',
   LENSFOLIO_METADATA: 'lensfolio-metadata'
+};
+
+// Errors
+export const ERRORS = {
+  notMined:
+    'A previous transaction may not been mined yet or you have passed in a invalid nonce. You must wait for that to be mined before doing another action, please try again in a few moments. Nonce out of sync.'
 };
