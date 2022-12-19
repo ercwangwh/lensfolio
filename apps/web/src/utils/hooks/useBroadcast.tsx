@@ -10,6 +10,11 @@ interface Props {
 
 const useBroadcast = ({ onCompleted, update }: Props): { broadcast: any; data: any; loading: boolean } => {
   const [broadcast, { data, loading }] = useBroadcastMutation({
+    context: {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    },
     onCompleted,
     update,
     onError: (error) => {

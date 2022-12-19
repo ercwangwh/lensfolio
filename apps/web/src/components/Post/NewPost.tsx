@@ -2,7 +2,14 @@ import { FC, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { useCreatePostTypedDataMutation, PublicationMainFocus } from 'lens';
 import type { PublicationMetadataV2Input, MetadataAttributeInput } from 'lens';
-import { useContractWrite, useProvider, useSigner, useSignTypedData } from 'wagmi';
+import {
+  useContractWrite,
+  useProvider,
+  useSigner,
+  useSignTypedData,
+  usePrepareContractWrite,
+  useContract
+} from 'wagmi';
 import {
   LENSHUB_PROXY_ADDRESS,
   LensHubProxy,
@@ -10,7 +17,7 @@ import {
   LENSFOLIO_APP_ID,
   LensfolioAttachment
 } from 'utils';
-import { utils } from 'ethers';
+import { ethers, utils } from 'ethers';
 import onError from '@lib/onError';
 import { toast } from 'react-hot-toast';
 import { v4 as uuid } from 'uuid';
@@ -22,7 +29,9 @@ import { Modal } from '@components/UI/Modal';
 import { BeakerIcon } from '@heroicons/react/24/outline';
 import { Button } from '@components/UI/Button';
 import DropZone from './DropZone';
-import uploadToIPFS from '@lib/uploadToIPFS';
+import uploadToIPFS, { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
+import getSignature from '@lib/getSignature';
+import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 // interface Props {
 //   publication: LensfolioPublication;
 // }
@@ -42,23 +51,43 @@ const NewPost: FC = () => {
   const [publicationContentError, setPublicationContentError] = useState('');
   const [attachments, setAttachments] = useState<LensfolioAttachment[]>([]);
   const [showUploadModal, setUploadModal] = useState(false);
-
+  // const [inputData, setInputData] = useState<Object>({});
   const isComment = false;
 
   const { data: signer } = useSigner();
 
   const { signTypedDataAsync } = useSignTypedData({ onError });
 
+  // const { config } = usePrepareContractWrite({
+  //   address: LENSHUB_PROXY_ADDRESS,
+  //   abi: LensHubProxy,
+  //   functionName: 'postWithSig',
+  //   // mode: 'recklesslyUnprepared',
+  //   // onSuccess: ({ hash }) => {
+  //   //   // onCompleted();
+  //   //   // setTxnQueue([generateOptimisticPublication({ txHash: hash }), ...txnQueue]);
+  //   // },
+  //   args: [inputData]
+  // });
+  // const { error, write } = useContractWrite(config);
+  // write?.()
+  // const contract = useContract({
+  //   address: LENSHUB_PROXY_ADDRESS,
+  //   abi: LensHubProxy,
+  //   signerOrProvider: signer
+  // });
+  // console.log(contract);
+
   const { error, write } = useContractWrite({
     address: LENSHUB_PROXY_ADDRESS,
     abi: LensHubProxy,
     functionName: 'postWithSig',
-    mode: 'recklesslyUnprepared',
-    onSuccess: ({ hash }) => {
-      // onCompleted();
-      // setTxnQueue([generateOptimisticPublication({ txHash: hash }), ...txnQueue]);
-    },
-    onError
+    mode: 'recklesslyUnprepared'
+    // onSuccess: ({ hash }) => {
+    //   // onCompleted();
+    //   // setTxnQueue([generateOptimisticPublication({ txHash: hash }), ...txnQueue]);
+    // }
+    // onError
   });
 
   const { broadcast } = useBroadcast({
@@ -69,6 +98,9 @@ const NewPost: FC = () => {
     }
   });
 
+  if (error) {
+    console.log('what contract error:???? ', error);
+  }
   // const generateOptimisticPublication = ({ txHash, txId }: { txHash?: string; txId?: string }) => {
   //   return {
   //     id: uuid(),
@@ -84,36 +116,63 @@ const NewPost: FC = () => {
   //   };
   // };
 
-  // const typedDataGenerator = async (generatedData: any) => {
-  //   const { id, typedData } = generatedData;
-  //   const {
-  //     profileId,
-  //     contentURI,
-  //     collectModule,
-  //     collectModuleInitData,
-  //     referenceModule,
-  //     referenceModuleInitData,
-  //     deadline
-  //   } = typedData.value;
-  //   const signature = await signTypedDataAsync({typedData.domain, typedData.types, typedData.value});
-  //   const { v, r, s } = utils.splitSignature(signature);
-  //   const sig = { v, r, s, deadline };
-  //   const inputStruct = {
-  //     profileId,
-  //     contentURI,
-  //     collectModule,
-  //     collectModuleInitData,
-  //     referenceModule,
-  //     referenceModuleInitData,
-  //     // ...(isComment && {
-  //     //   profileIdPointed: typedData.value.profileIdPointed,
-  //     //   pubIdPointed: typedData.value.pubIdPointed
-  //     // }),
-  //     sig
-  //   };
-  // };
+  const typedDataGenerator = async (generatedData: any) => {
+    const { id, typedData } = generatedData;
+    const {
+      profileId,
+      contentURI,
+      collectModule,
+      collectModuleInitData,
+      referenceModule,
+      referenceModuleInitData,
+      deadline
+    } = typedData.value;
+    const signature = await signTypedDataAsync(getSignature(typedData));
+    const { v, r, s } = utils.splitSignature(signature);
+    const sig = { v, r, s, deadline };
+    const inputStruct = {
+      profileId,
+      contentURI,
+      collectModule,
+      collectModuleInitData,
+      referenceModule,
+      referenceModuleInitData,
+      sig
+    };
+
+    // const inputStructPoster = {
+    //   profileId: 1,
+    //   contentURI: 'https://ipfs.io/ipfs/Qmby8QocUU2sPZL46rZeMctAuF5nrCc7eR1PPkooCztWPz',
+    //   collectModule: freeCollectModuleAddr,
+    //   collectModuleInitData: defaultAbiCoder.encode(['bool'], [true]),
+    //   referenceModule: ZERO_ADDRESS,
+    //   referenceModuleInitData: [],
+    // };
+    console.log('inputstruct ', inputStruct);
+    // setInputData(inputStruct);
+    setUserSigNonce(userSigNonce + 1);
+    if (!false) {
+      return write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
+      // return write?.({ args: inputStruct });
+    }
+    // ethers.Contract()
+    console.log(broadcast);
+    console.log('id ', id, 'signature ', signature);
+    const {
+      data: { broadcast: result }
+    } = await broadcast({ request: { id, signature } });
+
+    console.log(result);
+    // if ('reason' in result) {
+    // write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
+    // }
+  };
+
   const [createPostTypedData] = useCreatePostTypedDataMutation({
-    // onCompleted: ({ createPostTypedData }) => typedDataGenerator(createPostTypedData),
+    onCompleted: ({ createPostTypedData }) => {
+      console.log('sadf');
+      typedDataGenerator(createPostTypedData);
+    },
     onError
   });
 
@@ -133,7 +192,7 @@ const NewPost: FC = () => {
   //   }
   // };
   const createMetadata = async (metadata: PublicationMetadataV2Input) => {
-    return await uploadToIPFS(metadata);
+    return await uploadMetadataToIPFS(metadata);
   };
 
   const createPublication = async () => {
@@ -191,11 +250,12 @@ const NewPost: FC = () => {
       // } else {
       //   arweaveId = await createMetadata(metadata);
       // }
-      const ipfsFile = await createMetadata(metadata);
 
+      const ipfsFile = await createMetadata(metadata);
+      console.log(ipfsFile);
       const request = {
         profileId: currentProfile?.id,
-        contentURI: ipfsFile[0].item,
+        contentURI: ipfsFile ? ipfsFile.item : null,
         collectModule: {
           revertCollectModule: true
         },
@@ -203,9 +263,16 @@ const NewPost: FC = () => {
           followerOnlyReferenceModule: false
         }
       };
-      await createPostTypedData({
-        variables: { options: { overrideSigNonce: userSigNonce }, request }
+      const typedData = await createPostTypedData({
+        variables: { options: { overrideSigNonce: userSigNonce }, request },
+        context: {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
       });
+
+      console.log(typedData);
       //     await createPostTypedData({
       //       variables: { options: { overrideSigNonce: userSigNonce }, request }
       //     });
@@ -230,6 +297,7 @@ const NewPost: FC = () => {
       setIsSubmitting(false);
     }
   };
+
   return (
     <>
       <Modal
@@ -239,7 +307,7 @@ const NewPost: FC = () => {
         onClose={() => setUploadModal(false)}
       >
         <DropZone attachments={attachments} setAttachments={setAttachments} />
-        <Button onClick={createPublication}>upload</Button>
+        <Button onClick={createPublication}>upload to ipfs</Button>
       </Modal>
       <Button
         icon={<img className="mr-0.5 w-4 h-4" height={16} width={16} />}
@@ -251,6 +319,7 @@ const NewPost: FC = () => {
       >
         Upload
       </Button>
+      {/* <Button onClick={createPublication}>upload to ipfs</Button> */}
     </>
   );
 };
