@@ -143,3 +143,9 @@ export interface LensfolioAttachment {
   type: string;
   altTag: string;
 }
+
+export interface LensfolioWorks {
+  title: string;
+  attachment: LensfolioAttachment;
+  description: string | null;
+}

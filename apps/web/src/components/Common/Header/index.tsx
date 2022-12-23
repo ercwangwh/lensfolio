@@ -4,8 +4,12 @@ import Search from './Search';
 import type { FC } from 'react';
 import NavItems from './NavItems';
 import Post from '@components/Post';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Button } from '@components/UI/Button';
 
 const Header: FC = () => {
+  const router = useRouter();
   return (
     <div className="sticky top-0 z-10 w-full bg-white border-b dark:bg-gray-900 dark:border-b-gray-700/80">
       <div className="flex relative justify-between items-center h-14 sm:h-16">
@@ -13,7 +17,7 @@ const Header: FC = () => {
           <Search />
           <NavItems />
         </div>
-        <Post></Post>
+        <Button onClick={() => router.push('/post')}>Upload</Button>
         <Login />
       </div>
     </div>

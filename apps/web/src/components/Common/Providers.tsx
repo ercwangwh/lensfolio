@@ -21,7 +21,8 @@ import {
 import { IS_MAINNET, LENSFOLIO_APP_NAME, POLYGON_RPC_URL } from 'utils';
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-import client from '../apollo';
+import client from '../../apollo';
+import Layout from './Layout';
 
 // const { chains, provider } = configureChains(
 //   [IS_MAINNET ? chain.polygon : chain.polygonMumbai],
@@ -106,7 +107,9 @@ const Providers = ({ children }: { children: ReactNode }) => {
     <WagmiConfig client={wagmiClient}>
       <ThemeProvider defaultTheme="light" attribute="class">
         <RainbowKitProviderWrapper>
-          <ApolloProvider client={client}>{children}</ApolloProvider>
+          <ApolloProvider client={client}>
+            <Layout>{children}</Layout>
+          </ApolloProvider>
         </RainbowKitProviderWrapper>
       </ThemeProvider>
     </WagmiConfig>

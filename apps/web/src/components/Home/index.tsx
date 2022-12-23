@@ -57,7 +57,7 @@ function Home() {
   return (
     <div>
       {/* <LoginButton /> */}
-      <Header />
+      {/* <Header /> */}
       <ViewProfile />
     </div>
   );

@@ -36,7 +36,7 @@ import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 //   publication: LensfolioPublication;
 // }
 
-const NewPost: FC = () => {
+const UploadToLens: FC = () => {
   // App store
   const userSigNonce = useAppStore((state) => state.userSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -82,7 +82,8 @@ const NewPost: FC = () => {
     address: LENSHUB_PROXY_ADDRESS,
     abi: LensHubProxy,
     functionName: 'postWithSig',
-    mode: 'recklesslyUnprepared'
+    mode: 'recklesslyUnprepared',
+    overrides: { gasLimit: ethers.utils.parseEther('0.0000000001') }
     // onSuccess: ({ hash }) => {
     //   // onCompleted();
     //   // setTxnQueue([generateOptimisticPublication({ txHash: hash }), ...txnQueue]);
@@ -151,7 +152,7 @@ const NewPost: FC = () => {
     console.log('inputstruct ', inputStruct);
     // setInputData(inputStruct);
     setUserSigNonce(userSigNonce + 1);
-    if (!false) {
+    if (!true) {
       return write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
       // return write?.({ args: inputStruct });
     }
@@ -300,7 +301,7 @@ const NewPost: FC = () => {
 
   return (
     <>
-      <Modal
+      {/* <Modal
         title="Upload"
         icon={<BeakerIcon className="w-5 h-5 text-brand" />}
         show={showUploadModal}
@@ -318,10 +319,11 @@ const NewPost: FC = () => {
         }}
       >
         Upload
-      </Button>
+      </Button> */}
+      <Button onClick={createPublication}>upload to lens</Button>
       {/* <Button onClick={createPublication}>upload to ipfs</Button> */}
     </>
   );
 };
 
-export default NewPost;
+export default UploadToLens;

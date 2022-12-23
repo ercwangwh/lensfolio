@@ -1,4 +1,5 @@
 import { LS_KEYS } from 'utils';
+import type { LensfolioWorks } from 'utils';
 import type { Profile } from 'lens';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -10,6 +11,8 @@ interface AppState {
   setCurrentProfile: (currentProfile: Profile | null) => void;
   userSigNonce: number;
   setUserSigNonce: (userSigNonce: number) => void;
+  uploadedWorks: LensfolioWorks | null;
+  setUploadedWorks: (uploadedFiles: LensfolioWorks) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -18,7 +21,9 @@ export const useAppStore = create<AppState>((set) => ({
   currentProfile: null,
   setCurrentProfile: (currentProfile) => set(() => ({ currentProfile })),
   userSigNonce: 0,
-  setUserSigNonce: (userSigNonce) => set(() => ({ userSigNonce }))
+  setUserSigNonce: (userSigNonce) => set(() => ({ userSigNonce })),
+  uploadedWorks: null,
+  setUploadedWorks: (uploadedWorks) => set(() => ({ uploadedWorks }))
 }));
 
 interface AppPersistState {

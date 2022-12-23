@@ -3,9 +3,16 @@ import DropZone from './DropZone';
 import { Modal } from '@components/UI/Modal';
 import { Button } from '@components/UI/Button';
 import { BeakerIcon } from '@heroicons/react/24/outline';
-import NewPost from './NewPost';
+import { useRouter } from 'next/router';
+import { useAppStore } from 'src/store/app';
+import UploadToLens from './UploadToLens';
+import EditArea from './EditArea';
 const Post: FC = () => {
-  const [showUploadModal, setUploadModal] = useState(false);
+  // const [showUploadModal, setUploadModal] = useState(false);
+  // const useRouter()
+  // const router = useRouter();
+  // router.push('/post');
+  const uploadedWorks = useAppStore((state) => state.uploadedWorks);
   return (
     // <div>
     //   Post
@@ -31,7 +38,8 @@ const Post: FC = () => {
     //     Upload
     //   </Button>
     // </>
-    <NewPost></NewPost>
+    // <NewPost></NewPost>
+    uploadedWorks ? <UploadToLens /> : <EditArea uploadedWorks={uploadedWorks} />
   );
 };
 

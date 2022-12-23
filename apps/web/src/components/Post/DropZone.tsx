@@ -9,21 +9,19 @@ import toast from 'react-hot-toast';
 import { ALLOWED_IMAGE_TYPES, LensfolioAttachment } from 'utils';
 import useDragAndDrop from 'utils/hooks/useDragAndDrop';
 import uploadToIPFS from '@lib/uploadToIPFS';
+import { Input } from '@components/UI/Input';
 
-interface Props {
-  attachments: LensfolioAttachment[];
-  setAttachments: Dispatch<LensfolioAttachment[]>;
-}
-// import logger from 'utils/logger';
-const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
+// interface Props {
+//   attachments: LensfolioAttachment[];
+//   setAttachments: Dispatch<LensfolioAttachment[]>;
+// }
+
+// const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
+const DropZone: FC = () => {
   //   const setUploadedVideo = useAppStore((state) => state.setUploadedVideo);
   const [files, setFiles] = useState<File[]>([]);
   const { dragOver, setDragOver, onDragOver, onDragLeave, fileDropError, setFileDropError } =
     useDragAndDrop();
-
-  //   useEffect(() => {
-  //     Analytics.track('Pageview', { path: TRACK.PAGE_VIEW.UPLOAD.DROPZONE });
-  //   }, []);
 
   const uploadImage = async (files: any) => {
     // try {
@@ -44,7 +42,7 @@ const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
     for (const result of results) {
       console.log(result.item, result.type, result.altTag);
     }
-    setAttachments(results);
+    // setAttachments(results);
     // }
   };
 
@@ -76,15 +74,7 @@ const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
       {/* <MetaTags title="Select Video" /> */}
 
       <div className="relative flex flex-col items-center justify-center flex-1 my-20">
-        <div>
-          <span>Title</span>
-          <input id="title"></input>
-        </div>
-        <div>
-          <span>Description</span>
-          <input id="description"></input>
-        </div>
-
+        {/* <Input prefix={'Title'}></Input> */}
         {Array.from(files).map((file, index) => {
           return (
             // <input type="file">
@@ -140,6 +130,7 @@ const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
           </span>
         </label>
         {/* <button onClick={upload}></button> */}
+        {/* <Input prefix={'Description'}></Input> */}
       </div>
     </div>
   );
