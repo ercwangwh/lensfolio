@@ -38,6 +38,7 @@ import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 
 const UploadToLens: FC = () => {
   // App store
+  const uploadedWorks = useAppStore((state) => state.uploadedWorks);
   const userSigNonce = useAppStore((state) => state.userSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const setUserSigNonce = useAppStore((state) => state.setUserSigNonce);
@@ -207,6 +208,7 @@ const UploadToLens: FC = () => {
       // if (publicationContent.length === 0 && attachments.length === 0) {
       //   return setPublicationContentError(`${isComment ? 'Comment' : 'Post'} should not be empty!`);
       // }
+      console.log(trimify(uploadedWorks.description));
 
       setPublicationContentError('');
       // let textNftImageUrl = null;
@@ -229,11 +231,11 @@ const UploadToLens: FC = () => {
       const metadata: PublicationMetadataV2Input = {
         version: '2.0.0',
         metadata_id: uuid(),
-        description: 'description trimify(publicationContent)',
-        content: 'content trimify(publicationContent)',
+        description: trimify(uploadedWorks.description),
+        content: trimify(`${uploadedWorks.title}\n\n${uploadedWorks.description}`),
         external_url: null,
-        image: attachments.length > 0 ? attachments[0].item : null,
-        imageMimeType: attachments.length > 0 ? attachments[0].type : 'image/svg+xml',
+        image: uploadedWorks.attachment,
+        imageMimeType: uploadedWorks.attachment?.type,
         name: `${isComment ? 'Comment' : 'Post'} by @${currentProfile?.handle}`,
         tags: ['using_api_example'],
         animation_url: null,
@@ -245,6 +247,7 @@ const UploadToLens: FC = () => {
         appId: LENSFOLIO_APP_ID
       };
 
+      console.log(metadata);
       // let arweaveId = null;
       // if (restricted) {
       //   arweaveId = await createTokenGatedMetadata(metadata);

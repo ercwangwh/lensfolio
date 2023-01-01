@@ -6,6 +6,13 @@ function PostSetting() {
   const [showUploadModal, setUploadModal] = useState(false);
   return (
     <>
+      <Button
+        onClick={() => {
+          setUploadModal(true);
+        }}
+      >
+        Continue
+      </Button>
       <Modal
         title="Upload"
         // icon={<BeakerIcon className="w-5 h-5 text-brand" />}

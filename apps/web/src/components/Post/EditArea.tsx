@@ -1,20 +1,22 @@
 import { Button } from '@components/UI/Button';
 import { Input } from '@components/UI/Input';
-import { FC, ReactNode, useState } from 'react';
+import { ChangeEvent, FC, ReactNode, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { LensfolioWorks } from 'utils';
 import DropZone from './DropZone';
+import PostSetting from './PostSetting';
 
-interface Props {
-  // onUpload: (data: VideoFormData) => void;
-  // onCancel: () => void;
-  uploadedWorks: LensfolioWorks | null;
-}
+// interface Props {
+//   // onUpload: (data: VideoFormData) => void;
+//   // onCancel: () => void;
+//   uploadedWorks: LensfolioWorks | null;
+// }
 
-const EditArea: FC<Props> = ({ uploadedWorks }) => {
-  // const uploadedWorks = useAppStore((state) => state.uploadedWorks);
-  // const [title, setTitle] = useState<string>();
-  uploadedWorks?.title;
+const EditArea: FC = () => {
+  const [title, setTitle] = useState('');
+  // uploadedWorks?.title;
+  // setUploadedWorks()
+  const uploadedWorks = useAppStore((state) => state.uploadedWorks);
   const setUploadedWorks = useAppStore((state) => state.setUploadedWorks);
   // setUploadedWorks({title:})
   // setUploadedWorks()
@@ -37,19 +39,36 @@ const EditArea: FC<Props> = ({ uploadedWorks }) => {
   //   const onSubmitForm = (data: VideoFormData) => {
   //     onUpload(data);
   //   };
+  // setUploadedWorks()
+  // setUploadedWorks({ title: 'ddsf' });
+  // setUploadedWorks({ description: title });
+  // const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+  //   const data = evt.target.value;
+  //   setTitle(data);
+  //   // setUploadedWorks({ ...uploadedWorks });
+  // };
+
   return (
     <div>
       <Input
         prefix={'Title'}
-        onChange={(title) => {
-          // setUploadedWorks({title:title as string});
+        onChange={(evt) => {
+          const data = evt.target.value;
+          setTitle(data);
+          setUploadedWorks({ title: data });
         }}
-      >
-        {uploadedWorks?.title}
-      </Input>
+      ></Input>
+      <div> {title}</div>
       <DropZone></DropZone>
-      <Input prefix={'Description'}>{uploadedWorks?.description}</Input>
-      <Button>Continue</Button>
+      <Input
+        prefix={'Description'}
+        onChange={(evt) => {
+          const data = evt.target.value;
+          setUploadedWorks({ description: data });
+          console.log(uploadedWorks);
+        }}
+      ></Input>
+      <PostSetting></PostSetting>
     </div>
   );
 };

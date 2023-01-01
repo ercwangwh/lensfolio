@@ -18,7 +18,8 @@ import { Input } from '@components/UI/Input';
 
 // const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
 const DropZone: FC = () => {
-  //   const setUploadedVideo = useAppStore((state) => state.setUploadedVideo);
+  const setUploadedWorks = useAppStore((state) => state.setUploadedWorks);
+  // setUploadedWorks()
   const [files, setFiles] = useState<File[]>([]);
   const { dragOver, setDragOver, onDragOver, onDragLeave, fileDropError, setFileDropError } =
     useDragAndDrop();
@@ -40,6 +41,7 @@ const DropZone: FC = () => {
     setFiles(files);
     const results = await uploadToIPFS(files);
     for (const result of results) {
+      setUploadedWorks({ attachment: result });
       console.log(result.item, result.type, result.altTag);
     }
     // setAttachments(results);
@@ -122,7 +124,6 @@ const DropZone: FC = () => {
                   type="file"
                   className="hidden"
                   accept={ALLOWED_IMAGE_TYPES.join(',')}
-                  multiple
                 />
               </label>
             </div>

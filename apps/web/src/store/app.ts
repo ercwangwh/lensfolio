@@ -11,10 +11,15 @@ interface AppState {
   setCurrentProfile: (currentProfile: Profile | null) => void;
   userSigNonce: number;
   setUserSigNonce: (userSigNonce: number) => void;
-  uploadedWorks: LensfolioWorks | null;
-  setUploadedWorks: (uploadedFiles: LensfolioWorks) => void;
+  uploadedWorks: LensfolioWorks;
+  setUploadedWorks: (works: { [k: string]: any }) => void;
 }
 
+export const UPLOADED_WORKS_DEAFULT = {
+  title: '',
+  attachment: null,
+  description: ''
+};
 export const useAppStore = create<AppState>((set) => ({
   profiles: [],
   setProfiles: (profiles) => set(() => ({ profiles })),
@@ -23,7 +28,8 @@ export const useAppStore = create<AppState>((set) => ({
   userSigNonce: 0,
   setUserSigNonce: (userSigNonce) => set(() => ({ userSigNonce })),
   uploadedWorks: null,
-  setUploadedWorks: (uploadedWorks) => set(() => ({ uploadedWorks }))
+  setUploadedWorks: (uploadedData) =>
+    set((state) => ({ uploadedWorks: { ...state.uploadedWorks, ...uploadedData } }))
 }));
 
 interface AppPersistState {
