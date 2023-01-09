@@ -199,6 +199,7 @@ export type CanCommentResponse = {
 
 export type CanDecryptResponse = {
   __typename?: 'CanDecryptResponse';
+  extraDetails?: Maybe<Scalars['String']>;
   reasons?: Maybe<Array<DecryptFailReason>>;
   result: Scalars['Boolean'];
 };
@@ -279,10 +280,13 @@ export type CollectModuleParams = {
 
 /** The collect module types */
 export enum CollectModules {
+  AaveFeeCollectModule = 'AaveFeeCollectModule',
+  Erc4626FeeCollectModule = 'ERC4626FeeCollectModule',
   FeeCollectModule = 'FeeCollectModule',
   FreeCollectModule = 'FreeCollectModule',
   LimitedFeeCollectModule = 'LimitedFeeCollectModule',
   LimitedTimedFeeCollectModule = 'LimitedTimedFeeCollectModule',
+  MultirecipientFeeCollectModule = 'MultirecipientFeeCollectModule',
   RevertCollectModule = 'RevertCollectModule',
   TimedFeeCollectModule = 'TimedFeeCollectModule',
   UnknownCollectModule = 'UnknownCollectModule'
@@ -316,6 +320,7 @@ export type Comment = {
   commentOn?: Maybe<Publication>;
   /** The date the post was created on */
   createdAt: Scalars['DateTime'];
+  /** The data availability proofs you can fetch from */
   dataAvailabilityProofs?: Maybe<Scalars['String']>;
   /** This will bring back the first comment of a comment and only be defined if using `publication` query and `commentOf` */
   firstComment?: Maybe<Comment>;
@@ -946,6 +951,7 @@ export enum CustomFiltersTypes {
 
 /** The reason why a profile cannot decrypt a publication */
 export enum DecryptFailReason {
+  CanNotDecrypt = 'CAN_NOT_DECRYPT',
   CollectNotFinalisedOnChain = 'COLLECT_NOT_FINALISED_ON_CHAIN',
   DoesNotFollowProfile = 'DOES_NOT_FOLLOW_PROFILE',
   DoesNotOwnNft = 'DOES_NOT_OWN_NFT',
@@ -1556,6 +1562,17 @@ export type HidePublicationRequest = {
   publicationId: Scalars['InternalPublicationId'];
 };
 
+export type IdKitPhoneVerifyWebhookRequest = {
+  sharedSecret: Scalars['String'];
+  worldcoin?: InputMaybe<WorldcoinPhoneVerifyWebhookRequest>;
+};
+
+/** The verify webhook result status type */
+export enum IdKitPhoneVerifyWebhookResultStatusType {
+  AlreadyVerified = 'ALREADY_VERIFIED',
+  Success = 'SUCCESS'
+}
+
 export type IllegalReasonInputParams = {
   reason: PublicationReportingReason;
   subreason: PublicationReportingIllegalSubreason;
@@ -1768,6 +1785,7 @@ export type Mirror = {
   collectNftAddress?: Maybe<Scalars['ContractAddress']>;
   /** The date the post was created on */
   createdAt: Scalars['DateTime'];
+  /** The data availability proofs you can fetch from */
   dataAvailabilityProofs?: Maybe<Scalars['String']>;
   hasCollectedByMe: Scalars['Boolean'];
   /** If the publication has been hidden if it has then the content and media is not available */
@@ -1880,6 +1898,7 @@ export type Mutation = {
   createUnfollowTypedData: CreateUnfollowBroadcastItemResult;
   hel?: Maybe<Scalars['Void']>;
   hidePublication?: Maybe<Scalars['Void']>;
+  idKitPhoneVerifyWebhook: IdKitPhoneVerifyWebhookResultStatusType;
   proxyAction: Scalars['ProxyActionId'];
   refresh: AuthenticationResult;
   /** Removes profile interests from the given profile */
@@ -2016,6 +2035,10 @@ export type MutationHelArgs = {
 
 export type MutationHidePublicationArgs = {
   request: HidePublicationRequest;
+};
+
+export type MutationIdKitPhoneVerifyWebhookArgs = {
+  request: IdKitPhoneVerifyWebhookRequest;
 };
 
 export type MutationProxyActionArgs = {
@@ -2356,7 +2379,7 @@ export type PaginatedResultInfo = {
   next?: Maybe<Scalars['Cursor']>;
   /** Cursor to query the actual results */
   prev?: Maybe<Scalars['Cursor']>;
-  /** The total number of entities the pagination iterates over. If null it means it can not work it out due to dynamic or aggregated query e.g. For a query that requests all nfts with more than 10 likes, this field gives the total amount of nfts with more than 10 likes, not the total amount of nfts */
+  /** The total number of entities the pagination iterates over. If its null then its not been worked out due to it being an expensive query and not really needed for the client. All main counters are in counter tables to allow them to be faster fetching. */
   totalCount?: Maybe<Scalars['Int']>;
 };
 
@@ -2411,6 +2434,7 @@ export type Post = {
   collectedBy?: Maybe<Wallet>;
   /** The date the post was created on */
   createdAt: Scalars['DateTime'];
+  /** The data availability proofs you can fetch from */
   dataAvailabilityProofs?: Maybe<Scalars['String']>;
   hasCollectedByMe: Scalars['Boolean'];
   /** If the publication has been hidden if it has then the content and media is not available */
@@ -3050,6 +3074,7 @@ export type Query = {
   globalProtocolStats: GlobalProtocolStats;
   hasTxHashBeenIndexed: TransactionResult;
   internalPublicationFilter: PaginatedPublicationResult;
+  isIDKitPhoneVerified: Scalars['Boolean'];
   mutualFollowersProfiles: PaginatedProfileResult;
   nftOwnershipChallenge: NftOwnershipChallengeResult;
   nfts: NfTsResult;
@@ -3742,6 +3767,235 @@ export type WorldcoinIdentity = {
   isHuman: Scalars['Boolean'];
 };
 
+/** The worldcoin signal type */
+export enum WorldcoinPhoneVerifyType {
+  Orb = 'ORB',
+  Phone = 'PHONE'
+}
+
+export type WorldcoinPhoneVerifyWebhookRequest = {
+  nullifierHash: Scalars['String'];
+  signal: Scalars['EthereumAddress'];
+  signalType: WorldcoinPhoneVerifyType;
+};
+
+type CollectFields_FeeCollectModuleSettings_Fragment = {
+  __typename?: 'FeeCollectModuleSettings';
+  type: CollectModules;
+  recipient: any;
+  referralFee: number;
+  contractAddress: any;
+  followerOnly: boolean;
+  amount: {
+    __typename?: 'ModuleFeeAmount';
+    value: string;
+    asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+  };
+};
+
+type CollectFields_FreeCollectModuleSettings_Fragment = {
+  __typename?: 'FreeCollectModuleSettings';
+  type: CollectModules;
+  contractAddress: any;
+  followerOnly: boolean;
+};
+
+type CollectFields_LimitedFeeCollectModuleSettings_Fragment = {
+  __typename?: 'LimitedFeeCollectModuleSettings';
+  type: CollectModules;
+  collectLimit: string;
+  recipient: any;
+  referralFee: number;
+  contractAddress: any;
+  followerOnly: boolean;
+  amount: {
+    __typename?: 'ModuleFeeAmount';
+    value: string;
+    asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+  };
+};
+
+type CollectFields_LimitedTimedFeeCollectModuleSettings_Fragment = {
+  __typename?: 'LimitedTimedFeeCollectModuleSettings';
+  type: CollectModules;
+  collectLimit: string;
+  recipient: any;
+  endTimestamp: any;
+  referralFee: number;
+  contractAddress: any;
+  followerOnly: boolean;
+  amount: {
+    __typename?: 'ModuleFeeAmount';
+    value: string;
+    asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+  };
+};
+
+type CollectFields_RevertCollectModuleSettings_Fragment = { __typename?: 'RevertCollectModuleSettings' };
+
+type CollectFields_TimedFeeCollectModuleSettings_Fragment = {
+  __typename?: 'TimedFeeCollectModuleSettings';
+  type: CollectModules;
+  recipient: any;
+  endTimestamp: any;
+  referralFee: number;
+  contractAddress: any;
+  followerOnly: boolean;
+  amount: {
+    __typename?: 'ModuleFeeAmount';
+    value: string;
+    asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+  };
+};
+
+type CollectFields_UnknownCollectModuleSettings_Fragment = { __typename?: 'UnknownCollectModuleSettings' };
+
+export type CollectFieldsFragment =
+  | CollectFields_FeeCollectModuleSettings_Fragment
+  | CollectFields_FreeCollectModuleSettings_Fragment
+  | CollectFields_LimitedFeeCollectModuleSettings_Fragment
+  | CollectFields_LimitedTimedFeeCollectModuleSettings_Fragment
+  | CollectFields_RevertCollectModuleSettings_Fragment
+  | CollectFields_TimedFeeCollectModuleSettings_Fragment
+  | CollectFields_UnknownCollectModuleSettings_Fragment;
+
+export type PostFieldsFragment = {
+  __typename?: 'Post';
+  id: any;
+  reaction?: ReactionTypes | null;
+  collectNftAddress?: any | null;
+  onChainContentURI: string;
+  hidden: boolean;
+  hasCollectedByMe: boolean;
+  createdAt: any;
+  appId?: any | null;
+  profile: {
+    __typename?: 'Profile';
+    id: any;
+    name?: string | null;
+    handle: any;
+    bio?: string | null;
+    ownedBy: any;
+    isFollowedByMe: boolean;
+    stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
+    attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+    picture?:
+      | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+      | { __typename?: 'NftImage'; uri: any }
+      | null;
+    followModule?:
+      | { __typename: 'FeeFollowModuleSettings' }
+      | { __typename: 'ProfileFollowModuleSettings' }
+      | { __typename: 'RevertFollowModuleSettings' }
+      | { __typename: 'UnknownFollowModuleSettings' }
+      | null;
+  };
+  collectedBy?: {
+    __typename?: 'Wallet';
+    address: any;
+    defaultProfile?: { __typename?: 'Profile'; handle: any } | null;
+  } | null;
+  referenceModule?:
+    | { __typename: 'DegreesOfSeparationReferenceModuleSettings' }
+    | { __typename: 'FollowOnlyReferenceModuleSettings' }
+    | { __typename: 'UnknownReferenceModuleSettings' }
+    | null;
+  canComment: { __typename?: 'CanCommentResponse'; result: boolean };
+  canMirror: { __typename?: 'CanMirrorResponse'; result: boolean };
+  collectModule:
+    | {
+        __typename?: 'FeeCollectModuleSettings';
+        type: CollectModules;
+        recipient: any;
+        referralFee: number;
+        contractAddress: any;
+        followerOnly: boolean;
+        amount: {
+          __typename?: 'ModuleFeeAmount';
+          value: string;
+          asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+        };
+      }
+    | {
+        __typename?: 'FreeCollectModuleSettings';
+        type: CollectModules;
+        contractAddress: any;
+        followerOnly: boolean;
+      }
+    | {
+        __typename?: 'LimitedFeeCollectModuleSettings';
+        type: CollectModules;
+        collectLimit: string;
+        recipient: any;
+        referralFee: number;
+        contractAddress: any;
+        followerOnly: boolean;
+        amount: {
+          __typename?: 'ModuleFeeAmount';
+          value: string;
+          asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+        };
+      }
+    | {
+        __typename?: 'LimitedTimedFeeCollectModuleSettings';
+        type: CollectModules;
+        collectLimit: string;
+        recipient: any;
+        endTimestamp: any;
+        referralFee: number;
+        contractAddress: any;
+        followerOnly: boolean;
+        amount: {
+          __typename?: 'ModuleFeeAmount';
+          value: string;
+          asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+        };
+      }
+    | { __typename?: 'RevertCollectModuleSettings' }
+    | {
+        __typename?: 'TimedFeeCollectModuleSettings';
+        type: CollectModules;
+        recipient: any;
+        endTimestamp: any;
+        referralFee: number;
+        contractAddress: any;
+        followerOnly: boolean;
+        amount: {
+          __typename?: 'ModuleFeeAmount';
+          value: string;
+          asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+        };
+      }
+    | { __typename?: 'UnknownCollectModuleSettings' };
+  stats: {
+    __typename?: 'PublicationStats';
+    totalAmountOfComments: number;
+    totalAmountOfCollects: number;
+    totalAmountOfMirrors: number;
+    totalUpvotes: number;
+    totalDownvotes: number;
+  };
+  metadata: {
+    __typename?: 'MetadataOutput';
+    name?: string | null;
+    description?: any | null;
+    content?: any | null;
+    contentWarning?: PublicationContentWarning | null;
+    mainContentFocus: PublicationMainFocus;
+    tags: Array<string>;
+    media: Array<{
+      __typename?: 'MediaSet';
+      original: { __typename?: 'Media'; url: any; mimeType?: any | null };
+    }>;
+    cover?: { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } } | null;
+    attributes: Array<{
+      __typename?: 'MetadataAttributeOutput';
+      value?: string | null;
+      traitType?: string | null;
+    }>;
+  };
+};
+
 export type ProfileFieldsFragment = {
   __typename?: 'Profile';
   id: any;
@@ -3831,6 +4085,17 @@ export type CreatePostTypedDataMutation = {
   };
 };
 
+export type CreatePostViaDispatcherMutationVariables = Exact<{
+  request: CreatePublicPostRequest;
+}>;
+
+export type CreatePostViaDispatcherMutation = {
+  __typename?: 'Mutation';
+  createPostViaDispatcher:
+    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
+    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
+};
+
 export type CreateProfileMutationVariables = Exact<{
   request: CreateProfileRequest;
 }>;
@@ -3840,6 +4105,41 @@ export type CreateProfileMutation = {
   createProfile:
     | { __typename?: 'RelayError'; reason: RelayErrorReasons }
     | { __typename?: 'RelayerResult'; txHash: any; txId: any };
+};
+
+export type CreateSetDispatcherTypedDataMutationVariables = Exact<{
+  options?: InputMaybe<TypedDataOptions>;
+  request: SetDispatcherRequest;
+}>;
+
+export type CreateSetDispatcherTypedDataMutation = {
+  __typename?: 'Mutation';
+  createSetDispatcherTypedData: {
+    __typename?: 'CreateSetDispatcherBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateSetDispatcherEIP712TypedData';
+      types: {
+        __typename?: 'CreateSetDispatcherEIP712TypedDataTypes';
+        SetDispatcherWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      value: {
+        __typename?: 'CreateSetDispatcherEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        profileId: any;
+        dispatcher: any;
+      };
+    };
+  };
 };
 
 export type CreateUnfollowTypedDataMutationVariables = Exact<{
@@ -3921,6 +4221,22 @@ export type FollowersQuery = {
   };
 };
 
+export type LensfolioStatsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type LensfolioStatsQuery = {
+  __typename?: 'Query';
+  globalProtocolStats: {
+    __typename?: 'GlobalProtocolStats';
+    totalProfiles: number;
+    totalPosts: number;
+    totalBurntProfiles: number;
+    totalMirrors: number;
+    totalComments: number;
+    totalCollects: number;
+    totalFollows: number;
+  };
+};
+
 export type ProfileQueryVariables = Exact<{
   request: SingleProfileQueryRequest;
 }>;
@@ -3977,6 +4293,160 @@ export type ProfileQuery = {
       | { __typename: 'UnknownFollowModuleSettings' }
       | null;
   } | null;
+};
+
+export type ProfilePostsQueryVariables = Exact<{
+  request: PublicationsQueryRequest;
+  reactionRequest?: InputMaybe<ReactionFieldResolverRequest>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
+}>;
+
+export type ProfilePostsQuery = {
+  __typename?: 'Query';
+  publications: {
+    __typename?: 'PaginatedPublicationResult';
+    items: Array<
+      | { __typename?: 'Comment' }
+      | { __typename?: 'Mirror' }
+      | {
+          __typename?: 'Post';
+          id: any;
+          reaction?: ReactionTypes | null;
+          collectNftAddress?: any | null;
+          onChainContentURI: string;
+          hidden: boolean;
+          hasCollectedByMe: boolean;
+          createdAt: any;
+          appId?: any | null;
+          profile: {
+            __typename?: 'Profile';
+            id: any;
+            name?: string | null;
+            handle: any;
+            bio?: string | null;
+            ownedBy: any;
+            isFollowedByMe: boolean;
+            stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
+            attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+            picture?:
+              | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+              | { __typename?: 'NftImage'; uri: any }
+              | null;
+            followModule?:
+              | { __typename: 'FeeFollowModuleSettings' }
+              | { __typename: 'ProfileFollowModuleSettings' }
+              | { __typename: 'RevertFollowModuleSettings' }
+              | { __typename: 'UnknownFollowModuleSettings' }
+              | null;
+          };
+          collectedBy?: {
+            __typename?: 'Wallet';
+            address: any;
+            defaultProfile?: { __typename?: 'Profile'; handle: any } | null;
+          } | null;
+          referenceModule?:
+            | { __typename: 'DegreesOfSeparationReferenceModuleSettings' }
+            | { __typename: 'FollowOnlyReferenceModuleSettings' }
+            | { __typename: 'UnknownReferenceModuleSettings' }
+            | null;
+          canComment: { __typename?: 'CanCommentResponse'; result: boolean };
+          canMirror: { __typename?: 'CanMirrorResponse'; result: boolean };
+          collectModule:
+            | {
+                __typename?: 'FeeCollectModuleSettings';
+                type: CollectModules;
+                recipient: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | {
+                __typename?: 'FreeCollectModuleSettings';
+                type: CollectModules;
+                contractAddress: any;
+                followerOnly: boolean;
+              }
+            | {
+                __typename?: 'LimitedFeeCollectModuleSettings';
+                type: CollectModules;
+                collectLimit: string;
+                recipient: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | {
+                __typename?: 'LimitedTimedFeeCollectModuleSettings';
+                type: CollectModules;
+                collectLimit: string;
+                recipient: any;
+                endTimestamp: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | { __typename?: 'RevertCollectModuleSettings' }
+            | {
+                __typename?: 'TimedFeeCollectModuleSettings';
+                type: CollectModules;
+                recipient: any;
+                endTimestamp: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | { __typename?: 'UnknownCollectModuleSettings' };
+          stats: {
+            __typename?: 'PublicationStats';
+            totalAmountOfComments: number;
+            totalAmountOfCollects: number;
+            totalAmountOfMirrors: number;
+            totalUpvotes: number;
+            totalDownvotes: number;
+          };
+          metadata: {
+            __typename?: 'MetadataOutput';
+            name?: string | null;
+            description?: any | null;
+            content?: any | null;
+            contentWarning?: PublicationContentWarning | null;
+            mainContentFocus: PublicationMainFocus;
+            tags: Array<string>;
+            media: Array<{
+              __typename?: 'MediaSet';
+              original: { __typename?: 'Media'; url: any; mimeType?: any | null };
+            }>;
+            cover?: { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } } | null;
+            attributes: Array<{
+              __typename?: 'MetadataAttributeOutput';
+              value?: string | null;
+              traitType?: string | null;
+            }>;
+          };
+        }
+    >;
+    pageInfo: { __typename?: 'PaginatedResultInfo'; totalCount?: number | null; next?: any | null };
+  };
 };
 
 export type ProfilesQueryVariables = Exact<{
@@ -4082,6 +4552,19 @@ export type UserProfilesQuery = {
   };
 };
 
+export type ValidatePublicationMetadataQueryVariables = Exact<{
+  request: ValidatePublicationMetadataRequest;
+}>;
+
+export type ValidatePublicationMetadataQuery = {
+  __typename?: 'Query';
+  validatePublicationMetadata: {
+    __typename?: 'PublicationValidateMetadataResult';
+    valid: boolean;
+    reason?: string | null;
+  };
+};
+
 export interface PossibleTypesResultData {
   possibleTypes: {
     [key: string]: string[];
@@ -4163,6 +4646,144 @@ export const ProfileFieldsFragmentDoc = gql`
       __typename
     }
   }
+`;
+export const CollectFieldsFragmentDoc = gql`
+  fragment CollectFields on CollectModule {
+    ... on FreeCollectModuleSettings {
+      type
+      contractAddress
+      followerOnly
+    }
+    ... on FeeCollectModuleSettings {
+      type
+      recipient
+      referralFee
+      contractAddress
+      followerOnly
+      amount {
+        asset {
+          symbol
+          decimals
+          address
+        }
+        value
+      }
+    }
+    ... on LimitedFeeCollectModuleSettings {
+      type
+      collectLimit
+      recipient
+      referralFee
+      contractAddress
+      followerOnly
+      amount {
+        asset {
+          symbol
+          decimals
+          address
+        }
+        value
+      }
+    }
+    ... on LimitedTimedFeeCollectModuleSettings {
+      type
+      collectLimit
+      recipient
+      endTimestamp
+      referralFee
+      contractAddress
+      followerOnly
+      amount {
+        asset {
+          symbol
+          decimals
+          address
+        }
+        value
+      }
+    }
+    ... on TimedFeeCollectModuleSettings {
+      type
+      recipient
+      endTimestamp
+      referralFee
+      contractAddress
+      followerOnly
+      amount {
+        asset {
+          symbol
+          decimals
+          address
+        }
+        value
+      }
+    }
+  }
+`;
+export const PostFieldsFragmentDoc = gql`
+  fragment PostFields on Post {
+    id
+    reaction(request: $reactionRequest)
+    profile {
+      ...ProfileFields
+    }
+    collectedBy {
+      address
+      defaultProfile {
+        handle
+      }
+    }
+    referenceModule {
+      __typename
+    }
+    canComment(profileId: $profileId) {
+      result
+    }
+    canMirror(profileId: $profileId) {
+      result
+    }
+    collectModule {
+      ...CollectFields
+    }
+    collectNftAddress
+    onChainContentURI
+    hidden
+    hasCollectedByMe
+    stats {
+      totalAmountOfComments
+      totalAmountOfCollects
+      totalAmountOfMirrors
+      totalUpvotes
+      totalDownvotes
+    }
+    metadata {
+      name
+      description
+      content
+      contentWarning
+      mainContentFocus
+      tags
+      media {
+        original {
+          url
+          mimeType
+        }
+      }
+      cover {
+        original {
+          url
+        }
+      }
+      attributes {
+        value
+        traitType
+      }
+    }
+    createdAt
+    appId
+  }
+  ${ProfileFieldsFragmentDoc}
+  ${CollectFieldsFragmentDoc}
 `;
 export const RelayerResultFieldsFragmentDoc = gql`
   fragment RelayerResultFields on RelayResult {
@@ -4334,6 +4955,54 @@ export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreatePostTypedDataMutation,
   CreatePostTypedDataMutationVariables
 >;
+export const CreatePostViaDispatcherDocument = gql`
+  mutation CreatePostViaDispatcher($request: CreatePublicPostRequest!) {
+    createPostViaDispatcher(request: $request) {
+      ...RelayerResultFields
+    }
+  }
+  ${RelayerResultFieldsFragmentDoc}
+`;
+export type CreatePostViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreatePostViaDispatcherMutation,
+  CreatePostViaDispatcherMutationVariables
+>;
+
+/**
+ * __useCreatePostViaDispatcherMutation__
+ *
+ * To run a mutation, you first call `useCreatePostViaDispatcherMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostViaDispatcherMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostViaDispatcherMutation, { data, loading, error }] = useCreatePostViaDispatcherMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreatePostViaDispatcherMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePostViaDispatcherMutation,
+    CreatePostViaDispatcherMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreatePostViaDispatcherMutation, CreatePostViaDispatcherMutationVariables>(
+    CreatePostViaDispatcherDocument,
+    options
+  );
+}
+export type CreatePostViaDispatcherMutationHookResult = ReturnType<typeof useCreatePostViaDispatcherMutation>;
+export type CreatePostViaDispatcherMutationResult = Apollo.MutationResult<CreatePostViaDispatcherMutation>;
+export type CreatePostViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreatePostViaDispatcherMutation,
+  CreatePostViaDispatcherMutationVariables
+>;
 export const CreateProfileDocument = gql`
   mutation CreateProfile($request: CreateProfileRequest!) {
     createProfile(request: $request) {
@@ -4378,6 +5047,78 @@ export type CreateProfileMutationResult = Apollo.MutationResult<CreateProfileMut
 export type CreateProfileMutationOptions = Apollo.BaseMutationOptions<
   CreateProfileMutation,
   CreateProfileMutationVariables
+>;
+export const CreateSetDispatcherTypedDataDocument = gql`
+  mutation CreateSetDispatcherTypedData($options: TypedDataOptions, $request: SetDispatcherRequest!) {
+    createSetDispatcherTypedData(options: $options, request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          SetDispatcherWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          dispatcher
+        }
+      }
+    }
+  }
+`;
+export type CreateSetDispatcherTypedDataMutationFn = Apollo.MutationFunction<
+  CreateSetDispatcherTypedDataMutation,
+  CreateSetDispatcherTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateSetDispatcherTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateSetDispatcherTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSetDispatcherTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSetDispatcherTypedDataMutation, { data, loading, error }] = useCreateSetDispatcherTypedDataMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateSetDispatcherTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSetDispatcherTypedDataMutation,
+    CreateSetDispatcherTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateSetDispatcherTypedDataMutation,
+    CreateSetDispatcherTypedDataMutationVariables
+  >(CreateSetDispatcherTypedDataDocument, options);
+}
+export type CreateSetDispatcherTypedDataMutationHookResult = ReturnType<
+  typeof useCreateSetDispatcherTypedDataMutation
+>;
+export type CreateSetDispatcherTypedDataMutationResult =
+  Apollo.MutationResult<CreateSetDispatcherTypedDataMutation>;
+export type CreateSetDispatcherTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetDispatcherTypedDataMutation,
+  CreateSetDispatcherTypedDataMutationVariables
 >;
 export const CreateUnfollowTypedDataDocument = gql`
   mutation CreateUnfollowTypedData($request: UnfollowRequest!) {
@@ -4598,6 +5339,53 @@ export function useFollowersLazyQuery(
 export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
 export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
 export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
+export const LensfolioStatsDocument = gql`
+  query LensfolioStats {
+    globalProtocolStats(request: { sources: "lensfolio" }) {
+      totalProfiles
+      totalPosts
+      totalBurntProfiles
+      totalMirrors
+      totalComments
+      totalCollects
+      totalFollows
+    }
+  }
+`;
+
+/**
+ * __useLensfolioStatsQuery__
+ *
+ * To run a query within a React component, call `useLensfolioStatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLensfolioStatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLensfolioStatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLensfolioStatsQuery(
+  baseOptions?: Apollo.QueryHookOptions<LensfolioStatsQuery, LensfolioStatsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<LensfolioStatsQuery, LensfolioStatsQueryVariables>(LensfolioStatsDocument, options);
+}
+export function useLensfolioStatsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<LensfolioStatsQuery, LensfolioStatsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<LensfolioStatsQuery, LensfolioStatsQueryVariables>(
+    LensfolioStatsDocument,
+    options
+  );
+}
+export type LensfolioStatsQueryHookResult = ReturnType<typeof useLensfolioStatsQuery>;
+export type LensfolioStatsLazyQueryHookResult = ReturnType<typeof useLensfolioStatsLazyQuery>;
+export type LensfolioStatsQueryResult = Apollo.QueryResult<LensfolioStatsQuery, LensfolioStatsQueryVariables>;
 export const ProfileDocument = gql`
   query Profile($request: SingleProfileQueryRequest!) {
     profile(request: $request) {
@@ -4694,6 +5482,60 @@ export function useProfileLazyQuery(
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
+export const ProfilePostsDocument = gql`
+  query ProfilePosts(
+    $request: PublicationsQueryRequest!
+    $reactionRequest: ReactionFieldResolverRequest
+    $profileId: ProfileId
+  ) {
+    publications(request: $request) {
+      items {
+        ... on Post {
+          ...PostFields
+        }
+      }
+      pageInfo {
+        totalCount
+        next
+      }
+    }
+  }
+  ${PostFieldsFragmentDoc}
+`;
+
+/**
+ * __useProfilePostsQuery__
+ *
+ * To run a query within a React component, call `useProfilePostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfilePostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfilePostsQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *      reactionRequest: // value for 'reactionRequest'
+ *      profileId: // value for 'profileId'
+ *   },
+ * });
+ */
+export function useProfilePostsQuery(
+  baseOptions: Apollo.QueryHookOptions<ProfilePostsQuery, ProfilePostsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProfilePostsQuery, ProfilePostsQueryVariables>(ProfilePostsDocument, options);
+}
+export function useProfilePostsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfilePostsQuery, ProfilePostsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProfilePostsQuery, ProfilePostsQueryVariables>(ProfilePostsDocument, options);
+}
+export type ProfilePostsQueryHookResult = ReturnType<typeof useProfilePostsQuery>;
+export type ProfilePostsLazyQueryHookResult = ReturnType<typeof useProfilePostsLazyQuery>;
+export type ProfilePostsQueryResult = Apollo.QueryResult<ProfilePostsQuery, ProfilePostsQueryVariables>;
 export const ProfilesDocument = gql`
   query Profiles($ownedBy: [EthereumAddress!]) {
     profiles(request: { ownedBy: $ownedBy, limit: 10 }) {
@@ -4866,3 +5708,62 @@ export function useUserProfilesLazyQuery(
 export type UserProfilesQueryHookResult = ReturnType<typeof useUserProfilesQuery>;
 export type UserProfilesLazyQueryHookResult = ReturnType<typeof useUserProfilesLazyQuery>;
 export type UserProfilesQueryResult = Apollo.QueryResult<UserProfilesQuery, UserProfilesQueryVariables>;
+export const ValidatePublicationMetadataDocument = gql`
+  query ValidatePublicationMetadata($request: ValidatePublicationMetadataRequest!) {
+    validatePublicationMetadata(request: $request) {
+      valid
+      reason
+    }
+  }
+`;
+
+/**
+ * __useValidatePublicationMetadataQuery__
+ *
+ * To run a query within a React component, call `useValidatePublicationMetadataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useValidatePublicationMetadataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useValidatePublicationMetadataQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useValidatePublicationMetadataQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ValidatePublicationMetadataQuery,
+    ValidatePublicationMetadataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ValidatePublicationMetadataQuery, ValidatePublicationMetadataQueryVariables>(
+    ValidatePublicationMetadataDocument,
+    options
+  );
+}
+export function useValidatePublicationMetadataLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ValidatePublicationMetadataQuery,
+    ValidatePublicationMetadataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ValidatePublicationMetadataQuery, ValidatePublicationMetadataQueryVariables>(
+    ValidatePublicationMetadataDocument,
+    options
+  );
+}
+export type ValidatePublicationMetadataQueryHookResult = ReturnType<
+  typeof useValidatePublicationMetadataQuery
+>;
+export type ValidatePublicationMetadataLazyQueryHookResult = ReturnType<
+  typeof useValidatePublicationMetadataLazyQuery
+>;
+export type ValidatePublicationMetadataQueryResult = Apollo.QueryResult<
+  ValidatePublicationMetadataQuery,
+  ValidatePublicationMetadataQueryVariables
+>;

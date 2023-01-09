@@ -15,11 +15,18 @@ interface AppState {
   setUploadedWorks: (works: { [k: string]: any }) => void;
 }
 
+export const LENSFOLIO_ATTACHMENT_DEFAULT = {
+  item: '',
+  type: '',
+  altTag: ''
+};
+
 export const UPLOADED_WORKS_DEAFULT = {
   title: '',
-  attachment: null,
+  attachment: LENSFOLIO_ATTACHMENT_DEFAULT,
   description: ''
 };
+
 export const useAppStore = create<AppState>((set) => ({
   profiles: [],
   setProfiles: (profiles) => set(() => ({ profiles })),
@@ -27,7 +34,7 @@ export const useAppStore = create<AppState>((set) => ({
   setCurrentProfile: (currentProfile) => set(() => ({ currentProfile })),
   userSigNonce: 0,
   setUserSigNonce: (userSigNonce) => set(() => ({ userSigNonce })),
-  uploadedWorks: null,
+  uploadedWorks: UPLOADED_WORKS_DEAFULT,
   setUploadedWorks: (uploadedData) =>
     set((state) => ({ uploadedWorks: { ...state.uploadedWorks, ...uploadedData } }))
 }));

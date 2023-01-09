@@ -1,7 +1,16 @@
 import { FC, useState } from 'react';
 import { useAppStore } from 'src/store/app';
-import { useCreatePostTypedDataMutation, PublicationMainFocus } from 'lens';
-import type { PublicationMetadataV2Input, MetadataAttributeInput } from 'lens';
+import {
+  useCreatePostTypedDataMutation,
+  PublicationMainFocus,
+  useValidatePublicationMetadataLazyQuery,
+  useCreatePostViaDispatcherMutation
+} from 'lens';
+import type {
+  PublicationMetadataV2Input,
+  MetadataAttributeInput,
+  ValidatePublicationMetadataRequest
+} from 'lens';
 import {
   useContractWrite,
   useProvider,
@@ -15,7 +24,8 @@ import {
   LensHubProxy,
   SIGN_IN_REQUIRED_MESSAGE,
   LENSFOLIO_APP_ID,
-  LensfolioAttachment
+  LensfolioAttachment,
+  RELAYER_ENABLED
 } from 'utils';
 import { ethers, utils } from 'ethers';
 import onError from '@lib/onError';
@@ -58,7 +68,7 @@ const UploadToLens: FC = () => {
   const { data: signer } = useSigner();
 
   const { signTypedDataAsync } = useSignTypedData({ onError });
-
+  const [validateMetadata, { error: validateError }] = useValidatePublicationMetadataLazyQuery();
   // const { config } = usePrepareContractWrite({
   //   address: LENSHUB_PROXY_ADDRESS,
   //   abi: LensHubProxy,
@@ -78,6 +88,39 @@ const UploadToLens: FC = () => {
   //   signerOrProvider: signer
   // });
   // console.log(contract);
+
+  const [createPostViaDispatcher] = useCreatePostViaDispatcherMutation({
+    onCompleted: (data) => {
+      console.log(data);
+      // onCompleted();
+      // if (data.createPostViaDispatcher.__typename === 'RelayerResult') {
+      //   setTxnQueue([
+      //     generateOptimisticPublication({ txId: data.createPostViaDispatcher.txId }),
+      //     ...txnQueue
+      //   ]);
+      // }
+    },
+    onError
+  });
+
+  const createViaDispatcher = async (request: any) => {
+    const variables = {
+      options: { overrideSigNonce: userSigNonce },
+      request
+    };
+
+    const { data } = await createPostViaDispatcher({
+      variables: { request },
+      context: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      }
+    });
+    if (data?.createPostViaDispatcher?.__typename === 'RelayError') {
+      createPostTypedData({ variables });
+    }
+  };
 
   const { error, write } = useContractWrite({
     address: LENSHUB_PROXY_ADDRESS,
@@ -153,7 +196,7 @@ const UploadToLens: FC = () => {
     console.log('inputstruct ', inputStruct);
     // setInputData(inputStruct);
     setUserSigNonce(userSigNonce + 1);
-    if (!true) {
+    if (!RELAYER_ENABLED) {
       return write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
       // return write?.({ args: inputStruct });
     }
@@ -165,9 +208,9 @@ const UploadToLens: FC = () => {
     } = await broadcast({ request: { id, signature } });
 
     console.log(result);
-    // if ('reason' in result) {
-    // write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
-    // }
+    if ('reason' in result) {
+      write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
+    }
   };
 
   const [createPostTypedData] = useCreatePostTypedDataMutation({
@@ -208,7 +251,7 @@ const UploadToLens: FC = () => {
       // if (publicationContent.length === 0 && attachments.length === 0) {
       //   return setPublicationContentError(`${isComment ? 'Comment' : 'Post'} should not be empty!`);
       // }
-      console.log(trimify(uploadedWorks.description));
+      console.log('UploadedWorks: ', uploadedWorks);
 
       setPublicationContentError('');
       // let textNftImageUrl = null;
@@ -233,21 +276,41 @@ const UploadToLens: FC = () => {
         metadata_id: uuid(),
         description: trimify(uploadedWorks.description),
         content: trimify(`${uploadedWorks.title}\n\n${uploadedWorks.description}`),
-        external_url: null,
-        image: uploadedWorks.attachment,
-        imageMimeType: uploadedWorks.attachment?.type,
-        name: `${isComment ? 'Comment' : 'Post'} by @${currentProfile?.handle}`,
-        tags: ['using_api_example'],
-        animation_url: null,
-        mainContentFocus: PublicationMainFocus.Image,
-        contentWarning: null,
-        attributes: [],
-        media: attachments,
         locale: 'en-US',
+        tags: ['lenfolio_example'],
+        mainContentFocus: PublicationMainFocus.Image,
+        external_url: null,
+        name: `${isComment ? 'Comment' : 'Post'} by @${currentProfile?.handle}`,
+        attributes: [],
+        image: uploadedWorks.attachment?.item,
+        imageMimeType: uploadedWorks.attachment?.type,
+        media: [uploadedWorks.attachment],
+        animation_url: null,
+        contentWarning: null,
         appId: LENSFOLIO_APP_ID
       };
 
-      console.log(metadata);
+      // const metadata: PublicationMetadataV2Input = {
+      //   version: '2.0.0',
+      //   mainContentFocus: PublicationMainFocus.TextOnly,
+      //   metadata_id: '6162716327186732',
+      //   description: 'Description',
+      //   locale: 'en-US',
+      //   content: 'Content',
+      //   external_url: null,
+      //   image: null,
+      //   imageMimeType: null,
+      //   name: 'Name',
+      //   attributes: [],
+      //   tags: ['using_api_examples'],
+      //   appId: LENSFOLIO_APP_ID
+      // };
+      // console.log(metadata);
+
+      const { data: postData } = await validateMetadata({
+        variables: { request: { metadatav2: metadata } }
+      });
+      console.log('validate result:', postData);
       // let arweaveId = null;
       // if (restricted) {
       //   arweaveId = await createTokenGatedMetadata(metadata);
@@ -267,16 +330,20 @@ const UploadToLens: FC = () => {
           followerOnlyReferenceModule: false
         }
       };
-      const typedData = await createPostTypedData({
-        variables: { options: { overrideSigNonce: userSigNonce }, request },
-        context: {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      if (currentProfile?.dispatcher?.canUseRelay) {
+        await createViaDispatcher(request);
+      } else {
+        const typedData = await createPostTypedData({
+          variables: { options: { overrideSigNonce: userSigNonce }, request },
+          context: {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
           }
-        }
-      });
+        });
+        console.log(typedData);
+      }
 
-      console.log(typedData);
       //     await createPostTypedData({
       //       variables: { options: { overrideSigNonce: userSigNonce }, request }
       //     });

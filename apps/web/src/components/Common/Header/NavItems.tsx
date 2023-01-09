@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import Link from 'next/link';
+import React, { FC } from 'react';
 
 interface NavItemProps {
   name: string;
@@ -11,8 +12,12 @@ const NavItem = ({ name }: NavItemProps) => {
 const NavItems: FC = () => {
   return (
     <div className="flex items-center space-x-4">
-      <NavItem name="Home" />
-      <NavItem name="Explore" />
+      <Link href="/">
+        <NavItem name="Home" />
+      </Link>
+      <Link href="/explore">
+        <NavItem name="Explore" />
+      </Link>
     </div>
   );
 };

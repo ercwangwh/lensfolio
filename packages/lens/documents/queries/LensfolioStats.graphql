@@ -1,0 +1,11 @@
+query LensfolioStats {
+  globalProtocolStats(request: { sources: "lensfolio" }) {
+    totalProfiles
+    totalPosts
+    totalBurntProfiles
+    totalMirrors
+    totalComments
+    totalCollects
+    totalFollows
+  }
+}

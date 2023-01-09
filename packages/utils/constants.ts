@@ -133,7 +133,7 @@ export const LS_KEYS = {
 
 export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-export const SERVERLESS_URL = 'http://localhost:3001';
+export const SERVERLESS_URL = 'http://localhost:4784';
 
 // S3 bucket
 export const S3_BUCKET = {

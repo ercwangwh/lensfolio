@@ -9,6 +9,7 @@ import { CreateProfileMutation } from 'lens';
 import type { CustomErrorWithData } from 'utils';
 import clearLocalStorage from '@lib/clearLocalStorage';
 import { toast } from 'react-hot-toast';
+import Link from 'next/link';
 
 // interface props {
 //   profile: Profile;
@@ -50,6 +51,16 @@ const UserMenu = () => {
       }
     >
       <div>
+        <Link href={`/user/${currentProfile?.handle}`}>
+          <button
+            type="button"
+            className="flex items-center w-full px-2.5 py-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            // onClick={() => logout()}
+          >
+            {/* <HandWaveOutline className="w-4 h-4" /> */}
+            <span className="truncate whitespace-nowrap">Your Profile Page</span>
+          </button>
+        </Link>
         <button
           type="button"
           className="flex items-center w-full px-2.5 py-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"

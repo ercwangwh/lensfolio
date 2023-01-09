@@ -7,6 +7,7 @@ import Post from '@components/Post';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button } from '@components/UI/Button';
+import ToggleDispatcher from './ToggleDispatcher';
 
 const Header: FC = () => {
   const router = useRouter();
@@ -18,6 +19,7 @@ const Header: FC = () => {
           <NavItems />
         </div>
         <Button onClick={() => router.push('/post')}>Upload</Button>
+        <ToggleDispatcher></ToggleDispatcher>
         <Login />
       </div>
     </div>
