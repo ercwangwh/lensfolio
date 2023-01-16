@@ -15,6 +15,10 @@ import { LENSFOLIO_APP_ID } from 'utils';
 import getIPFSLink from '@lib/getIPFSLink';
 import { GridLayout, GridItemFour } from '@components/UI/GridLayout';
 import getAvatar from '@lib/getAvatar';
+import { useProfileInterestsQuery } from 'lens';
+import { Button } from '@components/UI/Button';
+import useHorizontalScroll from '@utils/hooks/useHorizantalScroll';
+import CategoryFilters from './CategoryFilters';
 
 function Home() {
   /* create initial state to hold array of profiles */
@@ -26,7 +30,7 @@ function Home() {
   // useProfilePostsLazyQuery();
 
   const currentProfile = useAppStore((state) => state.currentProfile);
-
+  const scrollRef = useHorizontalScroll();
   const publicationTypes = [PublicationTypes.Post, PublicationTypes.Mirror, PublicationTypes.Comment];
 
   const request = {
@@ -96,6 +100,7 @@ function Home() {
   // }
   return (
     <div>
+      <CategoryFilters />
       <GridLayout>
         {/* <GridItemFour> */}
         {data?.publications.items.map((item, index) => {
