@@ -145,7 +145,7 @@ export interface LensfolioAttachment {
 }
 
 export interface LensfolioWorks {
-  title: string;
-  attachment: LensfolioAttachment;
   description: string;
+  attachment: LensfolioAttachment;
+  content: string;
 }

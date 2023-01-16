@@ -12,6 +12,9 @@ import { useRouter } from 'next/router';
 import { Card } from '@components/UI/Card';
 import { useAppStore } from 'src/store/app';
 import { LENSFOLIO_APP_ID } from 'utils';
+import getIPFSLink from '@lib/getIPFSLink';
+import { GridLayout, GridItemFour } from '@components/UI/GridLayout';
+import getAvatar from '@lib/getAvatar';
 
 function Home() {
   /* create initial state to hold array of profiles */
@@ -93,31 +96,40 @@ function Home() {
   // }
   return (
     <div>
-      {/* <LoginButton /> */}
-      {/* <Header /> */}
-      {/* <ViewProfile /> */}
-      {data?.publications.items.map((item, index) => {
-        return (
-          <Card forceRounded={true} key={`${item}_${index}`}>
-            {item.__typename === 'Post' ? (
-              <div>
-                {item.metadata.name} {item.metadata.description} {item.appId}
-                {item.metadata.media.map((media) => {
-                  return (
-                    <div>
-                      {media.original.url}
-                      {/* {console.log(media.original.url)} */}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : null}
+      <GridLayout>
+        {/* <GridItemFour> */}
+        {data?.publications.items.map((item, index) => {
+          return (
+            <Card forceRounded={true} key={`${item}_${index}`}>
+              {item.__typename === 'Post' ? (
+                <div>
+                  {item.metadata.media.map((media) => {
+                    return (
+                      <div>
+                        <img src={getIPFSLink(media.original.url)}></img>
+                        {}
+                        {/* {media.original.url} */}
+                        {/* {console.log(media.original.url)} */}
+                      </div>
+                    );
+                  })}
+                  <img
+                    src={getAvatar(item.profile)}
+                    className="object-cover bg-white rounded-full dark:bg-theme w-8 h-8 md:w-9 md:h-9"
+                    alt="avatar picture"
+                    draggable={false}
+                  />
+                  {item.profile.handle}
+                </div>
+              ) : null}
 
-            {/* <div>Title</div>
+              {/* <div>Title</div>
             <div>Description</div> */}
-          </Card>
-        );
-      })}
+            </Card>
+          );
+        })}
+        {/* </GridItemFour> */}
+      </GridLayout>
     </div>
   );
 }

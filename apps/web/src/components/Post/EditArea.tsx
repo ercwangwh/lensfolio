@@ -51,20 +51,20 @@ const EditArea: FC = () => {
   return (
     <div>
       <Input
-        prefix={'Title'}
+        prefix={'Description'}
         onChange={(evt) => {
           const data = evt.target.value;
           setTitle(data);
-          setUploadedWorks({ title: data });
+          setUploadedWorks({ description: data });
         }}
       ></Input>
       <div> {title}</div>
       <DropZone></DropZone>
       <Input
-        prefix={'Description'}
+        prefix={'Content'}
         onChange={(evt) => {
           const data = evt.target.value;
-          setUploadedWorks({ description: data });
+          setUploadedWorks({ content: data });
           console.log(uploadedWorks);
         }}
       ></Input>

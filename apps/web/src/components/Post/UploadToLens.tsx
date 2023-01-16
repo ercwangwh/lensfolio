@@ -275,7 +275,7 @@ const UploadToLens: FC = () => {
         version: '2.0.0',
         metadata_id: uuid(),
         description: trimify(uploadedWorks.description),
-        content: trimify(`${uploadedWorks.title}\n\n${uploadedWorks.description}`),
+        content: trimify(`${uploadedWorks.description}\n\n${uploadedWorks.content}`),
         locale: 'en-US',
         tags: ['lenfolio_example'],
         mainContentFocus: PublicationMainFocus.Image,
@@ -334,12 +334,12 @@ const UploadToLens: FC = () => {
         await createViaDispatcher(request);
       } else {
         const typedData = await createPostTypedData({
-          variables: { options: { overrideSigNonce: userSigNonce }, request },
-          context: {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            }
-          }
+          variables: { options: { overrideSigNonce: userSigNonce }, request }
+          // context: {
+          //   headers: {
+          //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          //   }
+          // }
         });
         console.log(typedData);
       }

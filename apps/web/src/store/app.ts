@@ -22,9 +22,9 @@ export const LENSFOLIO_ATTACHMENT_DEFAULT = {
 };
 
 export const UPLOADED_WORKS_DEAFULT = {
-  title: '',
+  description: '',
   attachment: LENSFOLIO_ATTACHMENT_DEFAULT,
-  description: ''
+  content: ''
 };
 
 export const useAppStore = create<AppState>((set) => ({
