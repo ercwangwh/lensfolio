@@ -103,8 +103,7 @@ function Home() {
   return (
     <div>
       <CategoryFilters />
-      <GridLayout>
-        {/* <GridItemFour> */}
+      {/* <GridLayout>
         {data?.publications.items.map((item, index) => {
           return (
             <Card forceRounded={true} key={`${item}_${index}`}>
@@ -114,9 +113,6 @@ function Home() {
                     return (
                       <div>
                         <img src={getIPFSLink(media.original.url)}></img>
-                        {}
-                        {/* {media.original.url} */}
-                        {/* {console.log(media.original.url)} */}
                       </div>
                     );
                   })}
@@ -129,14 +125,10 @@ function Home() {
                   {item.profile.handle}
                 </div>
               ) : null}
-
-              {/* <div>Title</div>
-            <div>Description</div> */}
             </Card>
           );
         })}
-        {/* </GridItemFour> */}
-      </GridLayout>
+      </GridLayout> */}
       <Curated />
     </div>
   );

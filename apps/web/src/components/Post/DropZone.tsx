@@ -75,7 +75,7 @@ const DropZone: FC = () => {
     <div>
       {/* <MetaTags title="Select Video" /> */}
 
-      <div className="relative flex flex-col items-center justify-center flex-1 my-20">
+      <div className="relative flex flex-col items-center justify-center flex-1 my-10">
         {/* <Input prefix={'Title'}></Input> */}
         {Array.from(files).map((file, index) => {
           return (
@@ -108,16 +108,14 @@ const DropZone: FC = () => {
           </span>
           <span className="space-y-10 md:space-y-14">
             <div className="text-2xl font-semibold md:text-4xl">
-              <span>
-                Drag and drop <br /> images to upload
-              </span>
+              <span>Drag and drop an image to upload</span>
             </div>
             <div>
               <label
                 htmlFor="chooseVideo"
                 className="px-8 py-4 text-lg text-white bg-indigo-500 cursor-pointer rounded-full"
               >
-                or choose images
+                or choose an image
                 <input
                   id="chooseVideo"
                   onChange={onChooseFile}

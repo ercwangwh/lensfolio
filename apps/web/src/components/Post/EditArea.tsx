@@ -49,7 +49,16 @@ const EditArea: FC = () => {
   // };
 
   return (
-    <div>
+    <div className="container m-auto py-6">
+      <div className="flex justify-between">
+        <Button>Cancle</Button>
+        <PostSetting></PostSetting>
+      </div>
+      <h1 className="text-center font-bold my-6 text-2xl">What are you working on?</h1>
+      <p className="text-center my-2 text-lg">
+        Upload your work. This will also be used as the thumbnail in feeds
+      </p>
+
       <Input
         prefix={'Description'}
         onChange={(evt) => {
@@ -68,7 +77,6 @@ const EditArea: FC = () => {
           console.log(uploadedWorks);
         }}
       ></Input>
-      <PostSetting></PostSetting>
     </div>
   );
 };

@@ -2,10 +2,11 @@ import React, { FC } from 'react';
 import { useExploreQuery, PublicationSortCriteria, PublicationTypes } from 'lens';
 import { LensfolioPublication, LENSFOLIO_APP_ID } from 'utils';
 import TimelineShimmer from '@components/Common/Shimmer/TimelineShimmer';
+import Timeline from './Timeline';
 
 const Curated: FC = () => {
   const request = {
-    sortCriteria: PublicationSortCriteria.CuratedProfiles,
+    sortCriteria: PublicationSortCriteria.Latest,
     limit: 32,
     noRandomize: false,
     sources: [LENSFOLIO_APP_ID],
@@ -19,17 +20,17 @@ const Curated: FC = () => {
   const pageInfo = data?.explorePublications?.pageInfo;
   const works = data?.explorePublications?.items as LensfolioPublication[];
 
-  console.log('what error', works);
+  //   console.log('what error', works);
   return (
     <div>
-      {!loading && <TimelineShimmer />}
-      {/* {<ThumbnailsShimmer />} */}
+      {loading && <TimelineShimmer />}
       {!error && !loading && works && (
         <>
-          {works.map((work) => {
+          {/* {works.map((work) => {
             console.log('waht error', work);
             return <div>{work.metadata.description}</div>;
-          })}
+          })} */}
+          <Timeline works={works} />
         </>
       )}
     </div>

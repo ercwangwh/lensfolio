@@ -21,7 +21,7 @@ const UserPageShimmer: FC = () => {
           </div>
         </div>
       </div>
-      <div className="mt-4 md:mt-6">{/* <TimelineShimmer /> */}</div>
+      <div className="mt-4 md:mt-6"></div>
     </div>
   );
 };

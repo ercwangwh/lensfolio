@@ -280,7 +280,7 @@ const UploadToLens: FC = () => {
         tags: ['lenfolio_example'],
         mainContentFocus: PublicationMainFocus.Image,
         external_url: null,
-        name: `${isComment ? 'Comment' : 'Post'} by @${currentProfile?.handle}`,
+        name: trimify(uploadedWorks.description),
         attributes: [],
         image: uploadedWorks.attachment?.item,
         imageMimeType: uploadedWorks.attachment?.type,
