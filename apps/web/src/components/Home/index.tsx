@@ -19,6 +19,7 @@ import { useProfileInterestsQuery } from 'lens';
 import { Button } from '@components/UI/Button';
 import useHorizontalScroll from '@utils/hooks/useHorizantalScroll';
 import CategoryFilters from './CategoryFilters';
+import Curated from './Curated';
 
 function Home() {
   /* create initial state to hold array of profiles */
@@ -49,6 +50,7 @@ function Home() {
     },
     skip: !currentProfile?.id
   });
+
   // const { data, loading, error, fetchMore } = useExploreProfilesQuery();
 
   // const profiles = data?.exploreProfiles.items;
@@ -135,6 +137,7 @@ function Home() {
         })}
         {/* </GridItemFour> */}
       </GridLayout>
+      <Curated />
     </div>
   );
 }

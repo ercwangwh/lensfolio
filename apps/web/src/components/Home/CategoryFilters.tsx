@@ -44,7 +44,7 @@ const CategoryFilters: FC = () => {
           <Button
             className="hidden border-none md:block sticky left-0 focus:outline-none bg-opacity-10 hover:bg-opacity-25 backdrop-blur-xl rounded-full p-2"
             onClick={() => slide(-scrollOffset)}
-            outline
+            light
           >
             <ChevronLeftIcon className="w-4 h-4" />
           </Button>
