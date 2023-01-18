@@ -11,12 +11,15 @@ const NavItem = ({ name }: NavItemProps) => {
 
 const NavItems: FC = () => {
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-4 font-medium">
       <Link href="/">
         <NavItem name="Home" />
       </Link>
       <Link href="/explore">
         <NavItem name="Explore" />
+      </Link>
+      <Link href="/subscription">
+        <NavItem name="Subscription" />
       </Link>
     </div>
   );

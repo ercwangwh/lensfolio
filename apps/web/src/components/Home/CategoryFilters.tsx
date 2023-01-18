@@ -37,9 +37,9 @@ const CategoryFilters: FC = () => {
   return (
     <div
       ref={scrollRef}
-      className="flex relative items-center scroll-smooth overflow-x-auto touch-pan-x pt-4 space-x-2 no-scrollbar ultrawide:max-w-[110rem] mx-auto"
+      className="mx-auto flex relative items-center scroll-smooth overflow-x-auto touch-pan-x mt-4 mb-8 space-x-2 no-scrollbar ultrawide:max-w-[110rem]"
     >
-      {scrollX !== 0 && (
+      {
         <div className="bg-white sticky left-0 top-0 px-2">
           <Button
             className="hidden border-none md:block sticky left-0 focus:outline-none bg-opacity-10 hover:bg-opacity-25 backdrop-blur-xl rounded-full p-2"
@@ -49,11 +49,11 @@ const CategoryFilters: FC = () => {
             <ChevronLeftIcon className="w-4 h-4" />
           </Button>
         </div>
-      )}
+      }
       <Button
         variant={'secondary'}
-        size="sm"
-        className="px-3.5 capitalize py-1 text-xs border border-gray-200 dark:border-gray-700 rounded-full whitespace-nowrap"
+        size="lg"
+        className="px-3.5 bg-gray-100 border-none capitalize py-1 text-xs border border-gray-200 dark:border-gray-700 rounded-full whitespace-nowrap"
         outline
       >
         All
@@ -63,16 +63,16 @@ const CategoryFilters: FC = () => {
           <Button
             key={interest}
             variant={'secondary'}
-            size="sm"
-            className="px-3.5 capitalize py-1 text-xs border border-gray-200 dark:border-gray-700 rounded-full whitespace-nowrap"
+            size="lg"
+            className="px-3.5 bg-gray-100 capitalize py-1 text-xs border-none border-gray-200 dark:border-gray-700 rounded-full whitespace-nowrap"
             outline
           >
             {interest.toLowerCase()}
           </Button>
         );
       })}
-      {!scrollEnd && (
-        <div className="bg-white sticky right-0 bottom-0 px-2">
+      {
+        <div className=" bg-white sticky right-0 bottom-0 px-2">
           <Button
             className="border-none hidden md:block sticky right-0 focus:outline-none bg-opacity-10 hover:bg-opacity-25 backdrop-blur-xl rounded-full p-2"
             onClick={() => slide(scrollOffset)}
@@ -81,7 +81,7 @@ const CategoryFilters: FC = () => {
             <ChevronRightIcon className="w-4 h-4" />
           </Button>
         </div>
-      )}
+      }
     </div>
   );
 };

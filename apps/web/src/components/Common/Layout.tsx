@@ -14,8 +14,10 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
       <Header />
-      <Toaster position="bottom-right" toastOptions={getToastOptions(resolvedTheme)} />
-      {children}
+      <div className="2xl:py-6 py-4 ultrawide:max-w-[110rem] mx-auto md:px-3 ultrawide:px-0">
+        <Toaster position="bottom-right" toastOptions={getToastOptions(resolvedTheme)} />
+        {children}
+      </div>
     </div>
   );
 };
