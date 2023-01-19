@@ -99,15 +99,6 @@ export type AccessConditionOutput = {
   token?: Maybe<Erc20OwnershipOutput>;
 };
 
-export type AchRequest = {
-  ethereumAddress: Scalars['EthereumAddress'];
-  freeTextHandle?: InputMaybe<Scalars['Boolean']>;
-  handle?: InputMaybe<Scalars['CreateHandle']>;
-  overrideAlreadyClaimed: Scalars['Boolean'];
-  overrideTradeMark: Scalars['Boolean'];
-  secret: Scalars['String'];
-};
-
 /** The request object to add interests to a profile */
 export type AddProfileInterestsRequest = {
   /** The profile interest to add */
@@ -940,10 +931,6 @@ export type CreateUnfollowBroadcastItemResult = {
   typedData: CreateBurnEip712TypedData;
 };
 
-export type CurRequest = {
-  secret: Scalars['String'];
-};
-
 /** The custom filters types */
 export enum CustomFiltersTypes {
   Gardeners = 'GARDENERS'
@@ -1551,12 +1538,6 @@ export type HasTxHashBeenIndexedRequest = {
   txId?: InputMaybe<Scalars['TxId']>;
 };
 
-export type HelRequest = {
-  handle: Scalars['Handle'];
-  remove: Scalars['Boolean'];
-  secret: Scalars['String'];
-};
-
 export type HidePublicationRequest = {
   /** Publication id */
   publicationId: Scalars['InternalPublicationId'];
@@ -1868,7 +1849,6 @@ export type ModuleInfo = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  ach?: Maybe<Scalars['Void']>;
   /** Adds profile interests to the given profile */
   addProfileInterests?: Maybe<Scalars['Void']>;
   addReaction?: Maybe<Scalars['Void']>;
@@ -1896,7 +1876,6 @@ export type Mutation = {
   createSetProfileMetadataViaDispatcher: RelayResult;
   createToggleFollowTypedData: CreateToggleFollowBroadcastItemResult;
   createUnfollowTypedData: CreateUnfollowBroadcastItemResult;
-  hel?: Maybe<Scalars['Void']>;
   hidePublication?: Maybe<Scalars['Void']>;
   idKitPhoneVerifyWebhook: IdKitPhoneVerifyWebhookResultStatusType;
   proxyAction: Scalars['ProxyActionId'];
@@ -1905,10 +1884,6 @@ export type Mutation = {
   removeProfileInterests?: Maybe<Scalars['Void']>;
   removeReaction?: Maybe<Scalars['Void']>;
   reportPublication?: Maybe<Scalars['Void']>;
-};
-
-export type MutationAchArgs = {
-  request: AchRequest;
 };
 
 export type MutationAddProfileInterestsArgs = {
@@ -2027,10 +2002,6 @@ export type MutationCreateToggleFollowTypedDataArgs = {
 export type MutationCreateUnfollowTypedDataArgs = {
   options?: InputMaybe<TypedDataOptions>;
   request: UnfollowRequest;
-};
-
-export type MutationHelArgs = {
-  request: HelRequest;
 };
 
 export type MutationHidePublicationArgs = {
@@ -3058,7 +3029,6 @@ export type Query = {
   challenge: AuthChallengeResult;
   claimableHandles: ClaimableHandles;
   claimableStatus: ClaimStatus;
-  cur: Array<Scalars['String']>;
   defaultProfile?: Maybe<Profile>;
   doesFollow: Array<DoesFollowResponse>;
   enabledModuleCurrencies: Array<Erc20>;
@@ -3096,7 +3066,6 @@ export type Query = {
   publicationRevenue?: Maybe<PublicationRevenue>;
   publications: PaginatedPublicationResult;
   recommendedProfiles: Array<Profile>;
-  rel?: Maybe<Scalars['Void']>;
   search: SearchResult;
   /** @deprecated You should be using feed, this will not be supported after 15th November 2021, please migrate. */
   timeline: PaginatedTimelineResult;
@@ -3119,10 +3088,6 @@ export type QueryApprovedModuleAllowanceAmountArgs = {
 
 export type QueryChallengeArgs = {
   request: ChallengeRequest;
-};
-
-export type QueryCurArgs = {
-  request: CurRequest;
 };
 
 export type QueryDefaultProfileArgs = {
@@ -3249,10 +3214,6 @@ export type QueryRecommendedProfilesArgs = {
   options?: InputMaybe<RecommendedProfileOptions>;
 };
 
-export type QueryRelArgs = {
-  request: RelRequest;
-};
-
 export type QuerySearchArgs = {
   request: SearchQueryRequest;
 };
@@ -3340,11 +3301,6 @@ export enum ReferenceModules {
 export type RefreshRequest = {
   /** The refresh token */
   refreshToken: Scalars['Jwt'];
-};
-
-export type RelRequest = {
-  ethereumAddress: Scalars['EthereumAddress'];
-  secret: Scalars['String'];
 };
 
 export type RelayError = {
@@ -4805,6 +4761,31 @@ export type ProfileInterestsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ProfileInterestsQuery = { __typename?: 'Query'; profileInterests: Array<any> };
 
+export type ProfileNfTsQueryVariables = Exact<{
+  request: NfTsRequest;
+}>;
+
+export type ProfileNfTsQuery = {
+  __typename?: 'Query';
+  nfts: {
+    __typename?: 'NFTsResult';
+    items: Array<{
+      __typename?: 'NFT';
+      contractAddress: any;
+      tokenId: string;
+      name: string;
+      collectionName: string;
+      originalContent: {
+        __typename?: 'NFTContent';
+        animatedUrl?: string | null;
+        uri: string;
+        metaType: string;
+      };
+    }>;
+    pageInfo: { __typename?: 'PaginatedResultInfo'; next?: any | null; totalCount?: number | null };
+  };
+};
+
 export type ProfilePostsQueryVariables = Exact<{
   request: PublicationsQueryRequest;
   reactionRequest?: InputMaybe<ReactionFieldResolverRequest>;
@@ -6179,6 +6160,59 @@ export type ProfileInterestsQueryResult = Apollo.QueryResult<
   ProfileInterestsQuery,
   ProfileInterestsQueryVariables
 >;
+export const ProfileNfTsDocument = gql`
+  query ProfileNFTs($request: NFTsRequest!) {
+    nfts(request: $request) {
+      items {
+        contractAddress
+        tokenId
+        name
+        originalContent {
+          animatedUrl
+          uri
+          metaType
+        }
+        collectionName
+      }
+      pageInfo {
+        next
+        totalCount
+      }
+    }
+  }
+`;
+
+/**
+ * __useProfileNfTsQuery__
+ *
+ * To run a query within a React component, call `useProfileNfTsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileNfTsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileNfTsQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useProfileNfTsQuery(
+  baseOptions: Apollo.QueryHookOptions<ProfileNfTsQuery, ProfileNfTsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProfileNfTsQuery, ProfileNfTsQueryVariables>(ProfileNfTsDocument, options);
+}
+export function useProfileNfTsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileNfTsQuery, ProfileNfTsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProfileNfTsQuery, ProfileNfTsQueryVariables>(ProfileNfTsDocument, options);
+}
+export type ProfileNfTsQueryHookResult = ReturnType<typeof useProfileNfTsQuery>;
+export type ProfileNfTsLazyQueryHookResult = ReturnType<typeof useProfileNfTsLazyQuery>;
+export type ProfileNfTsQueryResult = Apollo.QueryResult<ProfileNfTsQuery, ProfileNfTsQueryVariables>;
 export const ProfilePostsDocument = gql`
   query ProfilePosts(
     $request: PublicationsQueryRequest!

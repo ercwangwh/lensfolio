@@ -88,7 +88,7 @@ const DropZone: FC = () => {
 
         <label
           className={clsx(
-            'w-full p-10 md:p-20 md:w-2/3 focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-3xl',
+            'w-full p-10 md:p-20 focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-3xl',
             { '!border-green-500': dragOver }
           )}
           htmlFor="dropVideo"

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 
 interface NavItemProps {
@@ -10,17 +11,31 @@ const NavItem = ({ name }: NavItemProps) => {
 };
 
 const NavItems: FC = () => {
+  const router = useRouter();
+
   return (
     <div className="flex items-center space-x-4 font-medium">
-      <Link href="/">
+      <button
+        onClick={() => {
+          router.push('/');
+        }}
+      >
         <NavItem name="Home" />
-      </Link>
-      <Link href="/explore">
+      </button>
+      <button
+        onClick={() => {
+          router.push('/explore');
+        }}
+      >
         <NavItem name="Explore" />
-      </Link>
-      <Link href="/subscription">
+      </button>
+      <button
+        onClick={() => {
+          router.push('/subscription');
+        }}
+      >
         <NavItem name="Subscription" />
-      </Link>
+      </button>
     </div>
   );
 };
