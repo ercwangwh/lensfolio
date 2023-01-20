@@ -3,8 +3,12 @@ import { useExploreQuery, PublicationSortCriteria, PublicationTypes } from 'lens
 import { LensfolioPublication, LENSFOLIO_APP_ID } from 'utils';
 import TimelineShimmer from '@components/Common/Shimmer/TimelineShimmer';
 import Timeline from './Timeline';
+import { useRouter } from 'next/router';
+import { Modal } from '@components/UI/Modal';
 
 const Curated: FC = () => {
+  const router = useRouter();
+
   const request = {
     sortCriteria: PublicationSortCriteria.Latest,
     limit: 32,

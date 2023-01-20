@@ -20,7 +20,9 @@ import { Button } from '@components/UI/Button';
 import useHorizontalScroll from '@utils/hooks/useHorizantalScroll';
 import CategoryFilters from './CategoryFilters';
 import Curated from './Curated';
-
+import { Modal } from '@components/UI/Modal';
+import { usePublicationStore } from 'src/store/publication';
+import Works from '@components/Works';
 function Home() {
   /* create initial state to hold array of profiles */
   // const [profiles, setProfiles] = useState([]);
@@ -29,46 +31,29 @@ function Home() {
   // }, []);
   // const request = { profile: <Profile></Profile>, limit: 10 };
   // useProfilePostsLazyQuery();
+  const router = useRouter();
+  const selectedWorkId = usePublicationStore((state) => state.selectedWorkId);
+  const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
+  // const scrollRef = useHorizontalScroll();
+  // const publicationTypes = [PublicationTypes.Post, PublicationTypes.Mirror, PublicationTypes.Comment];
 
-  const currentProfile = useAppStore((state) => state.currentProfile);
-  const scrollRef = useHorizontalScroll();
-  const publicationTypes = [PublicationTypes.Post, PublicationTypes.Mirror, PublicationTypes.Comment];
+  // const request = {
+  //   publicationTypes,
+  //   profileId: currentProfile?.id,
+  //   limit: 10,
+  //   sources: [LENSFOLIO_APP_ID]
+  // };
+  // const reactionRequest = currentProfile ? { profileId: currentProfile?.id } : null;
+  // const profileId = currentProfile?.id ?? null;
+  // const { data, loading, error, fetchMore } = useProfilePostsQuery({
+  //   variables: {
+  //     request: request,
+  //     reactionRequest: reactionRequest,
+  //     profileId: profileId
+  //   },
+  //   skip: !currentProfile?.id
+  // });
 
-  const request = {
-    publicationTypes,
-    profileId: currentProfile?.id,
-    limit: 10,
-    sources: [LENSFOLIO_APP_ID]
-  };
-  const reactionRequest = currentProfile ? { profileId: currentProfile?.id } : null;
-  const profileId = currentProfile?.id ?? null;
-  const { data, loading, error, fetchMore } = useProfilePostsQuery({
-    variables: {
-      request: request,
-      reactionRequest: reactionRequest,
-      profileId: profileId
-    },
-    skip: !currentProfile?.id
-  });
-
-  // const { data, loading, error, fetchMore } = useExploreProfilesQuery();
-
-  // const profiles = data?.exploreProfiles.items;
-  const publications = data?.publications?.items;
-  const pageInfo = data?.publications?.pageInfo;
-  const hasMore = pageInfo?.next && publications?.length !== pageInfo.totalCount;
-
-  console.log(data);
-
-  const loadMore = async () => {
-    await fetchMore({
-      variables: { request: { ...request, cursor: pageInfo?.next }, reactionRequest, profileId }
-    });
-  };
-
-  if (loading) {
-    return <div>is loading</div>;
-  }
   // const
   // async function fetchProfiles() {
   //   try {
@@ -130,6 +115,17 @@ function Home() {
         })}
       </GridLayout> */}
       <Curated />
+      <Modal
+        title={'Test'}
+        show={!!selectedWorkId}
+        onClose={() => {
+          router.push('/', undefined, { scroll: false });
+          setSelectedWorkId(null);
+        }}
+      >
+        {/* <div>Wathis</div> */}
+        <Works></Works>
+      </Modal>
     </div>
   );
 }

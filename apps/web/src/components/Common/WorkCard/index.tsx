@@ -18,7 +18,7 @@ import getAvatar from '@lib/getAvatar';
 // import VideoOptions from './VideoOptions';
 
 import getIPFSLink from '@lib/getIPFSLink';
-
+import { usePublicationStore } from 'src/store/publication';
 // dayjs.extend(relativeTime);
 
 interface Props {
@@ -34,8 +34,14 @@ const WorkCard: FC<Props> = ({ work }) => {
   //     isSensitiveContent ? `${STATIC_ASSETS}/images/sensor-blur.png` : getThumbnailUrl(video),
   //     isByte ? 'thumbnail_v' : 'thumbnail'
   //   );
+  // const setProfileId = useAppPersistStore((state) => state.setProfileId);
+  const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
   const thumbnailUrl = getIPFSLink(work.metadata.media[0].original.url);
 
+  const handleClick = () => {
+    // console.log('click success');
+    setSelectedWorkId(work.id);
+  };
   return (
     // <div onClick={() => Analytics.track(TRACK.CLICK_VIDEO)} className="group" role="button">
     <div>
@@ -47,30 +53,45 @@ const WorkCard: FC<Props> = ({ work }) => {
         <>
           {/* <ShareModal video={work} show={showShare} setShowShare={setShowShare} />
           <ReportModal video={work} show={showReport} setShowReport={setShowReport} /> */}
-          <Link href={`/watch/${work.id}`}>
+          <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} scroll={false}>
             <div className="relative overflow-hidden aspect-w-16 aspect-h-9">
               <img
                 src={thumbnailUrl}
                 draggable={false}
                 className="object-center bg-gray-100 dark:bg-gray-900 w-full h-full md:rounded-xl lg:w-full lg:h-full object-cover"
                 alt="thumbnail"
+                onClick={() => {
+                  handleClick();
+                }}
               />
               {/* <ThumbnailOverlays video={video} /> */}
             </div>
           </Link>
           <div className="py-2">
             <div className="flex items-start space-x-2.5">
-              <Link href={`/watch/${work.id}`} className="flex-none mt-0.5">
+              <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} className="flex-none mt-0.5">
                 <img
                   className="w-8 h-8 rounded-full"
                   src={getAvatar(work.profile)}
                   alt={work.profile?.handle}
                   draggable={false}
+                  onClick={() => {
+                    handleClick();
+                  }}
                 />
               </Link>
               <div className="grid flex-1">
-                <div className="flex pb-1 w-full items-start justify-between space-x-1.5 min-w-0">
-                  <Link href={`/watch/${work.id}`} className="text-sm font-semibold line-clamp-2 break-words">
+                <div
+                  className="flex pb-1 w-full items-start justify-between space-x-1.5 min-w-0"
+                  onClick={() => {
+                    handleClick();
+                  }}
+                >
+                  <Link
+                    href={`/?id=${work.id}`}
+                    as={`/works/${work.id}`}
+                    className="text-sm font-semibold line-clamp-2 break-words"
+                  >
                     {work.metadata?.name}
                   </Link>
                   {/* <VideoOptions video={work} setShowShare={setShowShare} setShowReport={setShowReport} /> */}

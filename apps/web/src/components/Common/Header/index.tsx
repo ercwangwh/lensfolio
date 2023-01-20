@@ -8,11 +8,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button } from '@components/UI/Button';
 import ToggleDispatcher from './ToggleDispatcher';
-import { useAppPersistStore } from 'src/store/app';
+import { useAppPersistStore, useAppStore } from 'src/store/app';
 
 const Header: FC = () => {
   const router = useRouter();
-  const profileId = useAppPersistStore((state) => state.profileId);
+  // const profileId = useAppPersistStore((state) => state.profileId);
+  const currentProfile = useAppStore((state) => state.currentProfile);
+  // console.log(profileId);
   return (
     <div className="sticky top-0 z-10 w-full bg-white border-b dark:bg-gray-900 dark:border-b-gray-700/80">
       <div className="container mx-auto">
@@ -23,7 +25,7 @@ const Header: FC = () => {
               <Search />
             </div>
             <div className="flex flex-row justify-end space-x-2 md:space-x-3 md:w-96">
-              {profileId && <Button onClick={() => router.push('/post')}>Upload</Button>}
+              {currentProfile && <Button onClick={() => router.push('/post')}>Upload</Button>}
               <Login />
             </div>
           </div>
