@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-// import { XIcon } from '@heroicons/react/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import type { FC, ReactNode } from 'react';
 import { Fragment } from 'react';
@@ -7,7 +7,7 @@ import { Fragment } from 'react';
 interface Props {
   icon?: ReactNode;
   title: ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'full';
   show: boolean;
   children: ReactNode[] | ReactNode;
   onClose?: () => void;
@@ -44,6 +44,7 @@ export const Modal: FC<Props> = ({ icon, title, size = 'sm', show, children, onC
                 { 'sm:max-w-5xl': size === 'lg' },
                 { 'sm:max-w-3xl': size === 'md' },
                 { 'sm:max-w-lg': size === 'sm' },
+                { 'sm:max-w-full': size === 'full' },
                 'inline-block align-bottom bg-white dark:bg-gray-800 text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full rounded-xl'
               )}
             >
@@ -58,7 +59,7 @@ export const Modal: FC<Props> = ({ icon, title, size = 'sm', show, children, onC
                     className="p-1 text-gray-800 rounded-full dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700"
                     onClick={onClose}
                   >
-                    {/* <XIcon className="w-5 h-5" /> */}
+                    <XMarkIcon className="w-5 h-5" />
                   </button>
                 ) : null}
               </div>

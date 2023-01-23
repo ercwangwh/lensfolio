@@ -22,7 +22,8 @@ import CategoryFilters from './CategoryFilters';
 import Curated from './Curated';
 import { Modal } from '@components/UI/Modal';
 import { usePublicationStore } from 'src/store/publication';
-import Works from '@components/Works';
+import Work from '@components/Work';
+
 function Home() {
   /* create initial state to hold array of profiles */
   // const [profiles, setProfiles] = useState([]);
@@ -32,8 +33,10 @@ function Home() {
   // const request = { profile: <Profile></Profile>, limit: 10 };
   // useProfilePostsLazyQuery();
   const router = useRouter();
-  const selectedWorkId = usePublicationStore((state) => state.selectedWorkId);
-  const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
+  // const selectedWorkId = usePublicationStore((state) => state.selectedWorkId);
+  // const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
+  const selectedProfile = useAppStore((state) => state.selectedProfile);
+  const setSelectedProfile = useAppStore((state) => state.setSelectedProfile);
   // const scrollRef = useHorizontalScroll();
   // const publicationTypes = [PublicationTypes.Post, PublicationTypes.Mirror, PublicationTypes.Comment];
 
@@ -116,15 +119,16 @@ function Home() {
       </GridLayout> */}
       <Curated />
       <Modal
-        title={'Test'}
-        show={!!selectedWorkId}
+        title={selectedProfile?.handle}
+        show={!!selectedProfile}
         onClose={() => {
           router.push('/', undefined, { scroll: false });
-          setSelectedWorkId(null);
+          setSelectedProfile(null);
         }}
+        size={'full'}
       >
         {/* <div>Wathis</div> */}
-        <Works></Works>
+        <Work></Work>
       </Modal>
     </div>
   );

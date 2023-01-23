@@ -19,6 +19,7 @@ import getAvatar from '@lib/getAvatar';
 
 import getIPFSLink from '@lib/getIPFSLink';
 import { usePublicationStore } from 'src/store/publication';
+import { useAppStore } from 'src/store/app';
 // dayjs.extend(relativeTime);
 
 interface Props {
@@ -35,12 +36,14 @@ const WorkCard: FC<Props> = ({ work }) => {
   //     isByte ? 'thumbnail_v' : 'thumbnail'
   //   );
   // const setProfileId = useAppPersistStore((state) => state.setProfileId);
-  const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
+  // const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
+  const setSelectedProfile = useAppStore((state) => state.setSelectedProfile);
   const thumbnailUrl = getIPFSLink(work.metadata.media[0].original.url);
 
   const handleClick = () => {
     // console.log('click success');
-    setSelectedWorkId(work.id);
+    // setSelectedWorkId(work.id);
+    setSelectedProfile(work.profile);
   };
   return (
     // <div onClick={() => Analytics.track(TRACK.CLICK_VIDEO)} className="group" role="button">

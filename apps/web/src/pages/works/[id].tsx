@@ -1,3 +1,3 @@
-import Works from '@components/Works';
+import Work from '@components/Work';
 
-export default Works;
+export default Work;

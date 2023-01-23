@@ -13,6 +13,8 @@ interface AppState {
   setUserSigNonce: (userSigNonce: number) => void;
   uploadedWorks: LensfolioWorks;
   setUploadedWorks: (works: { [k: string]: any }) => void;
+  selectedProfile: Profile | null;
+  setSelectedProfile: (selectedProfile: Profile | null) => void;
 }
 
 export const LENSFOLIO_ATTACHMENT_DEFAULT = {
@@ -36,7 +38,9 @@ export const useAppStore = create<AppState>((set) => ({
   setUserSigNonce: (userSigNonce) => set(() => ({ userSigNonce })),
   uploadedWorks: UPLOADED_WORKS_DEAFULT,
   setUploadedWorks: (uploadedData) =>
-    set((state) => ({ uploadedWorks: { ...state.uploadedWorks, ...uploadedData } }))
+    set((state) => ({ uploadedWorks: { ...state.uploadedWorks, ...uploadedData } })),
+  selectedProfile: null,
+  setSelectedProfile: (selectedProfile) => set({ selectedProfile: selectedProfile })
 }));
 
 interface AppPersistState {

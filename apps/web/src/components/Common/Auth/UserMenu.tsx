@@ -44,7 +44,7 @@ const UserMenu = () => {
           <img
             className="object-cover bg-white rounded-full dark:bg-theme w-8 h-8 md:w-9 md:h-9"
             src={getAvatar(currentProfile)}
-            alt="channel picture"
+            alt="avatar picture"
             draggable={false}
           />
         </Button>
