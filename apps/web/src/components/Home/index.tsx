@@ -118,7 +118,7 @@ function Home() {
         })}
       </GridLayout> */}
       <Curated />
-      <Modal
+      {/* <Modal
         title={selectedProfile?.handle}
         show={!!selectedProfile}
         onClose={() => {
@@ -127,9 +127,8 @@ function Home() {
         }}
         size={'full'}
       >
-        {/* <div>Wathis</div> */}
         <Work></Work>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-secondary {
+  @apply dark:bg-[#050506] bg-white;
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
   }

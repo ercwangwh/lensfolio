@@ -20,6 +20,7 @@ import getAvatar from '@lib/getAvatar';
 import getIPFSLink from '@lib/getIPFSLink';
 import { usePublicationStore } from 'src/store/publication';
 import { useAppStore } from 'src/store/app';
+import { useGlobalModalStateStore } from 'src/store/modals';
 // dayjs.extend(relativeTime);
 
 interface Props {
@@ -37,14 +38,14 @@ const WorkCard: FC<Props> = ({ work }) => {
   //   );
   // const setProfileId = useAppPersistStore((state) => state.setProfileId);
   // const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
-  const setSelectedProfile = useAppStore((state) => state.setSelectedProfile);
+  // const setSelectedProfile = useAppStore((state) => state);
+  const setShowWorkDetailModal = useGlobalModalStateStore((state) => state.setShowWorkDetailModal);
   const thumbnailUrl = getIPFSLink(work.metadata.media[0].original.url);
 
   const handleClick = () => {
-    // console.log('click success');
-    // setSelectedWorkId(work.id);
-    setSelectedProfile(work.profile);
+    setShowWorkDetailModal(true);
   };
+
   return (
     // <div onClick={() => Analytics.track(TRACK.CLICK_VIDEO)} className="group" role="button">
     <div>
@@ -63,9 +64,7 @@ const WorkCard: FC<Props> = ({ work }) => {
                 draggable={false}
                 className="object-center bg-gray-100 dark:bg-gray-900 w-full h-full md:rounded-xl lg:w-full lg:h-full object-cover"
                 alt="thumbnail"
-                onClick={() => {
-                  handleClick();
-                }}
+                onClick={handleClick}
               />
               {/* <ThumbnailOverlays video={video} /> */}
             </div>
@@ -78,22 +77,16 @@ const WorkCard: FC<Props> = ({ work }) => {
                   src={getAvatar(work.profile)}
                   alt={work.profile?.handle}
                   draggable={false}
-                  onClick={() => {
-                    handleClick();
-                  }}
+                  onClick={handleClick}
                 />
               </Link>
               <div className="grid flex-1">
-                <div
-                  className="flex pb-1 w-full items-start justify-between space-x-1.5 min-w-0"
-                  onClick={() => {
-                    handleClick();
-                  }}
-                >
+                <div className="flex pb-1 w-full items-start justify-between space-x-1.5 min-w-0">
                   <Link
                     href={`/?id=${work.id}`}
                     as={`/works/${work.id}`}
                     className="text-sm font-semibold line-clamp-2 break-words"
+                    onClick={handleClick}
                   >
                     {work.metadata?.name}
                   </Link>

@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { Button } from '@components/UI/Button';
 import ToggleDispatcher from './ToggleDispatcher';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
-
+import CreateProfile from '../CreateProfile';
 const Header: FC = () => {
   const router = useRouter();
   // const profileId = useAppPersistStore((state) => state.profileId);
@@ -28,9 +28,8 @@ const Header: FC = () => {
               {currentProfile && <Button onClick={() => router.push('/post')}>Upload</Button>}
               <Login />
             </div>
+            <CreateProfile />
           </div>
-          {/* <Button onClick={() => router.push('/post')}>Upload</Button> */}
-          {/* <ToggleDispatcher></ToggleDispatcher> */}
         </div>
         {/* <CategoryFilters /> */}
       </div>
