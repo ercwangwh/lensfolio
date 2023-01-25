@@ -4203,6 +4203,12 @@ export type RelayerResultFieldsFragment =
   | RelayerResultFields_RelayError_Fragment
   | RelayerResultFields_RelayerResult_Fragment;
 
+export type AddReactionMutationVariables = Exact<{
+  request: ReactionRequest;
+}>;
+
+export type AddReactionMutation = { __typename?: 'Mutation'; addReaction?: any | null };
+
 export type AuthenticateMutationVariables = Exact<{
   request: SignedAuthChallenge;
 }>;
@@ -4346,6 +4352,12 @@ export type CreateUnfollowTypedDataMutation = {
     };
   };
 };
+
+export type RemoveReactionMutationVariables = Exact<{
+  request: ReactionRequest;
+}>;
+
+export type RemoveReactionMutation = { __typename?: 'Mutation'; removeReaction?: any | null };
 
 export type ChallengeQueryVariables = Exact<{
   request: ChallengeRequest;
@@ -4985,7 +4997,7 @@ export type ProfilePostsQuery = {
 };
 
 export type ProfilesQueryVariables = Exact<{
-  ownedBy?: InputMaybe<Array<Scalars['EthereumAddress']> | Scalars['EthereumAddress']>;
+  request: ProfileQueryRequest;
 }>;
 
 export type ProfilesQuery = {
@@ -4994,62 +5006,27 @@ export type ProfilesQuery = {
     __typename?: 'PaginatedProfileResult';
     items: Array<{
       __typename?: 'Profile';
+      isDefault: boolean;
+      isFollowedByMe: boolean;
       id: any;
       name?: string | null;
-      bio?: string | null;
-      followNftAddress?: any | null;
-      metadata?: any | null;
-      isDefault: boolean;
       handle: any;
+      bio?: string | null;
       ownedBy: any;
-      attributes?: Array<{
-        __typename?: 'Attribute';
-        displayType?: string | null;
-        traitType?: string | null;
-        key: string;
-        value: string;
-      }> | null;
+      stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
+      attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
       picture?:
-        | { __typename: 'MediaSet'; original: { __typename?: 'Media'; url: any; mimeType?: any | null } }
-        | { __typename: 'NftImage'; contractAddress: any; tokenId: string; uri: any; verified: boolean }
+        | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+        | { __typename?: 'NftImage'; uri: any }
         | null;
-      coverPicture?:
-        | { __typename: 'MediaSet'; original: { __typename?: 'Media'; url: any; mimeType?: any | null } }
-        | { __typename: 'NftImage'; contractAddress: any; tokenId: string; uri: any; verified: boolean }
-        | null;
-      dispatcher?: { __typename?: 'Dispatcher'; address: any; canUseRelay: boolean } | null;
-      stats: {
-        __typename?: 'ProfileStats';
-        totalFollowers: number;
-        totalFollowing: number;
-        totalPosts: number;
-        totalComments: number;
-        totalMirrors: number;
-        totalPublications: number;
-        totalCollects: number;
-      };
       followModule?:
-        | {
-            __typename?: 'FeeFollowModuleSettings';
-            type: FollowModules;
-            recipient: any;
-            amount: {
-              __typename?: 'ModuleFeeAmount';
-              value: string;
-              asset: { __typename?: 'Erc20'; symbol: string; name: string; decimals: number; address: any };
-            };
-          }
-        | { __typename?: 'ProfileFollowModuleSettings'; type: FollowModules }
-        | { __typename?: 'RevertFollowModuleSettings'; type: FollowModules }
-        | { __typename?: 'UnknownFollowModuleSettings' }
+        | { __typename: 'FeeFollowModuleSettings' }
+        | { __typename: 'ProfileFollowModuleSettings' }
+        | { __typename: 'RevertFollowModuleSettings' }
+        | { __typename: 'UnknownFollowModuleSettings' }
         | null;
     }>;
-    pageInfo: {
-      __typename?: 'PaginatedResultInfo';
-      prev?: any | null;
-      next?: any | null;
-      totalCount?: number | null;
-    };
+    pageInfo: { __typename?: 'PaginatedResultInfo'; next?: any | null; totalCount?: number | null };
   };
 };
 
@@ -5742,6 +5719,45 @@ export const RelayerResultFieldsFragmentDoc = gql`
     }
   }
 `;
+export const AddReactionDocument = gql`
+  mutation AddReaction($request: ReactionRequest!) {
+    addReaction(request: $request)
+  }
+`;
+export type AddReactionMutationFn = Apollo.MutationFunction<
+  AddReactionMutation,
+  AddReactionMutationVariables
+>;
+
+/**
+ * __useAddReactionMutation__
+ *
+ * To run a mutation, you first call `useAddReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addReactionMutation, { data, loading, error }] = useAddReactionMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useAddReactionMutation(
+  baseOptions?: Apollo.MutationHookOptions<AddReactionMutation, AddReactionMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddReactionMutation, AddReactionMutationVariables>(AddReactionDocument, options);
+}
+export type AddReactionMutationHookResult = ReturnType<typeof useAddReactionMutation>;
+export type AddReactionMutationResult = Apollo.MutationResult<AddReactionMutation>;
+export type AddReactionMutationOptions = Apollo.BaseMutationOptions<
+  AddReactionMutation,
+  AddReactionMutationVariables
+>;
 export const AuthenticateDocument = gql`
   mutation Authenticate($request: SignedAuthChallenge!) {
     authenticate(request: $request) {
@@ -6132,6 +6148,48 @@ export type CreateUnfollowTypedDataMutationResult = Apollo.MutationResult<Create
 export type CreateUnfollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateUnfollowTypedDataMutation,
   CreateUnfollowTypedDataMutationVariables
+>;
+export const RemoveReactionDocument = gql`
+  mutation RemoveReaction($request: ReactionRequest!) {
+    removeReaction(request: $request)
+  }
+`;
+export type RemoveReactionMutationFn = Apollo.MutationFunction<
+  RemoveReactionMutation,
+  RemoveReactionMutationVariables
+>;
+
+/**
+ * __useRemoveReactionMutation__
+ *
+ * To run a mutation, you first call `useRemoveReactionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveReactionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeReactionMutation, { data, loading, error }] = useRemoveReactionMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useRemoveReactionMutation(
+  baseOptions?: Apollo.MutationHookOptions<RemoveReactionMutation, RemoveReactionMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<RemoveReactionMutation, RemoveReactionMutationVariables>(
+    RemoveReactionDocument,
+    options
+  );
+}
+export type RemoveReactionMutationHookResult = ReturnType<typeof useRemoveReactionMutation>;
+export type RemoveReactionMutationResult = Apollo.MutationResult<RemoveReactionMutation>;
+export type RemoveReactionMutationOptions = Apollo.BaseMutationOptions<
+  RemoveReactionMutation,
+  RemoveReactionMutationVariables
 >;
 export const ChallengeDocument = gql`
   query Challenge($request: ChallengeRequest!) {
@@ -6637,95 +6695,20 @@ export type ProfilePostsQueryHookResult = ReturnType<typeof useProfilePostsQuery
 export type ProfilePostsLazyQueryHookResult = ReturnType<typeof useProfilePostsLazyQuery>;
 export type ProfilePostsQueryResult = Apollo.QueryResult<ProfilePostsQuery, ProfilePostsQueryVariables>;
 export const ProfilesDocument = gql`
-  query Profiles($ownedBy: [EthereumAddress!]) {
-    profiles(request: { ownedBy: $ownedBy, limit: 10 }) {
+  query Profiles($request: ProfileQueryRequest!) {
+    profiles(request: $request) {
       items {
-        id
-        name
-        bio
-        attributes {
-          displayType
-          traitType
-          key
-          value
-        }
-        followNftAddress
-        metadata
+        ...ProfileFields
         isDefault
-        picture {
-          ... on NftImage {
-            contractAddress
-            tokenId
-            uri
-            verified
-          }
-          ... on MediaSet {
-            original {
-              url
-              mimeType
-            }
-          }
-          __typename
-        }
-        handle
-        coverPicture {
-          ... on NftImage {
-            contractAddress
-            tokenId
-            uri
-            verified
-          }
-          ... on MediaSet {
-            original {
-              url
-              mimeType
-            }
-          }
-          __typename
-        }
-        ownedBy
-        dispatcher {
-          address
-          canUseRelay
-        }
-        stats {
-          totalFollowers
-          totalFollowing
-          totalPosts
-          totalComments
-          totalMirrors
-          totalPublications
-          totalCollects
-        }
-        followModule {
-          ... on FeeFollowModuleSettings {
-            type
-            amount {
-              asset {
-                symbol
-                name
-                decimals
-                address
-              }
-              value
-            }
-            recipient
-          }
-          ... on ProfileFollowModuleSettings {
-            type
-          }
-          ... on RevertFollowModuleSettings {
-            type
-          }
-        }
+        isFollowedByMe
       }
       pageInfo {
-        prev
         next
         totalCount
       }
     }
   }
+  ${ProfileFieldsFragmentDoc}
 `;
 
 /**
@@ -6740,12 +6723,12 @@ export const ProfilesDocument = gql`
  * @example
  * const { data, loading, error } = useProfilesQuery({
  *   variables: {
- *      ownedBy: // value for 'ownedBy'
+ *      request: // value for 'request'
  *   },
  * });
  */
 export function useProfilesQuery(
-  baseOptions?: Apollo.QueryHookOptions<ProfilesQuery, ProfilesQueryVariables>
+  baseOptions: Apollo.QueryHookOptions<ProfilesQuery, ProfilesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<ProfilesQuery, ProfilesQueryVariables>(ProfilesDocument, options);
