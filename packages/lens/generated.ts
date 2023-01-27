@@ -4229,56 +4229,6 @@ export type BroadcastMutation = {
     | { __typename?: 'RelayerResult'; txHash: any; txId: any };
 };
 
-export type CreatePostTypedDataMutationVariables = Exact<{
-  options?: InputMaybe<TypedDataOptions>;
-  request: CreatePublicPostRequest;
-}>;
-
-export type CreatePostTypedDataMutation = {
-  __typename?: 'Mutation';
-  createPostTypedData: {
-    __typename?: 'CreatePostBroadcastItemResult';
-    id: any;
-    expiresAt: any;
-    typedData: {
-      __typename?: 'CreatePostEIP712TypedData';
-      types: {
-        __typename?: 'CreatePostEIP712TypedDataTypes';
-        PostWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
-      };
-      domain: {
-        __typename?: 'EIP712TypedDataDomain';
-        name: string;
-        chainId: any;
-        version: string;
-        verifyingContract: any;
-      };
-      value: {
-        __typename?: 'CreatePostEIP712TypedDataValue';
-        nonce: any;
-        deadline: any;
-        profileId: any;
-        contentURI: any;
-        collectModule: any;
-        collectModuleInitData: any;
-        referenceModule: any;
-        referenceModuleInitData: any;
-      };
-    };
-  };
-};
-
-export type CreatePostViaDispatcherMutationVariables = Exact<{
-  request: CreatePublicPostRequest;
-}>;
-
-export type CreatePostViaDispatcherMutation = {
-  __typename?: 'Mutation';
-  createPostViaDispatcher:
-    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
-    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
-};
-
 export type CreateProfileMutationVariables = Exact<{
   request: CreateProfileRequest;
 }>;
@@ -4358,6 +4308,105 @@ export type RemoveReactionMutationVariables = Exact<{
 }>;
 
 export type RemoveReactionMutation = { __typename?: 'Mutation'; removeReaction?: any | null };
+
+export type CreatePostViaDispatcherMutationVariables = Exact<{
+  request: CreatePublicPostRequest;
+}>;
+
+export type CreatePostViaDispatcherMutation = {
+  __typename?: 'Mutation';
+  createPostViaDispatcher:
+    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
+    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
+};
+
+export type CreateSetProfileMetadataViaDispatcherMutationVariables = Exact<{
+  request: CreatePublicSetProfileMetadataUriRequest;
+}>;
+
+export type CreateSetProfileMetadataViaDispatcherMutation = {
+  __typename?: 'Mutation';
+  createSetProfileMetadataViaDispatcher:
+    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
+    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
+};
+
+export type CreatePostTypedDataMutationVariables = Exact<{
+  options?: InputMaybe<TypedDataOptions>;
+  request: CreatePublicPostRequest;
+}>;
+
+export type CreatePostTypedDataMutation = {
+  __typename?: 'Mutation';
+  createPostTypedData: {
+    __typename?: 'CreatePostBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreatePostEIP712TypedData';
+      types: {
+        __typename?: 'CreatePostEIP712TypedDataTypes';
+        PostWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      value: {
+        __typename?: 'CreatePostEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        profileId: any;
+        contentURI: any;
+        collectModule: any;
+        collectModuleInitData: any;
+        referenceModule: any;
+        referenceModuleInitData: any;
+      };
+    };
+  };
+};
+
+export type CreateSetProfileMetadataTypedDataMutationVariables = Exact<{
+  request: CreatePublicSetProfileMetadataUriRequest;
+}>;
+
+export type CreateSetProfileMetadataTypedDataMutation = {
+  __typename?: 'Mutation';
+  createSetProfileMetadataTypedData: {
+    __typename?: 'CreateSetProfileMetadataURIBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateSetProfileMetadataURIEIP712TypedData';
+      types: {
+        __typename?: 'CreateSetProfileMetadataURIEIP712TypedDataTypes';
+        SetProfileMetadataURIWithSig: Array<{
+          __typename?: 'EIP712TypedDataField';
+          name: string;
+          type: string;
+        }>;
+      };
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      value: {
+        __typename?: 'CreateSetProfileMetadataURIEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        profileId: any;
+        metadata: any;
+      };
+    };
+  };
+};
 
 export type ChallengeQueryVariables = Exact<{
   request: ChallengeRequest;
@@ -5847,124 +5896,6 @@ export type BroadcastMutationOptions = Apollo.BaseMutationOptions<
   BroadcastMutation,
   BroadcastMutationVariables
 >;
-export const CreatePostTypedDataDocument = gql`
-  mutation CreatePostTypedData($options: TypedDataOptions, $request: CreatePublicPostRequest!) {
-    createPostTypedData(options: $options, request: $request) {
-      id
-      expiresAt
-      typedData {
-        types {
-          PostWithSig {
-            name
-            type
-          }
-        }
-        domain {
-          name
-          chainId
-          version
-          verifyingContract
-        }
-        value {
-          nonce
-          deadline
-          profileId
-          contentURI
-          collectModule
-          collectModuleInitData
-          referenceModule
-          referenceModuleInitData
-        }
-      }
-    }
-  }
-`;
-export type CreatePostTypedDataMutationFn = Apollo.MutationFunction<
-  CreatePostTypedDataMutation,
-  CreatePostTypedDataMutationVariables
->;
-
-/**
- * __useCreatePostTypedDataMutation__
- *
- * To run a mutation, you first call `useCreatePostTypedDataMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePostTypedDataMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPostTypedDataMutation, { data, loading, error }] = useCreatePostTypedDataMutation({
- *   variables: {
- *      options: // value for 'options'
- *      request: // value for 'request'
- *   },
- * });
- */
-export function useCreatePostTypedDataMutation(
-  baseOptions?: Apollo.MutationHookOptions<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>(
-    CreatePostTypedDataDocument,
-    options
-  );
-}
-export type CreatePostTypedDataMutationHookResult = ReturnType<typeof useCreatePostTypedDataMutation>;
-export type CreatePostTypedDataMutationResult = Apollo.MutationResult<CreatePostTypedDataMutation>;
-export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
-  CreatePostTypedDataMutation,
-  CreatePostTypedDataMutationVariables
->;
-export const CreatePostViaDispatcherDocument = gql`
-  mutation CreatePostViaDispatcher($request: CreatePublicPostRequest!) {
-    createPostViaDispatcher(request: $request) {
-      ...RelayerResultFields
-    }
-  }
-  ${RelayerResultFieldsFragmentDoc}
-`;
-export type CreatePostViaDispatcherMutationFn = Apollo.MutationFunction<
-  CreatePostViaDispatcherMutation,
-  CreatePostViaDispatcherMutationVariables
->;
-
-/**
- * __useCreatePostViaDispatcherMutation__
- *
- * To run a mutation, you first call `useCreatePostViaDispatcherMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreatePostViaDispatcherMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createPostViaDispatcherMutation, { data, loading, error }] = useCreatePostViaDispatcherMutation({
- *   variables: {
- *      request: // value for 'request'
- *   },
- * });
- */
-export function useCreatePostViaDispatcherMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreatePostViaDispatcherMutation,
-    CreatePostViaDispatcherMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreatePostViaDispatcherMutation, CreatePostViaDispatcherMutationVariables>(
-    CreatePostViaDispatcherDocument,
-    options
-  );
-}
-export type CreatePostViaDispatcherMutationHookResult = ReturnType<typeof useCreatePostViaDispatcherMutation>;
-export type CreatePostViaDispatcherMutationResult = Apollo.MutationResult<CreatePostViaDispatcherMutation>;
-export type CreatePostViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
-  CreatePostViaDispatcherMutation,
-  CreatePostViaDispatcherMutationVariables
->;
 export const CreateProfileDocument = gql`
   mutation CreateProfile($request: CreateProfileRequest!) {
     createProfile(request: $request) {
@@ -6190,6 +6121,246 @@ export type RemoveReactionMutationResult = Apollo.MutationResult<RemoveReactionM
 export type RemoveReactionMutationOptions = Apollo.BaseMutationOptions<
   RemoveReactionMutation,
   RemoveReactionMutationVariables
+>;
+export const CreatePostViaDispatcherDocument = gql`
+  mutation CreatePostViaDispatcher($request: CreatePublicPostRequest!) {
+    createPostViaDispatcher(request: $request) {
+      ...RelayerResultFields
+    }
+  }
+  ${RelayerResultFieldsFragmentDoc}
+`;
+export type CreatePostViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreatePostViaDispatcherMutation,
+  CreatePostViaDispatcherMutationVariables
+>;
+
+/**
+ * __useCreatePostViaDispatcherMutation__
+ *
+ * To run a mutation, you first call `useCreatePostViaDispatcherMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostViaDispatcherMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostViaDispatcherMutation, { data, loading, error }] = useCreatePostViaDispatcherMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreatePostViaDispatcherMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreatePostViaDispatcherMutation,
+    CreatePostViaDispatcherMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreatePostViaDispatcherMutation, CreatePostViaDispatcherMutationVariables>(
+    CreatePostViaDispatcherDocument,
+    options
+  );
+}
+export type CreatePostViaDispatcherMutationHookResult = ReturnType<typeof useCreatePostViaDispatcherMutation>;
+export type CreatePostViaDispatcherMutationResult = Apollo.MutationResult<CreatePostViaDispatcherMutation>;
+export type CreatePostViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreatePostViaDispatcherMutation,
+  CreatePostViaDispatcherMutationVariables
+>;
+export const CreateSetProfileMetadataViaDispatcherDocument = gql`
+  mutation CreateSetProfileMetadataViaDispatcher($request: CreatePublicSetProfileMetadataURIRequest!) {
+    createSetProfileMetadataViaDispatcher(request: $request) {
+      ...RelayerResultFields
+    }
+  }
+  ${RelayerResultFieldsFragmentDoc}
+`;
+export type CreateSetProfileMetadataViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateSetProfileMetadataViaDispatcherMutation,
+  CreateSetProfileMetadataViaDispatcherMutationVariables
+>;
+
+/**
+ * __useCreateSetProfileMetadataViaDispatcherMutation__
+ *
+ * To run a mutation, you first call `useCreateSetProfileMetadataViaDispatcherMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSetProfileMetadataViaDispatcherMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSetProfileMetadataViaDispatcherMutation, { data, loading, error }] = useCreateSetProfileMetadataViaDispatcherMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateSetProfileMetadataViaDispatcherMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSetProfileMetadataViaDispatcherMutation,
+    CreateSetProfileMetadataViaDispatcherMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateSetProfileMetadataViaDispatcherMutation,
+    CreateSetProfileMetadataViaDispatcherMutationVariables
+  >(CreateSetProfileMetadataViaDispatcherDocument, options);
+}
+export type CreateSetProfileMetadataViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateSetProfileMetadataViaDispatcherMutation
+>;
+export type CreateSetProfileMetadataViaDispatcherMutationResult =
+  Apollo.MutationResult<CreateSetProfileMetadataViaDispatcherMutation>;
+export type CreateSetProfileMetadataViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileMetadataViaDispatcherMutation,
+  CreateSetProfileMetadataViaDispatcherMutationVariables
+>;
+export const CreatePostTypedDataDocument = gql`
+  mutation CreatePostTypedData($options: TypedDataOptions, $request: CreatePublicPostRequest!) {
+    createPostTypedData(options: $options, request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          PostWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          contentURI
+          collectModule
+          collectModuleInitData
+          referenceModule
+          referenceModuleInitData
+        }
+      }
+    }
+  }
+`;
+export type CreatePostTypedDataMutationFn = Apollo.MutationFunction<
+  CreatePostTypedDataMutation,
+  CreatePostTypedDataMutationVariables
+>;
+
+/**
+ * __useCreatePostTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreatePostTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePostTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPostTypedDataMutation, { data, loading, error }] = useCreatePostTypedDataMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreatePostTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreatePostTypedDataMutation, CreatePostTypedDataMutationVariables>(
+    CreatePostTypedDataDocument,
+    options
+  );
+}
+export type CreatePostTypedDataMutationHookResult = ReturnType<typeof useCreatePostTypedDataMutation>;
+export type CreatePostTypedDataMutationResult = Apollo.MutationResult<CreatePostTypedDataMutation>;
+export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreatePostTypedDataMutation,
+  CreatePostTypedDataMutationVariables
+>;
+export const CreateSetProfileMetadataTypedDataDocument = gql`
+  mutation CreateSetProfileMetadataTypedData($request: CreatePublicSetProfileMetadataURIRequest!) {
+    createSetProfileMetadataTypedData(request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          SetProfileMetadataURIWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          metadata
+        }
+      }
+    }
+  }
+`;
+export type CreateSetProfileMetadataTypedDataMutationFn = Apollo.MutationFunction<
+  CreateSetProfileMetadataTypedDataMutation,
+  CreateSetProfileMetadataTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateSetProfileMetadataTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateSetProfileMetadataTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSetProfileMetadataTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSetProfileMetadataTypedDataMutation, { data, loading, error }] = useCreateSetProfileMetadataTypedDataMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateSetProfileMetadataTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSetProfileMetadataTypedDataMutation,
+    CreateSetProfileMetadataTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateSetProfileMetadataTypedDataMutation,
+    CreateSetProfileMetadataTypedDataMutationVariables
+  >(CreateSetProfileMetadataTypedDataDocument, options);
+}
+export type CreateSetProfileMetadataTypedDataMutationHookResult = ReturnType<
+  typeof useCreateSetProfileMetadataTypedDataMutation
+>;
+export type CreateSetProfileMetadataTypedDataMutationResult =
+  Apollo.MutationResult<CreateSetProfileMetadataTypedDataMutation>;
+export type CreateSetProfileMetadataTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileMetadataTypedDataMutation,
+  CreateSetProfileMetadataTypedDataMutationVariables
 >;
 export const ChallengeDocument = gql`
   query Challenge($request: ChallengeRequest!) {

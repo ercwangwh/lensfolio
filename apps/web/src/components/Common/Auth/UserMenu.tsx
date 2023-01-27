@@ -108,13 +108,13 @@ const UserMenu = () => {
             </button>
           </>
         )}
-        <button
-          type="button"
-          className="flex items-center w-full px-2.5 py-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+        <Link
+          href="/setting"
+          className="flex items-center w-full p-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
         >
           <Cog8ToothIcon className="w-4 h-4" />
           <span className="truncate whitespace-nowrap">Setting</span>
-        </button>
+        </Link>
         {/* <button
           type="button"
           className="flex items-center w-full p-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
