@@ -4320,6 +4320,17 @@ export type CreatePostViaDispatcherMutation = {
     | { __typename?: 'RelayerResult'; txHash: any; txId: any };
 };
 
+export type CreateSetProfileImageUriViaDispatcherMutationVariables = Exact<{
+  request: UpdateProfileImageRequest;
+}>;
+
+export type CreateSetProfileImageUriViaDispatcherMutation = {
+  __typename?: 'Mutation';
+  createSetProfileImageURIViaDispatcher:
+    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
+    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
+};
+
 export type CreateSetProfileMetadataViaDispatcherMutationVariables = Exact<{
   request: CreatePublicSetProfileMetadataUriRequest;
 }>;
@@ -4365,6 +4376,41 @@ export type CreatePostTypedDataMutation = {
         collectModuleInitData: any;
         referenceModule: any;
         referenceModuleInitData: any;
+      };
+    };
+  };
+};
+
+export type CreateSetProfileImageUriTypedDataMutationVariables = Exact<{
+  options?: InputMaybe<TypedDataOptions>;
+  request: UpdateProfileImageRequest;
+}>;
+
+export type CreateSetProfileImageUriTypedDataMutation = {
+  __typename?: 'Mutation';
+  createSetProfileImageURITypedData: {
+    __typename?: 'CreateSetProfileImageUriBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateSetProfileImageUriEIP712TypedData';
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      types: {
+        __typename?: 'CreateSetProfileImageUriEIP712TypedDataTypes';
+        SetProfileImageURIWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      value: {
+        __typename?: 'CreateSetProfileImageUriEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        imageURI: any;
+        profileId: any;
       };
     };
   };
@@ -6170,6 +6216,57 @@ export type CreatePostViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
   CreatePostViaDispatcherMutation,
   CreatePostViaDispatcherMutationVariables
 >;
+export const CreateSetProfileImageUriViaDispatcherDocument = gql`
+  mutation CreateSetProfileImageURIViaDispatcher($request: UpdateProfileImageRequest!) {
+    createSetProfileImageURIViaDispatcher(request: $request) {
+      ...RelayerResultFields
+    }
+  }
+  ${RelayerResultFieldsFragmentDoc}
+`;
+export type CreateSetProfileImageUriViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateSetProfileImageUriViaDispatcherMutation,
+  CreateSetProfileImageUriViaDispatcherMutationVariables
+>;
+
+/**
+ * __useCreateSetProfileImageUriViaDispatcherMutation__
+ *
+ * To run a mutation, you first call `useCreateSetProfileImageUriViaDispatcherMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSetProfileImageUriViaDispatcherMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSetProfileImageUriViaDispatcherMutation, { data, loading, error }] = useCreateSetProfileImageUriViaDispatcherMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateSetProfileImageUriViaDispatcherMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSetProfileImageUriViaDispatcherMutation,
+    CreateSetProfileImageUriViaDispatcherMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateSetProfileImageUriViaDispatcherMutation,
+    CreateSetProfileImageUriViaDispatcherMutationVariables
+  >(CreateSetProfileImageUriViaDispatcherDocument, options);
+}
+export type CreateSetProfileImageUriViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateSetProfileImageUriViaDispatcherMutation
+>;
+export type CreateSetProfileImageUriViaDispatcherMutationResult =
+  Apollo.MutationResult<CreateSetProfileImageUriViaDispatcherMutation>;
+export type CreateSetProfileImageUriViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileImageUriViaDispatcherMutation,
+  CreateSetProfileImageUriViaDispatcherMutationVariables
+>;
 export const CreateSetProfileMetadataViaDispatcherDocument = gql`
   mutation CreateSetProfileMetadataViaDispatcher($request: CreatePublicSetProfileMetadataURIRequest!) {
     createSetProfileMetadataViaDispatcher(request: $request) {
@@ -6290,6 +6387,81 @@ export type CreatePostTypedDataMutationResult = Apollo.MutationResult<CreatePost
 export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreatePostTypedDataMutation,
   CreatePostTypedDataMutationVariables
+>;
+export const CreateSetProfileImageUriTypedDataDocument = gql`
+  mutation CreateSetProfileImageURITypedData(
+    $options: TypedDataOptions
+    $request: UpdateProfileImageRequest!
+  ) {
+    createSetProfileImageURITypedData(options: $options, request: $request) {
+      id
+      expiresAt
+      typedData {
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        types {
+          SetProfileImageURIWithSig {
+            name
+            type
+          }
+        }
+        value {
+          nonce
+          deadline
+          imageURI
+          profileId
+        }
+      }
+    }
+  }
+`;
+export type CreateSetProfileImageUriTypedDataMutationFn = Apollo.MutationFunction<
+  CreateSetProfileImageUriTypedDataMutation,
+  CreateSetProfileImageUriTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateSetProfileImageUriTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateSetProfileImageUriTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSetProfileImageUriTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSetProfileImageUriTypedDataMutation, { data, loading, error }] = useCreateSetProfileImageUriTypedDataMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateSetProfileImageUriTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSetProfileImageUriTypedDataMutation,
+    CreateSetProfileImageUriTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateSetProfileImageUriTypedDataMutation,
+    CreateSetProfileImageUriTypedDataMutationVariables
+  >(CreateSetProfileImageUriTypedDataDocument, options);
+}
+export type CreateSetProfileImageUriTypedDataMutationHookResult = ReturnType<
+  typeof useCreateSetProfileImageUriTypedDataMutation
+>;
+export type CreateSetProfileImageUriTypedDataMutationResult =
+  Apollo.MutationResult<CreateSetProfileImageUriTypedDataMutation>;
+export type CreateSetProfileImageUriTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetProfileImageUriTypedDataMutation,
+  CreateSetProfileImageUriTypedDataMutationVariables
 >;
 export const CreateSetProfileMetadataTypedDataDocument = gql`
   mutation CreateSetProfileMetadataTypedData($request: CreatePublicSetProfileMetadataURIRequest!) {

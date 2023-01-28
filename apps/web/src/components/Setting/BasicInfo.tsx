@@ -81,7 +81,7 @@ const BasicInfo = ({ profile }: Props) => {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [coverImage, setCoverImage] = useState(getProfileCoverPicture(profile));
-  const selectedProfile = useAppStore((state) => state.selectedProfile);
+  const currentProfile = useAppStore((state) => state.currentProfile);
 
   const {
     register,

@@ -41,7 +41,6 @@ const uploadToIPFS = async (data: any): Promise<LensfolioAttachment[]> => {
         await client.putObject({ ...params, Body: file, ContentType: file.type });
         const result = await client.headObject(params);
         const metadata = result.Metadata;
-
         return {
           item: `ipfs://${metadata?.['ipfs-hash']}`,
           type: file.type || 'image/jpeg',

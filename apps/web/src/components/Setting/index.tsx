@@ -11,6 +11,7 @@ import Custom500 from 'src/pages/500';
 // import { Analytics, TRACK } from 'utils';
 
 import BasicInfo from './BasicInfo';
+import SideNav from './SideNav';
 // import ProfileInterests from './ProfileInterests';
 // import SideNav from './SideNav';
 
@@ -18,11 +19,11 @@ import BasicInfo from './BasicInfo';
 // const Membership = dynamic(() => import('./Membership'));
 // const DangerZone = dynamic(() => import('./DangerZone'));
 
-export const SETTINGS_MEMBERSHIP = '/setting/membership';
-export const SETTINGS_INTERESTS = '/setting/interests';
-export const SETTINGS_PERMISSIONS = '/setting/permissions';
-export const SETTINGS_DANGER_ZONE = '/setting/danger';
-export const SETTINGS = '/setting';
+export const SETTING_MEMBERSHIP = '/setting/membership';
+export const SETTING_INTERESTS = '/setting/interests';
+export const SETTING_PERMISSIONS = '/setting/permissions';
+export const SETTING_DANGER_ZONE = '/setting/danger';
+export const SETTING = '/setting';
 
 const Setting = () => {
   const router = useRouter();
@@ -54,11 +55,11 @@ const Setting = () => {
       {/* <MetaTags title="Setting" /> */}
       {!loading && !error && profile ? (
         <div className="grid gap-4 md:grid-cols-4">
-          {/* <div className="md:col-span-1">
-            <SideNav channel={channel} />
-          </div> */}
+          <div className="md:col-span-1">
+            <SideNav profile={profile} />
+          </div>
           <div className="md:col-span-3">
-            {router.pathname === SETTINGS && <BasicInfo profile={profile} />}
+            {router.pathname === SETTING && <BasicInfo profile={profile} />}
             {/* {router.pathname === SETTINGS_MEMBERSHIP && <Membership profile={profile} />}
             {router.pathname === SETTINGS_PERMISSIONS && <Permissions />}
             {router.pathname === SETTINGS_INTERESTS && <ProfileInterests />}

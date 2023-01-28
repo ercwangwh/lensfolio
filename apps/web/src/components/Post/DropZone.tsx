@@ -54,6 +54,12 @@ const DropZone: FC = () => {
     validateFile(e?.dataTransfer?.files);
   };
 
+  const onChooseFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) validateFile(e?.target?.files);
+    // const files=e?.target?.files
+    // if (e.target.files?.length) setFiles([...files]);
+  };
+
   const validateFile = (files: any) => {
     for (const file of files) {
       if (!ALLOWED_IMAGE_TYPES.includes(file?.type)) {
@@ -63,12 +69,6 @@ const DropZone: FC = () => {
       }
     }
     uploadImage(files);
-  };
-
-  const onChooseFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) validateFile(e?.target?.files);
-    // const files=e?.target?.files
-    // if (e.target.files?.length) setFiles([...files]);
   };
 
   return (
@@ -91,7 +91,7 @@ const DropZone: FC = () => {
             'w-full p-10 md:p-20 focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-3xl',
             { '!border-green-500': dragOver }
           )}
-          htmlFor="dropVideo"
+          htmlFor="dropImage"
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
@@ -100,7 +100,7 @@ const DropZone: FC = () => {
             type="file"
             className="hidden"
             onChange={onChooseFile}
-            id="dropVideo"
+            id="dropImage"
             accept={ALLOWED_IMAGE_TYPES.join(',')}
           />
           <span className="flex justify-center mb-6 opacity-80">
@@ -112,12 +112,12 @@ const DropZone: FC = () => {
             </div>
             <div>
               <label
-                htmlFor="chooseVideo"
+                htmlFor="chooseImage"
                 className="px-8 py-4 text-lg text-white bg-indigo-500 cursor-pointer rounded-full"
               >
                 or choose an image
                 <input
-                  id="chooseVideo"
+                  id="chooseImage"
                   onChange={onChooseFile}
                   type="file"
                   className="hidden"

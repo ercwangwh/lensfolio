@@ -110,12 +110,12 @@ const UploadToLens: FC = () => {
     };
 
     const { data } = await createPostViaDispatcher({
-      variables: { request },
-      context: {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      }
+      variables: { request }
+      // context: {
+      //   headers: {
+      //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      //   }
+      // }
     });
     if (data?.createPostViaDispatcher?.__typename === 'RelayError') {
       createPostTypedData({ variables });

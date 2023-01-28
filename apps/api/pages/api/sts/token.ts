@@ -53,7 +53,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         RoleSessionName: undefined
       })
     );
-
     return res.status(200).json({
       success: true,
       accessKeyId: data.Credentials?.AccessKeyId,
