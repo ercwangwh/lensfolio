@@ -19,7 +19,8 @@ import {
   walletConnectWallet
 } from '@rainbow-me/rainbowkit/wallets';
 import { IS_MAINNET, LENSFOLIO_APP_NAME, POLYGON_RPC_URL } from 'utils';
-import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { polygon, polygonMumbai } from 'wagmi/chains';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import client from '../../apollo';
 import Layout from './Layout';
@@ -49,7 +50,7 @@ import Layout from './Layout';
 // });
 
 const { chains, provider } = configureChains(
-  [IS_MAINNET ? chain.polygon : chain.polygonMumbai],
+  [IS_MAINNET ? polygon : polygonMumbai],
   [
     jsonRpcProvider({
       rpc: () => ({

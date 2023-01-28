@@ -80,11 +80,6 @@ const ToggleDispatcher: FC = () => {
               profileId: currentProfile?.id,
               enable: canUseRelay ? false : true
             }
-          },
-          context: {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            }
           }
         });
       }}

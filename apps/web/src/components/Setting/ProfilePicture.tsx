@@ -1,4 +1,3 @@
-// import { LENSHUB_PROXY_ABI } from '@abis/LensHubProxy';
 import { ALLOWED_IMAGE_TYPES, LensfolioAttachment, LensHubProxy } from 'utils';
 import { Loader } from '@components/UI/Loader';
 import { useAppStore } from 'src/store/app';
@@ -10,7 +9,7 @@ import {
   useCreateSetProfileImageUriTypedDataMutation,
   useCreateSetProfileImageUriViaDispatcherMutation
 } from 'lens';
-import type { ChangeEvent, FC } from 'react';
+import type { FC } from 'react';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { PhotoIcon } from '@heroicons/react/24/outline';
@@ -21,7 +20,6 @@ import { useContractWrite, useSignTypedData } from 'wagmi';
 import getAvatar from '@lib/getAvatar';
 import uploadToIPFS from '@lib/uploadToIPFS';
 import getIPFSLink from '@lib/getIPFSLink';
-import DropZone from '@components/Post/DropZone';
 
 interface Props {
   profile: Profile;
@@ -182,7 +180,6 @@ const ProfilePicture: FC<Props> = ({ profile }) => {
           onChange={onPfpUpload}
         />
       </label>
-      {/* <DropZone /> */}
     </div>
   );
 };

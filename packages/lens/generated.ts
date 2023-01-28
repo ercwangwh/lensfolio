@@ -4834,6 +4834,21 @@ export type FollowersQuery = {
   };
 };
 
+export type HasTxHashBeenIndexedQueryVariables = Exact<{
+  request: HasTxHashBeenIndexedRequest;
+}>;
+
+export type HasTxHashBeenIndexedQuery = {
+  __typename?: 'Query';
+  hasTxHashBeenIndexed:
+    | { __typename?: 'TransactionError'; reason: TransactionErrorReasons }
+    | {
+        __typename?: 'TransactionIndexedResult';
+        indexed: boolean;
+        txReceipt?: { __typename?: 'TransactionReceipt'; transactionHash: any } | null;
+      };
+};
+
 export type LensfolioStatsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type LensfolioStatsQuery = {
@@ -6742,6 +6757,62 @@ export function useFollowersLazyQuery(
 export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
 export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
 export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
+export const HasTxHashBeenIndexedDocument = gql`
+  query HasTxHashBeenIndexed($request: HasTxHashBeenIndexedRequest!) {
+    hasTxHashBeenIndexed(request: $request) {
+      ... on TransactionIndexedResult {
+        indexed
+        txReceipt {
+          transactionHash
+        }
+      }
+      ... on TransactionError {
+        reason
+      }
+    }
+  }
+`;
+
+/**
+ * __useHasTxHashBeenIndexedQuery__
+ *
+ * To run a query within a React component, call `useHasTxHashBeenIndexedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHasTxHashBeenIndexedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHasTxHashBeenIndexedQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useHasTxHashBeenIndexedQuery(
+  baseOptions: Apollo.QueryHookOptions<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>(
+    HasTxHashBeenIndexedDocument,
+    options
+  );
+}
+export function useHasTxHashBeenIndexedLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<HasTxHashBeenIndexedQuery, HasTxHashBeenIndexedQueryVariables>(
+    HasTxHashBeenIndexedDocument,
+    options
+  );
+}
+export type HasTxHashBeenIndexedQueryHookResult = ReturnType<typeof useHasTxHashBeenIndexedQuery>;
+export type HasTxHashBeenIndexedLazyQueryHookResult = ReturnType<typeof useHasTxHashBeenIndexedLazyQuery>;
+export type HasTxHashBeenIndexedQueryResult = Apollo.QueryResult<
+  HasTxHashBeenIndexedQuery,
+  HasTxHashBeenIndexedQueryVariables
+>;
 export const LensfolioStatsDocument = gql`
   query LensfolioStats {
     globalProtocolStats(request: { sources: "lensfolio" }) {
