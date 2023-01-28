@@ -2,7 +2,7 @@
 import { LensHubProxy } from 'utils';
 // import { Button } from '@components/UIElements/Button';
 import { Button } from '@components/UI/Button';
-import usePendingTxn from 'utils/hooks/usePendingTxn';
+import usePendingTxn from '@utils/hooks/usePendingTxn';
 import { useAppStore } from 'src/store/app';
 import { utils } from 'ethers';
 import type { CreateSetDispatcherBroadcastItemResult, Profile } from 'lens';
@@ -21,7 +21,7 @@ const Toggle = () => {
   const userSigNonce = useAppStore((state) => state.userSigNonce);
   const setUserSigNonce = useAppStore((state) => state.setUserSigNonce);
   const canUseRelay = currentProfile?.dispatcher?.canUseRelay;
-
+  console.log('can use relay:', canUseRelay);
   const onError = (error: CustomErrorWithData) => {
     toast.error(error?.message ?? ERROR_MESSAGE);
     setLoading(false);
@@ -43,10 +43,10 @@ const Toggle = () => {
     onError
   });
 
-  const { indexed } = usePendingTxn({
-    txHash: writeData?.hash,
-    txId: broadcastData?.broadcast.__typename === 'RelayerResult' ? broadcastData?.broadcast?.txId : undefined
-  });
+  // const { indexed } = usePendingTxn({
+  //   txHash: writeData?.hash,
+  //   txId: broadcastData?.broadcast.__typename === 'RelayerResult' ? broadcastData?.broadcast?.txId : undefined
+  // });
 
   const [refetchProfile] = useProfileLazyQuery({
     onCompleted: (data) => {
@@ -55,24 +55,24 @@ const Toggle = () => {
     }
   });
 
-  useEffect(() => {
-    if (indexed) {
-      toast.success(`Dispatcher ${canUseRelay ? 'disabled' : 'enabled'}`);
-      // Analytics.track(TRACK.DISPATCHER_ENABLED);
-      refetchProfile({
-        variables: {
-          request: { handle: currentProfile?.handle }
-        },
-        fetchPolicy: 'no-cache'
-      });
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [indexed]);
+  // useEffect(() => {
+  //   if (indexed) {
+  //     toast.success(`Dispatcher ${canUseRelay ? 'disabled' : 'enabled'}`);
+  //     // Analytics.track(TRACK.DISPATCHER_ENABLED);
+  //     refetchProfile({
+  //       variables: {
+  //         request: { handle: currentProfile?.handle }
+  //       },
+  //       fetchPolicy: 'no-cache'
+  //     });
+  //     setLoading(false);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [indexed]);
 
   const [createDispatcherTypedData] = useCreateSetDispatcherTypedDataMutation({
     onCompleted: async ({ createSetDispatcherTypedData }) => {
-      const { id, typedData } = createSetDispatcherTypedData as CreateSetDispatcherBroadcastItemResult;
+      const { id, typedData } = createSetDispatcherTypedData;
       const { deadline } = typedData?.value;
       try {
         const signature = await signTypedDataAsync({
@@ -91,11 +91,15 @@ const Toggle = () => {
         if (!RELAYER_ENABLED) {
           return writeDispatch?.({ recklesslySetUnpreparedArgs: [args] });
         }
+        console.log(id, signature);
         const { data } = await broadcast({
           variables: { request: { id, signature } }
         });
-        if (data?.broadcast?.__typename === 'RelayError')
+        console.log('broadcast data:', data);
+        console.log('relay type:', data?.broadcast.__typename);
+        if (data?.broadcast?.__typename === 'RelayError') {
           writeDispatch?.({ recklesslySetUnpreparedArgs: [args] });
+        }
       } catch {
         setLoading(false);
       }
@@ -106,7 +110,7 @@ const Toggle = () => {
     setLoading(true);
     createDispatcherTypedData({
       variables: {
-        options: { overrideSigNonce: userSigNonce },
+        // options: { overrideSigNonce: userSigNonce },
         request: {
           profileId: currentProfile?.id,
           enable: !canUseRelay

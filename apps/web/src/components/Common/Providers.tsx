@@ -24,6 +24,7 @@ import { polygon, polygonMumbai } from 'wagmi/chains';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import client from '../../apollo';
 import Layout from './Layout';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 // const { chains, provider } = configureChains(
 //   [IS_MAINNET ? chain.polygon : chain.polygonMumbai],
@@ -51,6 +52,7 @@ import Layout from './Layout';
 
 const { chains, provider } = configureChains(
   [IS_MAINNET ? polygon : polygonMumbai],
+  // [alchemyProvider({ apiKey: 'Vi1AooumhLIgAB0ySq2aLOLWeANXFXLK' })]
   [
     jsonRpcProvider({
       rpc: () => ({
