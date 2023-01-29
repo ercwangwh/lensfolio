@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@components/UI/Button';
-import { Input } from '@components/UI/Input';
+// import { Input } from '@components/UI/Input-d';
 import type { FC } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 

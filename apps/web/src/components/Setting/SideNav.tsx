@@ -68,7 +68,7 @@ const SideNav: FC<Props> = ({ profile }) => {
         >
           <KeyIcon className="w-4 h-4" /> <span>Permissions</span>
         </Link>
-        <Link
+        {/* <Link
           href={SETTING_INTERESTS}
           className={clsx(
             'flex items-center p-3 space-x-2 rounded-xl hover:bg-gray-100 hover:dark:bg-gray-800',
@@ -78,7 +78,7 @@ const SideNav: FC<Props> = ({ profile }) => {
           )}
         >
           <SparklesIcon className="w-4 h-4" /> <span>Interests</span>
-        </Link>
+        </Link> */}
         <Link
           href={SETTING_DANGER_ZONE}
           className={clsx(

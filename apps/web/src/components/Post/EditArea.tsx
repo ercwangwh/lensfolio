@@ -1,5 +1,5 @@
 import { Button } from '@components/UI/Button';
-import { Input } from '@components/UI/Input';
+import { Input } from '@components/UI/Input-d';
 import { TextArea } from '@components/UI/TextArea';
 import { ChangeEvent, FC, ReactNode, useState } from 'react';
 import { useAppStore } from 'src/store/app';

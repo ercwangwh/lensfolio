@@ -1,8 +1,6 @@
-// import { LENSHUB_PROXY_ABI } from '@abis/LensHubProxy';
 import { LensHubProxy } from 'utils';
-// import { Button } from '@components/UIElements/Button';
 import { Button } from '@components/UI/Button';
-import usePendingTxn from '@utils/hooks/usePendingTxn';
+import usePendingTxn from 'utils/hooks/usePendingTxn';
 import { useAppStore } from 'src/store/app';
 import { utils } from 'ethers';
 import type { CreateSetDispatcherBroadcastItemResult, Profile } from 'lens';
@@ -43,10 +41,10 @@ const Toggle = () => {
     onError
   });
 
-  // const { indexed } = usePendingTxn({
-  //   txHash: writeData?.hash,
-  //   txId: broadcastData?.broadcast.__typename === 'RelayerResult' ? broadcastData?.broadcast?.txId : undefined
-  // });
+  const { indexed } = usePendingTxn({
+    txHash: writeData?.hash,
+    txId: broadcastData?.broadcast.__typename === 'RelayerResult' ? broadcastData?.broadcast?.txId : undefined
+  });
 
   const [refetchProfile] = useProfileLazyQuery({
     onCompleted: (data) => {
@@ -55,20 +53,20 @@ const Toggle = () => {
     }
   });
 
-  // useEffect(() => {
-  //   if (indexed) {
-  //     toast.success(`Dispatcher ${canUseRelay ? 'disabled' : 'enabled'}`);
-  //     // Analytics.track(TRACK.DISPATCHER_ENABLED);
-  //     refetchProfile({
-  //       variables: {
-  //         request: { handle: currentProfile?.handle }
-  //       },
-  //       fetchPolicy: 'no-cache'
-  //     });
-  //     setLoading(false);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [indexed]);
+  useEffect(() => {
+    if (indexed) {
+      toast.success(`Dispatcher ${canUseRelay ? 'disabled' : 'enabled'}`);
+      // Analytics.track(TRACK.DISPATCHER_ENABLED);
+      refetchProfile({
+        variables: {
+          request: { handle: currentProfile?.handle }
+        },
+        fetchPolicy: 'no-cache'
+      });
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [indexed]);
 
   const [createDispatcherTypedData] = useCreateSetDispatcherTypedDataMutation({
     onCompleted: async ({ createSetDispatcherTypedData }) => {

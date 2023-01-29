@@ -2,7 +2,7 @@ import { LENS_PERIPHERY_ABI } from 'utils';
 // import CopyOutline from '@components/Common/Icons/CopyOutline';
 // import IsVerified from '@components/Common/IsVerified';
 import { Button } from '@components/UI/Button';
-import { Input } from '@components/UI/InputV2';
+import { Input } from '@components/UI/Input';
 import { Loader } from '@components/UI/Loader';
 import { TextArea } from '@components/UI/TextArea';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,7 +34,7 @@ import {
 // import getChannelCoverPicture from 'utils/functions/getChannelCoverPicture';
 import { getValueFromKeyInAttributes } from '@lib/getFromAttributes';
 import omit from '@lib/omit';
-import getProfileCoverPicture from '@lib/getChannelCoverPicture';
+import getProfileCoverPicture from '@lib/getProfileCoverPicture';
 import imageProxy from '@lib/imageProxy';
 import getIPFSLink from '@lib/getIPFSLink';
 // import sanitizeIpfsUrl from 'utils/functions/sanitizeIpfsUrl';
@@ -105,7 +105,7 @@ const BasicInfo = ({ profile }: Props) => {
   };
 
   const onCompleted = () => {
-    toast.success('Channel details submitted');
+    toast.success('Profile details submitted');
     // Analytics.track(TRACK.UPDATED_CHANNEL_INFO);
     setLoading(false);
   };
@@ -165,7 +165,7 @@ const BasicInfo = ({ profile }: Props) => {
     onError
   });
 
-  const onCopyChannelUrl = async (value: string) => {
+  const onCopyProfileUrl = async (value: string) => {
     await copy(value);
     toast.success('Copied to clipboard');
   };
@@ -287,7 +287,7 @@ const BasicInfo = ({ profile }: Props) => {
       </div>
       <div className="mt-4">
         <div className="flex items-center mb-1">
-          <div className="text-[11px] font-semibold uppercase opacity-60">Channel</div>
+          <div className="text-[11px] font-semibold uppercase opacity-60">Profile</div>
         </div>
         <div className="flex items-center space-x-3">
           <h6 className="flex items-center space-x-1">
@@ -309,7 +309,7 @@ const BasicInfo = ({ profile }: Props) => {
       </div>
       <div className="mt-4">
         <div className="flex items-center mb-1">
-          <div className="text-[11px] font-semibold uppercase opacity-60">Channel URL</div>
+          <div className="text-[11px] font-semibold uppercase opacity-60">Profile URL</div>
         </div>
         <div className="flex items-center space-x-2">
           <span>
@@ -317,7 +317,7 @@ const BasicInfo = ({ profile }: Props) => {
           </span>
           <button
             className="hover:opacity-60 focus:outline-none"
-            onClick={() => onCopyChannelUrl(`${LENSTUBE_WEBSITE_URL}/${profile.handle}`)}
+            onClick={() => onCopyProfileUrl(`${LENSTUBE_WEBSITE_URL}/${profile.handle}`)}
             type="button"
           >
             <ForwardIcon className="w-4 h-4" />
@@ -335,8 +335,8 @@ const BasicInfo = ({ profile }: Props) => {
       </div>
       <div className="mt-4">
         <TextArea
-          label="Channel Description"
-          placeholder="More about your channel"
+          label="Profile Description"
+          placeholder="More about your profile"
           rows={4}
           validationError={errors.description?.message}
           {...register('description')}

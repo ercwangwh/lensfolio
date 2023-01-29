@@ -16,8 +16,8 @@ import SideNav from './SideNav';
 // import SideNav from './SideNav';
 
 const Permissions = dynamic(() => import('./Permissions'));
-// const Membership = dynamic(() => import('./Membership'));
-// const DangerZone = dynamic(() => import('./DangerZone'));
+const Membership = dynamic(() => import('./Membership'));
+const DangerZone = dynamic(() => import('./DangerZone'));
 
 export const SETTING_MEMBERSHIP = '/setting/membership';
 export const SETTING_INTERESTS = '/setting/interests';
@@ -60,12 +60,13 @@ const Setting = () => {
           </div>
           <div className="md:col-span-3">
             {router.pathname === SETTING && <BasicInfo profile={profile} />}
-
+            {router.pathname === SETTING_MEMBERSHIP && <Membership profile={profile} />}
             {router.pathname === SETTING_PERMISSIONS && <Permissions />}
-            {/* {router.pathname === SETTINGS_MEMBERSHIP && <Membership profile={profile} />}
+            {router.pathname === SETTING_DANGER_ZONE && <DangerZone />}
+            {/* 
 
             {router.pathname === SETTINGS_INTERESTS && <ProfileInterests />}
-            {router.pathname === SETTINGS_DANGER_ZONE && <DangerZone />} */}
+            */}
           </div>
         </div>
       ) : null}

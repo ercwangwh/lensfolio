@@ -1,5 +1,5 @@
 import type { Publication } from 'lens';
-import create from 'zustand';
+import { create } from 'zustand';
 
 interface GlobalModalState {
   showReportModal: boolean;

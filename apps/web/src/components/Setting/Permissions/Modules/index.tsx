@@ -1,20 +1,23 @@
-import { Button } from '@components/UIElements/Button'
-import { Loader } from '@components/UIElements/Loader'
-import useAppStore from '@lib/store'
-import type { ApprovedAllowanceAmount, Erc20 } from 'lens'
+// import { Button } from '@components/UIElements/Button'
+import { Button } from '@components/UI/Button';
+import { Loader } from '@components/UI/Loader';
+// import { Loader } from '@components/UIElements/Loader'
+import { useAppStore } from 'src/store/app';
+// import useAppStore from '@lib/store'
+import type { ApprovedAllowanceAmount, Erc20 } from 'lens';
 import {
   CollectModules,
   FollowModules,
   ReferenceModules,
   useApprovedModuleAllowanceAmountQuery,
   useGenerateModuleCurrencyApprovalDataLazyQuery
-} from 'lens'
-import React, { useState } from 'react'
-import toast from 'react-hot-toast'
-import type { CustomErrorWithData } from 'utils'
-import { WMATIC_TOKEN_ADDRESS } from 'utils'
-import { getCollectModuleConfig } from 'utils/functions/getCollectModule'
-import { useSendTransaction, useWaitForTransaction } from 'wagmi'
+} from 'lens';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import type { CustomErrorWithData } from 'utils';
+import { WMATIC_TOKEN_ADDRESS } from 'utils';
+import { getCollectModuleConfig } from '@lib/getCollectModule';
+import { useSendTransaction, useWaitForTransaction } from 'wagmi';
 
 const collectModules = [
   'FeeCollectModule',
@@ -22,21 +25,21 @@ const collectModules = [
   'FeeFollowModule',
   'LimitedFeeCollectModule',
   'LimitedTimedFeeCollectModule'
-]
+];
 
 const ModulePermissions = () => {
-  const selectedChannel = useAppStore((state) => state.selectedChannel)
-  const [currency, setCurrency] = useState(WMATIC_TOKEN_ADDRESS)
-  const [loadingModule, setLoadingModule] = useState('')
+  const currentProfile = useAppStore((state) => state.currentProfile);
+  const [currency, setCurrency] = useState(WMATIC_TOKEN_ADDRESS);
+  const [loadingModule, setLoadingModule] = useState('');
 
   const { data: txData, sendTransaction } = useSendTransaction({
     request: {},
     mode: 'recklesslyUnprepared',
     onError(error: CustomErrorWithData) {
-      toast.error(error?.data?.message ?? error?.message)
-      setLoadingModule('')
+      toast.error(error?.data?.message ?? error?.message);
+      setLoadingModule('');
     }
-  })
+  });
 
   const {
     data,
@@ -58,27 +61,26 @@ const ModulePermissions = () => {
         referenceModules: [ReferenceModules.FollowerOnlyReferenceModule]
       }
     },
-    skip: !selectedChannel?.id
-  })
+    skip: !currentProfile?.id
+  });
   useWaitForTransaction({
     hash: txData?.hash,
     onSuccess: () => {
-      toast.success('Permission updated')
-      setLoadingModule('')
-      refetch()
+      toast.success('Permission updated');
+      setLoadingModule('');
+      refetch();
     },
     onError(error: CustomErrorWithData) {
-      toast.error(error?.data?.message ?? error?.message)
-      setLoadingModule('')
+      toast.error(error?.data?.message ?? error?.message);
+      setLoadingModule('');
     }
-  })
+  });
 
-  const [generateAllowanceQuery] =
-    useGenerateModuleCurrencyApprovalDataLazyQuery()
+  const [generateAllowanceQuery] = useGenerateModuleCurrencyApprovalDataLazyQuery();
 
   const handleClick = async (isAllow: boolean, selectedModule: string) => {
     try {
-      setLoadingModule(selectedModule)
+      setLoadingModule(selectedModule);
       const { data: allowanceData } = await generateAllowanceQuery({
         variables: {
           request: {
@@ -87,27 +89,27 @@ const ModulePermissions = () => {
             [getCollectModuleConfig(selectedModule).type]: selectedModule
           }
         }
-      })
-      const generated = allowanceData?.generateModuleCurrencyApprovalData
+      });
+      const generated = allowanceData?.generateModuleCurrencyApprovalData;
       sendTransaction?.({
         recklesslySetUnpreparedRequest: {
           from: generated?.from,
           to: generated?.to,
           data: generated?.data
         }
-      })
+      });
     } catch {
-      setLoadingModule('')
+      setLoadingModule('');
     }
-  }
+  };
 
   return (
     <div className="pt-6">
       <div>
         <h1 className="mb-1 text-xl font-semibold">Access permissions</h1>
         <p className="opacity-80">
-          These are the collect modules which you allowed / need to allow to use
-          collect feature. You can allow and revoke access anytime.
+          These are the collect modules which you allowed / need to allow to use collect feature. You can
+          allow and revoke access anytime.
         </p>
       </div>
       <div>
@@ -137,10 +139,7 @@ const ModulePermissions = () => {
           data?.approvedModuleAllowanceAmount?.map(
             (moduleItem: ApprovedAllowanceAmount) =>
               collectModules.includes(moduleItem.module) && (
-                <div
-                  key={moduleItem.contractAddress}
-                  className="flex items-center pb-4 rounded-md"
-                >
+                <div key={moduleItem.contractAddress} className="flex items-center pb-4 rounded-md">
                   <div className="flex-1">
                     <h6 className="text-base">Allow {moduleItem.module}</h6>
                     <p className="text-sm opacity-70">
@@ -172,7 +171,7 @@ const ModulePermissions = () => {
           )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ModulePermissions
+export default ModulePermissions;

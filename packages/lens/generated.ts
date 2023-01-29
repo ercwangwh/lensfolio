@@ -4342,6 +4342,34 @@ export type CreateSetProfileMetadataViaDispatcherMutation = {
     | { __typename?: 'RelayerResult'; txHash: any; txId: any };
 };
 
+export type CreateBurnProfileTypedDataMutationVariables = Exact<{
+  request: BurnProfileRequest;
+}>;
+
+export type CreateBurnProfileTypedDataMutation = {
+  __typename?: 'Mutation';
+  createBurnProfileTypedData: {
+    __typename?: 'CreateBurnProfileBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateBurnEIP712TypedData';
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      types: {
+        __typename?: 'CreateBurnEIP712TypedDataTypes';
+        BurnWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      value: { __typename?: 'CreateBurnEIP712TypedDataValue'; nonce: any; deadline: any; tokenId: string };
+    };
+  };
+};
+
 export type CreatePostTypedDataMutationVariables = Exact<{
   options?: InputMaybe<TypedDataOptions>;
   request: CreatePublicPostRequest;
@@ -4376,6 +4404,42 @@ export type CreatePostTypedDataMutation = {
         collectModuleInitData: any;
         referenceModule: any;
         referenceModuleInitData: any;
+      };
+    };
+  };
+};
+
+export type CreateSetFollowModuleTypedDataMutationVariables = Exact<{
+  options?: InputMaybe<TypedDataOptions>;
+  request: CreateSetFollowModuleRequest;
+}>;
+
+export type CreateSetFollowModuleTypedDataMutation = {
+  __typename?: 'Mutation';
+  createSetFollowModuleTypedData: {
+    __typename?: 'CreateSetFollowModuleBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateSetFollowModuleEIP712TypedData';
+      types: {
+        __typename?: 'CreateSetFollowModuleEIP712TypedDataTypes';
+        SetFollowModuleWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      value: {
+        __typename?: 'CreateSetFollowModuleEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        profileId: any;
+        followModule: any;
+        followModuleInitData: any;
       };
     };
   };
@@ -4454,6 +4518,28 @@ export type CreateSetProfileMetadataTypedDataMutation = {
   };
 };
 
+export type ApprovedModuleAllowanceAmountQueryVariables = Exact<{
+  request: ApprovedModuleAllowanceAmountRequest;
+}>;
+
+export type ApprovedModuleAllowanceAmountQuery = {
+  __typename?: 'Query';
+  approvedModuleAllowanceAmount: Array<{
+    __typename?: 'ApprovedAllowanceAmount';
+    currency: any;
+    module: string;
+    allowance: string;
+    contractAddress: any;
+  }>;
+  enabledModuleCurrencies: Array<{
+    __typename?: 'Erc20';
+    name: string;
+    symbol: string;
+    decimals: number;
+    address: any;
+  }>;
+};
+
 export type ChallengeQueryVariables = Exact<{
   request: ChallengeRequest;
 }>;
@@ -4461,6 +4547,33 @@ export type ChallengeQueryVariables = Exact<{
 export type ChallengeQuery = {
   __typename?: 'Query';
   challenge: { __typename?: 'AuthChallengeResult'; text: string };
+};
+
+export type EnabledModuleCurrrenciesQueryVariables = Exact<{
+  request: ProfileQueryRequest;
+}>;
+
+export type EnabledModuleCurrrenciesQuery = {
+  __typename?: 'Query';
+  enabledModuleCurrencies: Array<{
+    __typename?: 'Erc20';
+    name: string;
+    symbol: string;
+    decimals: number;
+    address: any;
+  }>;
+  profiles: {
+    __typename?: 'PaginatedProfileResult';
+    items: Array<{
+      __typename?: 'Profile';
+      followModule?:
+        | { __typename: 'FeeFollowModuleSettings' }
+        | { __typename: 'ProfileFollowModuleSettings' }
+        | { __typename: 'RevertFollowModuleSettings' }
+        | { __typename: 'UnknownFollowModuleSettings' }
+        | null;
+    }>;
+  };
 };
 
 export type ExploreQueryVariables = Exact<{
@@ -4834,6 +4947,20 @@ export type FollowersQuery = {
   };
 };
 
+export type GenerateModuleCurrencyApprovalDataQueryVariables = Exact<{
+  request: GenerateModuleCurrencyApprovalDataRequest;
+}>;
+
+export type GenerateModuleCurrencyApprovalDataQuery = {
+  __typename?: 'Query';
+  generateModuleCurrencyApprovalData: {
+    __typename?: 'GenerateModuleCurrencyApproval';
+    to: any;
+    from: any;
+    data: any;
+  };
+};
+
 export type HasTxHashBeenIndexedQueryVariables = Exact<{
   request: HasTxHashBeenIndexedRequest;
 }>;
@@ -4921,6 +5048,34 @@ export type ProfileQuery = {
       | { __typename: 'UnknownFollowModuleSettings' }
       | null;
   } | null;
+};
+
+export type ProfileFollowModuleQueryVariables = Exact<{
+  request: ProfileQueryRequest;
+}>;
+
+export type ProfileFollowModuleQuery = {
+  __typename?: 'Query';
+  profiles: {
+    __typename?: 'PaginatedProfileResult';
+    items: Array<{
+      __typename?: 'Profile';
+      followModule?:
+        | {
+            __typename?: 'FeeFollowModuleSettings';
+            recipient: any;
+            amount: {
+              __typename?: 'ModuleFeeAmount';
+              value: string;
+              asset: { __typename?: 'Erc20'; name: string; symbol: string; address: any; decimals: number };
+            };
+          }
+        | { __typename?: 'ProfileFollowModuleSettings' }
+        | { __typename?: 'RevertFollowModuleSettings' }
+        | { __typename?: 'UnknownFollowModuleSettings' }
+        | null;
+    }>;
+  };
 };
 
 export type ProfileInterestsQueryVariables = Exact<{ [key: string]: never }>;
@@ -6333,6 +6488,76 @@ export type CreateSetProfileMetadataViaDispatcherMutationOptions = Apollo.BaseMu
   CreateSetProfileMetadataViaDispatcherMutation,
   CreateSetProfileMetadataViaDispatcherMutationVariables
 >;
+export const CreateBurnProfileTypedDataDocument = gql`
+  mutation CreateBurnProfileTypedData($request: BurnProfileRequest!) {
+    createBurnProfileTypedData(request: $request) {
+      id
+      expiresAt
+      typedData {
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        types {
+          BurnWithSig {
+            name
+            type
+          }
+        }
+        value {
+          nonce
+          deadline
+          tokenId
+        }
+      }
+    }
+  }
+`;
+export type CreateBurnProfileTypedDataMutationFn = Apollo.MutationFunction<
+  CreateBurnProfileTypedDataMutation,
+  CreateBurnProfileTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateBurnProfileTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateBurnProfileTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBurnProfileTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBurnProfileTypedDataMutation, { data, loading, error }] = useCreateBurnProfileTypedDataMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateBurnProfileTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateBurnProfileTypedDataMutation,
+    CreateBurnProfileTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateBurnProfileTypedDataMutation, CreateBurnProfileTypedDataMutationVariables>(
+    CreateBurnProfileTypedDataDocument,
+    options
+  );
+}
+export type CreateBurnProfileTypedDataMutationHookResult = ReturnType<
+  typeof useCreateBurnProfileTypedDataMutation
+>;
+export type CreateBurnProfileTypedDataMutationResult =
+  Apollo.MutationResult<CreateBurnProfileTypedDataMutation>;
+export type CreateBurnProfileTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateBurnProfileTypedDataMutation,
+  CreateBurnProfileTypedDataMutationVariables
+>;
 export const CreatePostTypedDataDocument = gql`
   mutation CreatePostTypedData($options: TypedDataOptions, $request: CreatePublicPostRequest!) {
     createPostTypedData(options: $options, request: $request) {
@@ -6402,6 +6627,82 @@ export type CreatePostTypedDataMutationResult = Apollo.MutationResult<CreatePost
 export type CreatePostTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreatePostTypedDataMutation,
   CreatePostTypedDataMutationVariables
+>;
+export const CreateSetFollowModuleTypedDataDocument = gql`
+  mutation CreateSetFollowModuleTypedData(
+    $options: TypedDataOptions
+    $request: CreateSetFollowModuleRequest!
+  ) {
+    createSetFollowModuleTypedData(options: $options, request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          SetFollowModuleWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          followModule
+          followModuleInitData
+        }
+      }
+    }
+  }
+`;
+export type CreateSetFollowModuleTypedDataMutationFn = Apollo.MutationFunction<
+  CreateSetFollowModuleTypedDataMutation,
+  CreateSetFollowModuleTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateSetFollowModuleTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateSetFollowModuleTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSetFollowModuleTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSetFollowModuleTypedDataMutation, { data, loading, error }] = useCreateSetFollowModuleTypedDataMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateSetFollowModuleTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSetFollowModuleTypedDataMutation,
+    CreateSetFollowModuleTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateSetFollowModuleTypedDataMutation,
+    CreateSetFollowModuleTypedDataMutationVariables
+  >(CreateSetFollowModuleTypedDataDocument, options);
+}
+export type CreateSetFollowModuleTypedDataMutationHookResult = ReturnType<
+  typeof useCreateSetFollowModuleTypedDataMutation
+>;
+export type CreateSetFollowModuleTypedDataMutationResult =
+  Apollo.MutationResult<CreateSetFollowModuleTypedDataMutation>;
+export type CreateSetFollowModuleTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateSetFollowModuleTypedDataMutation,
+  CreateSetFollowModuleTypedDataMutationVariables
 >;
 export const CreateSetProfileImageUriTypedDataDocument = gql`
   mutation CreateSetProfileImageURITypedData(
@@ -6549,6 +6850,73 @@ export type CreateSetProfileMetadataTypedDataMutationOptions = Apollo.BaseMutati
   CreateSetProfileMetadataTypedDataMutation,
   CreateSetProfileMetadataTypedDataMutationVariables
 >;
+export const ApprovedModuleAllowanceAmountDocument = gql`
+  query ApprovedModuleAllowanceAmount($request: ApprovedModuleAllowanceAmountRequest!) {
+    approvedModuleAllowanceAmount(request: $request) {
+      currency
+      module
+      allowance
+      contractAddress
+    }
+    enabledModuleCurrencies {
+      name
+      symbol
+      decimals
+      address
+    }
+  }
+`;
+
+/**
+ * __useApprovedModuleAllowanceAmountQuery__
+ *
+ * To run a query within a React component, call `useApprovedModuleAllowanceAmountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useApprovedModuleAllowanceAmountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useApprovedModuleAllowanceAmountQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useApprovedModuleAllowanceAmountQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ApprovedModuleAllowanceAmountQuery,
+    ApprovedModuleAllowanceAmountQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ApprovedModuleAllowanceAmountQuery, ApprovedModuleAllowanceAmountQueryVariables>(
+    ApprovedModuleAllowanceAmountDocument,
+    options
+  );
+}
+export function useApprovedModuleAllowanceAmountLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ApprovedModuleAllowanceAmountQuery,
+    ApprovedModuleAllowanceAmountQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ApprovedModuleAllowanceAmountQuery, ApprovedModuleAllowanceAmountQueryVariables>(
+    ApprovedModuleAllowanceAmountDocument,
+    options
+  );
+}
+export type ApprovedModuleAllowanceAmountQueryHookResult = ReturnType<
+  typeof useApprovedModuleAllowanceAmountQuery
+>;
+export type ApprovedModuleAllowanceAmountLazyQueryHookResult = ReturnType<
+  typeof useApprovedModuleAllowanceAmountLazyQuery
+>;
+export type ApprovedModuleAllowanceAmountQueryResult = Apollo.QueryResult<
+  ApprovedModuleAllowanceAmountQuery,
+  ApprovedModuleAllowanceAmountQueryVariables
+>;
 export const ChallengeDocument = gql`
   query Challenge($request: ChallengeRequest!) {
     challenge(request: $request) {
@@ -6588,6 +6956,69 @@ export function useChallengeLazyQuery(
 export type ChallengeQueryHookResult = ReturnType<typeof useChallengeQuery>;
 export type ChallengeLazyQueryHookResult = ReturnType<typeof useChallengeLazyQuery>;
 export type ChallengeQueryResult = Apollo.QueryResult<ChallengeQuery, ChallengeQueryVariables>;
+export const EnabledModuleCurrrenciesDocument = gql`
+  query EnabledModuleCurrrencies($request: ProfileQueryRequest!) {
+    enabledModuleCurrencies {
+      name
+      symbol
+      decimals
+      address
+    }
+    profiles(request: $request) {
+      items {
+        followModule {
+          __typename
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useEnabledModuleCurrrenciesQuery__
+ *
+ * To run a query within a React component, call `useEnabledModuleCurrrenciesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEnabledModuleCurrrenciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEnabledModuleCurrrenciesQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useEnabledModuleCurrrenciesQuery(
+  baseOptions: Apollo.QueryHookOptions<EnabledModuleCurrrenciesQuery, EnabledModuleCurrrenciesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<EnabledModuleCurrrenciesQuery, EnabledModuleCurrrenciesQueryVariables>(
+    EnabledModuleCurrrenciesDocument,
+    options
+  );
+}
+export function useEnabledModuleCurrrenciesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    EnabledModuleCurrrenciesQuery,
+    EnabledModuleCurrrenciesQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<EnabledModuleCurrrenciesQuery, EnabledModuleCurrrenciesQueryVariables>(
+    EnabledModuleCurrrenciesDocument,
+    options
+  );
+}
+export type EnabledModuleCurrrenciesQueryHookResult = ReturnType<typeof useEnabledModuleCurrrenciesQuery>;
+export type EnabledModuleCurrrenciesLazyQueryHookResult = ReturnType<
+  typeof useEnabledModuleCurrrenciesLazyQuery
+>;
+export type EnabledModuleCurrrenciesQueryResult = Apollo.QueryResult<
+  EnabledModuleCurrrenciesQuery,
+  EnabledModuleCurrrenciesQueryVariables
+>;
 export const ExploreDocument = gql`
   query Explore(
     $request: ExplorePublicationRequest!
@@ -6757,6 +7188,66 @@ export function useFollowersLazyQuery(
 export type FollowersQueryHookResult = ReturnType<typeof useFollowersQuery>;
 export type FollowersLazyQueryHookResult = ReturnType<typeof useFollowersLazyQuery>;
 export type FollowersQueryResult = Apollo.QueryResult<FollowersQuery, FollowersQueryVariables>;
+export const GenerateModuleCurrencyApprovalDataDocument = gql`
+  query GenerateModuleCurrencyApprovalData($request: GenerateModuleCurrencyApprovalDataRequest!) {
+    generateModuleCurrencyApprovalData(request: $request) {
+      to
+      from
+      data
+    }
+  }
+`;
+
+/**
+ * __useGenerateModuleCurrencyApprovalDataQuery__
+ *
+ * To run a query within a React component, call `useGenerateModuleCurrencyApprovalDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGenerateModuleCurrencyApprovalDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGenerateModuleCurrencyApprovalDataQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useGenerateModuleCurrencyApprovalDataQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GenerateModuleCurrencyApprovalDataQuery,
+    GenerateModuleCurrencyApprovalDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GenerateModuleCurrencyApprovalDataQuery,
+    GenerateModuleCurrencyApprovalDataQueryVariables
+  >(GenerateModuleCurrencyApprovalDataDocument, options);
+}
+export function useGenerateModuleCurrencyApprovalDataLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GenerateModuleCurrencyApprovalDataQuery,
+    GenerateModuleCurrencyApprovalDataQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GenerateModuleCurrencyApprovalDataQuery,
+    GenerateModuleCurrencyApprovalDataQueryVariables
+  >(GenerateModuleCurrencyApprovalDataDocument, options);
+}
+export type GenerateModuleCurrencyApprovalDataQueryHookResult = ReturnType<
+  typeof useGenerateModuleCurrencyApprovalDataQuery
+>;
+export type GenerateModuleCurrencyApprovalDataLazyQueryHookResult = ReturnType<
+  typeof useGenerateModuleCurrencyApprovalDataLazyQuery
+>;
+export type GenerateModuleCurrencyApprovalDataQueryResult = Apollo.QueryResult<
+  GenerateModuleCurrencyApprovalDataQuery,
+  GenerateModuleCurrencyApprovalDataQueryVariables
+>;
 export const HasTxHashBeenIndexedDocument = gql`
   query HasTxHashBeenIndexed($request: HasTxHashBeenIndexedRequest!) {
     hasTxHashBeenIndexed(request: $request) {
@@ -6956,6 +7447,69 @@ export function useProfileLazyQuery(
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
+export const ProfileFollowModuleDocument = gql`
+  query ProfileFollowModule($request: ProfileQueryRequest!) {
+    profiles(request: $request) {
+      items {
+        followModule {
+          ... on FeeFollowModuleSettings {
+            amount {
+              asset {
+                name
+                symbol
+                address
+                decimals
+              }
+              value
+            }
+            recipient
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useProfileFollowModuleQuery__
+ *
+ * To run a query within a React component, call `useProfileFollowModuleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileFollowModuleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileFollowModuleQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useProfileFollowModuleQuery(
+  baseOptions: Apollo.QueryHookOptions<ProfileFollowModuleQuery, ProfileFollowModuleQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProfileFollowModuleQuery, ProfileFollowModuleQueryVariables>(
+    ProfileFollowModuleDocument,
+    options
+  );
+}
+export function useProfileFollowModuleLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileFollowModuleQuery, ProfileFollowModuleQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProfileFollowModuleQuery, ProfileFollowModuleQueryVariables>(
+    ProfileFollowModuleDocument,
+    options
+  );
+}
+export type ProfileFollowModuleQueryHookResult = ReturnType<typeof useProfileFollowModuleQuery>;
+export type ProfileFollowModuleLazyQueryHookResult = ReturnType<typeof useProfileFollowModuleLazyQuery>;
+export type ProfileFollowModuleQueryResult = Apollo.QueryResult<
+  ProfileFollowModuleQuery,
+  ProfileFollowModuleQueryVariables
+>;
 export const ProfileInterestsDocument = gql`
   query ProfileInterests {
     profileInterests

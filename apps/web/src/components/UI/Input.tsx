@@ -1,99 +1,71 @@
-import clsx from "clsx";
-import dynamic from "next/dynamic";
-import type { ComponentProps, ReactNode } from "react";
-import { forwardRef, useId } from "react";
+import clsx from 'clsx'
+import type { InputHTMLAttributes } from 'react'
+import React, { forwardRef, useId } from 'react'
 
-// import { FieldError } from "./Form";
-
-// const HelpTooltip = dynamic(() => import('./HelpTooltip'));
-
-interface Props extends Omit<ComponentProps<"input">, "prefix"> {
-  label?: string;
-  prefix?: string | ReactNode;
-  iconLeft?: ReactNode;
-  iconRight?: ReactNode;
-  className?: string;
-  helper?: ReactNode;
-  error?: boolean;
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string
+  type?: string
+  className?: string
+  validationError?: string
+  prefix?: string
+  suffix?: string
 }
-
 export const Input = forwardRef<HTMLInputElement, Props>(function Input(
   {
     label,
+    type = 'text',
+    validationError,
+    className = '',
     prefix,
-    type = "text",
-    iconLeft,
-    iconRight,
-    error,
-    className = "",
-    helper,
+    suffix,
     ...props
   },
   ref
 ) {
-  const id = useId();
-
-  const iconStyles = [
-    "text-zinc-500 [&>*]:peer-focus:text-brand-500 [&>*]:h-5",
-    { "!text-red-500 [&>*]:peer-focus:!text-red-500": error },
-  ];
-
+  const id = useId()
   return (
     <label className="w-full" htmlFor={id}>
       {label && (
         <div className="flex items-center mb-1 space-x-1.5">
-          <div className="font-medium text-gray-800 dark:text-gray-200">
+          <div className="text-[11px] font-semibold uppercase opacity-70">
             {label}
           </div>
-          {/* <HelpTooltip content={helper} /> */}
         </div>
       )}
       <div className="flex">
         {prefix && (
-          <span className="inline-flex items-center px-3 text-gray-500 bg-gray-100 rounded-l-xl border border-r-0 border-gray-300 dark:bg-gray-900 dark:border-gray-700/80">
+          <span className="inline-flex items-center px-4 text-sm bg-gray-100 border border-r-0 border-gray-300 opacity-80 rounded-l-xl dark:bg-gray-900 dark:border-gray-700">
             {prefix}
           </span>
         )}
-        <div
+        <input
+          id={id}
           className={clsx(
-            { "!border-red-500": error },
-            { "focus-within:ring-1": !error },
-            { "rounded-r-xl": prefix },
-            { "rounded-xl": !prefix },
             {
-              "opacity-60 bg-gray-500 bg-opacity-20": props.disabled,
+              'focus:ring-1 focus:ring-indigo-500': !validationError?.length,
+              '!border-red-500': validationError?.length,
+              'rounded-r-xl': prefix,
+              'rounded-xl': !prefix && !suffix,
+              'rounded-l-xl': suffix
             },
-            "flex items-center border bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700/80 focus-within:border-brand-500 focus-within:ring-brand-400 w-full"
+            'bg-white text-sm px-2.5 py-2 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 outline-none disabled:opacity-60 disabled:bg-gray-500 disabled:bg-opacity-20 w-full',
+            className
           )}
-        >
-          <input
-            id={id}
-            className={clsx(
-              { "placeholder-red-500": error },
-              { "rounded-r-xl": prefix },
-              { "rounded-xl": !prefix },
-              "peer border-none focus:ring-0 outline-none bg-transparent w-full",
-              className
-            )}
-            type={type}
-            ref={ref}
-            {...props}
-          />
-          <span
-            tabIndex={-1}
-            className={clsx({ "order-first pl-3": iconLeft }, iconStyles)}
-          >
-            {iconLeft}
+          ref={ref}
+          type={type}
+          {...props}
+        />
+        {suffix && (
+          <span className="inline-flex items-center px-4 text-sm bg-gray-100 border border-l-0 border-gray-300 whitespace-nowrap opacity-80 rounded-r-xl dark:bg-gray-900 dark:border-gray-700">
+            {suffix}
           </span>
-          <span
-            tabIndex={-1}
-            className={clsx({ "order-last pr-3": iconRight }, iconStyles)}
-          >
-            {iconRight}
-          </span>
-        </div>
+        )}
       </div>
-      {props.name}
+      {validationError && (
+        <div className="mx-1 mt-1 text-xs font-medium text-red-500">
+          {validationError}
+        </div>
+      )}
     </label>
-  );
-});
+  )
+})

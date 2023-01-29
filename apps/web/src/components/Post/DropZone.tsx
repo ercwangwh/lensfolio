@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import { ALLOWED_IMAGE_TYPES, LensfolioAttachment } from 'utils';
 import useDragAndDrop from 'utils/hooks/useDragAndDrop';
 import uploadToIPFS from '@lib/uploadToIPFS';
-import { Input } from '@components/UI/Input';
+import { Input } from '@components/UI/Input-d';
 
 // interface Props {
 //   attachments: LensfolioAttachment[];
