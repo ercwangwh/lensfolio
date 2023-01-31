@@ -4275,33 +4275,11 @@ export type CreateSetDispatcherTypedDataMutation = {
   };
 };
 
-export type CreateUnfollowTypedDataMutationVariables = Exact<{
-  request: UnfollowRequest;
+export type ProxyActionMutationVariables = Exact<{
+  request: ProxyActionRequest;
 }>;
 
-export type CreateUnfollowTypedDataMutation = {
-  __typename?: 'Mutation';
-  createUnfollowTypedData: {
-    __typename?: 'CreateUnfollowBroadcastItemResult';
-    id: any;
-    expiresAt: any;
-    typedData: {
-      __typename?: 'CreateBurnEIP712TypedData';
-      types: {
-        __typename?: 'CreateBurnEIP712TypedDataTypes';
-        BurnWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
-      };
-      domain: {
-        __typename?: 'EIP712TypedDataDomain';
-        version: string;
-        chainId: any;
-        name: string;
-        verifyingContract: any;
-      };
-      value: { __typename?: 'CreateBurnEIP712TypedDataValue'; nonce: any; deadline: any; tokenId: string };
-    };
-  };
-};
+export type ProxyActionMutation = { __typename?: 'Mutation'; proxyAction: any };
 
 export type RemoveReactionMutationVariables = Exact<{
   request: ReactionRequest;
@@ -4366,6 +4344,41 @@ export type CreateBurnProfileTypedDataMutation = {
         BurnWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
       };
       value: { __typename?: 'CreateBurnEIP712TypedDataValue'; nonce: any; deadline: any; tokenId: string };
+    };
+  };
+};
+
+export type CreateFollowTypedDataMutationVariables = Exact<{
+  options?: InputMaybe<TypedDataOptions>;
+  request: FollowRequest;
+}>;
+
+export type CreateFollowTypedDataMutation = {
+  __typename?: 'Mutation';
+  createFollowTypedData: {
+    __typename?: 'CreateFollowBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateFollowEIP712TypedData';
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      types: {
+        __typename?: 'CreateFollowEIP712TypedDataTypes';
+        FollowWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      value: {
+        __typename?: 'CreateFollowEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        profileIds: Array<any>;
+        datas: Array<any>;
+      };
     };
   };
 };
@@ -4514,6 +4527,34 @@ export type CreateSetProfileMetadataTypedDataMutation = {
         profileId: any;
         metadata: any;
       };
+    };
+  };
+};
+
+export type CreateUnfollowTypedDataMutationVariables = Exact<{
+  request: UnfollowRequest;
+}>;
+
+export type CreateUnfollowTypedDataMutation = {
+  __typename?: 'Mutation';
+  createUnfollowTypedData: {
+    __typename?: 'CreateUnfollowBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateBurnEIP712TypedData';
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      types: {
+        __typename?: 'CreateBurnEIP712TypedDataTypes';
+        BurnWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      value: { __typename?: 'CreateBurnEIP712TypedDataValue'; nonce: any; deadline: any; tokenId: string };
     };
   };
 };
@@ -5295,6 +5336,18 @@ export type ProfilesQuery = {
   };
 };
 
+export type ProxyActionStatusQueryVariables = Exact<{
+  proxyActionId: Scalars['ProxyActionId'];
+}>;
+
+export type ProxyActionStatusQuery = {
+  __typename?: 'Query';
+  proxyActionStatus:
+    | { __typename?: 'ProxyActionError'; reason: string }
+    | { __typename?: 'ProxyActionQueued' }
+    | { __typename?: 'ProxyActionStatusResult'; txId: any; status: ProxyActionStatusTypes };
+};
+
 export type PublicationDetailsQueryVariables = Exact<{
   request: PublicationQueryRequest;
   reactionRequest?: InputMaybe<ReactionFieldResolverRequest>;
@@ -5630,6 +5683,7 @@ export type UserProfilesQuery = {
     __typename?: 'PaginatedProfileResult';
     items: Array<{
       __typename?: 'Profile';
+      interests?: Array<any> | null;
       isDefault: boolean;
       id: any;
       name?: string | null;
@@ -5652,6 +5706,7 @@ export type UserProfilesQuery = {
         | null;
     }>;
   };
+  userSigNonces: { __typename?: 'UserSigNonces'; lensHubOnChainSigNonce: any };
 };
 
 export type ValidatePublicationMetadataQueryVariables = Exact<{
@@ -6229,72 +6284,44 @@ export type CreateSetDispatcherTypedDataMutationOptions = Apollo.BaseMutationOpt
   CreateSetDispatcherTypedDataMutation,
   CreateSetDispatcherTypedDataMutationVariables
 >;
-export const CreateUnfollowTypedDataDocument = gql`
-  mutation CreateUnfollowTypedData($request: UnfollowRequest!) {
-    createUnfollowTypedData(request: $request) {
-      id
-      expiresAt
-      typedData {
-        types {
-          BurnWithSig {
-            name
-            type
-          }
-        }
-        domain {
-          version
-          chainId
-          name
-          verifyingContract
-        }
-        value {
-          nonce
-          deadline
-          tokenId
-        }
-      }
-    }
+export const ProxyActionDocument = gql`
+  mutation proxyAction($request: ProxyActionRequest!) {
+    proxyAction(request: $request)
   }
 `;
-export type CreateUnfollowTypedDataMutationFn = Apollo.MutationFunction<
-  CreateUnfollowTypedDataMutation,
-  CreateUnfollowTypedDataMutationVariables
+export type ProxyActionMutationFn = Apollo.MutationFunction<
+  ProxyActionMutation,
+  ProxyActionMutationVariables
 >;
 
 /**
- * __useCreateUnfollowTypedDataMutation__
+ * __useProxyActionMutation__
  *
- * To run a mutation, you first call `useCreateUnfollowTypedDataMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateUnfollowTypedDataMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useProxyActionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProxyActionMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createUnfollowTypedDataMutation, { data, loading, error }] = useCreateUnfollowTypedDataMutation({
+ * const [proxyActionMutation, { data, loading, error }] = useProxyActionMutation({
  *   variables: {
  *      request: // value for 'request'
  *   },
  * });
  */
-export function useCreateUnfollowTypedDataMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateUnfollowTypedDataMutation,
-    CreateUnfollowTypedDataMutationVariables
-  >
+export function useProxyActionMutation(
+  baseOptions?: Apollo.MutationHookOptions<ProxyActionMutation, ProxyActionMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateUnfollowTypedDataMutation, CreateUnfollowTypedDataMutationVariables>(
-    CreateUnfollowTypedDataDocument,
-    options
-  );
+  return Apollo.useMutation<ProxyActionMutation, ProxyActionMutationVariables>(ProxyActionDocument, options);
 }
-export type CreateUnfollowTypedDataMutationHookResult = ReturnType<typeof useCreateUnfollowTypedDataMutation>;
-export type CreateUnfollowTypedDataMutationResult = Apollo.MutationResult<CreateUnfollowTypedDataMutation>;
-export type CreateUnfollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
-  CreateUnfollowTypedDataMutation,
-  CreateUnfollowTypedDataMutationVariables
+export type ProxyActionMutationHookResult = ReturnType<typeof useProxyActionMutation>;
+export type ProxyActionMutationResult = Apollo.MutationResult<ProxyActionMutation>;
+export type ProxyActionMutationOptions = Apollo.BaseMutationOptions<
+  ProxyActionMutation,
+  ProxyActionMutationVariables
 >;
 export const RemoveReactionDocument = gql`
   mutation RemoveReaction($request: ReactionRequest!) {
@@ -6557,6 +6584,75 @@ export type CreateBurnProfileTypedDataMutationResult =
 export type CreateBurnProfileTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateBurnProfileTypedDataMutation,
   CreateBurnProfileTypedDataMutationVariables
+>;
+export const CreateFollowTypedDataDocument = gql`
+  mutation CreateFollowTypedData($options: TypedDataOptions, $request: FollowRequest!) {
+    createFollowTypedData(options: $options, request: $request) {
+      id
+      expiresAt
+      typedData {
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        types {
+          FollowWithSig {
+            name
+            type
+          }
+        }
+        value {
+          nonce
+          deadline
+          profileIds
+          datas
+        }
+      }
+    }
+  }
+`;
+export type CreateFollowTypedDataMutationFn = Apollo.MutationFunction<
+  CreateFollowTypedDataMutation,
+  CreateFollowTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateFollowTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateFollowTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateFollowTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createFollowTypedDataMutation, { data, loading, error }] = useCreateFollowTypedDataMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateFollowTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateFollowTypedDataMutation,
+    CreateFollowTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateFollowTypedDataMutation, CreateFollowTypedDataMutationVariables>(
+    CreateFollowTypedDataDocument,
+    options
+  );
+}
+export type CreateFollowTypedDataMutationHookResult = ReturnType<typeof useCreateFollowTypedDataMutation>;
+export type CreateFollowTypedDataMutationResult = Apollo.MutationResult<CreateFollowTypedDataMutation>;
+export type CreateFollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateFollowTypedDataMutation,
+  CreateFollowTypedDataMutationVariables
 >;
 export const CreatePostTypedDataDocument = gql`
   mutation CreatePostTypedData($options: TypedDataOptions, $request: CreatePublicPostRequest!) {
@@ -6849,6 +6945,73 @@ export type CreateSetProfileMetadataTypedDataMutationResult =
 export type CreateSetProfileMetadataTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateSetProfileMetadataTypedDataMutation,
   CreateSetProfileMetadataTypedDataMutationVariables
+>;
+export const CreateUnfollowTypedDataDocument = gql`
+  mutation CreateUnfollowTypedData($request: UnfollowRequest!) {
+    createUnfollowTypedData(request: $request) {
+      id
+      expiresAt
+      typedData {
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        types {
+          BurnWithSig {
+            name
+            type
+          }
+        }
+        value {
+          nonce
+          deadline
+          tokenId
+        }
+      }
+    }
+  }
+`;
+export type CreateUnfollowTypedDataMutationFn = Apollo.MutationFunction<
+  CreateUnfollowTypedDataMutation,
+  CreateUnfollowTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateUnfollowTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateUnfollowTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUnfollowTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUnfollowTypedDataMutation, { data, loading, error }] = useCreateUnfollowTypedDataMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateUnfollowTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateUnfollowTypedDataMutation,
+    CreateUnfollowTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateUnfollowTypedDataMutation, CreateUnfollowTypedDataMutationVariables>(
+    CreateUnfollowTypedDataDocument,
+    options
+  );
+}
+export type CreateUnfollowTypedDataMutationHookResult = ReturnType<typeof useCreateUnfollowTypedDataMutation>;
+export type CreateUnfollowTypedDataMutationResult = Apollo.MutationResult<CreateUnfollowTypedDataMutation>;
+export type CreateUnfollowTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateUnfollowTypedDataMutation,
+  CreateUnfollowTypedDataMutationVariables
 >;
 export const ApprovedModuleAllowanceAmountDocument = gql`
   query ApprovedModuleAllowanceAmount($request: ApprovedModuleAllowanceAmountRequest!) {
@@ -7710,6 +7873,60 @@ export function useProfilesLazyQuery(
 export type ProfilesQueryHookResult = ReturnType<typeof useProfilesQuery>;
 export type ProfilesLazyQueryHookResult = ReturnType<typeof useProfilesLazyQuery>;
 export type ProfilesQueryResult = Apollo.QueryResult<ProfilesQuery, ProfilesQueryVariables>;
+export const ProxyActionStatusDocument = gql`
+  query ProxyActionStatus($proxyActionId: ProxyActionId!) {
+    proxyActionStatus(proxyActionId: $proxyActionId) {
+      ... on ProxyActionStatusResult {
+        txId
+        status
+      }
+      ... on ProxyActionError {
+        reason
+      }
+    }
+  }
+`;
+
+/**
+ * __useProxyActionStatusQuery__
+ *
+ * To run a query within a React component, call `useProxyActionStatusQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProxyActionStatusQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProxyActionStatusQuery({
+ *   variables: {
+ *      proxyActionId: // value for 'proxyActionId'
+ *   },
+ * });
+ */
+export function useProxyActionStatusQuery(
+  baseOptions: Apollo.QueryHookOptions<ProxyActionStatusQuery, ProxyActionStatusQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProxyActionStatusQuery, ProxyActionStatusQueryVariables>(
+    ProxyActionStatusDocument,
+    options
+  );
+}
+export function useProxyActionStatusLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProxyActionStatusQuery, ProxyActionStatusQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProxyActionStatusQuery, ProxyActionStatusQueryVariables>(
+    ProxyActionStatusDocument,
+    options
+  );
+}
+export type ProxyActionStatusQueryHookResult = ReturnType<typeof useProxyActionStatusQuery>;
+export type ProxyActionStatusLazyQueryHookResult = ReturnType<typeof useProxyActionStatusLazyQuery>;
+export type ProxyActionStatusQueryResult = Apollo.QueryResult<
+  ProxyActionStatusQuery,
+  ProxyActionStatusQueryVariables
+>;
 export const PublicationDetailsDocument = gql`
   query PublicationDetails(
     $request: PublicationQueryRequest!
@@ -7776,6 +7993,7 @@ export const UserProfilesDocument = gql`
     profiles(request: { ownedBy: $ownedBy, limit: 10 }) {
       items {
         ...ProfileFields
+        interests
         stats {
           totalFollowing
         }
@@ -7784,6 +8002,9 @@ export const UserProfilesDocument = gql`
           canUseRelay
         }
       }
+    }
+    userSigNonces {
+      lensHubOnChainSigNonce
     }
   }
   ${ProfileFieldsFragmentDoc}

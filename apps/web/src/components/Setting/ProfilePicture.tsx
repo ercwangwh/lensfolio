@@ -159,7 +159,7 @@ const ProfilePicture: FC<Props> = ({ profile }) => {
   return (
     <div className="relative flex-none overflow-hidden rounded-full group">
       <img
-        src={selectedPfp ? getIPFSLink(selectedPfp) : getAvatar(profile)}
+        src={selectedPfp ? getIPFSLink(selectedPfp) : getAvatar(profile, false)}
         className="object-cover w-32 h-32 border-2 rounded-full"
         draggable={false}
         alt={selectedPfp ? currentProfile?.handle : profile.handle}

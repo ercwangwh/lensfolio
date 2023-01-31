@@ -2,6 +2,7 @@ query UserProfiles($ownedBy: [EthereumAddress!]) {
   profiles(request: { ownedBy: $ownedBy, limit: 10 }) {
     items {
       ...ProfileFields
+      interests
       stats {
         totalFollowing
       }
@@ -10,5 +11,8 @@ query UserProfiles($ownedBy: [EthereumAddress!]) {
         canUseRelay
       }
     }
+  }
+  userSigNonces {
+    lensHubOnChainSigNonce
   }
 }

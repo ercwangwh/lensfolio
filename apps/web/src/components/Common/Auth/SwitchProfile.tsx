@@ -44,9 +44,9 @@ const SwitchProfile: FC = () => {
                 height={20}
                 width={20}
                 onError={({ currentTarget }) => {
-                  currentTarget.src = getAvatar(profile);
+                  currentTarget.src = getAvatar(profile, false);
                 }}
-                src={getAvatar(profile)}
+                src={getAvatar(profile, false)}
                 alt={profile?.handle}
               />
               <div className="truncate">{profile?.handle}</div>

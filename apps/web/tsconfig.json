@@ -11,5 +11,11 @@
       "@generated*": ["src/generated*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/styles/global.css"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/styles/global.css",
+    "../../packages/utils/hooks/useProxyActionStatus.ts"
+  ]
 }

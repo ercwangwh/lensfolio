@@ -95,7 +95,7 @@ const DangerZone = () => {
         <div className="flex items-center">
           <div className="flex-none mr-3 mt-0.5">
             <img
-              src={getAvatar(currentProfile)}
+              src={getAvatar(currentProfile, false)}
               className="rounded-full w-9 h-9"
               draggable={false}
               alt={currentProfile?.handle}

@@ -264,7 +264,8 @@ const BasicInfo = ({ profile }: Props) => {
         <img
           src={
             // sanitizeIpfsUrl(coverImage) ??
-            imageProxy(getIPFSLink(getProfileCoverPicture(profile)), 'thumbnail')
+            getIPFSLink(getProfileCoverPicture(profile))
+            // imageProxy(, 'thumbnail')
           }
           className="object-cover object-center w-full h-48 bg-white rounded-xl md:h-56 dark:bg-gray-900"
           draggable={false}

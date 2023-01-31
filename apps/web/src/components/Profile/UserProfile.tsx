@@ -45,7 +45,7 @@ const UserProfile: FC<Props> = ({
   const UserAvatar = () => (
     <div className="flex-none z-[1] mr-4 md:mr-6">
       <img
-        src={getAvatar(profile)}
+        src={getAvatar(profile, false)}
         loading="lazy"
         className="object-cover w-24 h-24 bg-white border-4 border-white dark:border-black rounded-xl dark:bg-gray-900 md:-mt-10 md:w-32 md:h-32"
         draggable={false}

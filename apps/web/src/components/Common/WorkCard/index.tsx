@@ -74,7 +74,7 @@ const WorkCard: FC<Props> = ({ work }) => {
               <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} className="flex-none mt-0.5">
                 <img
                   className="w-8 h-8 rounded-full"
-                  src={getAvatar(work.profile)}
+                  src={getAvatar(work.profile, false)}
                   alt={work.profile?.handle}
                   draggable={false}
                   onClick={handleClick}

@@ -58,7 +58,7 @@ const UserMenu = () => {
         <Button light={true} className="!p-0 flex-none">
           <img
             className="object-cover bg-white rounded-full dark:bg-theme w-8 h-8 md:w-9 md:h-9"
-            src={getAvatar(currentProfile)}
+            src={getAvatar(currentProfile, false)}
             alt="avatar picture"
             draggable={false}
           />
@@ -70,7 +70,7 @@ const UserMenu = () => {
           <div className="inline-flex items-center p-2 py-3 space-x-2 rounded-lg">
             <img
               className="object-cover rounded-full w-9 h-9"
-              src={getAvatar(currentProfile)}
+              src={getAvatar(currentProfile, false)}
               alt={currentProfile.handle}
               draggable={false}
             />
