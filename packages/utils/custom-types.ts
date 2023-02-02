@@ -149,3 +149,10 @@ export interface LensfolioWorks {
   attachment: LensfolioAttachment;
   content: string;
 }
+
+export type QueuedCommentType = {
+  comment: string;
+  pubId: string;
+  txnId?: string;
+  txnHash?: string;
+};

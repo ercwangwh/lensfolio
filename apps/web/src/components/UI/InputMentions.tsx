@@ -9,9 +9,7 @@ import { Mention, MentionsInput } from 'react-mentions';
 // import {Mention} from
 import { LENS_CUSTOM_FILTERS } from 'utils';
 import nFormatter from '@lib/nFormatter';
-// import {  } from 'utils/functions/formatNumber';
 import getAvatar from '@lib/getAvatar';
-// import getProfilePicture from 'utils/functions/getProfilePicture';
 
 interface Props extends ComponentProps<'textarea'> {
   label?: string;
@@ -42,8 +40,8 @@ const InputMentions: FC<Props> = ({
           request: {
             type: SearchRequestTypes.Profile,
             query,
-            limit: 5,
-            customFilters: LENS_CUSTOM_FILTERS
+            limit: 5
+            // customFilters: LENS_CUSTOM_FILTERS
           }
         }
       });
@@ -96,7 +94,7 @@ const InputMentions: FC<Props> = ({
             ) => (
               <div
                 className={clsx('flex truncate px-1.5 py-1.5 space-x-1.5', {
-                  'bg-indigo-50 rounded dark:bg-theme': focused
+                  'bg-indigo-50 rounded': focused
                 })}
               >
                 <img

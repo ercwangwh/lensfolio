@@ -1,31 +1,32 @@
 import { useApolloClient } from '@apollo/client';
-import InterweaveContent from '@components/Common/InterweaveContent';
-import IsVerified from '@components/Common/IsVerified';
-import Tooltip from '@components/UIElements/Tooltip';
+// import InterweaveContent from '@components/Common/InterweaveContent';
+// import IsVerified from '@components/Common/IsVerified';
+// import Tooltip from '@components/UIElements/Tooltip';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
+import { usePublicationStore } from 'src/store/publication';
 import {
   PublicationDetailsDocument,
   useHasTxHashBeenIndexedQuery,
-  usePublicationDetailsLazyQuery,
-  useTxIdToTxHashLazyQuery
+  usePublicationDetailsLazyQuery
+  // useTxIdToTxHashLazyQuery
 } from 'lens';
 import Link from 'next/link';
 import type { FC } from 'react';
 import React from 'react';
 import type { QueuedCommentType } from 'utils';
-import getProfilePicture from 'utils/functions/getProfilePicture';
-
-type Props = {
+// import getProfilePicture from 'utils/functions/getProfilePicture';
+import getAvatar from '@lib/getAvatar';
+interface Props {
   queuedComment: QueuedCommentType;
-};
+}
 
 const QueuedComment: FC<Props> = ({ queuedComment }) => {
-  const selectedChannel = useAppStore((state) => state.selectedChannel);
-  const queuedComments = usePersistStore((state) => state.queuedComments);
-  const setQueuedComments = usePersistStore((state) => state.setQueuedComments);
+  const currentProfile = useAppStore((state) => state.currentProfile);
+  const queuedComments = usePublicationStore((state) => state.queuedComments);
+  const setQueuedComments = usePublicationStore((state) => state.setQueuedComments);
 
   const { cache } = useApolloClient();
-  const [getTxnHash] = useTxIdToTxHashLazyQuery();
+  // const [getTxnHash] = useTxIdToTxHashLazyQuery();
 
   const removeFromQueue = () => {
     if (!queuedComment.txnId) {
@@ -90,31 +91,31 @@ const QueuedComment: FC<Props> = ({ queuedComment }) => {
     }
   });
 
-  if ((!queuedComment?.txnId && !queuedComment?.txnHash) || !selectedChannel) return null;
+  if ((!queuedComment?.txnId && !queuedComment?.txnHash) || !currentProfile) return null;
 
   return (
     <div className="flex items-start justify-between">
       <div className="flex items-start justify-between">
-        <Link href={`/channel/${selectedChannel?.handle}`} className="flex-none mr-3 mt-0.5">
+        <Link href={`/user/${currentProfile?.handle}`} className="flex-none mr-3 mt-0.5">
           <img
-            src={getProfilePicture(selectedChannel, 'avatar')}
+            src={getAvatar(currentProfile, false)}
             className="rounded-full w-7 h-7"
             draggable={false}
-            alt={selectedChannel?.handle}
+            alt={currentProfile?.handle}
           />
         </Link>
         <div className="flex flex-col items-start mr-2">
           <span className="flex items-center mb-1 space-x-1">
             <Link
-              href={`/channel/${selectedChannel.handle}`}
+              href={`/channel/${currentProfile.handle}`}
               className="flex items-center space-x-1 text-sm font-medium"
             >
-              <span>{selectedChannel?.handle}</span>
-              <IsVerified id={selectedChannel.id} />
+              <span>{currentProfile?.handle}</span>
+              {/* <IsVerified id={selectedChannel.id} /> */}
             </Link>
           </span>
           <div className="text-sm opacity-80">
-            <InterweaveContent content={queuedComment.comment} />
+            {/* <InterweaveContent content={queuedComment.comment} /> */}
           </div>
         </div>
       </div>

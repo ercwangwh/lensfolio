@@ -19,7 +19,7 @@ import NewComment from './NewComment';
 // import QueuedComment from './QueuedComment';
 import { Button } from '@components/UI/Button';
 
-// const Comment = dynamic(() => import('./Comment'));
+const Comment = dynamic(() => import('./Comment'));
 
 interface Props {
   work: LensfolioPublication;
@@ -105,26 +105,26 @@ const Comments: FC<Props> = ({ work }) => {
           </span>
         </Button>
       ) : null}
-      {/* {!error && !loading && (
+      {!error && !loading && (
         <>
           <div className="pt-5 space-y-4">
-            {queuedComments?.map(
+            {/* {queuedComments?.map(
               (queuedComment) =>
                 queuedComment?.pubId === video?.id && (
                   <QueuedComment key={queuedComment?.pubId} queuedComment={queuedComment} />
                 )
-            )}
-            {comments?.map((comment: Publication) => (
+            )} */}
+            {comments?.map((comment: LensfolioPublication) => (
               <Comment key={`${comment?.id}_${comment.createdAt}`} comment={comment} />
             ))}
           </div>
-          {pageInfo?.next && comments.length !== pageInfo?.totalCount && (
+          {/* {pageInfo?.next && comments.length !== pageInfo?.totalCount && (
             <span ref={observe} className="flex justify-center p-10">
               <Loader />
             </span>
-          )}
+          )} */}
         </>
-      )} */}
+      )}
     </div>
   );
 };
