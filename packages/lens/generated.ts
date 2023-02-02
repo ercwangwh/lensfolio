@@ -5091,6 +5091,200 @@ export type ProfileQuery = {
   } | null;
 };
 
+export type ProfileCommentsQueryVariables = Exact<{
+  request: PublicationsQueryRequest;
+  reactionRequest?: InputMaybe<ReactionFieldResolverRequest>;
+  profileId?: InputMaybe<Scalars['ProfileId']>;
+}>;
+
+export type ProfileCommentsQuery = {
+  __typename?: 'Query';
+  publications: {
+    __typename?: 'PaginatedPublicationResult';
+    items: Array<
+      | {
+          __typename?: 'Comment';
+          id: any;
+          reaction?: ReactionTypes | null;
+          collectNftAddress?: any | null;
+          onChainContentURI: string;
+          hidden: boolean;
+          hasCollectedByMe: boolean;
+          createdAt: any;
+          appId?: any | null;
+          profile: {
+            __typename?: 'Profile';
+            id: any;
+            name?: string | null;
+            handle: any;
+            bio?: string | null;
+            ownedBy: any;
+            isFollowedByMe: boolean;
+            stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
+            attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+            picture?:
+              | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+              | { __typename?: 'NftImage'; uri: any }
+              | null;
+            followModule?:
+              | { __typename: 'FeeFollowModuleSettings' }
+              | { __typename: 'ProfileFollowModuleSettings' }
+              | { __typename: 'RevertFollowModuleSettings' }
+              | { __typename: 'UnknownFollowModuleSettings' }
+              | null;
+          };
+          collectedBy?: {
+            __typename?: 'Wallet';
+            address: any;
+            defaultProfile?: { __typename?: 'Profile'; handle: any } | null;
+          } | null;
+          collectModule:
+            | {
+                __typename?: 'FeeCollectModuleSettings';
+                type: CollectModules;
+                recipient: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | {
+                __typename?: 'FreeCollectModuleSettings';
+                type: CollectModules;
+                contractAddress: any;
+                followerOnly: boolean;
+              }
+            | {
+                __typename?: 'LimitedFeeCollectModuleSettings';
+                type: CollectModules;
+                collectLimit: string;
+                recipient: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | {
+                __typename?: 'LimitedTimedFeeCollectModuleSettings';
+                type: CollectModules;
+                collectLimit: string;
+                recipient: any;
+                endTimestamp: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | { __typename?: 'RevertCollectModuleSettings' }
+            | {
+                __typename?: 'TimedFeeCollectModuleSettings';
+                type: CollectModules;
+                recipient: any;
+                endTimestamp: any;
+                referralFee: number;
+                contractAddress: any;
+                followerOnly: boolean;
+                amount: {
+                  __typename?: 'ModuleFeeAmount';
+                  value: string;
+                  asset: { __typename?: 'Erc20'; symbol: string; decimals: number; address: any };
+                };
+              }
+            | { __typename?: 'UnknownCollectModuleSettings' };
+          referenceModule?:
+            | { __typename: 'DegreesOfSeparationReferenceModuleSettings' }
+            | { __typename: 'FollowOnlyReferenceModuleSettings' }
+            | { __typename: 'UnknownReferenceModuleSettings' }
+            | null;
+          canComment: { __typename?: 'CanCommentResponse'; result: boolean };
+          canMirror: { __typename?: 'CanMirrorResponse'; result: boolean };
+          stats: {
+            __typename?: 'PublicationStats';
+            totalAmountOfComments: number;
+            totalAmountOfCollects: number;
+            totalAmountOfMirrors: number;
+            totalUpvotes: number;
+            totalDownvotes: number;
+          };
+          metadata: {
+            __typename?: 'MetadataOutput';
+            name?: string | null;
+            description?: any | null;
+            content?: any | null;
+            contentWarning?: PublicationContentWarning | null;
+            mainContentFocus: PublicationMainFocus;
+            tags: Array<string>;
+            media: Array<{
+              __typename?: 'MediaSet';
+              original: { __typename?: 'Media'; url: any; mimeType?: any | null };
+            }>;
+            cover?: { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } } | null;
+            attributes: Array<{
+              __typename?: 'MetadataAttributeOutput';
+              value?: string | null;
+              traitType?: string | null;
+            }>;
+          };
+          commentOn?:
+            | { __typename?: 'Comment' }
+            | { __typename?: 'Mirror' }
+            | {
+                __typename?: 'Post';
+                id: any;
+                createdAt: any;
+                profile: {
+                  __typename?: 'Profile';
+                  id: any;
+                  name?: string | null;
+                  handle: any;
+                  bio?: string | null;
+                  ownedBy: any;
+                  isFollowedByMe: boolean;
+                  stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
+                  attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+                  picture?:
+                    | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+                    | { __typename?: 'NftImage'; uri: any }
+                    | null;
+                  followModule?:
+                    | { __typename: 'FeeFollowModuleSettings' }
+                    | { __typename: 'ProfileFollowModuleSettings' }
+                    | { __typename: 'RevertFollowModuleSettings' }
+                    | { __typename: 'UnknownFollowModuleSettings' }
+                    | null;
+                };
+                metadata: {
+                  __typename?: 'MetadataOutput';
+                  name?: string | null;
+                  cover?: { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } } | null;
+                  attributes: Array<{
+                    __typename?: 'MetadataAttributeOutput';
+                    value?: string | null;
+                    traitType?: string | null;
+                  }>;
+                };
+              }
+            | null;
+        }
+      | { __typename?: 'Mirror' }
+      | { __typename?: 'Post' }
+    >;
+    pageInfo: { __typename?: 'PaginatedResultInfo'; totalCount?: number | null; next?: any | null };
+  };
+};
+
 export type ProfileFollowModuleQueryVariables = Exact<{
   request: ProfileQueryRequest;
 }>;
@@ -7610,6 +7804,69 @@ export function useProfileLazyQuery(
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
+export const ProfileCommentsDocument = gql`
+  query ProfileComments(
+    $request: PublicationsQueryRequest!
+    $reactionRequest: ReactionFieldResolverRequest
+    $profileId: ProfileId
+  ) {
+    publications(request: $request) {
+      items {
+        ... on Comment {
+          ...CommentFields
+        }
+      }
+      pageInfo {
+        totalCount
+        next
+      }
+    }
+  }
+  ${CommentFieldsFragmentDoc}
+`;
+
+/**
+ * __useProfileCommentsQuery__
+ *
+ * To run a query within a React component, call `useProfileCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileCommentsQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *      reactionRequest: // value for 'reactionRequest'
+ *      profileId: // value for 'profileId'
+ *   },
+ * });
+ */
+export function useProfileCommentsQuery(
+  baseOptions: Apollo.QueryHookOptions<ProfileCommentsQuery, ProfileCommentsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ProfileCommentsQuery, ProfileCommentsQueryVariables>(
+    ProfileCommentsDocument,
+    options
+  );
+}
+export function useProfileCommentsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileCommentsQuery, ProfileCommentsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ProfileCommentsQuery, ProfileCommentsQueryVariables>(
+    ProfileCommentsDocument,
+    options
+  );
+}
+export type ProfileCommentsQueryHookResult = ReturnType<typeof useProfileCommentsQuery>;
+export type ProfileCommentsLazyQueryHookResult = ReturnType<typeof useProfileCommentsLazyQuery>;
+export type ProfileCommentsQueryResult = Apollo.QueryResult<
+  ProfileCommentsQuery,
+  ProfileCommentsQueryVariables
+>;
 export const ProfileFollowModuleDocument = gql`
   query ProfileFollowModule($request: ProfileQueryRequest!) {
     profiles(request: $request) {

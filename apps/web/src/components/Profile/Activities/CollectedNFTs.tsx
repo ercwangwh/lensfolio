@@ -7,7 +7,6 @@ import type { FC } from 'react';
 import React from 'react';
 // import { useInView } from 'react-cool-inview'
 import { POLYGON_CHAIN_ID, SCROLL_ROOT_MARGIN } from 'utils';
-import { chain } from 'wagmi';
 
 import NFTCard from './NFTCard';
 

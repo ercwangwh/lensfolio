@@ -35,8 +35,8 @@ function Home() {
   const router = useRouter();
   // const selectedWorkId = usePublicationStore((state) => state.selectedWorkId);
   // const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
-  const selectedProfile = useAppStore((state) => state.selectedProfile);
-  const setSelectedProfile = useAppStore((state) => state.setSelectedProfile);
+  // const selectedProfile = useAppStore((state) => state.selectedProfile);
+  // const setSelectedProfile = useAppStore((state) => state.setSelectedProfile);
   // const scrollRef = useHorizontalScroll();
   // const publicationTypes = [PublicationTypes.Post, PublicationTypes.Mirror, PublicationTypes.Comment];
 

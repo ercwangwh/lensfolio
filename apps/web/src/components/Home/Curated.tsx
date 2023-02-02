@@ -5,10 +5,11 @@ import TimelineShimmer from '@components/Common/Shimmer/TimelineShimmer';
 import Timeline from './Timeline';
 import { useRouter } from 'next/router';
 import { Modal } from '@components/UI/Modal';
+import { useAppStore } from 'src/store/app';
 
 const Curated: FC = () => {
   const router = useRouter();
-
+  const currentProfile = useAppStore((state) => state.currentProfile);
   const request = {
     sortCriteria: PublicationSortCriteria.Latest,
     limit: 32,
@@ -18,7 +19,7 @@ const Curated: FC = () => {
   };
 
   const { data, loading, error } = useExploreQuery({
-    variables: { request }
+    variables: { request, reactionRequest: currentProfile ? { profileId: currentProfile?.id } : null }
   });
 
   const pageInfo = data?.explorePublications?.pageInfo;

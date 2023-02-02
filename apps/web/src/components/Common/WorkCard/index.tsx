@@ -21,6 +21,7 @@ import getIPFSLink from '@lib/getIPFSLink';
 import { usePublicationStore } from 'src/store/publication';
 import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
+import Like from '@components/Work/Actions/Like';
 // dayjs.extend(relativeTime);
 
 interface Props {
@@ -93,20 +94,14 @@ const WorkCard: FC<Props> = ({ work }) => {
                   {/* <VideoOptions video={work} setShowShare={setShowShare} setShowReport={setShowReport} /> */}
                 </div>
                 <Link
-                  href={`/username/${work.profile?.handle}`}
+                  href={`/user/${work.profile?.handle}`}
                   className="flex w-fit items-center space-x-0.5 text-[13px] hover:opacity-100 opacity-70"
                 >
                   <span>{work.profile?.handle}</span>
                   {/* <IsVerified id={work.profile?.id} size="xs" /> */}
                 </Link>
-                <div className="flex overflow-hidden items-center text-xs opacity-70">
-                  <span className="whitespace-nowrap">{work.stats?.totalUpvotes} likes</span>
-                  <span className="middot" />
-                  {/* {video.createdAt && (
-                    <span className="whitespace-nowrap">{dayjs(new Date(video.createdAt)).fromNow()}</span>
-                  )} */}
-                </div>
               </div>
+              <Like work={work} isFullPublication={false}></Like>
             </div>
           </div>
         </>

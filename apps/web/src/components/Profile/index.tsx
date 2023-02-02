@@ -11,10 +11,10 @@ const ViewProfile: FC = () => {
   const {
     query: { username }
   } = useRouter();
-  const currentProfile = useAppStore((state) => state.currentProfile);
+  // const currentProfile = useAppStore((state) => state.currentProfile);
 
   const { data, loading, error } = useProfileQuery({
-    variables: { request: { profileId: currentProfile?.id } }
+    variables: { request: { handle: username } }
   });
 
   if (loading || !data) {

@@ -28,7 +28,7 @@ const Like: FC<Props> = ({ work, isFullPublication }) => {
   const [count, setCount] = useState(
     isMirror ? work?.mirrorOf?.stats?.totalUpvotes : work?.stats?.totalUpvotes
   );
-
+  // console.log('Work Reaction', work, work.reaction);
   // const updateCache = (cache: ApolloCache<any>, type: ReactionTypes.Upvote | ReactionTypes.Downvote) => {
   //   if (pathname === '/works/[id]') {
   //     cache.modify({
@@ -87,6 +87,7 @@ const Like: FC<Props> = ({ work, isFullPublication }) => {
       setCount(count - 1);
       removeReaction(variable);
     } else {
+      console.log('Reaction');
       setLiked(true);
       setCount(count + 1);
       addReaction(variable);

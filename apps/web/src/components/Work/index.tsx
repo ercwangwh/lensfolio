@@ -18,19 +18,21 @@ const Work: FC = () => {
     query: { id }
   } = useRouter();
   //   console.log(id);
-  const selectedProfile = useAppStore((state) => state.selectedProfile);
+  const currentProfile = useAppStore((state) => state.currentProfile);
+  // const selectedProfile = useAppStore((state) => state.selectedProfile);
   const { data, error, loading } = usePublicationDetailsQuery({
     variables: {
       request: { publicationId: id },
-      reactionRequest: selectedProfile ? { profileId: selectedProfile?.id } : null,
-      profileId: selectedProfile?.id ?? null
+      reactionRequest: currentProfile ? { profileId: currentProfile?.id } : null,
+      profileId: currentProfile?.id ?? null
     },
     skip: !id
   });
   if (error) toast.error(error.message);
 
   const workData = data?.publication as LensfolioPublication;
-  // console.log(workData);
+
+  // console.log('Detail Work Data', workData);
   return (
     <div className="w-2/3 mx-auto">
       {loading && (

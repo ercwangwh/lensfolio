@@ -8,7 +8,8 @@ import Link from 'next/link';
 import type { FC } from 'react';
 import { useState } from 'react';
 import Badges from './Badges';
-
+import FollowActions from '@components/Common/FollowAction';
+import { useAppStore } from 'src/store/app';
 // import Follow from "./Follow";
 // import Markup from "./Markup";
 // import Slug from "./Slug";
@@ -41,7 +42,8 @@ const UserProfile: FC<Props> = ({
   //   const statusEmoji = getAttribute(profile?.attributes, 'statusEmoji');
   //   const statusMessage = getAttribute(profile?.attributes, 'statusMessage');
   //   const hasStatus = statusEmoji && statusMessage;
-
+  const currentProfile = useAppStore((state) => state.currentProfile);
+  console.log('Current Profile:', currentProfile);
   const UserAvatar = () => (
     <div className="flex-none z-[1] mr-4 md:mr-6">
       <img
@@ -77,6 +79,7 @@ const UserProfile: FC<Props> = ({
     <div className="flex justify-start items-center pt-2 md:pt-0 md:pl-4">
       <UserAvatar />
       <UserInfo />
+      <FollowActions profile={profile}></FollowActions>
     </div>
   );
 };

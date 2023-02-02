@@ -3,7 +3,9 @@ import UserProfileShimmer from '@components/Common/Shimmer/UserProfileShimmer';
 import UserPageShimmer from '@components/Common/Shimmer/UserPageShimmer';
 import UserHeaderShimmer from '@components/Common/Shimmer/UserHeaderShimmer';
 import WorkDetailShimmer from '@components/Common/Shimmer/WorkDetailShimmer';
-import { useUserProfilesQuery } from 'lens';
+import { useProfileQuery } from 'lens';
+// import { useUserProfilesQuery } from 'lens';
+// import useuser
 import { useAppStore } from 'src/store/app';
 import getAvatar from '@lib/getAvatar';
 import type { Publication } from 'lens';
@@ -15,7 +17,9 @@ interface Props {
 }
 
 const WorkHeader: FC<Props> = ({ work }) => {
-  const selectedProfile = useAppStore((state) => state.selectedProfile);
+  // const selectedProfile = useAppStore((state) => state.selectedProfile);
+
+  // useProfileQuery({variables:{request:{}}})
 
   return (
     <div className="">
@@ -24,8 +28,8 @@ const WorkHeader: FC<Props> = ({ work }) => {
           <div className="flex items-center p-2 space-x-4">
             <img
               className="w-12 h-12 rounded-sm"
-              src={getAvatar(selectedProfile)}
-              alt={selectedProfile?.handle}
+              src={getAvatar(work.profile, false)}
+              alt={work.profile?.handle}
               draggable={false}
             />
             <div className="flex-1 py-5 space-y-4">
