@@ -4,6 +4,9 @@ import axios from 'axios';
 import { EVER_API, S3_BUCKET, SERVERLESS_URL } from 'utils';
 import { v4 as uuid } from 'uuid';
 import type { PublicationMetadataV2Input } from 'lens';
+// import { Upload } from '@aws-sdk/lib-storage';
+import { XhrHttpHandler } from '@aws-sdk/xhr-http-handler';
+import { Upload } from '@aws-sdk/lib-storage';
 // import { Policies } from '@apollo/client/cache';
 
 const getS3Client = async () => {
@@ -16,7 +19,8 @@ const getS3Client = async () => {
       sessionToken: token.data?.sessionToken
     },
     region: 'us-west-2',
-    maxAttempts: 3
+    maxAttempts: 3,
+    requestHandler: new XhrHttpHandler({})
   });
 
   return client;
@@ -85,32 +89,48 @@ export const uploadMetadataToIPFS = async (
   }
 };
 
-// /**
-//  *
-//  * @param file - File object
-//  * @returns attachment or null
-//  */
-// export const uploadMetadataToIPFS = async (
-//   file: PublicationMetadataV2Input
-// ): Promise<LensfolioAttachment | null> => {
-//   try {
-//     const client = await getS3Client();
-//     const params = {
-//       Bucket: S3_BUCKET.LENSFOLIO_MEDIA,
-//       Key: uuid()
-//     };
-//     await client.putObject({ ...params, Body: file, ContentType: file.type });
-//     const result = await client.headObject(params);
-//     const metadata = result.Metadata;
-
-//     return {
-//       item: `ipfs://${metadata?.['ipfs-hash']}`,
-//       type: file.type || 'image/jpeg',
-//       altTag: ''
-//     };
-//   } catch {
-//     return null;
-//   }
-// };
+export const uploadFileToIPFS = async (
+  file: File,
+  onProgress?: (percentage: number) => void
+): Promise<LensfolioAttachment> => {
+  // const { url, type } = await everland(file, onProgress)
+  try {
+    const client = await getS3Client();
+    // const fileKey = uuid();
+    const params = {
+      Bucket: S3_BUCKET.LENSFOLIO_MEDIA,
+      Key: uuid(),
+      Body: file,
+      ContentType: file.type
+    };
+    const task = new Upload({
+      client,
+      queueSize: 3,
+      params
+    });
+    task.on('httpUploadProgress', (e) => {
+      const loaded = e.loaded ?? 0;
+      const total = e.total ?? 0;
+      const progress = (loaded / total) * 100;
+      console.log(Math.round(progress));
+      onProgress?.(Math.round(progress));
+    });
+    await task.done();
+    const result = await client.headObject(params);
+    const metadata = result.Metadata;
+    return {
+      item: `ipfs://${metadata?.['ipfs-hash']}`,
+      type: file.type,
+      altTag: ''
+    };
+  } catch (error) {
+    // logger.error('[Error IPFS3 Media Upload]', error);
+    return {
+      item: '',
+      type: file.type,
+      altTag: ''
+    };
+  }
+};
 
 export default uploadToIPFS;

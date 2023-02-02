@@ -9,6 +9,8 @@ import toast from 'react-hot-toast';
 import { ALLOWED_IMAGE_TYPES, LensfolioAttachment } from 'utils';
 import useDragAndDrop from 'utils/hooks/useDragAndDrop';
 import uploadToIPFS from '@lib/uploadToIPFS';
+import { uploadFileToIPFS } from '@lib/uploadToIPFS';
+
 import { Input } from '@components/UI/Input';
 
 // interface Props {
@@ -18,12 +20,23 @@ import { Input } from '@components/UI/Input';
 
 // const DropZone: FC<Props> = ({ attachments, setAttachments }) => {
 const DropZone: FC = () => {
+  const uploadedWorks = useAppStore((state) => state.uploadedWorks);
   const setUploadedWorks = useAppStore((state) => state.setUploadedWorks);
   // setUploadedWorks()
   const [files, setFiles] = useState<File[]>([]);
+  const [percent, setPercent] = useState(0);
   const { dragOver, setDragOver, onDragOver, onDragLeave, fileDropError, setFileDropError } =
     useDragAndDrop();
 
+  useEffect(() => {
+    console.log(uploadedWorks.percent);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadedWorks.percent]);
+
+  const percentCompleted = (percentNumber: number) => {
+    setUploadedWorks({ percent: percentNumber });
+    // console.log(percentNumber);
+  };
   const uploadImage = async (files: any) => {
     // try {
     //   if (file) {
@@ -38,8 +51,11 @@ const DropZone: FC = () => {
     // } catch (error) {
     //   toast.error('Error uploading file');
     //   logger.error('[Error Upload Video]', error);
+
     setFiles(files);
     const results = await uploadToIPFS(files);
+    const fileresult = await uploadFileToIPFS(files[0], percentCompleted);
+    console.log('File result', fileresult);
     for (const result of results) {
       setUploadedWorks({ attachment: result });
       console.log(result.item, result.type, result.altTag);
@@ -105,6 +121,7 @@ const DropZone: FC = () => {
           />
           <span className="flex justify-center mb-6 opacity-80">
             {/* <UploadOutline className="w-14 h-14" /> */}
+            {uploadedWorks.percent}
           </span>
           <span className="space-y-10 md:space-y-14">
             <div className="text-2xl font-semibold md:text-4xl">

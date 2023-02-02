@@ -148,6 +148,7 @@ export interface LensfolioWorks {
   description: string;
   attachment: LensfolioAttachment;
   content: string;
+  percent: number;
 }
 
 export type QueuedCommentType = {
