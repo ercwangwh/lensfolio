@@ -4287,6 +4287,17 @@ export type RemoveReactionMutationVariables = Exact<{
 
 export type RemoveReactionMutation = { __typename?: 'Mutation'; removeReaction?: any | null };
 
+export type CreateCommentViaDispatcherMutationVariables = Exact<{
+  request: CreatePublicCommentRequest;
+}>;
+
+export type CreateCommentViaDispatcherMutation = {
+  __typename?: 'Mutation';
+  createCommentViaDispatcher:
+    | { __typename?: 'RelayError'; reason: RelayErrorReasons }
+    | { __typename?: 'RelayerResult'; txHash: any; txId: any };
+};
+
 export type CreatePostViaDispatcherMutationVariables = Exact<{
   request: CreatePublicPostRequest;
 }>;
@@ -4344,6 +4355,48 @@ export type CreateBurnProfileTypedDataMutation = {
         BurnWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
       };
       value: { __typename?: 'CreateBurnEIP712TypedDataValue'; nonce: any; deadline: any; tokenId: string };
+    };
+  };
+};
+
+export type CreateCommentTypedDataMutationVariables = Exact<{
+  options?: InputMaybe<TypedDataOptions>;
+  request: CreatePublicCommentRequest;
+}>;
+
+export type CreateCommentTypedDataMutation = {
+  __typename?: 'Mutation';
+  createCommentTypedData: {
+    __typename?: 'CreateCommentBroadcastItemResult';
+    id: any;
+    expiresAt: any;
+    typedData: {
+      __typename?: 'CreateCommentEIP712TypedData';
+      types: {
+        __typename?: 'CreateCommentEIP712TypedDataTypes';
+        CommentWithSig: Array<{ __typename?: 'EIP712TypedDataField'; name: string; type: string }>;
+      };
+      domain: {
+        __typename?: 'EIP712TypedDataDomain';
+        name: string;
+        chainId: any;
+        version: string;
+        verifyingContract: any;
+      };
+      value: {
+        __typename?: 'CreateCommentEIP712TypedDataValue';
+        nonce: any;
+        deadline: any;
+        profileId: any;
+        profileIdPointed: any;
+        pubIdPointed: any;
+        contentURI: any;
+        collectModule: any;
+        collectModuleInitData: any;
+        referenceModule: any;
+        referenceModuleData: any;
+        referenceModuleInitData: any;
+      };
     };
   };
 };
@@ -5867,6 +5920,40 @@ export type PublicationDetailsQuery = {
     | null;
 };
 
+export type SearchProfilesQueryVariables = Exact<{
+  request: SearchQueryRequest;
+}>;
+
+export type SearchProfilesQuery = {
+  __typename?: 'Query';
+  search:
+    | {
+        __typename?: 'ProfileSearchResult';
+        items: Array<{
+          __typename?: 'Profile';
+          id: any;
+          name?: string | null;
+          handle: any;
+          bio?: string | null;
+          ownedBy: any;
+          isFollowedByMe: boolean;
+          stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
+          attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+          picture?:
+            | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+            | { __typename?: 'NftImage'; uri: any }
+            | null;
+          followModule?:
+            | { __typename: 'FeeFollowModuleSettings' }
+            | { __typename: 'ProfileFollowModuleSettings' }
+            | { __typename: 'RevertFollowModuleSettings' }
+            | { __typename: 'UnknownFollowModuleSettings' }
+            | null;
+        }>;
+      }
+    | { __typename?: 'PublicationSearchResult' };
+};
+
 export type UserProfilesQueryVariables = Exact<{
   ownedBy?: InputMaybe<Array<Scalars['EthereumAddress']> | Scalars['EthereumAddress']>;
 }>;
@@ -6559,6 +6646,57 @@ export type RemoveReactionMutationOptions = Apollo.BaseMutationOptions<
   RemoveReactionMutation,
   RemoveReactionMutationVariables
 >;
+export const CreateCommentViaDispatcherDocument = gql`
+  mutation CreateCommentViaDispatcher($request: CreatePublicCommentRequest!) {
+    createCommentViaDispatcher(request: $request) {
+      ...RelayerResultFields
+    }
+  }
+  ${RelayerResultFieldsFragmentDoc}
+`;
+export type CreateCommentViaDispatcherMutationFn = Apollo.MutationFunction<
+  CreateCommentViaDispatcherMutation,
+  CreateCommentViaDispatcherMutationVariables
+>;
+
+/**
+ * __useCreateCommentViaDispatcherMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentViaDispatcherMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentViaDispatcherMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentViaDispatcherMutation, { data, loading, error }] = useCreateCommentViaDispatcherMutation({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateCommentViaDispatcherMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCommentViaDispatcherMutation,
+    CreateCommentViaDispatcherMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateCommentViaDispatcherMutation, CreateCommentViaDispatcherMutationVariables>(
+    CreateCommentViaDispatcherDocument,
+    options
+  );
+}
+export type CreateCommentViaDispatcherMutationHookResult = ReturnType<
+  typeof useCreateCommentViaDispatcherMutation
+>;
+export type CreateCommentViaDispatcherMutationResult =
+  Apollo.MutationResult<CreateCommentViaDispatcherMutation>;
+export type CreateCommentViaDispatcherMutationOptions = Apollo.BaseMutationOptions<
+  CreateCommentViaDispatcherMutation,
+  CreateCommentViaDispatcherMutationVariables
+>;
 export const CreatePostViaDispatcherDocument = gql`
   mutation CreatePostViaDispatcher($request: CreatePublicPostRequest!) {
     createPostViaDispatcher(request: $request) {
@@ -6778,6 +6916,82 @@ export type CreateBurnProfileTypedDataMutationResult =
 export type CreateBurnProfileTypedDataMutationOptions = Apollo.BaseMutationOptions<
   CreateBurnProfileTypedDataMutation,
   CreateBurnProfileTypedDataMutationVariables
+>;
+export const CreateCommentTypedDataDocument = gql`
+  mutation CreateCommentTypedData($options: TypedDataOptions, $request: CreatePublicCommentRequest!) {
+    createCommentTypedData(options: $options, request: $request) {
+      id
+      expiresAt
+      typedData {
+        types {
+          CommentWithSig {
+            name
+            type
+          }
+        }
+        domain {
+          name
+          chainId
+          version
+          verifyingContract
+        }
+        value {
+          nonce
+          deadline
+          profileId
+          profileIdPointed
+          pubIdPointed
+          contentURI
+          collectModule
+          collectModuleInitData
+          referenceModule
+          referenceModuleData
+          referenceModuleInitData
+        }
+      }
+    }
+  }
+`;
+export type CreateCommentTypedDataMutationFn = Apollo.MutationFunction<
+  CreateCommentTypedDataMutation,
+  CreateCommentTypedDataMutationVariables
+>;
+
+/**
+ * __useCreateCommentTypedDataMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentTypedDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentTypedDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentTypedDataMutation, { data, loading, error }] = useCreateCommentTypedDataMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useCreateCommentTypedDataMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCommentTypedDataMutation,
+    CreateCommentTypedDataMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateCommentTypedDataMutation, CreateCommentTypedDataMutationVariables>(
+    CreateCommentTypedDataDocument,
+    options
+  );
+}
+export type CreateCommentTypedDataMutationHookResult = ReturnType<typeof useCreateCommentTypedDataMutation>;
+export type CreateCommentTypedDataMutationResult = Apollo.MutationResult<CreateCommentTypedDataMutation>;
+export type CreateCommentTypedDataMutationOptions = Apollo.BaseMutationOptions<
+  CreateCommentTypedDataMutation,
+  CreateCommentTypedDataMutationVariables
 >;
 export const CreateFollowTypedDataDocument = gql`
   mutation CreateFollowTypedData($options: TypedDataOptions, $request: FollowRequest!) {
@@ -8245,6 +8459,53 @@ export type PublicationDetailsQueryResult = Apollo.QueryResult<
   PublicationDetailsQuery,
   PublicationDetailsQueryVariables
 >;
+export const SearchProfilesDocument = gql`
+  query SearchProfiles($request: SearchQueryRequest!) {
+    search(request: $request) {
+      ... on ProfileSearchResult {
+        items {
+          ...ProfileFields
+        }
+      }
+    }
+  }
+  ${ProfileFieldsFragmentDoc}
+`;
+
+/**
+ * __useSearchProfilesQuery__
+ *
+ * To run a query within a React component, call `useSearchProfilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchProfilesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchProfilesQuery({
+ *   variables: {
+ *      request: // value for 'request'
+ *   },
+ * });
+ */
+export function useSearchProfilesQuery(
+  baseOptions: Apollo.QueryHookOptions<SearchProfilesQuery, SearchProfilesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SearchProfilesQuery, SearchProfilesQueryVariables>(SearchProfilesDocument, options);
+}
+export function useSearchProfilesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<SearchProfilesQuery, SearchProfilesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SearchProfilesQuery, SearchProfilesQueryVariables>(
+    SearchProfilesDocument,
+    options
+  );
+}
+export type SearchProfilesQueryHookResult = ReturnType<typeof useSearchProfilesQuery>;
+export type SearchProfilesLazyQueryHookResult = ReturnType<typeof useSearchProfilesLazyQuery>;
+export type SearchProfilesQueryResult = Apollo.QueryResult<SearchProfilesQuery, SearchProfilesQueryVariables>;
 export const UserProfilesDocument = gql`
   query UserProfiles($ownedBy: [EthereumAddress!]) {
     profiles(request: { ownedBy: $ownedBy, limit: 10 }) {

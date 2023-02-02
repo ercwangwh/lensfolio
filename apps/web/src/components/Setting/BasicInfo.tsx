@@ -26,7 +26,7 @@ import {
   IS_MAINNET,
   LENS_PERIPHERY_ADDRESS,
   LENSFOLIO_APP_ID,
-  LENSTUBE_WEBSITE_URL,
+  LENSFOLIO_WEBSITE_URL,
   RELAYER_ENABLED,
   TALLY_VERIFICATION_FORM_URL
 } from 'utils';
@@ -314,11 +314,11 @@ const BasicInfo = ({ profile }: Props) => {
         </div>
         <div className="flex items-center space-x-2">
           <span>
-            {LENSTUBE_WEBSITE_URL}/{profile.handle}
+            {LENSFOLIO_WEBSITE_URL}/{profile.handle}
           </span>
           <button
             className="hover:opacity-60 focus:outline-none"
-            onClick={() => onCopyProfileUrl(`${LENSTUBE_WEBSITE_URL}/${profile.handle}`)}
+            onClick={() => onCopyProfileUrl(`${LENSFOLIO_WEBSITE_URL}/${profile.handle}`)}
             type="button"
           >
             <ForwardIcon className="w-4 h-4" />

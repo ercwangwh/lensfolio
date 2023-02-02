@@ -10,6 +10,7 @@ import UserHeaderShimmer from '@components/Common/Shimmer/UserHeaderShimmer';
 import WorkDetailShimmer from '@components/Common/Shimmer/WorkDetailShimmer';
 import { LensfolioPublication } from 'utils';
 import WorkDetail from './WorkDetail';
+import Comments from './Comments';
 // interface Props {
 //   work: Publication;
 // }
@@ -46,6 +47,7 @@ const Work: FC = () => {
         <div>
           <WorkHeader work={workData} />
           <WorkDetail work={workData} />
+          <Comments work={workData} />
         </div>
       )}
     </div>

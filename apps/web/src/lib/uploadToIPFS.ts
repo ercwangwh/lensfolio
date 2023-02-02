@@ -1,5 +1,5 @@
 import { S3 } from '@aws-sdk/client-s3';
-import type { LensfolioAttachment } from 'utils';
+import type { LensfolioAttachment, LensfolioPublication } from 'utils';
 import axios from 'axios';
 import { EVER_API, S3_BUCKET, SERVERLESS_URL } from 'utils';
 import { v4 as uuid } from 'uuid';
@@ -62,7 +62,7 @@ const uploadToIPFS = async (data: any): Promise<LensfolioAttachment[]> => {
  */
 export const uploadMetadataToIPFS = async (
   metadata: PublicationMetadataV2Input
-): Promise<LensfolioAttachment | null> => {
+): Promise<LensfolioAttachment> => {
   try {
     const client = await getS3Client();
     const params = {
@@ -81,7 +81,7 @@ export const uploadMetadataToIPFS = async (
       altTag: ''
     };
   } catch {
-    return null;
+    return { item: '', type: '', altTag: '' };
   }
 };
 

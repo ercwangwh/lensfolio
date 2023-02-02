@@ -133,7 +133,6 @@ const ProfilePicture: FC<Props> = ({ profile }) => {
         const result: LensfolioAttachment[] = await uploadToIPFS(e.target.files);
         // const result = await uploadImage(e.target.files);
         console.log('upload result', result);
-        console.log();
         for (const r of result) {
           // setUploadedWorks({ attachment: result });
           console.log(r.item, r.type, r.altTag);

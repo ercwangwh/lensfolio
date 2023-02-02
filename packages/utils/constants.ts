@@ -12,6 +12,7 @@ export const STATIC_ASSETS = 'https://assets.lenstube.xyz';
 export const STATIC_ASSETS_URL = 'https://assets.lenster.xyz';
 export const STATIC_IMAGES_URL = `${STATIC_ASSETS_URL}/images`;
 export const LENSTUBE_WEBSITE_URL = IS_MAINNET ? 'https://lenstube.xyz' : 'https://testnet.lenstube.xyz';
+export const LENSFOLIO_WEBSITE_URL = IS_MAINNET ? 'https://lensfolio.xyz' : 'https://testnet.lensfolio.xyz';
 export const LENSTUBE_EMBED_URL = IS_MAINNET
   ? 'https://embed.lenstube.xyz'
   : 'https://test-embed.lenstube.xyz';
