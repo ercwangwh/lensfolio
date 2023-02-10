@@ -12,10 +12,10 @@ const Cover: FC<Props> = ({ cover }) => {
     <div
       className="h-52 sm:h-80 rounded-lg"
       style={{
-        backgroundImage: `url(${
-          cover ? imageProxy(getIPFSLink(cover), COVER) : `${STATIC_IMAGES_URL}/patterns/2.svg`
-        })`,
-        backgroundColor: '#8b5cf6',
+        // backgroundImage: `url(${
+        //   cover ? imageProxy(getIPFSLink(cover), COVER) : `${STATIC_IMAGES_URL}/patterns/2.svg`
+        // })`,
+        backgroundColor: '#3b82f6',
         backgroundSize: cover ? 'cover' : '30%',
         backgroundPosition: 'center center',
         backgroundRepeat: cover ? 'no-repeat' : 'repeat'

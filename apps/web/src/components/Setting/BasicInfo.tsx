@@ -261,15 +261,11 @@ const BasicInfo = ({ profile }: Props) => {
             <Loader />
           </div>
         )}
-        <img
-          src={
-            // sanitizeIpfsUrl(coverImage) ??
-            getIPFSLink(getProfileCoverPicture(profile))
-            // imageProxy(, 'thumbnail')
-          }
+        <div
           className="object-cover object-center w-full h-48 bg-white rounded-xl md:h-56 dark:bg-gray-900"
           draggable={false}
-          alt={`${profile.handle}'s cover`}
+          // alt={`${profile.handle}'s cover`}
+          style={{ backgroundColor: '#3b82f6' }}
         />
         <label
           htmlFor="chooseCover"

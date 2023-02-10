@@ -40,6 +40,7 @@ fragment PostFields on Post {
     contentWarning
     mainContentFocus
     tags
+    image
     media {
       original {
         url

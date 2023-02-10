@@ -45,6 +45,7 @@ import { z } from 'zod';
 import getUserLocale from '@lib/getUserLocale';
 import getTextNftUrl from '@lib/getTextNftUrl';
 import { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
+import { Input } from '@components/UI/Input';
 
 interface Props {
   work: LensfolioPublication;
@@ -279,16 +280,20 @@ const NewComment: FC<Props> = ({ work }) => {
             alt={currentProfile?.handle}
           />
         </div>
-        <InputMentions
-          placeholder="How's this work?"
+        <Input
+          placeholder="How you fell about this work?"
           autoComplete="off"
           validationError={errors.comment?.message}
-          value={watch('comment')}
-          onContentChange={(value) => {
-            setValue('comment', value);
+          onChange={(e) => {
+            setValue('comment', e.target.value);
             clearErrors('comment');
           }}
-          mentionsSelector="input-mentions-single"
+          value={watch('comment')}
+          // onContentChange={(value) => {
+          //   setValue('comment', value);
+          //   clearErrors('comment');
+          // }}
+          // mentionsSelector="input-mentions-single"
         />
         <Button disabled={loading} loading={loading}>
           Comment

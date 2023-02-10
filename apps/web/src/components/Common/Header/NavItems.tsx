@@ -15,6 +15,16 @@ const NavItems: FC = () => {
 
   return (
     <div className="flex items-center space-x-4 font-medium">
+      <img
+        className="w-8 h-8 rounded-3xl cursor-pointer"
+        height={112}
+        width={112}
+        src="/logo.svg"
+        alt="Logo"
+        onClick={() => {
+          router.push('/');
+        }}
+      />
       <button
         onClick={() => {
           router.push('/');

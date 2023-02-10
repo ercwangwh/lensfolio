@@ -21,11 +21,19 @@ export const LENSFOLIO_ATTACHMENT_DEFAULT = {
   altTag: ''
 };
 
+export const LENSFOLIO_WORK_COVER_IMG_DEFAULT = {
+  item: '',
+  type: '',
+  altTag: ''
+};
+
 export const UPLOADED_WORKS_DEAFULT = {
   description: '',
   attachment: LENSFOLIO_ATTACHMENT_DEFAULT,
   content: '',
-  percent: 0
+  percent: 0,
+  title: '',
+  coverImg: LENSFOLIO_WORK_COVER_IMG_DEFAULT
 };
 
 export const useAppStore = create<AppState>((set) => ({

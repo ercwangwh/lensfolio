@@ -62,7 +62,9 @@ export const SCROLL_ROOT_MARGIN = '40% 0px';
 
 // ipfs
 export const IPFS_FREE_UPLOAD_LIMIT = IS_MAINNET ? 1000 : 100;
-export const IPFS_GATEWAY = 'https://lens.infura-ipfs.io/ipfs/';
+// export const IPFS_GATEWAY = 'https://lens.infura-ipfs.io/ipfs/';
+export const IPFS_GATEWAY = 'https://4everland.io/ipfs/';
+
 export const EVER_ENDPOINT = 'https://endpoint.4everland.co';
 export const EVER_REGION = 'us-west-2';
 // export const EVER_ACCESS_KEY = process.env.EVER_ACCESS_KEY as string;
@@ -133,6 +135,14 @@ export const LS_KEYS = {
 };
 
 export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+export const ALLOWED_ATTACHMENTS_TYPES = [
+  'application/zip',
+  'application/vnd.rar',
+  'application/octet-stream',
+  'application/x-rar-compressed',
+  'application/x-zip-compressed',
+  'multipart/x-zip'
+];
 
 export const SERVERLESS_URL = 'http://localhost:4784';
 

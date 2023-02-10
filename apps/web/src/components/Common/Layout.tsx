@@ -11,6 +11,8 @@ import { useAccount, useDisconnect, useNetwork } from 'wagmi';
 import { Profile, useUserProfilesQuery } from 'lens';
 import getIsAuthTokensAvailable from '@lib/getIsAuthTokensAvailable';
 import resetAuthData from '@lib/resetAuthData';
+import useIsMounted from 'utils/hooks/useIsMounted';
+import Loading from './Loading';
 interface Props {
   children: ReactNode;
 }
@@ -27,7 +29,7 @@ const Layout: FC<Props> = ({ children }) => {
   const setProfileId = useAppPersistStore((state) => state.setProfileId);
   // const setSelectedReferenceModule = useReferenceModuleStore((state) => state.setSelectedReferenceModule);
 
-  // const { mounted } = useIsMounted();
+  const { mounted } = useIsMounted();
   const { address } = useAccount();
   // const { chain } = useNetwork();
   const { disconnect } = useDisconnect();
@@ -88,6 +90,10 @@ const Layout: FC<Props> = ({ children }) => {
     validateAuthentication();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, disconnect, profileId]);
+
+  if (loading || !mounted) {
+    return <Loading />;
+  }
 
   return (
     <div>

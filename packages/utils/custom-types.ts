@@ -144,11 +144,19 @@ export interface LensfolioAttachment {
   altTag: string;
 }
 
+export interface LensfolioWorkCoverImg {
+  item: string;
+  type: string;
+  altTag: string;
+}
+
 export interface LensfolioWorks {
   description: string;
   attachment: LensfolioAttachment;
   content: string;
   percent: number;
+  title: string;
+  coverImg: LensfolioWorkCoverImg;
 }
 
 export type QueuedCommentType = {

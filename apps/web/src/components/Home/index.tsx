@@ -23,6 +23,7 @@ import Curated from './Curated';
 import { Modal } from '@components/UI/Modal';
 import { usePublicationStore } from 'src/store/publication';
 import Work from '@components/Work';
+import { SortCriteriaFilters } from './SortCriteriaFilters';
 
 function Home() {
   /* create initial state to hold array of profiles */
@@ -90,7 +91,10 @@ function Home() {
   // }
   return (
     <div>
-      <CategoryFilters />
+      {/* <CategoryFilters /> */}
+      <div className="flex flex-row pb-8">
+        <SortCriteriaFilters />
+      </div>
       {/* <GridLayout>
         {data?.publications.items.map((item, index) => {
           return (

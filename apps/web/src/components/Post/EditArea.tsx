@@ -1,11 +1,12 @@
 import { Button } from '@components/UI/Button';
-import { Input } from '@components/UI/Input-d';
+import { Input } from '@components/UI/Input';
 import { TextArea } from '@components/UI/TextArea';
 import { ChangeEvent, FC, ReactNode, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { LensfolioWorks } from 'utils';
 import DropZone from './DropZone';
 import PostSetting from './PostSetting';
+import { Attachments } from './Attachments';
 
 // interface Props {
 //   // onUpload: (data: VideoFormData) => void;
@@ -62,25 +63,26 @@ const EditArea: FC = () => {
         </p>
         <div className="md:w-1/2 mx-auto mt-8">
           <TextArea
-            prefix={'Description'}
+            prefix={'Title'}
             onChange={(evt) => {
               const data = evt.target.value;
-              setTitle(data);
-              setUploadedWorks({ description: data });
+              // setTitle(data);
+              setUploadedWorks({ title: data });
             }}
             placeholder="Your title"
             rows={1}
           ></TextArea>
           {/* <div> {title}</div> */}
           <DropZone></DropZone>
+          <Attachments />
           <TextArea
             prefix={'Content'}
             onChange={(evt) => {
               const data = evt.target.value;
               setUploadedWorks({ content: data });
-              console.log(uploadedWorks);
+              // console.log(uploadedWorks);
             }}
-            placeholder="Your description of your design works"
+            placeholder="Your content of your design works"
             rows={5}
           ></TextArea>
         </div>

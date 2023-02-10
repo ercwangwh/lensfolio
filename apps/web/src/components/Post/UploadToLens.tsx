@@ -42,6 +42,8 @@ import DropZone from './DropZone';
 import uploadToIPFS, { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
 import getSignature from '@lib/getSignature';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
+import { url } from 'inspector';
+import getIPFSLink from '@lib/getIPFSLink';
 // interface Props {
 //   publication: LensfolioPublication;
 // }
@@ -251,7 +253,7 @@ const UploadToLens: FC = () => {
       // if (publicationContent.length === 0 && attachments.length === 0) {
       //   return setPublicationContentError(`${isComment ? 'Comment' : 'Post'} should not be empty!`);
       // }
-      console.log('UploadedWorks: ', uploadedWorks);
+      // console.log('UploadedWorks: ', uploadedWorks);
 
       setPublicationContentError('');
       // let textNftImageUrl = null;
@@ -274,17 +276,17 @@ const UploadToLens: FC = () => {
       const metadata: PublicationMetadataV2Input = {
         version: '2.0.0',
         metadata_id: uuid(),
-        description: trimify(uploadedWorks.description),
-        content: trimify(`${uploadedWorks.description}\n\n${uploadedWorks.content}`),
+        description: trimify(uploadedWorks.title),
+        content: trimify(uploadedWorks.content),
         locale: 'en-US',
         tags: ['lenfolio_example'],
-        mainContentFocus: PublicationMainFocus.Image,
+        mainContentFocus: PublicationMainFocus.Article,
         external_url: null,
-        name: trimify(uploadedWorks.description),
+        name: trimify(uploadedWorks.title),
         attributes: [],
-        image: uploadedWorks.attachment?.item,
-        imageMimeType: uploadedWorks.attachment?.type,
-        media: [uploadedWorks.attachment],
+        image: uploadedWorks.coverImg,
+        imageMimeType: uploadedWorks.coverImg.type,
+        media: [uploadedWorks.coverImg, uploadedWorks.attachment],
         animation_url: null,
         contentWarning: null,
         appId: LENSFOLIO_APP_ID

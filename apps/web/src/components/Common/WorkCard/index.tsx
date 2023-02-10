@@ -41,8 +41,18 @@ const WorkCard: FC<Props> = ({ work }) => {
   // const setSelectedWorkId = usePublicationStore((state) => state.setSelectedWorkId);
   // const setSelectedProfile = useAppStore((state) => state);
   const setShowWorkDetailModal = useGlobalModalStateStore((state) => state.setShowWorkDetailModal);
-  const thumbnailUrl = getIPFSLink(work.metadata.media[0].original.url);
-
+  // const thumbnailUrl =
+  //   work.metadata.media !== undefined
+  //     ? getIPFSLink(work.metadata.media[0].original.url)
+  //     : getIPFSLink(work.metadata.image);
+  // if()
+  const thumbnailUrl =
+    work.metadata.media.length > 0
+      ? getIPFSLink(work.metadata.media[0].original.url)
+      : getIPFSLink(work.metadata.image);
+  // const thumbnailUrl = getIPFSLink(work.metadata.image);
+  // console.log(work.metadata.media);
+  // const thumbnailUrl = ;
   const handleClick = () => {
     setShowWorkDetailModal(true);
   };
