@@ -57,30 +57,30 @@ export type ReferenceModuleType = {
   } | null;
 };
 
-export type UploadedVideo = {
-  stream: FileReaderStreamType | null;
-  preview: string;
-  videoType: string;
-  file: File | null;
-  title: string;
-  description: string;
-  thumbnail: string;
-  thumbnailType: string;
-  playbackId: string;
-  videoCategory: { tag: string; name: string };
-  percent: number;
-  isSensitiveContent: boolean;
-  isUploadToIpfs: boolean;
-  loading: boolean;
-  uploadingThumbnail: boolean;
-  videoSource: string;
-  buttonText: string;
-  durationInSeconds: string | null;
-  collectModule: CollectModuleType;
-  referenceModule: ReferenceModuleType;
-  isNSFW: boolean;
-  isNSFWThumbnail: boolean;
-};
+// export type UploadedVideo = {
+//   stream: FileReaderStreamType | null;
+//   preview: string;
+//   videoType: string;
+//   file: File | null;
+//   title: string;
+//   description: string;
+//   thumbnail: string;
+//   thumbnailType: string;
+//   playbackId: string;
+//   videoCategory: { tag: string; name: string };
+//   percent: number;
+//   isSensitiveContent: boolean;
+//   isUploadToIpfs: boolean;
+//   loading: boolean;
+//   uploadingThumbnail: boolean;
+//   videoSource: string;
+//   buttonText: string;
+//   durationInSeconds: string | null;
+//   collectModule: CollectModuleType;
+//   referenceModule: ReferenceModuleType;
+//   isNSFW: boolean;
+//   isNSFWThumbnail: boolean;
+// };
 
 export type HLSData = {
   hrn: string;
@@ -95,14 +95,14 @@ export type IPFSUploadResult = {
   type: string;
 };
 
-export type VideoUploadForm = {
-  videoThumbnail: IPFSUploadResult | null;
-  videoSource: string | null;
-  playbackId: string | null;
-  title: string;
-  description: string;
-  adultContent: boolean;
-};
+// export type VideoUploadForm = {
+//   videoThumbnail: IPFSUploadResult | null;
+//   videoSource: string | null;
+//   playbackId: string | null;
+//   title: string;
+//   description: string;
+//   adultContent: boolean;
+// };
 
 export type StreamData = {
   streamKey: string;
@@ -120,7 +120,7 @@ export type ProfileMetadata = {
   attributes: Attribute[];
 };
 
-export type LenstubeCollectModule = FreeCollectModuleSettings &
+export type LensfolioCollectModule = FreeCollectModuleSettings &
   FeeCollectModuleSettings &
   RevertCollectModuleSettings &
   TimedFeeCollectModuleSettings &
@@ -157,6 +157,10 @@ export interface LensfolioWorks {
   percent: number;
   title: string;
   coverImg: LensfolioWorkCoverImg;
+  loading: boolean;
+  statusText: string;
+  collectModule: CollectModuleType;
+  referenceModule: ReferenceModuleType;
 }
 
 export type QueuedCommentType = {

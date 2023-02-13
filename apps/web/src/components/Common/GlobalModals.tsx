@@ -6,6 +6,10 @@ import { useGlobalModalStateStore } from 'src/store/modals';
 
 import SwitchProfile from './Auth/SwitchProfile';
 import Work from '@components/Work';
+
+import { CollectSettingDetail } from '@components/Post/CollectModule/CollectSettingDetail';
+import { ReferenceSettingDetail } from '@components/Post/ReferenceModule/ReferenceSettingDetail';
+
 const GlobalModals: FC = () => {
   // Report modal state
 
@@ -13,6 +17,10 @@ const GlobalModals: FC = () => {
   const setShowProfileSwitchModal = useGlobalModalStateStore((state) => state.setShowProfileSwitchModal);
   const showWorkDetailModal = useGlobalModalStateStore((state) => state.showWorkDetailModal);
   const setShowWorkDetailModal = useGlobalModalStateStore((state) => state.setShowWorkDetailModal);
+  const showCollectModuleModal = useGlobalModalStateStore((state) => state.showCollectModuleModal);
+  const setShowCollectModuleModal = useGlobalModalStateStore((state) => state.setShowCollectModuleModal);
+  const showReferenceModuleModal = useGlobalModalStateStore((state) => state.showReferenceModuleModal);
+  const setShowReferenceModuleModal = useGlobalModalStateStore((state) => state.setShowReferenceModuleModal);
 
   return (
     <>
@@ -31,6 +39,22 @@ const GlobalModals: FC = () => {
         size="full"
       >
         <Work />
+      </Modal>
+      <Modal
+        title={`Collect Setting`}
+        show={showCollectModuleModal}
+        onClose={() => setShowCollectModuleModal(false)}
+        size="lg"
+      >
+        <CollectSettingDetail />
+      </Modal>
+      <Modal
+        title={`Reference Setting`}
+        show={showReferenceModuleModal}
+        onClose={() => setShowReferenceModuleModal(false)}
+        size="lg"
+      >
+        <ReferenceSettingDetail />
       </Modal>
     </>
   );

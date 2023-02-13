@@ -52,14 +52,10 @@ const WorkDetail: FC<Props> = ({ work }) => {
         </div>
         <div className="flex-1 py-5 space-y-4">
           <div className="grid grid-cols-2 gap-2">
-            <a
-              // download={'File.'}
-              // download={'Fkna.zip'}
-              // href={'https://lensfolio-media.4everland.store/FknFkFJXoAEa7da.zip'}
-              href={getIPFSLink(work.metadata.media[1].original.url)}
-            >
+            {/* <a href={getIPFSLink(work.metadata.media[1].original.url)}>
               {getIPFSLink(work.metadata.media[1].original.url)}
-            </a>
+            </a> */}
+
             {/* <button
               onClick={() => {
                 downloadImage(getIPFSLink(work.metadata.media[1].original.url));

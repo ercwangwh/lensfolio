@@ -14,10 +14,12 @@ interface GlobalModalState {
   setShowStatusModal: (showStatusModal: boolean) => void;
   showProfileSwitchModal: boolean;
   setShowProfileSwitchModal: (showProfileSwitchModal: boolean) => void;
-  showMobileDrawer: boolean;
-  setShowMobileDrawer: (showMobileDrawer: boolean) => void;
   showWorkDetailModal: boolean;
-  setShowWorkDetailModal: (showProfileSwitchModal: boolean) => void;
+  setShowWorkDetailModal: (showWorkDetailModal: boolean) => void;
+  showCollectModuleModal: boolean;
+  setShowCollectModuleModal: (showCollectModuleModal: boolean) => void;
+  showReferenceModuleModal: boolean;
+  setShowReferenceModuleModal: (showReferenceModuleModal: boolean) => void;
 }
 
 export const useGlobalModalStateStore = create<GlobalModalState>((set) => ({
@@ -30,8 +32,10 @@ export const useGlobalModalStateStore = create<GlobalModalState>((set) => ({
   setShowStatusModal: (showStatusModal) => set(() => ({ showStatusModal })),
   showProfileSwitchModal: false,
   setShowProfileSwitchModal: (showProfileSwitchModal) => set(() => ({ showProfileSwitchModal })),
-  showMobileDrawer: false,
-  setShowMobileDrawer: (showMobileDrawer) => set(() => ({ showMobileDrawer })),
   showWorkDetailModal: false,
-  setShowWorkDetailModal: (showWorkDetailModal) => set(() => ({ showWorkDetailModal }))
+  setShowWorkDetailModal: (showWorkDetailModal) => set(() => ({ showWorkDetailModal })),
+  showCollectModuleModal: false,
+  setShowCollectModuleModal: (showCollectModuleModal) => set(() => ({ showCollectModuleModal })),
+  showReferenceModuleModal: false,
+  setShowReferenceModuleModal: (showReferenceModuleModal) => set(() => ({ showReferenceModuleModal }))
 }));

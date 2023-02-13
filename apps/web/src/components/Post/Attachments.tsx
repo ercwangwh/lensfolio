@@ -33,7 +33,7 @@ export const Attachments: FC = () => {
     // try {
 
     setUpload(true);
-    setFile(file);
+    setFile(file[0]);
     // const results = await uploadToIPFS(files);
     const result = await uploadFileToIPFS(file[0], percentCompleted);
     console.log('File result', result);
@@ -59,7 +59,7 @@ export const Attachments: FC = () => {
       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">
         Upload Attachment
       </label>
-      <input
+      {/* <input
         className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         aria-describedby="file_input_help"
         id="file_input"
@@ -68,7 +68,20 @@ export const Attachments: FC = () => {
       />
       <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
         ZIP or RAR (MAX. ~100MB).
-      </p>
+      </p> */}
+
+      <div className="flex w-full items-center justify-center bg-grey-lighter">
+        <label className="w-full flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue-500 hover:text-white">
+          <svg className="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+          </svg>
+          <span className="mt-2 text-base leading-normal">
+            {`${uploadedWorks.attachment.item.length === 0 ? 'Select a file (ZIP OR RAR)' : file?.name}`}
+          </span>
+          <input id="file_input" type="file" className="hidden" onChange={onChooseFile} />
+        </label>
+      </div>
+
       <ProgressBar completed={percent} />
     </div>
   );

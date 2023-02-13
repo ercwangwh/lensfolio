@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import type { LensfolioPublication } from 'utils';
 // import { Analytics, LENSTUBE_BYTES_APP_ID, STATIC_ASSETS, TRACK } from 'utils';
 // import { getIsSensitiveContent } from 'utils/functions/getIsSensitiveContent';
+import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline';
 import getAvatar from '@lib/getAvatar';
 // import getThumbnailUrl from 'utils/functions/getThumbnailUrl';
 // import imageCdn from 'utils/functions/imageCdn';
@@ -22,6 +23,7 @@ import { usePublicationStore } from 'src/store/publication';
 import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
 import Like from '@components/Work/Actions/Like';
+import nFormatter from '@lib/nFormatter';
 // dayjs.extend(relativeTime);
 
 interface Props {
@@ -112,6 +114,12 @@ const WorkCard: FC<Props> = ({ work }) => {
                 </Link>
               </div>
               <Like work={work} isFullPublication={false}></Like>
+              <span className="flex items-center space-x-1 cursor-pointer">
+                <span className="p-1.5 rounded-full hover:bg-gray-300 hover:bg-opacity-20">
+                  <ChatBubbleBottomCenterIcon className={'h-4 w-4'} />
+                </span>
+                <span className="text-[11px] sm:text-xs">{nFormatter(work.stats.totalAmountOfComments)}</span>
+              </span>
             </div>
           </div>
         </>

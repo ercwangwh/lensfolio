@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useAppStore } from 'src/store/app';
+import { useAppStore, UPLOADED_WORKS_DEAFULT } from 'src/store/app';
 import {
   useCreatePostTypedDataMutation,
   PublicationMainFocus,
@@ -25,7 +25,9 @@ import {
   SIGN_IN_REQUIRED_MESSAGE,
   LENSFOLIO_APP_ID,
   LensfolioAttachment,
-  RELAYER_ENABLED
+  RELAYER_ENABLED,
+  CustomErrorWithData,
+  ERROR_MESSAGE
 } from 'utils';
 import { ethers, utils } from 'ethers';
 import onError from '@lib/onError';
@@ -44,6 +46,7 @@ import getSignature from '@lib/getSignature';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { url } from 'inspector';
 import getIPFSLink from '@lib/getIPFSLink';
+import { getCollectModule } from '@lib/getCollectModule';
 // interface Props {
 //   publication: LensfolioPublication;
 // }
@@ -51,6 +54,7 @@ import getIPFSLink from '@lib/getIPFSLink';
 const UploadToLens: FC = () => {
   // App store
   const uploadedWorks = useAppStore((state) => state.uploadedWorks);
+  const setUploadedWorks = useAppStore((state) => state.setUploadedWorks);
   const userSigNonce = useAppStore((state) => state.userSigNonce);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const setUserSigNonce = useAppStore((state) => state.setUserSigNonce);
@@ -61,47 +65,79 @@ const UploadToLens: FC = () => {
 
   //State
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [publicationContentError, setPublicationContentError] = useState('');
-  const [attachments, setAttachments] = useState<LensfolioAttachment[]>([]);
-  const [showUploadModal, setUploadModal] = useState(false);
+  // const [publicationContentError, setPublicationContentError] = useState('');
+  // const [attachments, setAttachments] = useState<LensfolioAttachment[]>([]);
+  // const [showUploadModal, setUploadModal] = useState(false);
   // const [inputData, setInputData] = useState<Object>({});
-  const isComment = false;
+  // const isComment = false;
 
-  const { data: signer } = useSigner();
+  // const { data: signer } = useSigner();
+
+  const generateQueuedWorks = (txn: { txId?: string; txHash?: string }) => {
+    return {
+      id: uuid(),
+      type: 'NEW_POST',
+      txHash: txn.txHash,
+      txId: txn.txId,
+      attachment: uploadedWorks.attachment,
+      title: uploadedWorks.title,
+      cover: uploadedWorks.coverImg
+    };
+  };
+
+  const resetToDefaults = () => {
+    setUploadedWorks(UPLOADED_WORKS_DEAFULT);
+  };
+
+  const onError = (error: CustomErrorWithData) => {
+    toast.error(error?.data?.message ?? error?.message ?? ERROR_MESSAGE);
+    setUploadedWorks({
+      statusText: 'Post Error',
+      loading: false
+    });
+  };
+
+  const onCompleted = (data: any) => {
+    if (data?.broadcast?.reason === 'NOT_ALLOWED' || data.createPostViaDispatcher?.reason) {
+      return toast.error(`${data}[Error Post Dispatcher]`);
+    }
+    const txnId = data?.createPostViaDispatcher?.txId ?? data?.broadcast?.txId;
+    setTxnQueue([generateQueuedWorks(txnId), ...txnQueue]);
+    return setUploadedWorks({
+      statusText: 'Post',
+      loading: false
+    });
+  };
 
   const { signTypedDataAsync } = useSignTypedData({ onError });
   const [validateMetadata, { error: validateError }] = useValidatePublicationMetadataLazyQuery();
-  // const { config } = usePrepareContractWrite({
-  //   address: LENSHUB_PROXY_ADDRESS,
-  //   abi: LensHubProxy,
-  //   functionName: 'postWithSig',
-  //   // mode: 'recklesslyUnprepared',
-  //   // onSuccess: ({ hash }) => {
-  //   //   // onCompleted();
-  //   //   // setTxnQueue([generateOptimisticPublication({ txHash: hash }), ...txnQueue]);
-  //   // },
-  //   args: [inputData]
-  // });
-  // const { error, write } = useContractWrite(config);
-  // write?.()
-  // const contract = useContract({
-  //   address: LENSHUB_PROXY_ADDRESS,
-  //   abi: LensHubProxy,
-  //   signerOrProvider: signer
-  // });
-  // console.log(contract);
+
+  const { error, write } = useContractWrite({
+    address: LENSHUB_PROXY_ADDRESS,
+    abi: LensHubProxy,
+    functionName: 'postWithSig',
+    mode: 'recklesslyUnprepared',
+    onSuccess: (data) => {
+      setUploadedWorks({
+        statusText: 'Broadcast',
+        loading: false
+      });
+      setTxnQueue([generateQueuedWorks({ txHash: data.hash }), ...txnQueue]);
+    },
+    onError
+  });
+
+  const { broadcast } = useBroadcast({
+    onCompleted: (data) => {
+      console.log('Broadcast:', broadcast);
+      if (data.broadcast.__typename === 'RelayerResult') {
+        setTxnQueue([generateQueuedWorks({ txId: data.broadcast.txId }), ...txnQueue]);
+      }
+    }
+  });
 
   const [createPostViaDispatcher] = useCreatePostViaDispatcherMutation({
-    onCompleted: (data) => {
-      console.log(data);
-      // onCompleted();
-      // if (data.createPostViaDispatcher.__typename === 'RelayerResult') {
-      //   setTxnQueue([
-      //     generateOptimisticPublication({ txId: data.createPostViaDispatcher.txId }),
-      //     ...txnQueue
-      //   ]);
-      // }
-    },
+    onCompleted,
     onError
   });
 
@@ -113,55 +149,11 @@ const UploadToLens: FC = () => {
 
     const { data } = await createPostViaDispatcher({
       variables: { request }
-      // context: {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      //   }
-      // }
     });
     if (data?.createPostViaDispatcher?.__typename === 'RelayError') {
       createPostTypedData({ variables });
     }
   };
-
-  const { error, write } = useContractWrite({
-    address: LENSHUB_PROXY_ADDRESS,
-    abi: LensHubProxy,
-    functionName: 'postWithSig',
-    mode: 'recklesslyUnprepared',
-    overrides: { gasLimit: ethers.utils.parseEther('0.0000000001') }
-    // onSuccess: ({ hash }) => {
-    //   // onCompleted();
-    //   // setTxnQueue([generateOptimisticPublication({ txHash: hash }), ...txnQueue]);
-    // }
-    // onError
-  });
-
-  const { broadcast } = useBroadcast({
-    onCompleted: (data) => {
-      console.log(broadcast);
-      // onCompleted();
-      // setTxnQueue([generateOptimisticPublication({ txId: data?.broadcast?.txId }), ...txnQueue]);
-    }
-  });
-
-  if (error) {
-    console.log('what contract error:???? ', error);
-  }
-  // const generateOptimisticPublication = ({ txHash, txId }: { txHash?: string; txId?: string }) => {
-  //   return {
-  //     id: uuid(),
-  //     // ...(isComment && { parent: publication.id }),
-  //     type: isComment ? 'NEW_COMMENT' : 'NEW_POST',
-  //     txHash,
-  //     txId,
-  //     content: publicationContent,
-  //     attachments,
-  //     title: audioPublication.title,
-  //     cover: audioPublication.cover,
-  //     author: audioPublication.author
-  //   };
-  // };
 
   const typedDataGenerator = async (generatedData: any) => {
     const { id, typedData } = generatedData;
@@ -174,70 +166,48 @@ const UploadToLens: FC = () => {
       referenceModuleInitData,
       deadline
     } = typedData.value;
-    const signature = await signTypedDataAsync(getSignature(typedData));
-    const { v, r, s } = utils.splitSignature(signature);
-    const sig = { v, r, s, deadline };
-    const inputStruct = {
-      profileId,
-      contentURI,
-      collectModule,
-      collectModuleInitData,
-      referenceModule,
-      referenceModuleInitData,
-      sig
-    };
+    try {
+      const signature = await signTypedDataAsync(getSignature(typedData));
+      const { v, r, s } = utils.splitSignature(signature);
+      const sig = { v, r, s, deadline };
+      const inputStruct = {
+        profileId,
+        contentURI,
+        collectModule,
+        collectModuleInitData,
+        referenceModule,
+        referenceModuleInitData,
+        sig
+      };
 
-    // const inputStructPoster = {
-    //   profileId: 1,
-    //   contentURI: 'https://ipfs.io/ipfs/Qmby8QocUU2sPZL46rZeMctAuF5nrCc7eR1PPkooCztWPz',
-    //   collectModule: freeCollectModuleAddr,
-    //   collectModuleInitData: defaultAbiCoder.encode(['bool'], [true]),
-    //   referenceModule: ZERO_ADDRESS,
-    //   referenceModuleInitData: [],
-    // };
-    console.log('inputstruct ', inputStruct);
-    // setInputData(inputStruct);
-    setUserSigNonce(userSigNonce + 1);
-    if (!RELAYER_ENABLED) {
-      return write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
-      // return write?.({ args: inputStruct });
-    }
-    // ethers.Contract()
-    console.log(broadcast);
-    console.log('id ', id, 'signature ', signature);
-    const {
-      data: { broadcast: result }
-    } = await broadcast({ request: { id, signature } });
+      console.log('inputstruct ', inputStruct);
 
-    console.log(result);
-    if ('reason' in result) {
-      write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
-    }
+      setUserSigNonce(userSigNonce + 1);
+      if (!RELAYER_ENABLED) {
+        return write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
+      }
+
+      // console.log(broadcast);
+      console.log('id ', id, 'signature ', signature);
+      const {
+        data: { broadcast: result }
+      } = await broadcast({ request: { id, signature } });
+
+      console.log('Broadcast result:', result);
+      if ('reason' in result) {
+        write?.({ recklesslySetUnpreparedArgs: [inputStruct] });
+      }
+    } catch {}
   };
 
   const [createPostTypedData] = useCreatePostTypedDataMutation({
     onCompleted: ({ createPostTypedData }) => {
-      console.log('sadf');
+      console.log('CreatePostTypedData');
       typedDataGenerator(createPostTypedData);
     },
     onError
   });
 
-  // const getMainContentFocus = () => {
-  //   if (attachments.length > 0) {
-  //     if (isAudioPublication) {
-  //       return PublicationMainFocus.Audio;
-  //     } else if (ALLOWED_IMAGE_TYPES.includes(attachments[0]?.type)) {
-  //       return PublicationMainFocus.Image;
-  //     } else if (ALLOWED_VIDEO_TYPES.includes(attachments[0]?.type)) {
-  //       return PublicationMainFocus.Video;
-  //     } else {
-  //       return PublicationMainFocus.TextOnly;
-  //     }
-  //   } else {
-  //     return PublicationMainFocus.TextOnly;
-  //   }
-  // };
   const createMetadata = async (metadata: PublicationMetadataV2Input) => {
     return await uploadMetadataToIPFS(metadata);
   };
@@ -249,13 +219,19 @@ const UploadToLens: FC = () => {
 
     try {
       setIsSubmitting(true);
+      setUploadedWorks({
+        buttonText: 'Storing metadata...',
+        loading: true
+      });
+      if (uploadedWorks.title.length === 0 || uploadedWorks.coverImg.item.length === 0) {
+        setUploadedWorks({
+          loading: false
+        });
+        return toast.error('Title & Cover Image should not be empty!');
+      }
+      console.log('UploadedWorks: ', uploadedWorks);
 
-      // if (publicationContent.length === 0 && attachments.length === 0) {
-      //   return setPublicationContentError(`${isComment ? 'Comment' : 'Post'} should not be empty!`);
-      // }
-      // console.log('UploadedWorks: ', uploadedWorks);
-
-      setPublicationContentError('');
+      // setPublicationContentError('');
       // let textNftImageUrl = null;
       // if (!attachments.length && selectedCollectModule !== CollectModules.RevertCollectModule) {
       //   textNftImageUrl = await getTextNftUrl(
@@ -292,44 +268,38 @@ const UploadToLens: FC = () => {
         appId: LENSFOLIO_APP_ID
       };
 
-      // const metadata: PublicationMetadataV2Input = {
-      //   version: '2.0.0',
-      //   mainContentFocus: PublicationMainFocus.TextOnly,
-      //   metadata_id: '6162716327186732',
-      //   description: 'Description',
-      //   locale: 'en-US',
-      //   content: 'Content',
-      //   external_url: null,
-      //   image: null,
-      //   imageMimeType: null,
-      //   name: 'Name',
-      //   attributes: [],
-      //   tags: ['using_api_examples'],
-      //   appId: LENSFOLIO_APP_ID
-      // };
-      // console.log(metadata);
-
       const { data: postData } = await validateMetadata({
         variables: { request: { metadatav2: metadata } }
       });
       console.log('validate result:', postData);
-      // let arweaveId = null;
-      // if (restricted) {
-      //   arweaveId = await createTokenGatedMetadata(metadata);
-      // } else {
-      //   arweaveId = await createMetadata(metadata);
-      // }
 
       const ipfsFile = await createMetadata(metadata);
-      console.log(ipfsFile);
+      setUploadedWorks({
+        buttonText: 'Posting ...',
+        loading: true
+      });
+      console.log('IPFS url:', ipfsFile);
+
+      const isRestricted = Boolean(
+        uploadedWorks.referenceModule?.degreesOfSeparationReferenceModule?.degreesOfSeparation
+      );
+      const referenceModuleDegrees = {
+        commentsRestricted: isRestricted,
+        mirrorsRestricted: isRestricted,
+        degreesOfSeparation: uploadedWorks.referenceModule?.degreesOfSeparationReferenceModule
+          ?.degreesOfSeparation as number
+      };
+
       const request = {
         profileId: currentProfile?.id,
         contentURI: ipfsFile ? ipfsFile.item : null,
-        collectModule: {
-          revertCollectModule: true
-        },
+        collectModule: getCollectModule(uploadedWorks.collectModule),
         referenceModule: {
-          followerOnlyReferenceModule: false
+          followerOnlyReferenceModule: uploadedWorks.referenceModule?.followerOnlyReferenceModule,
+          degreesOfSeparationReferenceModule: uploadedWorks.referenceModule
+            ?.degreesOfSeparationReferenceModule
+            ? referenceModuleDegrees
+            : null
         }
       };
       if (currentProfile?.dispatcher?.canUseRelay) {
@@ -337,42 +307,18 @@ const UploadToLens: FC = () => {
       } else {
         const typedData = await createPostTypedData({
           variables: { options: { overrideSigNonce: userSigNonce }, request }
-          // context: {
-          //   headers: {
-          //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-          //   }
-          // }
         });
-        console.log(typedData);
+        console.log('Typed Data:', typedData);
       }
-
-      //     await createPostTypedData({
-      //       variables: { options: { overrideSigNonce: userSigNonce }, request }
-      //     });
-      // if (currentProfile?.dispatcher?.canUseRelay) {
-      //   await createViaDispatcher(request);
-      // } else {
-      //   if (isComment) {
-      //     await createCommentTypedData({
-      //       variables: {
-      //         options: { overrideSigNonce: userSigNonce },
-      //         request: request as CreatePublicCommentRequest
-      //       }
-      //     });
-      //   } else {
-      //     await createPostTypedData({
-      //       variables: { options: { overrideSigNonce: userSigNonce }, request }
-      //     });
-      //   }
-      // }
-    } catch {
+    } catch (error) {
+      toast.error(`[Error Store & Post Video]${error}`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <>
+    <div className="flex flex-row justify-between">
       {/* <Modal
         title="Upload"
         icon={<BeakerIcon className="w-5 h-5 text-brand" />}
@@ -392,9 +338,14 @@ const UploadToLens: FC = () => {
       >
         Upload
       </Button> */}
-      <Button onClick={createPublication}>upload to lens</Button>
+      <Button disabled={uploadedWorks.loading} onClick={resetToDefaults}>
+        Cancle
+      </Button>
+      <Button disabled={uploadedWorks.loading} onClick={createPublication}>
+        Upload to lens
+      </Button>
       {/* <Button onClick={createPublication}>upload to ipfs</Button> */}
-    </>
+    </div>
   );
 };
 

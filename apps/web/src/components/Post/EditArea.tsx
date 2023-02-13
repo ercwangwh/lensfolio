@@ -7,7 +7,10 @@ import { LensfolioWorks } from 'utils';
 import DropZone from './DropZone';
 import PostSetting from './PostSetting';
 import { Attachments } from './Attachments';
-
+import CollectModule from './CollectModule';
+import ReferenceModule from './ReferenceModule';
+import UploadToLens from './UploadToLens';
+// import uploadToIPFS from '@lib/uploadToIPFS';
 // interface Props {
 //   // onUpload: (data: VideoFormData) => void;
 //   // onCancel: () => void;
@@ -52,16 +55,14 @@ const EditArea: FC = () => {
 
   return (
     <div className="m-auto py-6">
-      <div className="flex justify-between">
+      {/* <div className="flex justify-between">
         <Button>Cancle</Button>
         <PostSetting></PostSetting>
-      </div>
+      </div> */}
       <div>
         <h1 className="text-center font-bold my-6 text-2xl">What are you working on?</h1>
-        <p className="text-center my-2 text-lg">
-          Upload your work. This will also be used as the thumbnail in feeds
-        </p>
-        <div className="md:w-1/2 mx-auto mt-8">
+        <p className="text-center my-2 text-lg">Talk is less, show your works.</p>
+        <div className="flex flex-col space-y-2 md:w-1/2 mx-auto mt-8">
           <TextArea
             prefix={'Title'}
             onChange={(evt) => {
@@ -74,7 +75,6 @@ const EditArea: FC = () => {
           ></TextArea>
           {/* <div> {title}</div> */}
           <DropZone></DropZone>
-          <Attachments />
           <TextArea
             prefix={'Content'}
             onChange={(evt) => {
@@ -85,6 +85,10 @@ const EditArea: FC = () => {
             placeholder="Your content of your design works"
             rows={5}
           ></TextArea>
+          <Attachments />
+          <CollectModule />
+          <ReferenceModule />
+          <UploadToLens />
         </div>
       </div>
     </div>

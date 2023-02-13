@@ -3,6 +3,7 @@ import type { LensfolioWorks } from 'utils';
 import type { Profile } from 'lens';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { WMATIC_TOKEN_ADDRESS } from 'utils';
 
 interface AppState {
   profiles: Profile[] | [];
@@ -33,7 +34,23 @@ export const UPLOADED_WORKS_DEAFULT = {
   content: '',
   percent: 0,
   title: '',
-  coverImg: LENSFOLIO_WORK_COVER_IMG_DEFAULT
+  coverImg: LENSFOLIO_WORK_COVER_IMG_DEFAULT,
+  loading: false,
+  statusText: '',
+  collectModule: {
+    type: 'revertCollectModule',
+    followerOnlyCollect: false,
+    amount: { currency: WMATIC_TOKEN_ADDRESS, value: '' },
+    referralFee: 0,
+    isTimedFeeCollect: false,
+    isFreeCollect: false,
+    isFeeCollect: false,
+    isRevertCollect: true
+  },
+  referenceModule: {
+    followerOnlyReferenceModule: false,
+    degreesOfSeparationReferenceModule: null
+  }
 };
 
 export const useAppStore = create<AppState>((set) => ({

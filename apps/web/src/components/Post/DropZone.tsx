@@ -124,7 +124,7 @@ const DropZone: FC = () => {
             </span>
             <span className="space-y-10 md:space-y-14">
               <div className="text-2xl font-semibold md:text-4xl">
-                <span>Drag and drop an image to upload</span>
+                <span>Drag and drop an image as thumbnail</span>
               </div>
               <div>
                 <label

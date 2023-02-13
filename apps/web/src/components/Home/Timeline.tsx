@@ -21,7 +21,7 @@ const Timeline: FC<Props> = ({ works, workType = 'Post' }) => {
         // ) : (
         //   isPub && <VideoCard key={`${work?.id}_${work.createdAt}`} video={work} />
         // );
-        return isPub && <WorkCard key={`${work.createdAt}`} work={work} />;
+        return isPub && <WorkCard key={`${work?.id}_${work.createdAt}`} work={work} />;
       })}
     </div>
   );
