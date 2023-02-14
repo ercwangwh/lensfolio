@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.1",
+    "@apollo/client": "^3.7.7",
     "@aws-sdk/client-s3": "^3.254.0",
     "@aws-sdk/client-sts": "^3.231.0",
     "@aws-sdk/lib-storage": "^3.262.0",
@@ -20,6 +20,7 @@
     "@rainbow-me/rainbowkit": "^0.8.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/line-clamp": "^0.4.2",
+    "@tippyjs/react": "^4.2.6",
     "@types/uuid": "^9.0.0",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.7",

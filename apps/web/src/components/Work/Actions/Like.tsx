@@ -14,6 +14,7 @@ import type { LensfolioPublication } from 'utils';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import nFormatter from '@lib/nFormatter';
+import Tooltip from '@components/UI/Tooltip';
 
 interface Props {
   work: LensfolioPublication;
@@ -94,15 +95,15 @@ const Like: FC<Props> = ({ work, isFullPublication }) => {
     }
   };
 
-  const iconClassName = isFullPublication ? 'w-[17px] sm:w-[20px]' : 'w-[15px] sm:w-[18px]';
-
+  // const iconClassName = isFullPublication ? 'w-[17px] sm:w-[20px]' : 'w-[15px] sm:w-[18px]';
+  const iconClassName = isFullPublication ? 'w-5 sm:w-5' : 'w-4 sm:w-4';
   return (
     <motion.button whileTap={{ scale: 0.9 }} onClick={createLike} aria-label="Like">
       <span className="flex items-center space-x-1 text-pink-500">
         <span className="p-1.5 rounded-full hover:bg-pink-300 hover:bg-opacity-20">
-          {/* <Tooltip placement="top" content={liked ? 'Unlike' : 'Like'} withDelay> */}
-          {liked ? <HeartIconSolid className={iconClassName} /> : <HeartIcon className={iconClassName} />}
-          {/* </Tooltip> */}
+          <Tooltip placement="top" content={liked ? 'Unlike' : 'Like'}>
+            {liked ? <HeartIconSolid className={iconClassName} /> : <HeartIcon className={iconClassName} />}
+          </Tooltip>
         </span>
         {count > 0 && !isFullPublication && (
           <span className="text-[11px] sm:text-xs">{nFormatter(count)}</span>

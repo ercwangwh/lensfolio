@@ -1,16 +1,23 @@
 // import { LENSHUB_PROXY_ABI } from '@abis/LensHubProxy'
+import { motion } from 'framer-motion';
 import { LensHubProxy } from 'utils';
 import { InboxIcon } from '@heroicons/react/24/outline';
+import { InboxIcon as InboxIconSolid } from '@heroicons/react/24/solid';
 // import CollectOutline from '@components/Common/Icons/CollectOutline';
 import { Button } from '@components/UI/Button';
-// import { Button } from '@components/UIElements/Button';
-// import { Loader } from '@components/UIElements/Loader';
-// import Tooltip from '@components/UIElements/Tooltip';
-import { useAppStore } from 'src/store/app';
+import { Loader } from '@components/UI/Loader';
+import Tooltip from '@components/UI/Tooltip';
 
-import usePersistStore from '@lib/store/persist';
+import { useAppStore } from 'src/store/app';
+import { useAppPersistStore } from 'src/store/app';
+// import usePersistStore from '@lib/store/persist';
 import { utils } from 'ethers';
-import type { CreateCollectBroadcastItemResult, Publication } from 'lens';
+import type {
+  CreateCollectBroadcastItemResult,
+  FeeCollectModuleSettings,
+  FreeCollectModuleSettings,
+  Publication
+} from 'lens';
 import {
   useBroadcastMutation,
   useCreateCollectTypedDataMutation,
@@ -20,7 +27,7 @@ import {
 import type { FC } from 'react';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import type { CustomErrorWithData, LenstubeCollectModule } from 'utils';
+import type { CustomErrorWithData, LensfolioCollectModule, LensfolioPublication } from 'utils';
 import {
   // Analytics,
   ERROR_MESSAGE,
@@ -35,17 +42,18 @@ import { useAccount, useContractWrite, useSignTypedData } from 'wagmi';
 
 import CollectModal from './CollectModal';
 
-type Props = {
-  video: Publication;
-  variant?: 'primary' | 'secondary' | 'material';
-};
+interface Props {
+  work: LensfolioPublication;
+  // variant?: 'primary' | 'secondary' | 'success';
+  isFullPublication: boolean;
+}
 
-const CollectVideo: FC<Props> = ({ video, variant = 'primary' }) => {
+const CollectWork: FC<Props> = ({ work, isFullPublication }) => {
   const { address } = useAccount();
   const [loading, setLoading] = useState(false);
   const [showCollectModal, setShowCollectModal] = useState(false);
-  const [alreadyCollected, setAlreadyCollected] = useState(video.hasCollectedByMe);
-  const selectedChannelId = usePersistStore((state) => state.selectedChannelId);
+  const [alreadyCollected, setAlreadyCollected] = useState(work.hasCollectedByMe);
+  const profileId = useAppPersistStore((state) => state.profileId);
   const userSigNonce = useAppStore((state) => state.userSigNonce);
   const setUserSigNonce = useAppStore((state) => state.setUserSigNonce);
 
@@ -65,16 +73,26 @@ const CollectVideo: FC<Props> = ({ video, variant = 'primary' }) => {
   });
 
   const { data, loading: fetchingCollectModule } = usePublicationCollectModuleQuery({
-    variables: { request: { publicationId: video?.id } }
+    variables: { request: { publicationId: work?.id } }
   });
+
   const collectModule =
     data?.publication?.__typename === 'Post'
-      ? (data?.publication?.collectModule as LenstubeCollectModule)
+      ? (data?.publication?.collectModule as LensfolioCollectModule)
       : null;
 
+  console.log(
+    'collectModule:',
+    data,
+    collectModule?.amount,
+    collectModule?.followerOnly,
+    // collectModule?.collectLimit,
+    collectModule?.type
+    // collectModule?.endTimestamp
+  );
   const { write: writeCollectWithSig } = useContractWrite({
     address: LENSHUB_PROXY_ADDRESS,
-    abi: LENSHUB_PROXY_ABI,
+    abi: LensHubProxy,
     functionName: 'collectWithSig',
     mode: 'recklesslyUnprepared',
     onError,
@@ -96,9 +114,9 @@ const CollectVideo: FC<Props> = ({ video, variant = 'primary' }) => {
       const { typedData, id } = createCollectTypedData as CreateCollectBroadcastItemResult;
       try {
         const signature = await signTypedDataAsync({
-          domain: omitKey(typedData?.domain, '__typename'),
-          types: omitKey(typedData?.types, '__typename'),
-          value: omitKey(typedData?.value, '__typename')
+          domain: omit(typedData?.domain, '__typename'),
+          types: omit(typedData?.types, '__typename'),
+          value: omit(typedData?.value, '__typename')
         });
         const { v, r, s } = utils.splitSignature(signature);
         const args = {
@@ -125,33 +143,33 @@ const CollectVideo: FC<Props> = ({ video, variant = 'primary' }) => {
     onError
   });
 
-  const isFreeCollect = video.collectModule.__typename === 'FreeCollectModuleSettings';
-
+  const isFreeCollect = work.collectModule.__typename === 'FreeCollectModuleSettings';
+  // console.log('Work collectModule:', work.collectModule);
   const collectNow = () => {
     setShowCollectModal(false);
     setLoading(true);
     if (!isFreeCollect) {
-      Analytics.track(TRACK.COLLECT.FEE);
+      // Analytics.track(TRACK.COLLECT.FEE);
       return createCollectTypedData({
         variables: {
           options: { overrideSigNonce: userSigNonce },
-          request: { publicationId: video?.id }
+          request: { publicationId: work?.id }
         }
       });
     }
-    Analytics.track(TRACK.COLLECT.FREE);
+    // Analytics.track(TRACK.COLLECT.FREE);
     // Using proxyAction to free collect without signing
     createProxyActionFreeCollect({
       variables: {
         request: {
-          collect: { freeCollect: { publicationId: video?.id } }
+          collect: { freeCollect: { publicationId: work?.id } }
         }
       }
     });
   };
 
   const onClickCollect = () => {
-    if (!selectedChannelId) return toast.error(SIGN_IN_REQUIRED_MESSAGE);
+    if (!profileId) return toast.error(SIGN_IN_REQUIRED_MESSAGE);
     return setShowCollectModal(true);
   };
 
@@ -166,12 +184,12 @@ const CollectVideo: FC<Props> = ({ video, variant = 'primary' }) => {
       </b>
     </span>
   );
-
+  const iconClassName = isFullPublication ? 'w-5 sm:w-5' : 'w-4 sm:w-4';
   return (
-    <div>
+    <>
       {showCollectModal && collectModule && (
         <CollectModal
-          video={video}
+          work={work}
           showModal={showCollectModal}
           setShowModal={setShowCollectModal}
           collectNow={collectNow}
@@ -180,24 +198,36 @@ const CollectVideo: FC<Props> = ({ video, variant = 'primary' }) => {
           fetchingCollectModule={fetchingCollectModule}
         />
       )}
-      <Tooltip
-        content={loading ? 'Collecting' : alreadyCollected ? 'Already Collected' : collectTooltipText}
-        placement="top"
+
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        onClick={onClickCollect}
+        disabled={fetchingCollectModule || alreadyCollected}
+        aria-label="Collect"
       >
-        <div>
-          <Button
-            className="!px-2"
-            disabled={loading || alreadyCollected}
-            onClick={() => onClickCollect()}
-            size="md"
-            variant={variant}
-          >
-            {loading ? <Loader size="md" /> : <CollectOutline className="w-5 h-5" />}
-          </Button>
-        </div>
-      </Tooltip>
-    </div>
+        <span className="flex items-center space-x-1 text-blue-500">
+          <span className="p-1.5 rounded-full hover:bg-blue-300 hover:bg-opacity-20 cursor-pointer">
+            <Tooltip
+              content={
+                fetchingCollectModule
+                  ? 'Collecting'
+                  : alreadyCollected
+                  ? 'Already Collected'
+                  : collectTooltipText
+              }
+              placement="top"
+            >
+              {alreadyCollected || fetchingCollectModule ? (
+                <InboxIconSolid className={iconClassName} />
+              ) : (
+                <InboxIcon className={iconClassName} />
+              )}
+            </Tooltip>
+          </span>
+        </span>
+      </motion.button>
+    </>
   );
 };
 
-export default CollectVideo;
+export default CollectWork;

@@ -24,6 +24,7 @@ import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
 import Like from '@components/Work/Actions/Like';
 import nFormatter from '@lib/nFormatter';
+import { getRelativeTime } from '@lib/formatTime';
 // dayjs.extend(relativeTime);
 
 interface Props {
@@ -109,7 +110,8 @@ const WorkCard: FC<Props> = ({ work }) => {
                   href={`/user/${work.profile?.handle}`}
                   className="flex w-fit items-center space-x-0.5 text-[13px] hover:opacity-100 opacity-70"
                 >
-                  <span>{work.profile?.handle}</span>
+                  <span>{`${work.profile?.handle} ${getRelativeTime(work.createdAt)}`}</span>
+
                   {/* <IsVerified id={work.profile?.id} size="xs" /> */}
                 </Link>
               </div>

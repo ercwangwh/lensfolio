@@ -10,14 +10,16 @@ import { useAppStore, useAppPersistStore } from 'src/store/app';
 import { PublicationMainFocus, useProfileCommentsQuery } from 'lens';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import type { FC } from 'react';
+import { FC, useEffect } from 'react';
 import React from 'react';
 // import { useInView } from 'react-cool-inview';
 import { LensfolioPublication, LENS_CUSTOM_FILTERS, SCROLL_ROOT_MARGIN } from 'utils';
 
 import NewComment from './NewComment';
-// import QueuedComment from './QueuedComment';
+import QueuedComment from './QueuedComment';
 import { Button } from '@components/UI/Button';
+import { useTransactionPersistStore } from 'src/store/transaction';
+import usePendingTxn from 'utils/hooks/usePendingTxn';
 
 const Comment = dynamic(() => import('./Comment'));
 
@@ -30,7 +32,8 @@ const Comments: FC<Props> = ({ work }) => {
     query: { id }
   } = useRouter();
   const profileId = useAppPersistStore((state) => state.profileId);
-  //   const queuedComments = usePersistStore((state) => state.queuedComments);
+  const txnQueue = useTransactionPersistStore((state) => state.txnQueue);
+  // const queuedComments = usePersistStore((state) => state.queuedComments);
   const currentProfile = useAppStore((state) => state.currentProfile);
 
   const isFollowerOnlyReferenceModule =
@@ -79,6 +82,16 @@ const Comments: FC<Props> = ({ work }) => {
   //     }
   //   });
 
+  // const { data: txnData, indexed } = usePendingTxn({ txHash, txId });
+  // useEffect(() => {
+  //   console.log('Indexed Usehook:', indexed);
+  //   if (indexed && txnData) {
+  //     // toast.success(`Indexed txId ${txId}`);
+  //     console.log('txndata', txnData);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [indexed]);
+
   if (loading) return <CommentsShimmer />;
 
   return (
@@ -108,12 +121,12 @@ const Comments: FC<Props> = ({ work }) => {
       {!error && !loading && (
         <>
           <div className="pt-5 space-y-4">
-            {/* {queuedComments?.map(
-              (queuedComment) =>
-                queuedComment?.pubId === video?.id && (
-                  <QueuedComment key={queuedComment?.pubId} queuedComment={queuedComment} />
+            {txnQueue?.map(
+              (txnQueue) =>
+                txnQueue?.pubId === work?.id && (
+                  <QueuedComment key={txnQueue?.pubId} queuedComment={txnQueue} />
                 )
-            )} */}
+            )}
             {comments?.map((comment: LensfolioPublication) => (
               <Comment key={`${comment?.id}_${comment.createdAt}`} comment={comment} />
             ))}

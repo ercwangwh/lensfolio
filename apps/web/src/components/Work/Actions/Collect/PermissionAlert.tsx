@@ -1,26 +1,22 @@
-import { Button } from '@components/UIElements/Button'
-import type { ApprovedAllowanceAmount } from 'lens'
-import { useGenerateModuleCurrencyApprovalDataLazyQuery } from 'lens'
-import type { Dispatch, FC } from 'react'
-import React from 'react'
-import toast from 'react-hot-toast'
-import type { CustomErrorWithData } from 'utils'
-import { getCollectModuleConfig } from 'utils/functions/getCollectModule'
-import { useSendTransaction, useWaitForTransaction } from 'wagmi'
+// import { Button } from '@components/UIElements/Button'
+import { Button } from '@components/UI/Button';
+import type { ApprovedAllowanceAmount } from 'lens';
+import { useGenerateModuleCurrencyApprovalDataLazyQuery } from 'lens';
+import type { Dispatch, FC } from 'react';
+import React from 'react';
+import toast from 'react-hot-toast';
+import type { CustomErrorWithData } from 'utils';
+import { getCollectModuleConfig } from '@lib/getCollectModule';
+import { useSendTransaction, useWaitForTransaction } from 'wagmi';
 
 type Props = {
-  setIsAllowed: Dispatch<boolean>
-  isAllowed: boolean
-  allowanceModule: ApprovedAllowanceAmount
-}
+  setIsAllowed: Dispatch<boolean>;
+  isAllowed: boolean;
+  allowanceModule: ApprovedAllowanceAmount;
+};
 
-const PermissionAlert: FC<Props> = ({
-  setIsAllowed,
-  isAllowed,
-  allowanceModule
-}) => {
-  const [generateAllowanceQuery, { loading }] =
-    useGenerateModuleCurrencyApprovalDataLazyQuery()
+const PermissionAlert: FC<Props> = ({ setIsAllowed, isAllowed, allowanceModule }) => {
+  const [generateAllowanceQuery, { loading }] = useGenerateModuleCurrencyApprovalDataLazyQuery();
 
   const {
     data: txData,
@@ -30,21 +26,19 @@ const PermissionAlert: FC<Props> = ({
     request: {},
     mode: 'recklesslyUnprepared',
     onError(error: CustomErrorWithData) {
-      toast.error(error?.data?.message ?? error?.message)
+      toast.error(error?.data?.message ?? error?.message);
     }
-  })
+  });
   const { isLoading: waiting } = useWaitForTransaction({
     hash: txData?.hash,
     onSuccess: () => {
-      toast.success(
-        `Module ${isAllowed ? 'disabled' : 'enabled'} successfully!`
-      )
-      setIsAllowed(!isAllowed)
+      toast.success(`Module ${isAllowed ? 'disabled' : 'enabled'} successfully!`);
+      setIsAllowed(!isAllowed);
     },
     onError(error: CustomErrorWithData) {
-      toast.error(error?.data?.message ?? error?.message)
+      toast.error(error?.data?.message ?? error?.message);
     }
-  })
+  });
 
   const handleAllowance = async () => {
     const result = await generateAllowanceQuery({
@@ -52,20 +46,19 @@ const PermissionAlert: FC<Props> = ({
         request: {
           currency: allowanceModule.currency,
           value: Number.MAX_SAFE_INTEGER.toString(),
-          [getCollectModuleConfig(allowanceModule.module).type]:
-            allowanceModule.module
+          [getCollectModuleConfig(allowanceModule.module).type]: allowanceModule.module
         }
       }
-    })
-    const data = result?.data?.generateModuleCurrencyApprovalData
+    });
+    const data = result?.data?.generateModuleCurrencyApprovalData;
     sendTransaction?.({
       recklesslySetUnpreparedRequest: {
         from: data?.from,
         to: data?.to,
         data: data?.data
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="flex justify-end">
@@ -77,7 +70,7 @@ const PermissionAlert: FC<Props> = ({
         Allow Collect
       </Button>
     </div>
-  )
-}
+  );
+};
 
-export default PermissionAlert
+export default PermissionAlert;

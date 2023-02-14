@@ -12,6 +12,7 @@ import type { Publication } from 'lens';
 import { LensfolioPublication } from 'utils';
 import { Button } from '@components/UI/Button';
 import Like from './Actions/Like';
+import CollectWork from './Actions/Collect';
 interface Props {
   work: LensfolioPublication;
 }
@@ -20,6 +21,7 @@ const WorkHeader: FC<Props> = ({ work }) => {
   // const selectedProfile = useAppStore((state) => state.selectedProfile);
 
   // useProfileQuery({variables:{request:{}}})
+  console.log('Work', work);
 
   return (
     <div className="">
@@ -39,8 +41,11 @@ const WorkHeader: FC<Props> = ({ work }) => {
               </div>
             </div>
           </div>
-          <div className=" my-auto">
+          <div className=" flex flex-row my-auto">
             <Like work={work} isFullPublication={true}></Like>
+            {work.collectModule.__typename !== 'RevertCollectModuleSettings' ? (
+              <CollectWork work={work} isFullPublication={true}></CollectWork>
+            ) : null}
           </div>
         </div>
         <div className="mt-4 md:mt-6"></div>

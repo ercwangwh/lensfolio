@@ -9,7 +9,7 @@ import getAvatar from '@lib/getAvatar';
 import type { Publication } from 'lens';
 import { Button } from '@components/UI/Button';
 import getIPFSLink from '@lib/getIPFSLink';
-import { useProfilesLazyQuery } from 'lens';
+import { useProfilesLazyQuery, useProfilesQuery } from 'lens';
 import { Modal } from '@components/UI/Modal';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { useGlobalModalStateStore } from 'src/store/modals';
@@ -18,7 +18,8 @@ const SwitchProfile: FC = () => {
   const profiles = useAppStore((state) => state.profiles);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const setCurrentProfile = useAppStore((state) => state.setCurrentProfile);
-
+  // const { data } = useProfilesQuery({ variables: { request: { profileIds: currentProfile?.id } } });
+  // console.log(data);
   //   const showProfileSwitchModal = useGlobalModalStateStore((state) => state.showProfileSwitchModal);
   const setShowProfileSwitchModal = useGlobalModalStateStore((state) => state.setShowProfileSwitchModal);
   return (

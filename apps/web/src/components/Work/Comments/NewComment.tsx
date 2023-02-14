@@ -46,6 +46,7 @@ import getUserLocale from '@lib/getUserLocale';
 import getTextNftUrl from '@lib/getTextNftUrl';
 import { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
 import { Input } from '@components/UI/Input';
+import { useTransactionPersistStore } from 'src/store/transaction';
 
 interface Props {
   work: LensfolioPublication;
@@ -64,6 +65,8 @@ const NewComment: FC<Props> = ({ work }) => {
   const [loading, setLoading] = useState(false);
   const currentProfile = useAppStore((state) => state.currentProfile);
   const profileId = useAppPersistStore((state) => state.profileId);
+  const txnQueue = useTransactionPersistStore((state) => state.txnQueue);
+  const setTxnQueue = useTransactionPersistStore((state) => state.setTxnQueue);
   // const queuedComments = useAppPersistStore((state) => state.);
   // const setQueuedComments = usePersistStore((state) => state.setQueuedComments);
   const userSigNonce = useAppStore((state) => state.userSigNonce);
@@ -84,29 +87,32 @@ const NewComment: FC<Props> = ({ work }) => {
     resolver: zodResolver(formSchema)
   });
 
-  // const setToQueue = (txn: { txnId?: string; txnHash?: string }) => {
-  //   setQueuedComments([
-  //     {
-  //       comment: getValues('comment'),
-  //       txnId: txn.txnId,
-  //       txnHash: txn.txnHash,
-  //       pubId: video.id
-  //     },
-  //     ...(queuedComments || [])
-  //   ]);
-  //   reset();
-  //   setLoading(false);
-  // };
+  const setToQueue = (txn: { txId?: string; txHash?: string }) => {
+    setTxnQueue([
+      {
+        comment: getValues('comment'),
+        txId: txn.txId,
+        txHash: txn.txHash,
+        pubId: work.id
+      },
+      ...txnQueue
+    ]);
+    reset();
+    // console.log('Reset Success');
+    setLoading(false);
+    // toast.success('Comment Success');
+  };
 
-  // const onCompleted = (data: any) => {
-  //   // if (data?.broadcast?.reason === 'NOT_ALLOWED' || data.createCommentViaDispatcher?.reason) {
-  //   //   return logger.error('[Error Comment Dispatcher]', data);
-  //   // }
-  //   // toast.success(data);
-  //   // Analytics.track(TRACK.NEW_COMMENT);
-  //   // const txnId = data?.createCommentViaDispatcher?.txId ?? data?.broadcast?.txId;
-  //   // return setToQueue({ txnId });
-  // };
+  const onCompleted = (data: any) => {
+    if (data?.broadcast?.reason === 'NOT_ALLOWED' || data.createCommentViaDispatcher?.reason) {
+      return toast.error('[Error Data Comment Dispatcher]');
+    }
+    // console.log('Comment Success');
+    // Analytics.track(TRACK.NEW_COMMENT);
+    const txId = data?.createCommentViaDispatcher?.txId ?? data?.broadcast?.txId;
+    // console.log('Txid:', txId);
+    setToQueue({ txId });
+  };
 
   const onError = (error: CustomErrorWithData) => {
     toast.error(error?.data?.message ?? error?.message ?? ERROR_MESSAGE);
@@ -125,19 +131,22 @@ const NewComment: FC<Props> = ({ work }) => {
     onError,
     onSuccess: (data) => {
       if (data.hash) {
-        // setToQueue({ txnHash: data.hash });
+        setToQueue({ txHash: data.hash });
       }
     }
   });
 
   const [broadcast] = useBroadcastMutation({
-    onError
-    // onCompleted
+    onError,
+    onCompleted
   });
 
   const [createCommentViaDispatcher] = useCreateCommentViaDispatcherMutation({
-    onError
-    // onCompleted
+    onError,
+    // onCompleted: (data) => {
+    //   console.log(data);
+    // }
+    onCompleted
   });
 
   const [createCommentTypedData] = useCreateCommentTypedDataMutation({
@@ -222,7 +231,7 @@ const NewComment: FC<Props> = ({ work }) => {
         content: trimify(data.comment),
         locale: getUserLocale(),
         mainContentFocus: PublicationMainFocus.TextOnly,
-        external_url: `${LENSFOLIO_WEBSITE_URL}/watch/${work?.id}`,
+        external_url: `${LENSFOLIO_WEBSITE_URL}/works/${work?.id}`,
         image: getAvatar(currentProfile, false),
         // image:textNftImageUrl,
         imageMimeType: 'image/svg+xml',
@@ -263,7 +272,7 @@ const NewComment: FC<Props> = ({ work }) => {
       }
       await createViaDispatcher(request);
     } catch (error) {
-      // logger.error('[Error Store & Post Comment]', error);
+      toast.error(`[Error Store & Post Comment]${error}`);
     }
   };
 

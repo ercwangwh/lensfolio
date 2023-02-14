@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { CollectModuleType, LensfolioWorks } from 'utils';
 import { WMATIC_TOKEN_ADDRESS } from 'utils';
 import { z } from 'zod';
+import { getCollectModule } from '@lib/getCollectModule';
 
 interface Props {
   uploadedWork: LensfolioWorks;
@@ -84,6 +85,8 @@ const FeeCollectForm: FC<Props> = ({ uploadedWork, setCollectType, enabledCurren
       collectLimit: data.collectLimit
     });
     setShowCollectModuleModal(false);
+    console.log('Upload Collect Module:', uploadedWork.collectModule);
+    console.log('Upload Collect Module:', getCollectModule(uploadedWork.collectModule));
   };
 
   return (

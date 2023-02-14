@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 import { useAppStore } from 'src/store/app';
 import UserHeaderShimmer from '@components/Common/Shimmer/UserHeaderShimmer';
 import WorkDetailShimmer from '@components/Common/Shimmer/WorkDetailShimmer';
-import { LensfolioPublication } from 'utils';
+import { LensfolioCollectModule, LensfolioPublication } from 'utils';
 import WorkDetail from './WorkDetail';
 import Comments from './Comments';
 // interface Props {
@@ -32,8 +32,12 @@ const Work: FC = () => {
   if (error) toast.error(error.message);
 
   const workData = data?.publication as LensfolioPublication;
-
-  // console.log('Detail Work Data', workData);
+  // const collectM = workData.collectModule as LensfolioCollectModule;
+  // console.log(
+  //   'Detail Work Data',
+  //   collectM.__typename === 'FeeCollectModuleSettings' ? collectM.amount : collectM.collectLimit
+  // );
+  console.log('Work Data', data);
   return (
     <div className="w-2/3 mx-auto">
       {loading && (

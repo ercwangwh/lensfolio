@@ -1,4 +1,6 @@
 import TimelineShimmer from '@components/Common/Shimmer/TimelineShimmer';
+import { Loader } from '@components/UI/Loader';
+import { NoDataFound } from '@components/UI/NoDataFound';
 // import { Loader } from '@components/UIElements/Loader'
 // import { NoDataFound } from '@components/UIElements/NoDataFound'
 import type { Nft, Profile } from 'lens';
@@ -10,9 +12,9 @@ import { POLYGON_CHAIN_ID, SCROLL_ROOT_MARGIN } from 'utils';
 
 import NFTCard from './NFTCard';
 
-type Props = {
+interface Props {
   profile: Profile;
-};
+}
 
 const CollectedNFTs: FC<Props> = ({ profile }) => {
   const request = {
@@ -50,9 +52,9 @@ const CollectedNFTs: FC<Props> = ({ profile }) => {
 
   if (error) console.log('Error', error);
 
-  // if (data?.nfts?.items?.length === 0) {
-  //   return <NoDataFound isCenter withImage text="No NFTs found" />
-  // }
+  if (data?.nfts?.items?.length === 0) {
+    return <NoDataFound isCenter withImage text="No NFTs found" />;
+  }
 
   return (
     <div className="w-full">

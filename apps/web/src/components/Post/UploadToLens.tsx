@@ -302,6 +302,7 @@ const UploadToLens: FC = () => {
             : null
         }
       };
+      console.log('Request:', request);
       if (currentProfile?.dispatcher?.canUseRelay) {
         await createViaDispatcher(request);
       } else {

@@ -12,6 +12,9 @@ import { LENS_API_URL } from 'utils';
 import axios from 'axios';
 import { LS_KEYS } from 'utils';
 import parseJwt from '@lib/parseJwt';
+import result from 'lens';
+import { publicationKeyFields } from '@lib/keyFields';
+import { cursorBasedPagination } from '@lib/cursorBasedPagination';
 // const API_URL = "https://api.lens.dev";
 
 const REFRESH_AUTHENTICATION_MUTATION = `
@@ -95,15 +98,52 @@ const retryLink = new RetryLink({
     initial: 100
   },
   attempts: {
-    max: 2,
+    max: 5,
     retryIf: (error) => Boolean(error)
+  }
+});
+
+const cache = new InMemoryCache({
+  possibleTypes: result.possibleTypes,
+  typePolicies: {
+    Post: { keyFields: publicationKeyFields },
+    Comment: { keyFields: publicationKeyFields },
+    Mirror: { keyFields: publicationKeyFields },
+    Query: {
+      fields: {
+        timeline: cursorBasedPagination(['request', ['profileId']]),
+        feed: cursorBasedPagination(['request', ['profileId', 'feedEventItemTypes']]),
+        feedHighlights: cursorBasedPagination(['request', ['profileId']]),
+        explorePublications: cursorBasedPagination(['request', ['sortCriteria', 'metadata']]),
+        publications: cursorBasedPagination([
+          'request',
+          ['profileId', 'collectedBy', 'commentsOf', 'publicationTypes', 'metadata']
+        ]),
+        nfts: cursorBasedPagination(['request', ['ownerAddress', 'chainIds']]),
+        notifications: cursorBasedPagination(['request', ['profileId', 'notificationTypes']]),
+        followers: cursorBasedPagination(['request', ['profileId']]),
+        following: cursorBasedPagination(['request', ['address']]),
+        search: cursorBasedPagination(['request', ['query', 'type']]),
+        profiles: cursorBasedPagination([
+          'request',
+          ['profileIds', 'ownedBy', 'handles', 'whoMirroredPublicationId']
+        ]),
+        whoCollectedPublication: cursorBasedPagination(['request', ['publicationId']]),
+        whoReactedPublication: cursorBasedPagination(['request', ['publicationId']]),
+        mutualFollowersProfiles: cursorBasedPagination([
+          'request',
+          ['viewingProfileId', 'yourProfileId', 'limit']
+        ])
+      }
+    }
   }
 });
 
 /* create the API client */
 const client = new ApolloClient({
   link: from([authLink, retryLink, httpLink]),
-  cache: new InMemoryCache()
+  // cache: new InMemoryCache()
+  cache
 });
 
 export default client;

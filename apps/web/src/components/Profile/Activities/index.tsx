@@ -14,6 +14,7 @@ import type { Profile } from 'lens';
 import AllWorks from './AllWorks';
 import CollectedNFTs from './CollectedNFTs';
 import About from './About';
+import CollectedWorks from './CollectedWorks';
 
 interface Props {
   profile: Profile;
@@ -120,7 +121,9 @@ const Activities: FC<Props> = ({ profile }) => {
         <Tab.Panel className="py-3 focus:outline-none">
           <AllWorks profile={profile} />
         </Tab.Panel>
-        <Tab.Panel className="py-3 focus:outline-none">{/* <collect channel={channel} /> */}</Tab.Panel>
+        <Tab.Panel className="py-3 focus:outline-none">
+          <CollectedWorks profile={profile} />
+        </Tab.Panel>
         <Tab.Panel className="py-3 focus:outline-none">{/* <mirror channel={channel} /> */}</Tab.Panel>
         <Tab.Panel className="py-3 focus:outline-none">{/* <comment channel={channel} /> */}</Tab.Panel>
         <Tab.Panel className="py-3 focus:outline-none">

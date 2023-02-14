@@ -12,21 +12,6 @@ import type {
   TimedFeeCollectModuleSettings
 } from 'lens';
 
-// export type VideoDraft = {
-//   preview: string;
-//   title: string;
-//   description: string;
-// };
-
-// export type BundlrDataState = {
-//   instance: WebBundlr | null;
-//   balance: string;
-//   estimatedPrice: string;
-//   deposit: string | null;
-//   depositing: boolean;
-//   showDeposit: boolean;
-// };
-
 export type FileReaderStreamType = NodeJS.ReadableStream & {
   name: string;
   size: number;
@@ -82,27 +67,12 @@ export type ReferenceModuleType = {
 //   isNSFWThumbnail: boolean;
 // };
 
-export type HLSData = {
-  hrn: string;
-  url: string;
-  type: string;
-};
-
 export type LensfolioPublication = Post & Comment & Mirror;
 
 export type IPFSUploadResult = {
   url: string;
   type: string;
 };
-
-// export type VideoUploadForm = {
-//   videoThumbnail: IPFSUploadResult | null;
-//   videoSource: string | null;
-//   playbackId: string | null;
-//   title: string;
-//   description: string;
-//   adultContent: boolean;
-// };
 
 export type StreamData = {
   streamKey: string;
@@ -166,6 +136,6 @@ export interface LensfolioWorks {
 export type QueuedCommentType = {
   comment: string;
   pubId: string;
-  txnId?: string;
-  txnHash?: string;
+  txId?: string;
+  txHash?: string;
 };
