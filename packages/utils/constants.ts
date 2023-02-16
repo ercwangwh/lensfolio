@@ -144,8 +144,8 @@ export const ALLOWED_ATTACHMENTS_TYPES = [
   'multipart/x-zip'
 ];
 
-export const SERVERLESS_URL = 'http://localhost:4784';
-
+// export const SERVERLESS_URL = 'http://localhost:4784';
+export const SERVERLESS_URL = 'https://lensfolio-api.vercel.app:4784/';
 // S3 bucket
 export const S3_BUCKET = {
   LENSFOLIO_MEDIA: 'lensfolio-media',
