@@ -61,7 +61,7 @@ const EditArea: FC = () => {
       </div> */}
       <div>
         <h1 className="text-center font-bold my-6 text-2xl">What are you working on?</h1>
-        <p className="text-center my-2 text-lg">Talk is less, show your works.</p>
+        <p className="text-center my-2 text-lg">Talk is cheap, show your works.</p>
         <div className="flex flex-col space-y-2 md:w-1/2 mx-auto mt-8">
           <TextArea
             prefix={'Title'}

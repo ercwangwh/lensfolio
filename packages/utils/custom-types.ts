@@ -133,9 +133,18 @@ export interface LensfolioWorks {
   referenceModule: ReferenceModuleType;
 }
 
+export type QueuedWorkType = {
+  coverImg: LensfolioWorkCoverImg;
+  title: string;
+  type?: string;
+  txId?: string;
+  txHash?: string;
+};
+
 export type QueuedCommentType = {
   comment: string;
   pubId: string;
+  type?: string;
   txId?: string;
   txHash?: string;
 };

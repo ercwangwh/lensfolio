@@ -47,6 +47,8 @@ import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { url } from 'inspector';
 import getIPFSLink from '@lib/getIPFSLink';
 import { getCollectModule } from '@lib/getCollectModule';
+import { useRouter } from 'next/router';
+// const router = useRouter();
 // interface Props {
 //   publication: LensfolioPublication;
 // }
@@ -65,6 +67,8 @@ const UploadToLens: FC = () => {
 
   //State
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
   // const [publicationContentError, setPublicationContentError] = useState('');
   // const [attachments, setAttachments] = useState<LensfolioAttachment[]>([]);
   // const [showUploadModal, setUploadModal] = useState(false);
@@ -96,14 +100,15 @@ const UploadToLens: FC = () => {
       loading: false
     });
   };
-
+  console.log('txnQueue', txnQueue);
   const onCompleted = (data: any) => {
     if (data?.broadcast?.reason === 'NOT_ALLOWED' || data.createPostViaDispatcher?.reason) {
       return toast.error(`${data}[Error Post Dispatcher]`);
     }
-    const txnId = data?.createPostViaDispatcher?.txId ?? data?.broadcast?.txId;
-    setTxnQueue([generateQueuedWorks(txnId), ...txnQueue]);
-    return setUploadedWorks({
+    const txId = data?.createPostViaDispatcher?.txId ?? data?.broadcast?.txId;
+    console.log('txid', txId);
+    setTxnQueue([generateQueuedWorks({ txId }), ...txnQueue]);
+    setUploadedWorks({
       statusText: 'Post',
       loading: false
     });
@@ -223,11 +228,11 @@ const UploadToLens: FC = () => {
         buttonText: 'Storing metadata...',
         loading: true
       });
-      if (uploadedWorks.title.length === 0 || uploadedWorks.coverImg.item.length === 0) {
+      if (!uploadedWorks.title || !uploadedWorks.coverImg || !uploadedWorks.content) {
         setUploadedWorks({
           loading: false
         });
-        return toast.error('Title & Cover Image should not be empty!');
+        return toast.error('Title, Description & Cover Image should not be empty!');
       }
       console.log('UploadedWorks: ', uploadedWorks);
 
@@ -248,6 +253,15 @@ const UploadToLens: FC = () => {
       //     value: getMainContentFocus()?.toLowerCase()
       //   }
       // ];
+      // const mediaInput = (): LensfolioAttachment[] => {
+      //   if (!uploadedWorks.attachment.item) return [uploadedWorks.coverImg];
+      //   else return [uploadedWorks.coverImg, uploadedWorks.attachment];
+      // };
+      const mediaInput = (): LensfolioAttachment[] => {
+        return !uploadedWorks.attachment.item
+          ? [uploadedWorks.coverImg]
+          : [uploadedWorks.coverImg, uploadedWorks.attachment];
+      };
 
       const metadata: PublicationMetadataV2Input = {
         version: '2.0.0',
@@ -260,9 +274,9 @@ const UploadToLens: FC = () => {
         external_url: null,
         name: trimify(uploadedWorks.title),
         attributes: [],
-        image: uploadedWorks.coverImg,
+        image: uploadedWorks.coverImg.item,
         imageMimeType: uploadedWorks.coverImg.type,
-        media: [uploadedWorks.coverImg, uploadedWorks.attachment],
+        media: mediaInput(),
         animation_url: null,
         contentWarning: null,
         appId: LENSFOLIO_APP_ID
@@ -311,6 +325,7 @@ const UploadToLens: FC = () => {
         });
         console.log('Typed Data:', typedData);
       }
+      router.push('/');
     } catch (error) {
       toast.error(`[Error Store & Post Video]${error}`);
     } finally {

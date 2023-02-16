@@ -25,7 +25,7 @@ const Curated: FC = () => {
   const pageInfo = data?.explorePublications?.pageInfo;
   const works = data?.explorePublications?.items as LensfolioPublication[];
 
-  //   console.log('what error', works);
+  console.log('works', works);
   return (
     <div>
       {loading && <TimelineShimmer />}

@@ -93,7 +93,8 @@ const NewComment: FC<Props> = ({ work }) => {
         comment: getValues('comment'),
         txId: txn.txId,
         txHash: txn.txHash,
-        pubId: work.id
+        pubId: work.id,
+        type: 'NEW_COMMENT'
       },
       ...txnQueue
     ]);

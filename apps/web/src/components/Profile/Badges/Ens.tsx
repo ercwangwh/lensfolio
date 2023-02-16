@@ -2,6 +2,7 @@
 import { STATIC_IMAGES_URL } from 'utils';
 import type { Profile } from 'lens';
 import type { FC } from 'react';
+import getIPFSLink from '@lib/getIPFSLink';
 
 interface Props {
   profile: Profile;

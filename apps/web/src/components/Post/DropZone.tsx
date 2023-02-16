@@ -23,7 +23,7 @@ const DropZone: FC = () => {
   const uploadedWorks = useAppStore((state) => state.uploadedWorks);
   const setUploadedWorks = useAppStore((state) => state.setUploadedWorks);
   // setUploadedWorks()
-  const [files, setFiles] = useState<File[]>([]);
+  const [file, setFile] = useState<File | null>(null);
   const [upload, setUpload] = useState(false);
   const [percent, setPercent] = useState(0);
   const { dragOver, setDragOver, onDragOver, onDragLeave, fileDropError, setFileDropError } =
@@ -40,13 +40,13 @@ const DropZone: FC = () => {
     // console.log(percentNumber);
   };
 
-  const uploadImage = async (files: any) => {
+  const uploadImage = async (file: File) => {
     // try {
 
     setUpload(true);
-    setFiles(files);
+    setFile(file);
     // const results = await uploadToIPFS(files);
-    const result = await uploadWorkCoverImgToIPFS(files[0], percentCompleted);
+    const result = await uploadWorkCoverImgToIPFS(file, percentCompleted);
     console.log('Image Cover result', result);
     setUpload(false);
     // for (const result of results) {
@@ -63,43 +63,49 @@ const DropZone: FC = () => {
   const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     setDragOver(false);
-    validateFile(e?.dataTransfer?.files);
+    // validateFile(e?.dataTransfer?.files);
+    if (e?.dataTransfer?.files?.length === 1) validateFile(e?.dataTransfer?.files[0]);
+    else toast.error('Only 1 image as cover image');
   };
 
   const onChooseFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) validateFile(e?.target?.files);
+    if (e.target.files?.length === 1) validateFile(e?.target?.files[0]);
+    else toast.error('Only 1 image as cover image');
     // const files=e?.target?.files
     // if (e.target.files?.length) setFiles([...files]);
   };
 
-  const validateFile = (files: any) => {
-    for (const file of files) {
-      if (!ALLOWED_IMAGE_TYPES.includes(file?.type)) {
-        const errorMessage = 'Image format not supported!';
-        toast.error(errorMessage);
-        return setFileDropError(errorMessage);
-      }
+  const validateFile = (file: File) => {
+    // for (const file of files) {
+    //   if (!ALLOWED_IMAGE_TYPES.includes(file?.type)) {
+    //     const errorMessage = 'Image format not supported!';
+    //     toast.error(errorMessage);
+    //     return setFileDropError(errorMessage);
+    //   }
+    // }
+    if (!ALLOWED_IMAGE_TYPES.includes(file?.type)) {
+      const errorMessage = 'Image format not supported!';
+      toast.error(errorMessage);
+      return setFileDropError(errorMessage);
     }
-    uploadImage(files);
+    uploadImage(file);
   };
 
   return (
     <div>
       {/* <MetaTags title="Select Work" /> */}
 
-      <div className="relative flex flex-col items-center justify-center flex-1 my-10">
-        {upload || files.length ? (
-          Array.from(files).map((file, index) => {
-            return (
-              // <input type="file">
-              //   input
-              <div>
-                <img key={index} src={URL.createObjectURL(file)} alt="placeholder" />
-                <ProgressBar completed={percent} />
-                {/* // </input> */}
-              </div>
-            );
-          })
+      <div className="relative flex flex-col items-center justify-center flex-1 my-10 aspect-w-16 aspect-h-9">
+        {file ? (
+          <div>
+            <img
+              src={URL.createObjectURL(file)}
+              draggable={false}
+              className="object-center bg-gray-100 dark:bg-gray-900 w-full h-full md:rounded-xl lg:w-full lg:h-full object-cover"
+              alt="placeholder"
+            />
+            <ProgressBar completed={percent} />
+          </div>
         ) : (
           <label
             className={clsx(
@@ -118,10 +124,7 @@ const DropZone: FC = () => {
               id="dropImage"
               accept={ALLOWED_IMAGE_TYPES.join(',')}
             />
-            <span className="flex justify-center mb-6 opacity-80">
-              {/* <UploadOutline className="w-14 h-14" /> */}
-              {uploadedWorks.percent}
-            </span>
+
             <span className="space-y-10 md:space-y-14">
               <div className="text-2xl font-semibold md:text-4xl">
                 <span>Drag and drop an image as thumbnail</span>
@@ -129,7 +132,7 @@ const DropZone: FC = () => {
               <div>
                 <label
                   htmlFor="chooseImage"
-                  className="px-8 py-4 text-lg text-white bg-indigo-500 cursor-pointer rounded-full"
+                  className="px-8 py-4 text-lg text-white bg-blue-500 cursor-pointer rounded-full"
                 >
                   or choose an image
                   <input

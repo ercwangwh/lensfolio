@@ -98,7 +98,7 @@ const retryLink = new RetryLink({
     initial: 100
   },
   attempts: {
-    max: 5,
+    max: 2,
     retryIf: (error) => Boolean(error)
   }
 });

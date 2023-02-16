@@ -43,8 +43,8 @@ const WorkDetail: FC<Props> = ({ work }) => {
 
   return (
     <div className="">
-      <div className="flex flex-col">
-        <div className=" aspect-w-16 aspect-h-9 ">
+      <div className="flex flex-col ">
+        <div className="aspect-w-16 aspect-h-9">
           <img
             src={thumbnailUrl}
             draggable={false}
