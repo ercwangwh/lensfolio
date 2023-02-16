@@ -15,7 +15,7 @@ import { PublicationMetadataStatusType } from 'lens';
 import Link from 'next/link';
 import { FC, useEffect } from 'react';
 import React from 'react';
-import type { QueuedCommentType } from 'utils';
+import type { LensfolioPublication, QueuedCommentType } from 'utils';
 // import getProfilePicture from 'utils/functions/getProfilePicture';
 import getAvatar from '@lib/getAvatar';
 import { useTransactionPersistStore } from 'src/store/transaction';
@@ -37,6 +37,7 @@ const QueuedComment: FC<Props> = ({ queuedComment }) => {
 
   const { cache } = useApolloClient();
   // const [getTxnHash] = useTxIdToTxHashLazyQuery();
+  console.log('cache', cache);
 
   const removeTxn = () => {
     if (txHash) {
@@ -60,7 +61,7 @@ const QueuedComment: FC<Props> = ({ queuedComment }) => {
           fields: {
             publications() {
               cache.writeQuery({
-                data: data?.publication as any,
+                data: data?.publication as LensfolioPublication,
                 query: PublicationDetailsDocument
               });
             }

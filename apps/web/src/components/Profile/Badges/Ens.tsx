@@ -13,15 +13,7 @@ const Ens: FC<Props> = ({ profile }) => {
     return null;
   }
 
-  return (
-    <img
-      className="drop-shadow-xl"
-      height={24}
-      width={24}
-      src={`${STATIC_IMAGES_URL}/badges/ens.png`}
-      alt="ENS Badge"
-    />
-  );
+  return <img className="drop-shadow-xl" height={24} width={24} src={`/ENS.svg`} alt="ENS Badge" />;
 };
 
 export default Ens;
