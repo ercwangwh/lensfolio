@@ -5,10 +5,10 @@ import toast from 'react-hot-toast';
 
 interface Props {
   onCompleted?: (data: any) => void;
-  update?: (cache: ApolloCache<any>) => void;
+  // update?: (cache: ApolloCache<any>) => void;
 }
 
-const useBroadcast = ({ onCompleted, update }: Props): { broadcast: any; data: any; loading: boolean } => {
+const useBroadcast = ({ onCompleted }: Props): { broadcast: any; data: any; loading: boolean } => {
   const [broadcast, { data, loading }] = useBroadcastMutation({
     context: {
       headers: {
@@ -16,7 +16,7 @@ const useBroadcast = ({ onCompleted, update }: Props): { broadcast: any; data: a
       }
     },
     onCompleted,
-    update,
+    // update,
     onError: (error) => {
       if (error.message === ERRORS.notMined) {
         toast.error(error.message);
