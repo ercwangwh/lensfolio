@@ -1,37 +1,28 @@
 import { CustomFiltersTypes } from 'lens';
+import getEnvConfig from './functions/getEnvConfig';
 
 export const LENSFOLIO_APP_NAME = 'Lensfoliio';
 export const LENSFOLIO_APP_DESCRIPTION =
-  'Lensfolio is a decentralized artist platform built with Lens protocol.';
+  'Lensfolio is a decentralized creator platform built with Lens protocol.';
 
 export const LENS_ENV = process.env.NEXT_PUBLIC_ENVIRONMENT;
 export const IS_MAINNET = LENS_ENV === 'mainnet';
 export const RELAYER_ENABLED = true;
-
-export const STATIC_ASSETS = 'https://assets.lenstube.xyz';
-export const STATIC_ASSETS_URL = 'https://assets.lenster.xyz';
+export const STATIC_ASSETS = 'https://assets.lensfolio.xyz';
+export const STATIC_ASSETS_URL = 'https://assets.lensfolio.xyz';
 export const STATIC_IMAGES_URL = `${STATIC_ASSETS_URL}/images`;
-export const LENSTUBE_WEBSITE_URL = IS_MAINNET ? 'https://lenstube.xyz' : 'https://testnet.lenstube.xyz';
 export const LENSFOLIO_WEBSITE_URL = IS_MAINNET ? 'https://lensfolio.xyz' : 'https://testnet.lensfolio.xyz';
-export const LENSTUBE_EMBED_URL = IS_MAINNET
-  ? 'https://embed.lenstube.xyz'
-  : 'https://test-embed.lenstube.xyz';
 
 export const EVER_API = 'https://endpoint.4everland.co';
 
-// lens
+// Lens
 export const MAINNET_API_URL = 'https://api.lens.dev';
 export const TESTNET_API_URL = 'https://api-mumbai.lens.dev';
 export const STAGING_MAINNET_API_URL = 'https://staging-api-social-polygon.lens.crtlkey.com';
 export const STAGING_TESTNET_API_URL = 'https://staging-api-social-mumbai.lens.crtlkey.com';
 export const STAGING_API_URL = IS_MAINNET ? STAGING_MAINNET_API_URL : STAGING_TESTNET_API_URL;
 export const LENS_API_URL = IS_MAINNET ? MAINNET_API_URL : TESTNET_API_URL;
-
-// lenstube api
-export const LENSTUBE_MAINNET_API_URL = 'https://api.lenstube.xyz';
-export const LENSTUBE_TESTNET_API_URL = 'https://api-testnet.lenstube.xyz';
-export const LENSTUBE_DEV_API_URL = 'http://localhost:5555';
-
+export const LENS_CUSTOM_FILTERS = [CustomFiltersTypes.Gardeners];
 export const API_URL = IS_MAINNET ? MAINNET_API_URL : TESTNET_API_URL;
 export const LENSHUB_PROXY_ADDRESS = IS_MAINNET
   ? '0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d'
@@ -44,6 +35,12 @@ export const WMATIC_TOKEN_ADDRESS = IS_MAINNET
   : '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
+// Lensfolio Serverless API
+export const SERVERLESS_MAINNET_API_URL = 'https://api.lensfolio.xyz';
+export const SERVERLESS_TESTNET_API_URL = 'https://lensfolio-api.vercel.app';
+export const SERVERLESS_DEVELOPMENT_API_URL = 'http://localhost:4784';
+export const SERVERLESS_URL = getEnvConfig().serverlessEndpoint;
+
 // polygon
 export const POLYGON_RPC_URL = IS_MAINNET
   ? 'https://rpc.ankr.com/polygon'
@@ -52,7 +49,7 @@ export const POLYGON_RPC_URL = IS_MAINNET
 export const POLYGONSCAN_URL = IS_MAINNET ? 'https://polygonscan.com' : 'https://mumbai.polygonscan.com';
 export const POLYGON_CHAIN_ID = IS_MAINNET ? 137 : 80001;
 
-export const IMGPROXY_URL = 'https://media.lenster.xyz';
+export const IMGPROXY_URL = 'https://media.lensfolio.xyz';
 
 // cdn
 export const IMAGE_CDN_URL = IS_MAINNET ? 'https://ik.imagekit.io/lenstubemain' : '';
@@ -62,17 +59,13 @@ export const SCROLL_ROOT_MARGIN = '40% 0px';
 
 // ipfs
 export const IPFS_FREE_UPLOAD_LIMIT = IS_MAINNET ? 1000 : 100;
-// export const IPFS_GATEWAY = 'https://lens.infura-ipfs.io/ipfs/';
 export const IPFS_GATEWAY = 'https://4everland.io/ipfs/';
 
 export const EVER_ENDPOINT = 'https://endpoint.4everland.co';
 export const EVER_REGION = 'us-west-2';
 // export const EVER_ACCESS_KEY = process.env.EVER_ACCESS_KEY as string;
 // export const EVER_ACCESS_SECRET = process.env.EVER_ACCESS_SECRET as string;
-export const NEXT_PUBLIC_EVER_BUCKET_NAME = IS_MAINNET ? 'lenstube' : 'testnet';
-
-// livepeer
-// export const LIVEPEER_API_KEY = process.env.LIVEPEER_API_KEY as string;
+export const NEXT_PUBLIC_EVER_BUCKET_NAME = IS_MAINNET ? 'lensfolio' : 'testnet';
 
 // bundlr
 export const BUNDLR_NODE_URL = IS_MAINNET ? 'https://node1.bundlr.network' : 'https://devnet.bundlr.network';
@@ -82,44 +75,20 @@ export const BUNDLR_METADATA_UPLOAD_URL = IS_MAINNET
 export const BUNDLR_CURRENCY = 'matic';
 export const BUNDLR_WEBSITE_URL = 'https://bundlr.network';
 export const ARWEAVE_WEBSITE_URL = 'https://arweave.net';
-// export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
+export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
 export const BUNDLR_CONNECT_MESSAGE = 'Sign to initialize & estimate upload...';
-
-// error messages
-export const ERROR_MESSAGE = 'Oops, something went wrong!';
-export const SIGN_IN_REQUIRED_MESSAGE = 'Sign in required';
 
 // App Ids
 export const LENSFOLIO_APP_ID = 'lensfolio';
-export const LENSFOLIO_BYTES_APP_ID = 'lensfolio-bytes';
-
-// official
-export const LENSTUBE_TWITTER_HANDLE = 'lenstubexyz';
-export const LENSTUBE_GITHUB_HANDLE = 'lenstube-xyz';
-export const LENSTUBE_STATUS_PAGE = 'https://status.lenstube.xyz';
-export const TALLY_VERIFICATION_FORM_URL = 'https://tally.so/r/mY5e80';
 
 // admin
 export const ADMIN_IDS = IS_MAINNET ? ['0x2d'] : ['0x2f'];
-
-// lens
-export const LENS_CUSTOM_FILTERS = [CustomFiltersTypes.Gardeners];
-// export const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/mpeg', 'video/ogg', 'video/webm', 'video/quicktime'];
 
 // other apps
 export const LENSTER_WEBSITE_URL = IS_MAINNET ? 'https://lenster.xyz' : 'https://testnet.lenster.xyz';
 export const OPENSEA_MARKETPLACE_URL = IS_MAINNET ? 'https://opensea.io' : 'https://testnets.opensea.io';
 export const RARIBLE_MARKETPLACE_URL = IS_MAINNET ? 'https://rarible.com' : 'https://testnet.rarible.com';
 export const LENSPORT_MARKETPLACE_URL = 'https://lensport.io';
-
-// misc
-// export const GIT_DEPLOYED_COMMIT_SHA = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA;
-// export const GIT_DEPLOYED_BRANCH = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF;
-// export const VERCEL_DEPLOYED_ENV = process.env.NEXT_PUBLIC_VERCEL_ENV;
-// export const MIXPANEL_API_HOST = '/collect';
-// export const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
-
-export const API_ORIGINS = ['https://lenstube.xyz', 'https://testnet.lenstube.xyz', 'http://localhost:4783'];
 
 // Named transforms
 export const AVATAR = 'avatar';
@@ -144,8 +113,6 @@ export const ALLOWED_ATTACHMENTS_TYPES = [
   'multipart/x-zip'
 ];
 
-// export const SERVERLESS_URL = 'http://localhost:4784';
-export const SERVERLESS_URL = 'https://lensfolio-api.vercel.app:4784/';
 // S3 bucket
 export const S3_BUCKET = {
   LENSFOLIO_MEDIA: 'lensfolio-media',
@@ -157,3 +124,5 @@ export const ERRORS = {
   notMined:
     'A previous transaction may not been mined yet or you have passed in a invalid nonce. You must wait for that to be mined before doing another action, please try again in a few moments. Nonce out of sync.'
 };
+export const ERROR_MESSAGE = 'Oops, something went wrong!';
+export const SIGN_IN_REQUIRED_MESSAGE = 'Sign in required';
