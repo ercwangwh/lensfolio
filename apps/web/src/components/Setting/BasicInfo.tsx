@@ -27,8 +27,7 @@ import {
   LENS_PERIPHERY_ADDRESS,
   LENSFOLIO_APP_ID,
   LENSFOLIO_WEBSITE_URL,
-  RELAYER_ENABLED,
-  TALLY_VERIFICATION_FORM_URL
+  RELAYER_ENABLED
 } from 'utils';
 // import { VERIFIED_CHANNELS } from 'utils/data/verified';
 // import getChannelCoverPicture from 'utils/functions/getChannelCoverPicture';
@@ -293,7 +292,7 @@ const BasicInfo = ({ profile }: Props) => {
           </h6>
           {/* {IS_MAINNET && !VERIFIED_CHANNELS.includes(channel?.id) && channel.stats.totalFollowers > 500 && (
             <Link
-              href={TALLY_VERIFICATION_FORM_URL}
+              href={}
               onClick={() => Analytics.track(TRACK.GET_VERIFIED)}
               target="_blank"
               rel="noreferer noreferrer"
