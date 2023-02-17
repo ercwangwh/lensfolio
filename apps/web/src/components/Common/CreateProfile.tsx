@@ -1,22 +1,20 @@
 // import React, { ReactNode } from 'react';
-
 import Header from './Header';
 import { FC, ReactNode, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTheme } from 'next-themes';
-import { useCreateProfileMutation } from 'lens';
+import { useCreateProfileMutation, Scalars } from 'lens';
 import { Button } from '@components/UI/Button';
 import type { CreateProfileRequest } from 'lens';
 import onError from '@lib/onError';
+import { Input } from '@components/UI/Input';
 
 const CreateProfile: FC = () => {
   const [handle, setHandle] = useState('');
-  // CreateProfileRequest
-  const request = { handle: handle };
 
   const [createProfileMutation, { data, loading }] = useCreateProfileMutation({
     variables: {
-      request // value for 'request'
+      request: { handle: handle } // value for 'request'
     },
     onCompleted: (data) => {
       data.createProfile.__typename === 'RelayerResult' ? toast.success(data.createProfile.txId) : null;
@@ -28,12 +26,13 @@ const CreateProfile: FC = () => {
     setHandle(evt.target.value);
   };
   const onCreate = () => {
+    if (!handle) return toast.error('Handlename should not be null');
     createProfileMutation();
   };
 
   return (
-    <div>
-      <input onChange={handleChange}></input>
+    <div className="flex flex-row">
+      <Input onChange={handleChange} placeholder="create testnet profile"></Input>
       <Button disabled={loading} onClick={onCreate}>
         Create
       </Button>

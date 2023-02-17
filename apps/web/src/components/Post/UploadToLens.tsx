@@ -48,6 +48,8 @@ import { url } from 'inspector';
 import getIPFSLink from '@lib/getIPFSLink';
 import { getCollectModule } from '@lib/getCollectModule';
 import { useRouter } from 'next/router';
+
+import { Loader } from '@components/UI/Loader';
 // const router = useRouter();
 // interface Props {
 //   publication: LensfolioPublication;
@@ -357,7 +359,11 @@ const UploadToLens: FC = () => {
       <Button disabled={uploadedWorks.loading} onClick={resetToDefaults}>
         Cancle
       </Button>
-      <Button disabled={uploadedWorks.loading} onClick={createPublication}>
+      <Button
+        disabled={uploadedWorks.loading}
+        icon={isSubmitting ? <Loader /> : null}
+        onClick={createPublication}
+      >
         Upload to lens
       </Button>
       {/* <Button onClick={createPublication}>upload to ipfs</Button> */}

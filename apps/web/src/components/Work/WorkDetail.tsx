@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import UserProfileShimmer from '@components/Common/Shimmer/UserProfileShimmer';
 import UserPageShimmer from '@components/Common/Shimmer/UserPageShimmer';
 import UserHeaderShimmer from '@components/Common/Shimmer/UserHeaderShimmer';
@@ -9,6 +9,7 @@ import getAvatar from '@lib/getAvatar';
 import type { Publication } from 'lens';
 import { Button } from '@components/UI/Button';
 import getIPFSLink from '@lib/getIPFSLink';
+import { Loader } from '@components/UI/Loader';
 import { IPFS_GATEWAY } from 'utils';
 
 interface Props {
@@ -19,6 +20,7 @@ const WorkDetail: FC<Props> = ({ work }) => {
   //   const selectedProfile = useAppStore((state) => state.selectedProfile);
   // const thumbnailUrl = getIPFSLink(work.metadata.media[0].original.url);
   // const thumbnailUrl = getIPFSLink(work.metadata.image);
+  const [downloading, setDownloading] = useState(false);
   const thumbnailUrl =
     work.metadata.media.length > 0
       ? getIPFSLink(work.metadata.media[0].original.url)
@@ -28,6 +30,7 @@ const WorkDetail: FC<Props> = ({ work }) => {
     work.metadata.media.length > 1 ? getIPFSLink(work.metadata.media[1].original.url) : null;
 
   async function downloadFile(url: string) {
+    setDownloading(true);
     const filename = url.substring(url.lastIndexOf('/') + 1);
     const file = await fetch(url);
     const fileBlob = await file.blob();
@@ -39,6 +42,7 @@ const WorkDetail: FC<Props> = ({ work }) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setDownloading(false);
   }
 
   return (
@@ -61,19 +65,11 @@ const WorkDetail: FC<Props> = ({ work }) => {
               }}
               size="lg"
               disabled={!work.hasCollectedByMe}
+              icon={downloading ? <Loader /> : null}
             >
               {work.hasCollectedByMe ? 'Download Attachment' : 'Collect To Download Attachment'}
             </Button>
           ) : null}
-
-          {/* <p>{work.metadata.description}</p>
-            {/* <form
-              method="get"
-              action={getIPFSLink('ipfs://bafybeicpqlqdlcace2ti2uf2wa7arisxvngkzixg7coogcuouvd5l7kxju')}
-            >
-              <button type="submit">Download!</button>
-            </form> */}
-          {/* <div>{url}</div> */}
         </div>
       </div>
       <div className="mt-4 md:mt-6"></div>

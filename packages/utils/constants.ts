@@ -37,7 +37,7 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 // Lensfolio Serverless API
 export const SERVERLESS_MAINNET_API_URL = 'https://api.lensfolio.xyz';
-export const SERVERLESS_TESTNET_API_URL = 'https://lensfolio-api.vercel.app';
+export const SERVERLESS_TESTNET_API_URL = 'https://api-testnet.lensfolio.xyz';
 export const SERVERLESS_DEVELOPMENT_API_URL = 'http://localhost:4784';
 export const SERVERLESS_URL = getEnvConfig().serverlessEndpoint;
 

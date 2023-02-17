@@ -1,11 +1,11 @@
-import clsx from 'clsx'
-import type { FC } from 'react'
-import React from 'react'
+import clsx from 'clsx';
+import type { FC } from 'react';
+import React from 'react';
 
 type Props = {
-  size?: 'sm' | 'md'
-  className?: string
-}
+  size?: 'sm' | 'md';
+  className?: string;
+};
 
 export const Loader: FC<Props> = ({ size = 'md', className }) => {
   return (
@@ -13,14 +13,10 @@ export const Loader: FC<Props> = ({ size = 'md', className }) => {
       <div className="grid space-y-2 justify-items-center">
         <svg
           role="status"
-          className={clsx(
-            'text-gray-400 animate-spin dark:fill-white fill-black',
-            className,
-            {
-              'w-5 h-5': size === 'md',
-              'w-3.5 h-3.5': size === 'sm'
-            }
-          )}
+          className={clsx('text-gray-400 animate-spin dark:fill-white fill-gray-600', className, {
+            'w-5 h-5': size === 'md',
+            'w-3.5 h-3.5': size === 'sm'
+          })}
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -36,5 +32,5 @@ export const Loader: FC<Props> = ({ size = 'md', className }) => {
         </svg>
       </div>
     </div>
-  )
-}
+  );
+};
