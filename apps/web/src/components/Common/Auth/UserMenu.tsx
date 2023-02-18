@@ -20,7 +20,7 @@ import {
   SunIcon,
   MoonIcon
 } from '@heroicons/react/24/outline';
-import { NextLink } from '@components/UI/DropMenu';
+// import { NextLink } from '@components/UI/DropMenu';
 import { useGlobalModalStateStore } from 'src/store/modals';
 // interface props {
 //   profile: Profile;
@@ -86,13 +86,14 @@ const UserMenu = () => {
         </div>
         {currentProfile && (
           <>
-            <Menu.Item
-              as={NextLink}
-              href={`/user/${currentProfile?.handle}`}
-              className="inline-flex items-center w-full p-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              <BanknotesIcon className="w-4 h-4" />
-              <span className="truncate whitespace-nowrap">Your Profile</span>
+            <Menu.Item>
+              <Link
+                href={`/user/${currentProfile?.handle}`}
+                className="inline-flex items-center w-full p-2 space-x-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                <BanknotesIcon className="w-4 h-4" />
+                <span className="truncate whitespace-nowrap">Your Profile</span>
+              </Link>
             </Menu.Item>
             <button
               type="button"
