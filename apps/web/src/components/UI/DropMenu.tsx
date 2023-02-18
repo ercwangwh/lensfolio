@@ -3,7 +3,9 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import type { FC, ReactElement, ReactNode } from 'react';
 import React from 'react';
-
+// import { forwardRef } from 'react';
+import { LinkHTMLAttributes } from 'react';
+import { forwardRef, ForwardedRef } from 'react';
 interface Props {
   trigger: ReactNode;
   children: ReactElement;
@@ -14,11 +16,17 @@ interface Props {
   position?: 'right' | 'left' | 'bottom';
 }
 
-export const NextLink = ({ href, children, ...rest }: Record<string, any>) => (
-  <Link href={href} {...rest}>
+export const NextLink = forwardRef(({ href, children, ...rest }: Record<string, any>, ref: any) => (
+  <Link href={href} {...rest} ref={ref}>
     {children}
   </Link>
-);
+));
+
+// export const NextLink = forwardRef<ForwardedRef<HTMLAnchorElement>, { href: string; children: React.ReactNode }>(({ href, children, ...rest }, ref) => (
+//   <Link href={href} {...rest} ref={ref}>
+//     {children}
+//   </Link>
+// ));
 
 const DropMenu: FC<Props> = ({ trigger, children, positionClassName, position = 'right' }) => (
   <Menu as="div" className="relative">

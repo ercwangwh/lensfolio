@@ -61,7 +61,7 @@ const Comment: FC<Props> = ({ comment }) => {
   return (
     <div className="flex items-start justify-between">
       <div className="flex items-start justify-between">
-        <Link href={`/channel/${comment.profile?.handle}`} className="flex-none mr-3 mt-0.5">
+        <Link href={`/user/${comment.profile?.handle}`} className="flex-none mr-3 mt-0.5">
           <img
             src={getAvatar(comment.profile, false)}
             className="rounded-full w-7 h-7"
@@ -72,7 +72,7 @@ const Comment: FC<Props> = ({ comment }) => {
         <div className="flex flex-col items-start mr-2">
           <span className="flex items-center mb-1 space-x-1">
             <Link
-              href={`/channel/${comment.profile?.handle}`}
+              href={`/user/${comment.profile?.handle}`}
               className="flex items-center space-x-1 text-sm font-medium"
             >
               <span>{comment?.profile?.handle}</span>

@@ -47,6 +47,7 @@ import getTextNftUrl from '@lib/getTextNftUrl';
 import { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
 import { Input } from '@components/UI/Input';
 import { useTransactionPersistStore } from 'src/store/transaction';
+import { Loader } from '@components/UI/Loader';
 
 interface Props {
   work: LensfolioPublication;
@@ -305,7 +306,7 @@ const NewComment: FC<Props> = ({ work }) => {
           // }}
           // mentionsSelector="input-mentions-single"
         />
-        <Button disabled={loading} loading={loading}>
+        <Button disabled={loading} loading={loading} icon={loading ? <Loader /> : null}>
           Comment
         </Button>
       </form>

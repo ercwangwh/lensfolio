@@ -264,7 +264,12 @@ const BasicInfo = ({ profile }: Props) => {
           className="object-cover object-center w-full h-48 bg-white rounded-xl md:h-56 dark:bg-gray-900"
           draggable={false}
           // alt={`${profile.handle}'s cover`}
-          style={{ backgroundColor: '#3b82f6' }}
+          style={{
+            backgroundImage: 'url(/banner.png)',
+            backgroundColor: '#3b82f6',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center'
+          }}
         />
         <label
           htmlFor="chooseCover"

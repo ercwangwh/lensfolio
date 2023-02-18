@@ -13,13 +13,15 @@ import { LensfolioPublication } from 'utils';
 import { Button } from '@components/UI/Button';
 import Like from './Actions/Like';
 import CollectWork from './Actions/Collect';
+import Delete from './Actions/Delete';
+
 interface Props {
   work: LensfolioPublication;
 }
 
 const WorkHeader: FC<Props> = ({ work }) => {
   // const selectedProfile = useAppStore((state) => state.selectedProfile);
-
+  const currentProfile = useAppStore((state) => state.currentProfile);
   // useProfileQuery({variables:{request:{}}})
   console.log('Work', work);
 
@@ -46,6 +48,7 @@ const WorkHeader: FC<Props> = ({ work }) => {
             {work.collectModule.__typename !== 'RevertCollectModuleSettings' ? (
               <CollectWork work={work} isFullPublication={true}></CollectWork>
             ) : null}
+            {/* {currentProfile?.id === work.profile.id ? <Delete work={work}></Delete> : null} */}
           </div>
         </div>
         <div className="mt-4 md:mt-6"></div>
