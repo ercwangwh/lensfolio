@@ -13,13 +13,13 @@ const Curated: FC = () => {
   const request = {
     sortCriteria: PublicationSortCriteria.Latest,
     limit: 32,
-    noRandomize: false,
+    noRandomize: true,
     sources: [LENSFOLIO_APP_ID],
     publicationTypes: [PublicationTypes.Post]
   };
 
   const { data, loading, error } = useExploreQuery({
-    variables: { request, reactionRequest: currentProfile ? { profileId: currentProfile?.id } : null }
+    variables: { request }
   });
 
   const pageInfo = data?.explorePublications?.pageInfo;

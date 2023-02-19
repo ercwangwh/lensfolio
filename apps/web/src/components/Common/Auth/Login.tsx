@@ -26,7 +26,7 @@ const Login: FC = () => {
   const { chain } = useNetwork();
   const [challengequery, { error: errorChallenge }] = useChallengeLazyQuery({ fetchPolicy: 'no-cache' });
   const [authenticate, { error: errorAuthenticate }] = useAuthenticateMutation();
-  const [getProfiles, { error: errorProfiles }] = useUserProfilesLazyQuery();
+  const [getProfiles, { error: errorProfiles }] = useUserProfilesLazyQuery({ fetchPolicy: 'no-cache' });
 
   const onError = () => {
     setLoading(false);
