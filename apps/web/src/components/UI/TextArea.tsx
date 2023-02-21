@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type { ComponentProps } from 'react';
+import { ComponentProps, useEffect } from 'react';
 import React, { forwardRef, useId } from 'react';
 
 interface Props extends ComponentProps<'textarea'> {
@@ -14,6 +14,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>(function TextArea
   ref
 ) {
   const id = useId();
+
   return (
     <label className="w-full" htmlFor={id}>
       {label && (
@@ -25,7 +26,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>(function TextArea
         <textarea
           id={id}
           className={clsx(
-            validationError?.length ? '!border-red-500' : 'focus:ring-1 focus:ring-sky-500',
+            validationError?.length ? '!border-red-500' : 'without-focus-ring',
             'bg-white text-sm no-scrollbar px-2.5 py-2 rounded-xl dark:bg-gray-900 border border-gray-300 dark:border-gray-700 outline-none disabled:opacity-60 disabled:bg-gray-500 disabled:bg-opacity-20 w-full',
             className
           )}

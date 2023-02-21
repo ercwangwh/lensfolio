@@ -50,6 +50,7 @@ import { getCollectModule } from '@lib/getCollectModule';
 import { useRouter } from 'next/router';
 
 import { Loader } from '@components/UI/Loader';
+import getTags from '@lib/getTags';
 // const router = useRouter();
 // interface Props {
 //   publication: LensfolioPublication;
@@ -271,7 +272,7 @@ const UploadToLens: FC = () => {
         description: trimify(uploadedWorks.title),
         content: trimify(uploadedWorks.content),
         locale: 'en-US',
-        tags: ['lenfolio_example'],
+        tags: [uploadedWorks.workCategory.tag, ...getTags(uploadedWorks.content)],
         mainContentFocus: PublicationMainFocus.Article,
         external_url: null,
         name: trimify(uploadedWorks.title),

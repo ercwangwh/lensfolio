@@ -7,10 +7,14 @@
 }
 
 .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  
+  display: none;
+}
+
 .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.without-focus-ring {
+  @apply focus:ring-0 focus:ring-offset-0;
+}

@@ -1,6 +1,7 @@
 // import UploadOutline from '@components/Common/Icons/UploadOutline'
 // import MetaTags from '@components/Common/MetaTags'
 // const FormData = require('form-data')
+import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
 import { useAppStore } from 'src/store/app';
 import clsx from 'clsx';
 // import fileReaderStream from 'filereader-stream'
@@ -13,6 +14,9 @@ import { uploadFileToIPFS, uploadWorkCoverImgToIPFS } from '@lib/uploadToIPFS';
 
 import { Input } from '@components/UI/Input';
 import ProgressBar from '@components/UI/ProgressBar';
+import { Button } from '@components/UI/Button';
+import { LENSFOLIO_WORK_COVER_IMG_DEFAULT } from 'src/store/app';
+import { Loader } from '@components/UI/Loader';
 // interface Props {
 //   attachments: LensfolioAttachment[];
 //   setAttachments: Dispatch<LensfolioAttachment[]>;
@@ -76,13 +80,6 @@ const DropZone: FC = () => {
   };
 
   const validateFile = (file: File) => {
-    // for (const file of files) {
-    //   if (!ALLOWED_IMAGE_TYPES.includes(file?.type)) {
-    //     const errorMessage = 'Image format not supported!';
-    //     toast.error(errorMessage);
-    //     return setFileDropError(errorMessage);
-    //   }
-    // }
     if (!ALLOWED_IMAGE_TYPES.includes(file?.type)) {
       const errorMessage = 'Image format not supported!';
       toast.error(errorMessage);
@@ -91,11 +88,17 @@ const DropZone: FC = () => {
     uploadImage(file);
   };
 
+  const handleDelete = () => {
+    setFile(null);
+    setPercent(0);
+    setUploadedWorks({ coverImg: LENSFOLIO_WORK_COVER_IMG_DEFAULT });
+  };
+
   return (
-    <div>
+    <>
       {/* <MetaTags title="Select Work" /> */}
 
-      <div className="relative flex flex-col items-center justify-center flex-1 my-10 aspect-w-16 aspect-h-9">
+      <div className="relative flex flex-col items-center justify-center flex-1 aspect-w-2 aspect-h-1">
         {file ? (
           <div>
             <img
@@ -104,12 +107,21 @@ const DropZone: FC = () => {
               className="object-center bg-gray-100 dark:bg-gray-900 w-full h-full md:rounded-xl lg:w-full lg:h-full object-cover"
               alt="placeholder"
             />
-            <ProgressBar completed={percent} />
+            <Button
+              light={true}
+              className="text-black text-xl"
+              style={{ position: 'absolute', top: 5, right: 5 }}
+              disabled={upload}
+              onClick={handleDelete}
+            >
+              {upload ? <Loader /> : 'X'}
+            </Button>
+            {percent ? <ProgressBar completed={percent} /> : null}
           </div>
         ) : (
           <label
             className={clsx(
-              'w-full p-10 md:p-20 focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-3xl',
+              'w-full focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-xl cursor-pointer',
               { '!border-green-500': dragOver }
             )}
             htmlFor="dropImage"
@@ -126,23 +138,9 @@ const DropZone: FC = () => {
             />
 
             <span className="space-y-10 md:space-y-14">
-              <div className="text-2xl font-semibold md:text-4xl">
-                <span>Drag and drop an image as thumbnail</span>
-              </div>
-              <div>
-                <label
-                  htmlFor="chooseImage"
-                  className="px-8 py-4 text-lg text-white bg-blue-500 cursor-pointer rounded-full"
-                >
-                  or choose an image
-                  <input
-                    id="chooseImage"
-                    onChange={onChooseFile}
-                    type="file"
-                    className="hidden"
-                    accept={ALLOWED_IMAGE_TYPES.join(',')}
-                  />
-                </label>
+              <div className="flex flex-col text-2xl items-center font-semibold md:text-xl text-blue-500">
+                <CloudArrowUpIcon className="w-8 h8 text-blue-500" />
+                <span>Choose or drag and drop a cover image</span>
               </div>
               {fileDropError && <div className="font-medium text-red-500">{fileDropError}</div>}
             </span>
@@ -152,7 +150,7 @@ const DropZone: FC = () => {
         {/* <button onClick={upload}></button> */}
         {/* <Input prefix={'Description'}></Input> */}
       </div>
-    </div>
+    </>
   );
 };
 export default DropZone;
