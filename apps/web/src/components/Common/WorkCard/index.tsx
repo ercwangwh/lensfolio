@@ -56,6 +56,7 @@ const WorkCard: FC<Props> = ({ work }) => {
   // const thumbnailUrl = getIPFSLink(work.metadata.image);
   // console.log(work.metadata.media);
   // const thumbnailUrl = ;
+  // console.log('onchainuri,', work.onChainContentURI);
   const handleClick = () => {
     setShowWorkDetailModal(true);
   };

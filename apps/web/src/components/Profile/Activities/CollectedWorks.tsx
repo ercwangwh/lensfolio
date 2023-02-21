@@ -22,7 +22,7 @@ const CollectedWorks: FC<Props> = ({ profile }) => {
     metadata: { mainContentFocus: [PublicationMainFocus.Image, PublicationMainFocus.Article] },
     // customFilters: LENS_CUSTOM_FILTERS,
     collectedBy: profile.ownedBy,
-    profileId: profile?.id,
+    // profileId: profile?.id,
     sources: [LENSFOLIO_APP_ID]
   };
 

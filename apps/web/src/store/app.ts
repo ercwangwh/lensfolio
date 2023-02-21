@@ -4,6 +4,7 @@ import type { Profile } from 'lens';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { WMATIC_TOKEN_ADDRESS } from 'utils';
+import { CREATOR_WORK_CATEGORIES } from 'utils/categories';
 
 interface AppState {
   profiles: Profile[] | [];
@@ -34,6 +35,7 @@ export const UPLOADED_WORKS_DEAFULT = {
   content: '',
   percent: 0,
   title: '',
+  workCategory: CREATOR_WORK_CATEGORIES[0],
   coverImg: LENSFOLIO_WORK_COVER_IMG_DEFAULT,
   loading: false,
   statusText: '',

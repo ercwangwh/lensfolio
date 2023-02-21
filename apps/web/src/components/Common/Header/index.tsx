@@ -1,6 +1,5 @@
 import React from 'react';
-import Login from '../Auth/Login';
-import Search from './Search';
+
 import type { FC } from 'react';
 import NavItems from './NavItems';
 import Post from '@components/Post';
@@ -10,6 +9,10 @@ import { Button } from '@components/UI/Button';
 import ToggleDispatcher from './ToggleDispatcher';
 import { useAppPersistStore, useAppStore } from 'src/store/app';
 import CreateProfile from '../CreateProfile';
+
+import Login from '../Auth/Login';
+// import Search from './Search';
+import GlobalSearchBar from '../Search/GlobalSearchBar';
 const Header: FC = () => {
   const router = useRouter();
   // const profileId = useAppPersistStore((state) => state.profileId);
@@ -22,7 +25,7 @@ const Header: FC = () => {
           <div className="flex justify-between w-full gap-4 items-center">
             <NavItems />
             <div className="md:w-96">
-              <Search />
+              <GlobalSearchBar />
             </div>
             <div className="flex flex-row justify-end space-x-2 md:space-x-3 md:w-96">
               {currentProfile && <Button onClick={() => router.push('/post')}>Upload</Button>}

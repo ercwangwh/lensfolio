@@ -4,6 +4,7 @@ import getEnvConfig from './functions/getEnvConfig';
 export const LENSFOLIO_APP_NAME = 'Lensfoliio';
 export const LENSFOLIO_APP_DESCRIPTION =
   'Lensfolio is a decentralized creator platform built with Lens protocol.';
+export const LENSFOLIO_OG_IMAGE = '/banner.png';
 
 export const LENS_ENV = process.env.NEXT_PUBLIC_ENVIRONMENT;
 export const IS_MAINNET = LENS_ENV === 'mainnet';

@@ -1,4 +1,4 @@
-/* pages/index.js */
+import MetaTags from '@components/Common/MetaTags';
 import { useEffect, useState } from 'react';
 // import { client, exploreProfiles } from "../api";
 import client from '../../apollo';
@@ -92,6 +92,7 @@ function Home() {
   return (
     <div>
       {/* <CategoryFilters /> */}
+      <MetaTags />
       <div className="flex flex-row pb-8">
         <SortCriteriaFilters />
       </div>

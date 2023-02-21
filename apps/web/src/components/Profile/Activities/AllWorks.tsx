@@ -18,7 +18,7 @@ const AllWorks: FC<Props> = ({ profile }) => {
   const request = {
     publicationTypes: [PublicationTypes.Post],
     limit: 32,
-    metadata: { mainContentFocus: [PublicationMainFocus.Image] },
+    metadata: { mainContentFocus: [PublicationMainFocus.Article] },
     // customFilters: LENS_CUSTOM_FILTERS,
     profileId: profile?.id,
     sources: [LENSFOLIO_APP_ID]
