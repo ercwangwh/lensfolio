@@ -5,7 +5,7 @@ import { ChangeEvent, FC, ReactNode, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { LensfolioWorks } from 'utils';
 import DropZone from './DropZone';
-
+import dynamic from 'next/dynamic';
 import { Attachments } from './Attachments';
 import CollectModule from './CollectModule';
 import ReferenceModule from './ReferenceModule';
@@ -20,13 +20,18 @@ import PostSetting from './PostSetting';
 import getAvatar from '@lib/getAvatar';
 import clsx from 'clsx';
 import { shortenAddress } from '@lib/shortenAddress';
-
+import { OutputData } from '@editorjs/editorjs';
 // import uploadToIPFS from '@lib/uploadToIPFS';
 // interface Props {
 //   // onUpload: (data: VideoFormData) => void;
 //   // onCancel: () => void;
 //   uploadedWorks: LensfolioWorks | null;
 // }
+// important that we use dynamic loading here
+// editorjs should only be rendered on the client side.
+const EditorBlock = dynamic(() => import('./Editor/Editor'), {
+  ssr: false
+});
 
 const formSchema = z.object({
   title: z
@@ -42,6 +47,7 @@ export type VideoFormData = z.infer<typeof formSchema>;
 
 const EditArea: FC = () => {
   const [title, setTitle] = useState('');
+  const [data, setData] = useState<OutputData>();
   // uploadedWorks?.title;
   // setUploadedWorks()
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -158,6 +164,7 @@ const EditArea: FC = () => {
           <CollectModule />
           <ReferenceModule />
           <Category />
+          <EditorBlock onChange={setData} holder="editorjs-container" />
           <UploadToLens />
         </div>
       </div>
