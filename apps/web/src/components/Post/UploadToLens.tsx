@@ -272,7 +272,7 @@ const UploadToLens: FC = () => {
         description: trimify(uploadedWorks.title),
         content: trimify(uploadedWorks.content),
         locale: 'en-US',
-        tags: [uploadedWorks.workCategory.tag, ...getTags(uploadedWorks.content)],
+        tags: [...getTags(uploadedWorks.content)],
         mainContentFocus: PublicationMainFocus.Article,
         external_url: null,
         name: trimify(uploadedWorks.title),
@@ -330,14 +330,14 @@ const UploadToLens: FC = () => {
       }
       router.push('/');
     } catch (error) {
-      toast.error(`[Error Store & Post Video]${error}`);
+      toast.error(`[Error Store & Post Work]${error}`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-center">
       {/* <Modal
         title="Upload"
         icon={<BeakerIcon className="w-5 h-5 text-brand" />}
@@ -357,9 +357,9 @@ const UploadToLens: FC = () => {
       >
         Upload
       </Button> */}
-      <Button disabled={uploadedWorks.loading} onClick={resetToDefaults}>
+      {/* <Button disabled={uploadedWorks.loading} onClick={resetToDefaults}>
         Cancle
-      </Button>
+      </Button> */}
       <Button
         disabled={uploadedWorks.loading}
         icon={isSubmitting ? <Loader /> : null}

@@ -21,6 +21,8 @@ import getAvatar from '@lib/getAvatar';
 import clsx from 'clsx';
 import { shortenAddress } from '@lib/shortenAddress';
 import { OutputData } from '@editorjs/editorjs';
+import { UserInfo } from './UserInfo';
+import TextareaAutosize from 'react-textarea-autosize';
 // import uploadToIPFS from '@lib/uploadToIPFS';
 // interface Props {
 //   // onUpload: (data: VideoFormData) => void;
@@ -29,7 +31,7 @@ import { OutputData } from '@editorjs/editorjs';
 // }
 // important that we use dynamic loading here
 // editorjs should only be rendered on the client side.
-const EditorBlock = dynamic(() => import('./Editor/Editor'), {
+const EditorBlock = dynamic(() => import('./ContentEditor/Editor'), {
   ssr: false
 });
 
@@ -43,7 +45,7 @@ const formSchema = z.object({
   isSensitiveContent: z.boolean()
 });
 
-export type VideoFormData = z.infer<typeof formSchema>;
+export type WorkFormData = z.infer<typeof formSchema>;
 
 const EditArea: FC = () => {
   const [title, setTitle] = useState('');
@@ -90,7 +92,7 @@ const EditArea: FC = () => {
     setValue,
     watch,
     clearErrors
-  } = useForm<VideoFormData>({
+  } = useForm<WorkFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: uploadedWorks.title,
@@ -109,36 +111,24 @@ const EditArea: FC = () => {
         <PostSetting></PostSetting>
       </div> */}
       <div>
-        {/* <h1 className="text-center font-bold my-6 text-2xl">What are you working on?</h1>
-        <p className="text-center my-2 text-lg">Talk is cheap, show your works.</p> */}
         <div className="flex flex-col space-y-2 md:w-1/2 mx-auto">
           <DropZone />
-          <div className="flex flex-row space-x-3 items-center">
-            <img
-              className="object-cover bg-white rounded-full dark:bg-theme w-8 h-8 md:w-9 md:h-9"
-              src={getAvatar(currentProfile, false)}
-              alt="avatar picture"
-              draggable={false}
-            />
-            <span className=" font-semibold">{currentProfile?.handle}</span>
-            <span className=" bg-gray-200 p-1 rounded-full text-xs">
-              {shortenAddress(currentProfile?.ownedBy)}
-            </span>
-          </div>
           <div className="relative">
-            <TextArea
-              // prefix={'Title'}
-              className="border-none text-5xl resize-none"
+            <TextareaAutosize
+              className={clsx(
+                watch('title')?.length > 100 ? 'text-red-500' : 'text-blue-500',
+                'block w-full text-blue-500 text-5xl font-medium no-scrollbar placeholder-gray-500 focus:outline-none resize-none'
+              )}
+              placeholder="Give it a title"
               onChange={(evt) => {
                 const value = evt.target.value;
+                console.log(value);
                 setValue('title', value);
                 setUploadedWorks({ title: value });
                 clearErrors('title');
               }}
-              placeholder="Your title"
               value={watch('title')}
-              rows={1}
-            />
+            ></TextareaAutosize>
             <div className="absolute bottom-0 right-1 mt-1 flex items-center justify-end">
               <span
                 className={clsx('text-[10px] opacity-50', {
@@ -150,20 +140,8 @@ const EditArea: FC = () => {
             </div>
           </div>
 
-          <TextArea
-            // prefix={'Content'}
-            onChange={(evt) => {
-              const data = evt.target.value;
-              setUploadedWorks({ content: data });
-              // console.log(uploadedWorks);
-            }}
-            placeholder="Your content of your design works"
-            rows={5}
-          ></TextArea>
-          <Attachments />
-          <CollectModule />
-          <ReferenceModule />
-          <Category />
+          <UserInfo />
+
           <EditorBlock onChange={setData} holder="editorjs-container" />
           <UploadToLens />
         </div>

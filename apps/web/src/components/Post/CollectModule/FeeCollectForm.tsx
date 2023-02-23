@@ -157,7 +157,7 @@ const FeeCollectForm: FC<Props> = ({ uploadedWork, setCollectType, enabledCurren
           validationError={errors.referralPercent?.message}
         />
         <span className="text-xs opacity-60">
-          Percent of collect revenue can be shared with anyone who mirrors this video.
+          Percent of collect revenue can be shared with anyone who mirrors this work.
         </span>
       </div>
       <div className="flex justify-end">

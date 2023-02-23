@@ -12,7 +12,7 @@ interface Props {
 const ChargeQuestion: FC<Props> = ({ uploadedWork, setCollectType }) => {
   return (
     <div className="space-y-2">
-      <h6>Would you like to set collect price for this video?</h6>
+      <h6>Would you like to set collect price for this work?</h6>
       <div className="flex flex-wrap gap-1.5 md:flex-nowrap">
         <button
           type="button"

@@ -17,7 +17,7 @@ const Editor = ({ data, onChange, holder }: Props) => {
       const editor = new EditorJS({
         holder: holder,
         tools: EDITOR_TOOLS,
-        data: { blocks: DEFAULT_BLOCKS },
+        data,
         async onChange(api, event) {
           const data = await api.saver.save();
           onChange(data);

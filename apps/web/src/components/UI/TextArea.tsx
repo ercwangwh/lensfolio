@@ -1,6 +1,7 @@
 import clsx from 'clsx';
-import { ComponentProps, useEffect } from 'react';
-import React, { forwardRef, useId } from 'react';
+import { ComponentProps, useState } from 'react';
+import React, { forwardRef, useId, ForwardRefRenderFunction } from 'react';
+// import TextareaAutosize from 'react-textarea-autosize';
 
 interface Props extends ComponentProps<'textarea'> {
   label?: string;
@@ -8,6 +9,13 @@ interface Props extends ComponentProps<'textarea'> {
   className?: string;
   validationError?: string;
 }
+
+// interface TextareaTitleProps extends ComponentProps<'textarea'> {
+//   maxRows?: number;
+//   placeholder?: string;
+//   onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+//   validationError?: string;
+// }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, Props>(function TextArea(
   { label, validationError, className = '', ...props },
@@ -38,3 +46,35 @@ export const TextArea = forwardRef<HTMLTextAreaElement, Props>(function TextArea
     </label>
   );
 });
+
+// export const TextareaTitle = forwardRef<HTMLTextAreaElement, TextareaTitleProps>(
+//   ({ maxRows, placeholder = 'Give it a title', onChange, validationError }, ref) => {
+//     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+//       const textarea = event.target as HTMLTextAreaElement;
+//       const length = textarea.value.length;
+//       console.log(length);
+//       if (length >= 100) {
+//         event.preventDefault();
+//       }
+//     };
+
+//     return (
+//       <div>
+//         <TextareaAutosize
+//           maxRows={maxRows}
+//           className={clsx(
+//             validationError?.length ? '!border-red-500' : 'without-focus-ring',
+//             'block w-full text-blue-500 text-5xl font-medium no-scrollbar placeholder-gray-500 focus:outline-none resize-none'
+//           )}
+//           placeholder={placeholder}
+//           onChange={onChange}
+//           // onKeyDown={handleKeyDown}
+//           ref={ref}
+//         />
+//         {validationError && (
+//           <div className="mx-1 mt-1 text-xs font-medium text-red-500">{validationError}</div>
+//         )}
+//       </div>
+//     );
+//   }
+// );

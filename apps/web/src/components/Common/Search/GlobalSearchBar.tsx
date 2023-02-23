@@ -18,7 +18,7 @@ import useDebounce from 'utils/hooks/useDebounce';
 import useOutsideClick from 'utils/hooks/useOutsideClick';
 
 import Profiles from './Profiles';
-import Videos from './Works';
+import Works from './Works';
 
 interface Props {
   onSearchResults?: () => void;
@@ -129,7 +129,7 @@ const GlobalSearchBar: FC<Props> = ({ onSearchResults }) => {
                 </Tab.Panel>
                 <Tab.Panel className="no-scrollbar max-h-[80vh] overflow-y-auto focus:outline-none">
                   {data?.search?.__typename === 'PublicationSearchResult' && (
-                    <Videos results={profiles as Publication[]} loading={loading} clearSearch={clearSearch} />
+                    <Works results={profiles as Publication[]} loading={loading} clearSearch={clearSearch} />
                   )}
                 </Tab.Panel>
               </Tab.Panels>

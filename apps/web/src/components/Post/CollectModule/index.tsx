@@ -1,8 +1,8 @@
-import { CheckIcon } from '@heroicons/react/24/outline';
-
+// import { CheckIcon } from '@heroicons/react/24/outline';
 import { useAppStore } from 'src/store/app';
 import { useGlobalModalStateStore } from 'src/store/modals';
-
+import Tooltip from '@components/UI/Tooltip';
+import { ReceiptRefundIcon, RectangleStackIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 
 const CollectModule = () => {
@@ -30,19 +30,25 @@ const CollectModule = () => {
   };
 
   return (
-    <div className="p-5 py-5 overflow-x-hidden text-left align-middle transition-all transform shadow-xl bg-secondary">
-      <div className="flex items-center mb-1 space-x-1.5">
+    <>
+      {/* <div className="flex items-center mb-1 space-x-1.5">
         <div className="text-[11px] font-semibold uppercase opacity-70">Collect Type</div>
-      </div>
-      <button
-        type="button"
-        onClick={() => setShowCollectModuleModal(true)}
-        className="flex items-center justify-between w-full px-4 py-2.5 text-sm text-left border border-gray-300 focus:outline-none dark:border-gray-700 rounded-xl"
-      >
-        <span>{getSelectedCollectType()}</span>
-        <CheckIcon className="w-3 h-3" />
-      </button>
-    </div>
+      </div> */}
+      <Tooltip content={getSelectedCollectType()} placement="top">
+        <button
+          type="button"
+          onClick={() => setShowCollectModuleModal(true)}
+          // className="flex items-center justify-between w-full px-4 py-2.5 text-sm text-left border border-gray-300 focus:outline-none dark:border-gray-700 rounded-xl"
+        >
+          {/* <span>{getSelectedCollectType()}</span> */}
+          {uploadedWorks.collectModule.isRevertCollect ? (
+            <ReceiptRefundIcon className=" h-5 w-5 text-blue-500" />
+          ) : (
+            <RectangleStackIcon className=" h-5 w-5 text-blue-500" />
+          )}
+        </button>
+      </Tooltip>
+    </>
   );
 };
 

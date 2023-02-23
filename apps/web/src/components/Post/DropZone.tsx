@@ -121,7 +121,7 @@ const DropZone: FC = () => {
         ) : (
           <label
             className={clsx(
-              'w-full focus:outline-none border-gray-500 grid place-items-center text-center border border-dashed rounded-xl cursor-pointer',
+              'w-full focus:outline-none border-gray-500 bg-gray-100 grid place-items-center text-center border border-dashed rounded-xl cursor-pointer',
               { '!border-green-500': dragOver }
             )}
             htmlFor="dropImage"
