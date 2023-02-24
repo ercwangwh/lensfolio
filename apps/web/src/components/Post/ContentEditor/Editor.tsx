@@ -15,6 +15,7 @@ const Editor = ({ data, onChange, holder }: Props) => {
     //initialize editor if we don't have a reference
     if (!ref.current) {
       const editor = new EditorJS({
+        placeholder: 'Let`s write an awesome story of your work!',
         holder: holder,
         tools: EDITOR_TOOLS,
         data,
@@ -22,7 +23,7 @@ const Editor = ({ data, onChange, holder }: Props) => {
           const data = await api.saver.save();
           onChange(data);
         },
-        autofocus: true
+        autofocus: false
       });
       ref.current = editor;
     }

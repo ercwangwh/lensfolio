@@ -120,7 +120,7 @@ export const ReferenceSettingDetail = () => {
         </button> */}
         <div className="flex justify-end">
           <Button type="button" onClick={() => setShowReferenceModuleModal(false)}>
-            Set Preference
+            Set Reference
           </Button>
         </div>
       </div>

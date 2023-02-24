@@ -1,7 +1,7 @@
 import { CustomFiltersTypes } from 'lens';
 import getEnvConfig from './functions/getEnvConfig';
 
-export const LENSFOLIO_APP_NAME = 'Lensfoliio';
+export const LENSFOLIO_APP_NAME = 'Lensfolio';
 export const LENSFOLIO_APP_DESCRIPTION =
   'Lensfolio is a decentralized creator platform built with Lens protocol.';
 export const LENSFOLIO_OG_IMAGE = '/banner.png';
@@ -80,7 +80,7 @@ export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
 export const BUNDLR_CONNECT_MESSAGE = 'Sign to initialize & estimate upload...';
 
 // App Ids
-export const LENSFOLIO_APP_ID = 'lensfolio';
+export const LENSFOLIO_APP_ID = 'Lensfolio-test';
 
 // admin
 export const ADMIN_IDS = IS_MAINNET ? ['0x2d'] : ['0x2f'];

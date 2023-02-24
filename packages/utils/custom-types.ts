@@ -12,6 +12,8 @@ import type {
   TimedFeeCollectModuleSettings
 } from 'lens';
 
+import { OutputData } from '@editorjs/editorjs';
+
 export type FileReaderStreamType = NodeJS.ReadableStream & {
   name: string;
   size: number;
@@ -123,7 +125,7 @@ export interface LensfolioWorkCoverImg {
 export interface LensfolioWorks {
   description: string;
   attachment: LensfolioAttachment;
-  content: string;
+  content: OutputData;
   percent: number;
   workCategory: { tag: string; name: string };
   title: string;

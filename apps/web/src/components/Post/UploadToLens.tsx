@@ -40,7 +40,7 @@ import useBroadcast from '@utils/hooks/useBroadcast';
 import { Modal } from '@components/UI/Modal';
 import { BeakerIcon } from '@heroicons/react/24/outline';
 import { Button } from '@components/UI/Button';
-import DropZone from './DropZone';
+import DropZone from './TitleArea';
 import uploadToIPFS, { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
 import getSignature from '@lib/getSignature';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
@@ -231,11 +231,12 @@ const UploadToLens: FC = () => {
         buttonText: 'Storing metadata...',
         loading: true
       });
+      console.log('uploadedWorks', uploadedWorks);
       if (!uploadedWorks.title || !uploadedWorks.coverImg || !uploadedWorks.content) {
         setUploadedWorks({
           loading: false
         });
-        return toast.error('Title, Description & Cover Image should not be empty!');
+        return toast.error('Title, Content & Cover Image should not be empty!');
       }
       console.log('UploadedWorks: ', uploadedWorks);
 
@@ -270,9 +271,9 @@ const UploadToLens: FC = () => {
         version: '2.0.0',
         metadata_id: uuid(),
         description: trimify(uploadedWorks.title),
-        content: trimify(uploadedWorks.content),
+        content: trimify(JSON.stringify(uploadedWorks.content)),
         locale: 'en-US',
-        tags: [...getTags(uploadedWorks.content)],
+        tags: [...getTags(JSON.stringify(uploadedWorks.content))],
         mainContentFocus: PublicationMainFocus.Article,
         external_url: null,
         name: trimify(uploadedWorks.title),

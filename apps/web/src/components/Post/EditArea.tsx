@@ -4,7 +4,7 @@ import { TextArea } from '@components/UI/TextArea';
 import { ChangeEvent, FC, ReactNode, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { LensfolioWorks } from 'utils';
-import DropZone from './DropZone';
+import TitleArea from './TitleArea';
 import dynamic from 'next/dynamic';
 import { Attachments } from './Attachments';
 import CollectModule from './CollectModule';
@@ -35,20 +35,7 @@ const EditorBlock = dynamic(() => import('./ContentEditor/Editor'), {
   ssr: false
 });
 
-const formSchema = z.object({
-  title: z
-    .string()
-    .trim()
-    .min(5, { message: 'Title should be atleast 5 characters' })
-    .max(100, { message: 'Title should not exceed 100 characters' }),
-  content: z.string().trim().max(5000, { message: 'Content should not exceed 5000 characters' }),
-  isSensitiveContent: z.boolean()
-});
-
-export type WorkFormData = z.infer<typeof formSchema>;
-
 const EditArea: FC = () => {
-  const [title, setTitle] = useState('');
   const [data, setData] = useState<OutputData>();
   // uploadedWorks?.title;
   // setUploadedWorks()
@@ -85,24 +72,10 @@ const EditArea: FC = () => {
   //   // setUploadedWorks({ ...uploadedWorks });
   // };
 
-  const {
-    handleSubmit,
-    getValues,
-    formState: { errors },
-    setValue,
-    watch,
-    clearErrors
-  } = useForm<WorkFormData>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: uploadedWorks.title,
-      content: uploadedWorks.content
-    }
-  });
-
-  // const onSubmitForm = (data: VideoFormData) => {
-  //   onUpload(data);
-  // };
+  const onEditorDataChange = (data: OutputData) => {
+    // onUpload(data);JSON.stringify()
+    setUploadedWorks({ content: data });
+  };
 
   return (
     <div className="m-auto">
@@ -111,38 +84,10 @@ const EditArea: FC = () => {
         <PostSetting></PostSetting>
       </div> */}
       <div>
-        <div className="flex flex-col space-y-2 md:w-1/2 mx-auto">
-          <DropZone />
-          <div className="relative">
-            <TextareaAutosize
-              className={clsx(
-                watch('title')?.length > 100 ? 'text-red-500' : 'text-blue-500',
-                'block w-full text-blue-500 text-5xl font-medium no-scrollbar placeholder-gray-500 focus:outline-none resize-none'
-              )}
-              placeholder="Give it a title"
-              onChange={(evt) => {
-                const value = evt.target.value;
-                console.log(value);
-                setValue('title', value);
-                setUploadedWorks({ title: value });
-                clearErrors('title');
-              }}
-              value={watch('title')}
-            ></TextareaAutosize>
-            <div className="absolute bottom-0 right-1 mt-1 flex items-center justify-end">
-              <span
-                className={clsx('text-[10px] opacity-50', {
-                  'text-red-500 !opacity-100': watch('title')?.length > 100
-                })}
-              >
-                {watch('title')?.length}/100
-              </span>
-            </div>
-          </div>
-
+        <div className="flex flex-col space-y-6 md:w-1/2 mx-auto">
+          <TitleArea />
           <UserInfo />
-
-          <EditorBlock onChange={setData} holder="editorjs-container" />
+          <EditorBlock onChange={onEditorDataChange} holder="editorjs-container" />
           <UploadToLens />
         </div>
       </div>
