@@ -5,6 +5,7 @@ import { useProfileQuery } from 'lens';
 import Details from './Details';
 // import UserProfileShimmer from '@components/Common/Shimmer/UserProfileShimmer';
 import UserPageShimmer from '@components/Common/Shimmer/UserPageShimmer';
+import ProfileShimmer from '@components/Common/Shimmer/ProfileShimmer';
 import { useRouter } from 'next/router';
 import { LENSFOLIO_APP_NAME } from 'utils';
 import Activities from './Activities';
@@ -20,7 +21,7 @@ const ViewProfile: FC = () => {
   });
 
   if (loading || !data) {
-    return <UserPageShimmer />;
+    return <ProfileShimmer />;
   }
 
   const profile = data?.profile as Profile;

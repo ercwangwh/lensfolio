@@ -31,7 +31,7 @@ const Header: FC = () => {
               {currentProfile && <Button onClick={() => router.push('/post')}>Upload</Button>}
               <Login />
             </div>
-            <CreateProfile />
+            {/* <CreateProfile /> */}
           </div>
         </div>
         {/* <CategoryFilters /> */}

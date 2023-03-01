@@ -41,11 +41,11 @@ export const Modal: FC<Props> = ({ icon, title, size = 'sm', show, children, onC
           >
             <div
               className={clsx(
-                { 'sm:max-w-5xl': size === 'lg' },
-                { 'sm:max-w-3xl': size === 'md' },
-                { 'sm:max-w-lg': size === 'sm' },
-                { 'sm:max-w-full': size === 'full' },
-                'inline-block align-bottom bg-white dark:bg-gray-800 text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full rounded-xl'
+                { 'sm:max-w-5xl sm:my-8': size === 'lg' },
+                { 'sm:max-w-3xl sm:my-8': size === 'md' },
+                { 'sm:max-w-lg sm:my-8': size === 'sm' },
+                { 'sm:max-w-full sm:max-h-full sm:mt-8 ': size === 'full' },
+                'inline-block align-bottom bg-white dark:bg-gray-800 text-left shadow-xl transform transition-all sm:align-middle w-full rounded-xl'
               )}
             >
               <div className="flex justify-between items-center py-3.5 px-5 divider">

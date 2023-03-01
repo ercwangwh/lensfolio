@@ -1,7 +1,7 @@
-import type { Profile } from "lens";
-import type { FC } from "react";
+import type { Profile } from 'lens';
+import type { FC } from 'react';
 
-import Ens from "./Ens";
+import Ens from './Ens';
 
 interface Props {
   profile: Profile;
@@ -20,7 +20,7 @@ const Badges: FC<Props> = ({ profile }) => {
 
   return (
     <>
-      <div className="w-full divider" />
+      {/* <div className="w-full divider" /> */}
       <div className="flex flex-wrap gap-3">
         <Ens profile={profile} />
       </div>

@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 import clsx from 'clsx';
 import {
   BanknotesIcon,
+  BookOpenIcon,
   ChatBubbleBottomCenterIcon,
   ArrowPathIcon,
   InboxIcon,
@@ -29,46 +30,47 @@ const Activities: FC<Props> = ({ profile }) => {
         return 1;
       case 'colleted':
         return 2;
-      case 'mirrored':
-        return 3;
-      case 'commented':
-        return 4;
-      case 'nfts':
-        return 5;
-      case 'about':
-        return 6;
+      // case 'mirrored':
+      //   return 3;
+      // case 'commented':
+      //   return 4;
+      // case 'nfts':
+      //   return 5;
+      // case 'about':
+      //   return 6;
       default:
         return 0;
     }
   };
   return (
-    <Tab.Group as="div" className="w-full" defaultIndex={getDefaultTab()}>
-      <Tab.List className="flex overflow-x-auto no-scrollbar">
-        <Tab
-          //   onClick={() => Analytics.track(TRACK.CHANNEL.CLICK_CHANNEL_VIDEOS)}
-          className={({ selected }) =>
-            clsx(
-              'px-4 py-2 flex items-center space-x-2 border-b-2 text-sm focus:outline-none',
-              selected ? 'border-blue-900 opacity-100' : 'border-transparent opacity-50'
-            )
-          }
-        >
-          <BanknotesIcon className="h-6 w-6" />
-          <span>All Works</span>
-        </Tab>
-        <Tab
-          //   onClick={() => Analytics.track(TRACK.CHANNEL.CLICK_CHANNEL_VIDEOS)}
-          className={({ selected }) =>
-            clsx(
-              'px-4 py-2 flex items-center space-x-2 border-b-2 text-sm focus:outline-none',
-              selected ? 'border-blue-900 opacity-100' : 'border-transparent opacity-50'
-            )
-          }
-        >
-          <InboxIcon className="h-6 w-6" />
-          <span>Collected</span>
-        </Tab>
-        <Tab
+    <Tab.Group as="div" className="w-full h-full pt-3" defaultIndex={getDefaultTab()}>
+      <div className="flex flex-col items-center">
+        <Tab.List className="p-2 rounded-xl flex overflow-x-auto no-scrollbar justify-center space-x-4 bg-blue-500">
+          <Tab
+            //   onClick={() => Analytics.track(TRACK.CHANNEL.CLICK_CHANNEL_VIDEOS)}
+            className={({ selected }) =>
+              clsx(
+                ' p-2 flex items-center space-x-2 text-sm focus:outline-none rounded-2xl ',
+                selected ? 'bg-white text-gray-800' : 'text-white'
+              )
+            }
+          >
+            <BookOpenIcon className="h-6 w-6" />
+            <span>All Works</span>
+          </Tab>
+          <Tab
+            //   onClick={() => Analytics.track(TRACK.CHANNEL.CLICK_CHANNEL_VIDEOS)}
+            className={({ selected }) =>
+              clsx(
+                ' p-2  flex items-center space-x-2 text-sm focus:outline-none rounded-2xl',
+                selected ? 'bg-white text-gray-800' : 'text-white'
+              )
+            }
+          >
+            <InboxIcon className="h-6 w-6" />
+            <span>Collected</span>
+          </Tab>
+          {/* <Tab
           //   onClick={() => Analytics.track(TRACK.CHANNEL.CLICK_CHANNEL_VIDEOS)}
           className={({ selected }) =>
             clsx(
@@ -115,23 +117,24 @@ const Activities: FC<Props> = ({ profile }) => {
         >
           <EllipsisHorizontalCircleIcon className="h-6 w-6" />
           <span>About</span>
-        </Tab>
-      </Tab.List>
+        </Tab> */}
+        </Tab.List>
+      </div>
       <Tab.Panels>
-        <Tab.Panel className="py-3 focus:outline-none">
+        <Tab.Panel className="py-4 focus:outline-none">
           <AllWorks profile={profile} />
         </Tab.Panel>
-        <Tab.Panel className="py-3 focus:outline-none">
+        <Tab.Panel className="py-4 focus:outline-none">
           <CollectedWorks profile={profile} />
         </Tab.Panel>
-        <Tab.Panel className="py-3 focus:outline-none">{/* <mirror channel={channel} /> */}</Tab.Panel>
-        <Tab.Panel className="py-3 focus:outline-none">{/* <comment channel={channel} /> */}</Tab.Panel>
+        {/* <Tab.Panel className="py-3 focus:outline-none">mirror</Tab.Panel>
+        <Tab.Panel className="py-3 focus:outline-none">comment</Tab.Panel>
         <Tab.Panel className="py-3 focus:outline-none">
           <CollectedNFTs profile={profile} />
         </Tab.Panel>
         <Tab.Panel className="py-3 focus:outline-none">
           <About profile={profile} />
-        </Tab.Panel>
+        </Tab.Panel> */}
       </Tab.Panels>
     </Tab.Group>
   );

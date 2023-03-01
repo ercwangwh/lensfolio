@@ -41,7 +41,8 @@ import { Modal } from '@components/UI/Modal';
 import { BeakerIcon } from '@heroicons/react/24/outline';
 import { Button } from '@components/UI/Button';
 import DropZone from './TitleArea';
-import uploadToIPFS, { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
+import { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
+import uploadContentToIPFS from '@lib/uploadToIPFS';
 import getSignature from '@lib/getSignature';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { url } from 'inspector';
@@ -51,6 +52,10 @@ import { useRouter } from 'next/router';
 
 import { Loader } from '@components/UI/Loader';
 import getTags from '@lib/getTags';
+
+import edjsHTML from 'editorjs-html';
+import parse from 'html-react-parser';
+import { OutputData } from '@editorjs/editorjs';
 // const router = useRouter();
 // interface Props {
 //   publication: LensfolioPublication;
@@ -77,6 +82,7 @@ const UploadToLens: FC = () => {
   // const [showUploadModal, setUploadModal] = useState(false);
   // const [inputData, setInputData] = useState<Object>({});
   // const isComment = false;
+  const edjsParser = edjsHTML();
 
   // const { data: signer } = useSigner();
 
@@ -220,6 +226,10 @@ const UploadToLens: FC = () => {
     return await uploadMetadataToIPFS(metadata);
   };
 
+  const createContent = async (data: OutputData) => {
+    return await uploadContentToIPFS(data);
+  };
+
   const createPublication = async () => {
     if (!currentProfile) {
       return toast.error(SIGN_IN_REQUIRED_MESSAGE);
@@ -232,14 +242,16 @@ const UploadToLens: FC = () => {
         loading: true
       });
       console.log('uploadedWorks', uploadedWorks);
-      if (!uploadedWorks.title || !uploadedWorks.coverImg || !uploadedWorks.content) {
+      if (!uploadedWorks.title || !uploadedWorks.content) {
         setUploadedWorks({
           loading: false
         });
-        return toast.error('Title, Content & Cover Image should not be empty!');
+        return toast.error('Title & Content should not be empty!');
       }
       console.log('UploadedWorks: ', uploadedWorks);
 
+      // const htmlContent = edjsParser.parse(uploadedWorks.content).join();
+      // console.log('content', htmlContent);
       // setPublicationContentError('');
       // let textNftImageUrl = null;
       // if (!attachments.length && selectedCollectModule !== CollectModules.RevertCollectModule) {
@@ -261,19 +273,22 @@ const UploadToLens: FC = () => {
       //   if (!uploadedWorks.attachment.item) return [uploadedWorks.coverImg];
       //   else return [uploadedWorks.coverImg, uploadedWorks.attachment];
       // };
-      const mediaInput = (): LensfolioAttachment[] => {
-        return !uploadedWorks.attachment.item
-          ? [uploadedWorks.coverImg]
-          : [uploadedWorks.coverImg, uploadedWorks.attachment];
+      const mediaInput = (): LensfolioAttachment[] | null => {
+        return uploadedWorks.coverImg.item ? [uploadedWorks.coverImg] : null;
       };
+      setUploadedWorks({
+        buttonText: 'Uploading Content File ...',
+        loading: true
+      });
+      const contentFile = await createContent(uploadedWorks.content);
 
       const metadata: PublicationMetadataV2Input = {
         version: '2.0.0',
         metadata_id: uuid(),
         description: trimify(uploadedWorks.title),
-        content: trimify(JSON.stringify(uploadedWorks.content)),
+        content: trimify(contentFile.item),
         locale: 'en-US',
-        tags: [...getTags(JSON.stringify(uploadedWorks.content))],
+        tags: [...getTags(contentFile.item)],
         mainContentFocus: PublicationMainFocus.Article,
         external_url: null,
         name: trimify(uploadedWorks.title),

@@ -46,7 +46,8 @@ import { useContractWrite, useSignTypedData } from 'wagmi';
 import { z } from 'zod';
 import { ForwardIcon } from '@heroicons/react/24/outline';
 import trimify from '@lib/trimify';
-import uploadToIPFS from '@lib/uploadToIPFS';
+import { uploadFileToIPFS } from '@lib/uploadToIPFS';
+import uploadContentToIPFS from '@lib/uploadToIPFS';
 
 interface Props {
   profile: Profile;
@@ -69,7 +70,7 @@ const formSchema = z.object({
   twitter: z.string(),
   location: z.string(),
   website: z.union([
-    z.string().url({ message: 'Enter valid website URL (eg. https://lenstube.xyz)' }),
+    z.string().url({ message: 'Enter valid website URL (eg. https://lensfolio.xyz)' }),
     z.string().max(0)
   ])
 });
@@ -189,71 +190,73 @@ const BasicInfo = ({ profile }: Props) => {
       ?.filter((attr) => !['website', 'location', 'twitter', 'app'].includes(attr.key))
       .map(({ traitType, key, value }) => ({ traitType, key, value })) ?? [];
 
-  // const onSaveBasicInfo = async (data: FormData) => {
-  //   // Analytics.track(TRACK.UPDATE_CHANNEL_INFO);
-  //   setLoading(true);
-  //   try {
-  //     const { url } = await uploadToAr({
-  //       version: '1.0.0',
-  //       name: data.displayName || null,
-  //       bio: trimify(data.description),
-  //       cover_picture: data.coverImage ?? coverImage,
-  //       attributes: [
-  //         ...otherAttributes,
-  //         {
-  //           displayType: PublicationMetadataDisplayTypes.String,
-  //           traitType: 'website',
-  //           key: 'website',
-  //           value: data.website
-  //         },
-  //         {
-  //           displayType: PublicationMetadataDisplayTypes.String,
-  //           traitType: 'location',
-  //           key: 'location',
-  //           value: data.location
-  //         },
-  //         {
-  //           displayType: PublicationMetadataDisplayTypes.String,
-  //           traitType: 'twitter',
-  //           key: 'twitter',
-  //           value: data.twitter
-  //         },
-  //         {
-  //           displayType: PublicationMetadataDisplayTypes.String,
-  //           traitType: 'app',
-  //           key: 'app',
-  //           value: LENSFOLIO_APP_ID
-  //         }
-  //       ],
-  //       metadata_id: uuidv4()
-  //     });
-  //     const request = {
-  //       profileId: profile?.id,
-  //       metadata: url
-  //     };
-  //     const canUseDispatcher = selectedProfile?.dispatcher?.canUseRelay;
-  //     if (!canUseDispatcher) {
-  //       return signTypedData(request);
-  //     }
-  //     createViaDispatcher(request);
-  //   } catch {
-  //     setLoading(false);
-  //   }
-  // };
+  const onSaveBasicInfo = async (data: FormData) => {
+    // Analytics.track(TRACK.UPDATE_CHANNEL_INFO);
+    setLoading(true);
+    try {
+      const { item } = await uploadContentToIPFS({
+        version: '1.0.0',
+        name: data.displayName || null,
+        bio: trimify(data.description),
+        cover_picture: data.coverImage ?? coverImage,
+        attributes: [
+          ...otherAttributes,
+          {
+            displayType: PublicationMetadataDisplayTypes.String,
+            traitType: 'website',
+            key: 'website',
+            value: data.website
+          },
+          {
+            displayType: PublicationMetadataDisplayTypes.String,
+            traitType: 'location',
+            key: 'location',
+            value: data.location
+          },
+          {
+            displayType: PublicationMetadataDisplayTypes.String,
+            traitType: 'twitter',
+            key: 'twitter',
+            value: data.twitter
+          },
+          {
+            displayType: PublicationMetadataDisplayTypes.String,
+            traitType: 'app',
+            key: 'app',
+            value: LENSFOLIO_APP_ID
+          }
+        ],
+        metadata_id: uuidv4()
+      });
+      const request = {
+        profileId: profile?.id,
+        metadata: item
+      };
+      const canUseDispatcher = currentProfile?.dispatcher?.canUseRelay;
+      if (!canUseDispatcher) {
+        return signTypedData(request);
+      }
+      createViaDispatcher(request);
+    } catch {
+      setLoading(false);
+    }
+  };
 
-  // const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files?.length) {
-  //     setUploading(true);
-  //     const result: IPFSUploadResult = await uploadToIPFS(e.target.files[0]);
-  //     setCoverImage(result.url);
-  //     setUploading(false);
-  //     onSaveBasicInfo({ ...getValues(), coverImage: result.url });
-  //   }
-  // };
+  // console.log(getIPFSLink(getProfileCoverPicture(currentProfile as Profile)));
+  const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      setUploading(true);
+      const result = await uploadFileToIPFS(e.target.files[0]);
+      console.log(result);
+      setCoverImage(result.item);
+      setUploading(false);
+      onSaveBasicInfo({ ...getValues(), coverImage: result.item });
+    }
+  };
 
   return (
     // <form onSubmit={handleSubmit(onSaveBasicInfo)} className="p-4 bg-white rounded-xl dark:bg-theme">
-    <form className="p-4 bg-white rounded-xl dark:bg-theme">
+    <form onSubmit={handleSubmit(onSaveBasicInfo)} className="p-4 bg-white rounded-xl dark:bg-theme">
       <div className="relative flex-none w-full">
         {uploading && (
           <div className="absolute rounded-xl bg-black w-full h-full flex items-center justify-center z-10 opacity-40">
@@ -265,12 +268,16 @@ const BasicInfo = ({ profile }: Props) => {
           draggable={false}
           // alt={`${profile.handle}'s cover`}
           style={{
-            backgroundImage: 'url(/banner.png)',
-            backgroundColor: '#3b82f6',
+            // backgroundImage: 'url(/banner.png)',
+            backgroundImage: currentProfile
+              ? `url(${getIPFSLink(getProfileCoverPicture(currentProfile))})`
+              : 'url(/banner.png)',
+            // backgroundColor: '#3b82f6',
             backgroundSize: 'cover',
             backgroundPosition: 'center center'
           }}
         />
+        {/* <img src={getIPFSLink(getProfileCoverPicture(currentProfile as Profile))}></img> */}
         <label
           htmlFor="chooseCover"
           className="absolute p-1 px-3 text-sm bg-white rounded-lg cursor-pointer dark:bg-theme bottom-2 left-2"
@@ -282,7 +289,7 @@ const BasicInfo = ({ profile }: Props) => {
             type="file"
             accept=".png, .jpg, .jpeg, .svg"
             className="hidden w-full"
-            // onChange={handleUpload}
+            onChange={handleUpload}
           />
         </label>
       </div>

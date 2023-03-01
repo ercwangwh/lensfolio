@@ -31,31 +31,26 @@ const getS3Client = async () => {
  * @param data - Data to upload to IPFS
  * @returns attachment array
  */
-const uploadToIPFS = async (data: any): Promise<LensfolioAttachment[]> => {
+const uploadContentToIPFS = async (data: any): Promise<LensfolioAttachment> => {
   try {
     const client = await getS3Client();
-    const files = Array.from(data);
-    const attachments = await Promise.all(
-      files.map(async (_: any, i: number) => {
-        const file = data.item(i);
-        const params = {
-          Bucket: S3_BUCKET.LENSFOLIO_MEDIA,
-          Key: uuid()
-        };
-        await client.putObject({ ...params, Body: file, ContentType: file.type });
-        const result = await client.headObject(params);
-        const metadata = result.Metadata;
-        return {
-          item: `ipfs://${metadata?.['ipfs-hash']}`,
-          type: file.type || 'image/jpeg',
-          altTag: ''
-        };
-      })
-    );
+    const params = {
+      Bucket: S3_BUCKET.LENSFOLIO_MEDIA,
+      Key: uuid()
+    };
+    const payload = JSON.stringify(data);
+    console.log(payload);
+    await client.putObject({ ...params, Body: payload, ContentType: 'application/json' });
+    const result = await client.headObject(params);
+    const meta = result.Metadata;
 
-    return attachments;
+    return {
+      item: `ipfs://${meta?.['ipfs-hash']}`,
+      type: 'application/json',
+      altTag: ''
+    };
   } catch {
-    return [];
+    return { item: '', type: '', altTag: '' };
   }
 };
 
@@ -189,4 +184,4 @@ export const uploadWorkCoverImgToIPFS = async (
   }
 };
 
-export default uploadToIPFS;
+export default uploadContentToIPFS;

@@ -177,7 +177,6 @@ const TitleArea: FC = () => {
         <TextareaAutosize
           className={clsx(
             watch('title')?.length > 100 ? 'text-red-500' : 'text-blue-500',
-            !uploadedWorks.coverImg.item ? '' : null,
             'box-border text-blue-500 w-full px-2 text-5xl text-center font-medium no-scrollbar placeholder-gray-500 focus:outline-none resize-none'
           )}
           placeholder="Give it a title"

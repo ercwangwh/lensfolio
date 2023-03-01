@@ -96,10 +96,10 @@ const Layout: FC<Props> = ({ children }) => {
   }
 
   return (
-    <div>
+    <div className="">
       <Header />
       <GlobalModals />
-      <div className="2xl:py-6 py-4 bg-gray-100 ultrawide:max-w-[110rem] mx-auto md:px-3 ultrawide:px-0">
+      <div className="2xl:py-6 py-4 ultrawide:max-w-[110rem] mx-auto md:px-3 ultrawide:px-0">
         <Toaster position="bottom-right" toastOptions={getToastOptions(resolvedTheme)} />
 
         {children}

@@ -1123,10 +1123,14 @@ export type Erc4626FeeCollectModuleSettings = {
   endTimestamp?: Maybe<Scalars['DateTime']>;
   /** True if only followers of publisher may collect the post. */
   followerOnly: Scalars['Boolean'];
+  /** The recipient of the ERC4626 vault shares */
+  recipient: Scalars['EthereumAddress'];
   /** The referral fee associated with this publication. */
   referralFee: Scalars['Float'];
   /** The collect modules enum */
   type: CollectModules;
+  /** The ERC4626 vault address */
+  vault: Scalars['ContractAddress'];
 };
 
 export type ElectedMirror = {
@@ -4137,9 +4141,14 @@ export type CommentFieldsFragment = {
     handle: any;
     bio?: string | null;
     ownedBy: any;
+    isDefault: boolean;
     isFollowedByMe: boolean;
     stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
     attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+    coverPicture?:
+      | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+      | { __typename?: 'NftImage' }
+      | null;
     picture?:
       | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
       | { __typename?: 'NftImage'; uri: any }
@@ -4273,9 +4282,14 @@ export type CommentFieldsFragment = {
           handle: any;
           bio?: string | null;
           ownedBy: any;
+          isDefault: boolean;
           isFollowedByMe: boolean;
           stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
           attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+          coverPicture?:
+            | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+            | { __typename?: 'NftImage' }
+            | null;
           picture?:
             | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
             | { __typename?: 'NftImage'; uri: any }
@@ -4318,9 +4332,14 @@ export type PostFieldsFragment = {
     handle: any;
     bio?: string | null;
     ownedBy: any;
+    isDefault: boolean;
     isFollowedByMe: boolean;
     stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
     attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+    coverPicture?:
+      | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+      | { __typename?: 'NftImage' }
+      | null;
     picture?:
       | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
       | { __typename?: 'NftImage'; uri: any }
@@ -4449,9 +4468,14 @@ export type ProfileFieldsFragment = {
   handle: any;
   bio?: string | null;
   ownedBy: any;
+  isDefault: boolean;
   isFollowedByMe: boolean;
   stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
   attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+  coverPicture?:
+    | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+    | { __typename?: 'NftImage' }
+    | null;
   picture?:
     | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
     | { __typename?: 'NftImage'; uri: any }
@@ -5009,9 +5033,14 @@ export type ExploreQuery = {
             handle: any;
             bio?: string | null;
             ownedBy: any;
+            isDefault: boolean;
             isFollowedByMe: boolean;
             stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
             attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+            coverPicture?:
+              | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+              | { __typename?: 'NftImage' }
+              | null;
             picture?:
               | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
               | { __typename?: 'NftImage'; uri: any }
@@ -5145,9 +5174,14 @@ export type ExploreQuery = {
                   handle: any;
                   bio?: string | null;
                   ownedBy: any;
+                  isDefault: boolean;
                   isFollowedByMe: boolean;
                   stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
                   attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+                  coverPicture?:
+                    | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+                    | { __typename?: 'NftImage' }
+                    | null;
                   picture?:
                     | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
                     | { __typename?: 'NftImage'; uri: any }
@@ -5190,9 +5224,14 @@ export type ExploreQuery = {
             handle: any;
             bio?: string | null;
             ownedBy: any;
+            isDefault: boolean;
             isFollowedByMe: boolean;
             stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
             attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+            coverPicture?:
+              | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+              | { __typename?: 'NftImage' }
+              | null;
             picture?:
               | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
               | { __typename?: 'NftImage'; uri: any }
@@ -5498,9 +5537,14 @@ export type ProfileCollectsQuery = {
             handle: any;
             bio?: string | null;
             ownedBy: any;
+            isDefault: boolean;
             isFollowedByMe: boolean;
             stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
             attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+            coverPicture?:
+              | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+              | { __typename?: 'NftImage' }
+              | null;
             picture?:
               | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
               | { __typename?: 'NftImage'; uri: any }
@@ -5654,9 +5698,14 @@ export type ProfileCommentsQuery = {
             handle: any;
             bio?: string | null;
             ownedBy: any;
+            isDefault: boolean;
             isFollowedByMe: boolean;
             stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
             attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+            coverPicture?:
+              | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+              | { __typename?: 'NftImage' }
+              | null;
             picture?:
               | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
               | { __typename?: 'NftImage'; uri: any }
@@ -5790,9 +5839,14 @@ export type ProfileCommentsQuery = {
                   handle: any;
                   bio?: string | null;
                   ownedBy: any;
+                  isDefault: boolean;
                   isFollowedByMe: boolean;
                   stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
                   attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+                  coverPicture?:
+                    | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+                    | { __typename?: 'NftImage' }
+                    | null;
                   picture?:
                     | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
                     | { __typename?: 'NftImage'; uri: any }
@@ -5911,9 +5965,14 @@ export type ProfilePostsQuery = {
             handle: any;
             bio?: string | null;
             ownedBy: any;
+            isDefault: boolean;
             isFollowedByMe: boolean;
             stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
             attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+            coverPicture?:
+              | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+              | { __typename?: 'NftImage' }
+              | null;
             picture?:
               | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
               | { __typename?: 'NftImage'; uri: any }
@@ -6058,6 +6117,10 @@ export type ProfilesQuery = {
       ownedBy: any;
       stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
       attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+      coverPicture?:
+        | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+        | { __typename?: 'NftImage' }
+        | null;
       picture?:
         | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
         | { __typename?: 'NftImage'; uri: any }
@@ -6195,9 +6258,14 @@ export type PublicationDetailsQuery = {
           handle: any;
           bio?: string | null;
           ownedBy: any;
+          isDefault: boolean;
           isFollowedByMe: boolean;
           stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
           attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+          coverPicture?:
+            | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+            | { __typename?: 'NftImage' }
+            | null;
           picture?:
             | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
             | { __typename?: 'NftImage'; uri: any }
@@ -6331,9 +6399,14 @@ export type PublicationDetailsQuery = {
                 handle: any;
                 bio?: string | null;
                 ownedBy: any;
+                isDefault: boolean;
                 isFollowedByMe: boolean;
                 stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
                 attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+                coverPicture?:
+                  | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+                  | { __typename?: 'NftImage' }
+                  | null;
                 picture?:
                   | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
                   | { __typename?: 'NftImage'; uri: any }
@@ -6376,9 +6449,14 @@ export type PublicationDetailsQuery = {
           handle: any;
           bio?: string | null;
           ownedBy: any;
+          isDefault: boolean;
           isFollowedByMe: boolean;
           stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
           attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+          coverPicture?:
+            | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+            | { __typename?: 'NftImage' }
+            | null;
           picture?:
             | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
             | { __typename?: 'NftImage'; uri: any }
@@ -6530,9 +6608,14 @@ export type SearchProfilesQuery = {
           handle: any;
           bio?: string | null;
           ownedBy: any;
+          isDefault: boolean;
           isFollowedByMe: boolean;
           stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
           attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+          coverPicture?:
+            | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+            | { __typename?: 'NftImage' }
+            | null;
           picture?:
             | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
             | { __typename?: 'NftImage'; uri: any }
@@ -6578,9 +6661,14 @@ export type SearchPublicationsQuery = {
                 handle: any;
                 bio?: string | null;
                 ownedBy: any;
+                isDefault: boolean;
                 isFollowedByMe: boolean;
                 stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
                 attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+                coverPicture?:
+                  | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+                  | { __typename?: 'NftImage' }
+                  | null;
                 picture?:
                   | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
                   | { __typename?: 'NftImage'; uri: any }
@@ -6714,9 +6802,14 @@ export type SearchPublicationsQuery = {
                       handle: any;
                       bio?: string | null;
                       ownedBy: any;
+                      isDefault: boolean;
                       isFollowedByMe: boolean;
                       stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
                       attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+                      coverPicture?:
+                        | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+                        | { __typename?: 'NftImage' }
+                        | null;
                       picture?:
                         | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
                         | { __typename?: 'NftImage'; uri: any }
@@ -6761,9 +6854,14 @@ export type SearchPublicationsQuery = {
                 handle: any;
                 bio?: string | null;
                 ownedBy: any;
+                isDefault: boolean;
                 isFollowedByMe: boolean;
                 stats: { __typename?: 'ProfileStats'; totalFollowers: number; totalFollowing: number };
                 attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+                coverPicture?:
+                  | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+                  | { __typename?: 'NftImage' }
+                  | null;
                 picture?:
                   | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
                   | { __typename?: 'NftImage'; uri: any }
@@ -6910,6 +7008,10 @@ export type UserProfilesQuery = {
       stats: { __typename?: 'ProfileStats'; totalFollowing: number; totalFollowers: number };
       dispatcher?: { __typename?: 'Dispatcher'; canUseRelay: boolean } | null;
       attributes?: Array<{ __typename?: 'Attribute'; key: string; value: string }> | null;
+      coverPicture?:
+        | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
+        | { __typename?: 'NftImage' }
+        | null;
       picture?:
         | { __typename?: 'MediaSet'; original: { __typename?: 'Media'; url: any } }
         | { __typename?: 'NftImage'; uri: any }
@@ -6999,6 +7101,7 @@ export const ProfileFieldsFragmentDoc = gql`
     handle
     bio
     ownedBy
+    isDefault
     isFollowedByMe
     stats {
       totalFollowers
@@ -7007,6 +7110,13 @@ export const ProfileFieldsFragmentDoc = gql`
     attributes {
       key
       value
+    }
+    coverPicture {
+      ... on MediaSet {
+        original {
+          url
+        }
+      }
     }
     picture {
       ... on MediaSet {

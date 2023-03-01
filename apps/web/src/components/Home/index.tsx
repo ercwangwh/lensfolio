@@ -91,11 +91,13 @@ function Home() {
   // }
   return (
     <div>
-      {/* <CategoryFilters /> */}
       <MetaTags />
-      <div className="flex flex-row pb-8">
-        <SortCriteriaFilters />
+      <div className="pb-3">
+        <CategoryFilters />
       </div>
+      {/* <div className="flex flex-row pb-8">
+        <SortCriteriaFilters />
+      </div> */}
       {/* <GridLayout>
         {data?.publications.items.map((item, index) => {
           return (

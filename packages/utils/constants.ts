@@ -39,7 +39,8 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 // Lensfolio Serverless API
 export const SERVERLESS_MAINNET_API_URL = 'https://api.lensfolio.xyz';
 export const SERVERLESS_TESTNET_API_URL = 'https://api-testnet.lensfolio.xyz';
-export const SERVERLESS_DEVELOPMENT_API_URL = 'http://localhost:4784';
+export const SERVERLESS_DEVELOPMENT_API_URL = 'https://api-testnet.lensfolio.xyz';
+// export const SERVERLESS_DEVELOPMENT_API_URL = 'http://localhost:4784';
 export const SERVERLESS_URL = getEnvConfig().serverlessEndpoint;
 
 // polygon
@@ -80,7 +81,7 @@ export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
 export const BUNDLR_CONNECT_MESSAGE = 'Sign to initialize & estimate upload...';
 
 // App Ids
-export const LENSFOLIO_APP_ID = 'Lensfolio-test';
+export const LENSFOLIO_APP_ID = 'Lensfolio-test1';
 
 // admin
 export const ADMIN_IDS = IS_MAINNET ? ['0x2d'] : ['0x2f'];

@@ -34,7 +34,7 @@ const Editor = ({ data, onChange, holder }: Props) => {
       }
     };
   }, []);
-  return <div className=" prose max-w-full " id={holder} />;
+  return <div className="prose min-w-full max-w-full" id={holder} />;
 };
 
 export default memo(Editor);

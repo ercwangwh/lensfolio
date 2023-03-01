@@ -1,15 +1,26 @@
-import React, { FC, useEffect, useState } from 'react';
+// import useAppStore from '@lib/store'
+import { useAppStore } from 'src/store/app';
+import { CREATOR_WORK_CATEGORIES } from 'utils/categories';
+// import { CREATOR_WORK_CATEGORIES } from '@utils/data/categories'
 import useHorizontalScroll from '@utils/hooks/useHorizantalScroll';
-import { useProfileInterestsQuery } from 'lens';
-import { Button } from '@components/UI/Button';
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+// import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 
-const CategoryFilters: FC = () => {
+const CategoriesList = () => {
+  const activeTagFilter = useAppStore((state) => state.activeTagFilter);
+  const setActiveTagFilter = useAppStore((state) => state.setActiveTagFilter);
+
   const [scrollX, setScrollX] = useState(0);
   const [scrollEnd, setScrollEnd] = useState(false);
 
-  const { data, loading } = useProfileInterestsQuery();
   const scrollRef = useHorizontalScroll();
+
+  const onFilter = (tag: string) => {
+    setActiveTagFilter(tag);
+  };
+
   const sectionOffsetWidth = scrollRef.current?.offsetWidth ?? 1000;
   const scrollOffset = sectionOffsetWidth / 1.2;
 
@@ -20,6 +31,7 @@ const CategoryFilters: FC = () => {
       setScrollEnd(false);
     }
   }, [scrollRef]);
+
   const slide = (shift: number) => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft += shift;
@@ -34,56 +46,71 @@ const CategoryFilters: FC = () => {
       }
     }
   };
+
   return (
-    <div
-      ref={scrollRef}
-      className="mx-auto flex relative items-center scroll-smooth overflow-x-auto touch-pan-x mt-4 mb-8 space-x-2 no-scrollbar ultrawide:max-w-[110rem]"
-    >
-      {
-        <div className="bg-white sticky left-0 top-0 px-2">
-          <Button
-            className="hidden border-none md:block sticky left-0 focus:outline-none bg-opacity-10 hover:bg-opacity-25 backdrop-blur-xl rounded-full p-2"
+    <>
+      <div className="relative w-full z-10">
+        {scrollX !== 0 && (
+          <span className="absolute z-10 left-0 top-1 w-40 h-12 bg-faded-left pointer-events-none" />
+        )}
+
+        {scrollX !== 0 && (
+          <button
+            type="button"
+            className="bg-white dark:bg-gray-700 z-20 dark:hover:text-gray-900 dark:text-white hover:bg-gray-200 rounded-full p-2 hidden md:block text-gray-800 focus:outline-none left-0 absolute top-0"
             onClick={() => slide(-scrollOffset)}
-            light
           >
-            <ChevronLeftIcon className="w-4 h-4" />
-          </Button>
-        </div>
-      }
-      <Button
-        variant={'secondary'}
-        size="lg"
-        className="px-3.5 bg-gray-100 border-none capitalize py-1 text-xs border border-gray-200 dark:border-gray-700 rounded-full whitespace-nowrap"
-        outline
-      >
-        All
-      </Button>
-      {data?.profileInterests.map((interest) => {
-        return (
-          <Button
-            key={interest}
-            variant={'secondary'}
-            size="lg"
-            className="px-3.5 bg-gray-100 capitalize py-1 text-xs border-none border-gray-200 dark:border-gray-700 rounded-full whitespace-nowrap"
-            outline
-          >
-            {interest.toLowerCase()}
-          </Button>
-        );
-      })}
-      {
-        <div className=" bg-white sticky right-0 bottom-0 px-2">
-          <Button
-            className="border-none hidden md:block sticky right-0 focus:outline-none bg-opacity-10 hover:bg-opacity-25 backdrop-blur-xl rounded-full p-2"
+            <ChevronLeftIcon className=" h-6 w-6" />
+          </button>
+        )}
+
+        {!scrollEnd && (
+          <button
+            type="button"
+            className="bg-white dark:bg-gray-700 z-20 dark:hover:text-gray-900 dark:text-white hover:bg-gray-200 rounded-full p-2 hidden md:block text-gray-800 focus:outline-none right-0 absolute top-0"
             onClick={() => slide(scrollOffset)}
-            outline
           >
-            <ChevronRightIcon className="w-4 h-4" />
-          </Button>
-        </div>
-      }
-    </div>
+            <ChevronRightIcon className=" h-6 w-6" />
+          </button>
+        )}
+        {!scrollEnd && (
+          <span className="absolute z-10 right-0 top-1 w-40 h-12 bg-faded-right pointer-events-none" />
+        )}
+      </div>
+      <div
+        ref={scrollRef}
+        className="flex relative items-center scroll-smooth overflow-x-auto touch-pan-x no-scrollbar md:px-2 pt-2 pb-1.5 space-x-2 ultrawide:max-w-[110rem] mx-auto"
+      >
+        <button
+          type="button"
+          onClick={() => onFilter('all')}
+          className={clsx(
+            'px-3.5 capitalize py-1 text-xs border dark:hover:bg-gray-700 hover:bg-blue-600 hover:border-blue-600 hover:text-white dark:border-gray-700 rounded-full whitespace-nowrap focus:outline-none focus:ring-0',
+            activeTagFilter === 'all'
+              ? 'bg-blue-500 dark:border-gray-600 text-white border-blue-500'
+              : 'dark:bg-black dark:text-white text-gray-500 bg-white border-gray-300'
+          )}
+        >
+          All
+        </button>
+        {CREATOR_WORK_CATEGORIES.map((category) => (
+          <button
+            type="button"
+            onClick={() => onFilter(category.tag)}
+            key={category.tag}
+            className={clsx(
+              'px-3.5 capitalize py-1 text-xs border dark:hover:bg-gray-700 hover:bg-blue-600 hover:border-blue-600 hover:text-white dark:border-gray-700 rounded-full whitespace-nowrap focus:outline-none focus:ring-0',
+              activeTagFilter === category.tag
+                ? 'bg-blue-500 dark:border-gray-600 text-white border-blue-500'
+                : 'dark:bg-black dark:text-white text-gray-500 bg-white border-gray-300'
+            )}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+    </>
   );
 };
 
-export default CategoryFilters;
+export default CategoriesList;

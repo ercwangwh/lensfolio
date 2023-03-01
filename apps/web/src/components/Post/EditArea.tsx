@@ -23,6 +23,9 @@ import { shortenAddress } from '@lib/shortenAddress';
 import { OutputData } from '@editorjs/editorjs';
 import { UserInfo } from './UserInfo';
 import TextareaAutosize from 'react-textarea-autosize';
+import { TagsInput } from '@components/UI/TagsInput';
+import { LexicalEditor } from './LexicalEditor';
+// import { SlateEditor } from './SlateEditor';
 // import uploadToIPFS from '@lib/uploadToIPFS';
 // interface Props {
 //   // onUpload: (data: VideoFormData) => void;
@@ -85,8 +88,10 @@ const EditArea: FC = () => {
       </div> */}
       <div>
         <div className="flex flex-col space-y-6 md:w-1/2 mx-auto">
+          <LexicalEditor />
           <TitleArea />
           <UserInfo />
+          <TagsInput />
           <EditorBlock onChange={onEditorDataChange} holder="editorjs-container" />
           <UploadToLens />
         </div>

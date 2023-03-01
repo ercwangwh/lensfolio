@@ -13,6 +13,7 @@ import { LensfolioPublication } from 'utils';
 import { Button } from '@components/UI/Button';
 import Like from './Actions/Like';
 import CollectWork from './Actions/Collect';
+import dayjs from 'dayjs';
 
 interface Props {
   work: LensfolioPublication;
@@ -37,8 +38,10 @@ const WorkHeader: FC<Props> = ({ work }) => {
             />
             <div className="flex-1 py-5 space-y-4">
               <div className="grid grid-rows-2 gap-2">
-                <div>{work.metadata.name}</div>
-                <div>{`${work.profile.handle} on ${work.createdAt}`}</div>
+                {/* <div>{work.metadata.name}</div> */}
+                <div>{`${work.profile.handle} ${dayjs(work.createdAt)
+                  .locale('en')
+                  .format('MMM DD, YYYY')}`}</div>
               </div>
             </div>
           </div>

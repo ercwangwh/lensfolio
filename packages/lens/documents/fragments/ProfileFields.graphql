@@ -4,6 +4,7 @@ fragment ProfileFields on Profile {
   handle
   bio
   ownedBy
+  isDefault
   isFollowedByMe
   stats {
     totalFollowers
@@ -12,6 +13,13 @@ fragment ProfileFields on Profile {
   attributes {
     key
     value
+  }
+  coverPicture {
+    ... on MediaSet {
+      original {
+        url
+      }
+    }
   }
   picture {
     ... on MediaSet {

@@ -19,10 +19,9 @@ const CollectedWorks: FC<Props> = ({ profile }) => {
   const request: PublicationsQueryRequest = {
     publicationTypes: [PublicationTypes.Post],
     limit: 32,
-    metadata: { mainContentFocus: [PublicationMainFocus.Image, PublicationMainFocus.Article] },
+    metadata: { mainContentFocus: [PublicationMainFocus.Article] },
     // customFilters: LENS_CUSTOM_FILTERS,
     collectedBy: profile.ownedBy,
-    // profileId: profile?.id,
     sources: [LENSFOLIO_APP_ID]
   };
 
@@ -33,6 +32,7 @@ const CollectedWorks: FC<Props> = ({ profile }) => {
     skip: !profile?.id
   });
 
+  console.log(data);
   const profileWorks = data?.publications?.items as LensfolioPublication[];
   const pageInfo = data?.publications?.pageInfo;
 
