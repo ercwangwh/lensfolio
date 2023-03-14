@@ -36,7 +36,7 @@ interface Props {
 }
 
 const WorkCard: FC<Props> = ({ work }) => {
-  const [content, setContent] = useState<string[]>([]);
+  // const [content, setContent] = useState<string[]>([]);
   //   const [showReport, setShowReport] = useState(false);
   //   const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id);
   //   const isByte = video.appId === LENSTUBE_BYTES_APP_ID;
@@ -57,10 +57,10 @@ const WorkCard: FC<Props> = ({ work }) => {
   //   return await getContent(work.metadata?.content);
   // };
 
-  getContent(work.metadata?.content).then((data) => {
-    setContent(data);
-  });
-
+  // getContent(work.metadata?.content).then((data) => {
+  //   setContent(data);
+  // });
+  const content = work.metadata.content as string;
   const thumbnailUrl =
     work.metadata.media.length > 0
       ? getIPFSLink(work.metadata.media[0].original.url)
@@ -108,22 +108,13 @@ const WorkCard: FC<Props> = ({ work }) => {
             <div className="py-2 border-t">
               <div className="flex flex-col items-start space-y-3 px-4">
                 <div className="flex pb-1 w-full items-start justify-between space-x-1.5 min-w-0 overflow-ellipsis overflow-hidden whitespace-nowrap">
-                  {/* <Link
-                    href={`/?id=${work.id}`}
-                    as={`/works/${work.id}`}
-                    className="text-sm font-semibold line-clamp-2 break-words"
-                    onClick={handleClick}
-                  > */}
                   <span className=" font-semibold line-clamp-2 break-words">{work.metadata?.name}</span>
                   {/* </Link> */}
                 </div>
                 <span className=" bg-gray-200 text-[13px] px-1 hover:opacity-100 opacity-70 rounded-md">
                   {dayjs(createTime).locale('en').format('MMM DD, YYYY')}
                 </span>
-                <div className="line-clamp-6 overflow-hidden text-sm text-gray-500">
-                  {parse(content?.join(''))}
-                </div>
-
+                <div className="line-clamp-5 overflow-hidden text-sm text-gray-500">{parse(content)}</div>
                 <div className="flex flex-row justify-start space-x-2">
                   {/* <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} className="flex-none mt-0.5"> */}
                   <img

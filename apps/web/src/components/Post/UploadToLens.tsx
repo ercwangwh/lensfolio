@@ -55,7 +55,8 @@ import getTags from '@lib/getTags';
 
 import edjsHTML from 'editorjs-html';
 import parse from 'html-react-parser';
-import { OutputData } from '@editorjs/editorjs';
+// import { OutputData } from '@editorjs/editorjs';
+import { extractText } from '@lib/extractText';
 // const router = useRouter();
 // interface Props {
 //   publication: LensfolioPublication;
@@ -226,9 +227,9 @@ const UploadToLens: FC = () => {
     return await uploadMetadataToIPFS(metadata);
   };
 
-  const createContent = async (data: OutputData) => {
-    return await uploadContentToIPFS(data);
-  };
+  // const createContent = async (data: OutputData) => {
+  //   return await uploadContentToIPFS(data);
+  // };
 
   const createPublication = async () => {
     if (!currentProfile) {
@@ -280,19 +281,24 @@ const UploadToLens: FC = () => {
         buttonText: 'Uploading Content File ...',
         loading: true
       });
-      const contentFile = await createContent(uploadedWorks.content);
+      // const contentFile = await createContent(uploadedWorks.content);
 
       const metadata: PublicationMetadataV2Input = {
         version: '2.0.0',
         metadata_id: uuid(),
         description: trimify(uploadedWorks.title),
-        content: trimify(contentFile.item),
+        content: extractText(uploadedWorks.content),
         locale: 'en-US',
-        tags: [...getTags(contentFile.item)],
+        tags: [],
         mainContentFocus: PublicationMainFocus.Article,
         external_url: null,
         name: trimify(uploadedWorks.title),
-        attributes: [],
+        attributes: [
+          {
+            traitType: 'content_html',
+            value: uploadedWorks.content
+          }
+        ],
         image: uploadedWorks.coverImg.item,
         imageMimeType: uploadedWorks.coverImg.type,
         media: mediaInput(),

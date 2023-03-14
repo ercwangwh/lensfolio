@@ -21,6 +21,8 @@ const CollectedWorks: FC<Props> = ({ profile }) => {
     limit: 32,
     metadata: { mainContentFocus: [PublicationMainFocus.Article] },
     // customFilters: LENS_CUSTOM_FILTERS,
+    // profileId:,
+    // profileId: profile.id,
     collectedBy: profile.ownedBy,
     sources: [LENSFOLIO_APP_ID]
   };

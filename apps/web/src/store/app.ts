@@ -5,7 +5,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { WMATIC_TOKEN_ADDRESS } from 'utils';
 import { CREATOR_WORK_CATEGORIES } from 'utils/categories';
-import { OutputData } from '@editorjs/editorjs';
+// import { OutputData } from '@editorjs/editorjs';
 
 interface AppState {
   profiles: Profile[] | [];
@@ -35,7 +35,7 @@ export const LENSFOLIO_WORK_COVER_IMG_DEFAULT = {
 export const UPLOADED_WORKS_DEAFULT = {
   description: '',
   attachment: LENSFOLIO_ATTACHMENT_DEFAULT,
-  content: { blocks: [] },
+  content: '',
   percent: 0,
   title: '',
   workCategory: CREATOR_WORK_CATEGORIES[0],

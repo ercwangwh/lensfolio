@@ -53,7 +53,7 @@ const AllWorks: FC<Props> = ({ profile }) => {
   // if (data?.publications?.items?.length === 0) {
   //   return <NoDataFound isCenter withImage text="No videos found" />;
   // }
-
+  console.log(data);
   return (
     <div className="w-full">
       {!error && !loading && (

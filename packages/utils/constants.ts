@@ -81,7 +81,8 @@ export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
 export const BUNDLR_CONNECT_MESSAGE = 'Sign to initialize & estimate upload...';
 
 // App Ids
-export const LENSFOLIO_APP_ID = 'Lensfolio-test1';
+// export const LENSFOLIO_APP_ID = 'Lensfolio-test1';
+export const LENSFOLIO_APP_ID = 'Lensfolio-test2';
 
 // admin
 export const ADMIN_IDS = IS_MAINNET ? ['0x2d'] : ['0x2f'];

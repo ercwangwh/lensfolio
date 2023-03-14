@@ -44,10 +44,10 @@ const WorkDetail: FC<Props> = ({ work }) => {
   const fileAttachmentlUrl =
     work.metadata.media.length > 1 ? getIPFSLink(work.metadata.media[1].original.url) : null;
 
-  getContent(work.metadata?.content).then((data) => {
-    setContent(data);
-  });
-
+  // getContent(work.metadata?.content).then((data) => {
+  //   setContent(data);
+  // });
+  const contentDetail = work.metadata.attributes.find((item) => item.traitType === 'content_html');
   async function downloadFile(url: string) {
     setDownloading(true);
     const filename = url.substring(url.lastIndexOf('/') + 1);
@@ -95,7 +95,7 @@ const WorkDetail: FC<Props> = ({ work }) => {
           <WorkHeader work={work} />
           {/* <div>{work.metadata?.content}</div> */}
           {/* <EditorBlock onChange={onEditorDataChange} holder="editorjs-container" /> */}
-          <div className="prose max-w-full">{parse(content.join(''))}</div>
+          <div className="prose max-w-full">{contentDetail?.value ? parse(contentDetail?.value) : null}</div>
 
           {fileAttachmentlUrl ? (
             <Button

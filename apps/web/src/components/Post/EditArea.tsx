@@ -20,11 +20,14 @@ import PostSetting from './PostSetting';
 import getAvatar from '@lib/getAvatar';
 import clsx from 'clsx';
 import { shortenAddress } from '@lib/shortenAddress';
-import { OutputData } from '@editorjs/editorjs';
+
 import { UserInfo } from './UserInfo';
 import TextareaAutosize from 'react-textarea-autosize';
 import { TagsInput } from '@components/UI/TagsInput';
-import { LexicalEditor } from './LexicalEditor';
+
+import TinyMCEEditor from './TinyMCE';
+import useIsMounted from 'utils/hooks/useIsMounted';
+import Loading from '@components/Common/Loading';
 // import { SlateEditor } from './SlateEditor';
 // import uploadToIPFS from '@lib/uploadToIPFS';
 // interface Props {
@@ -34,12 +37,12 @@ import { LexicalEditor } from './LexicalEditor';
 // }
 // important that we use dynamic loading here
 // editorjs should only be rendered on the client side.
-const EditorBlock = dynamic(() => import('./ContentEditor/Editor'), {
-  ssr: false
-});
+// const EditorBlock = dynamic(() => import('./ContentEditor/Editor'), {
+//   ssr: false
+// });
 
 const EditArea: FC = () => {
-  const [data, setData] = useState<OutputData>();
+  // const { mounted } = useIsMounted();
   // uploadedWorks?.title;
   // setUploadedWorks()
   const currentProfile = useAppStore((state) => state.currentProfile);
@@ -75,10 +78,7 @@ const EditArea: FC = () => {
   //   // setUploadedWorks({ ...uploadedWorks });
   // };
 
-  const onEditorDataChange = (data: OutputData) => {
-    // onUpload(data);JSON.stringify()
-    setUploadedWorks({ content: data });
-  };
+  // if (!mounted) return <Loading />;
 
   return (
     <div className="m-auto">
@@ -88,11 +88,14 @@ const EditArea: FC = () => {
       </div> */}
       <div>
         <div className="flex flex-col space-y-6 md:w-1/2 mx-auto">
-          <LexicalEditor />
           <TitleArea />
           <UserInfo />
-          <TagsInput />
-          <EditorBlock onChange={onEditorDataChange} holder="editorjs-container" />
+          {/* <TagsInput /> */}
+          {/* <div className=" prose"> */}
+          <TinyMCEEditor />
+          {/* </div> */}
+          {/* <LexicalEditor /> */}
+          {/* <EditorBlock onChange={onEditorDataChange} holder="editorjs-container" /> */}
           <UploadToLens />
         </div>
       </div>
