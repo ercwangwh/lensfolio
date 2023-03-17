@@ -21,11 +21,12 @@ const getAvatar = (profile: any, isCdn = true): string => {
       AVATAR
     );
   }
-  return getIPFSLink(
-    profile?.picture?.original?.url ??
-      profile?.picture?.uri ??
-      getStampFyiURL(profile?.ownedBy ?? ZERO_ADDRESS)
-  );
+  // return getIPFSLink(
+  //   profile?.picture?.original?.url ??
+  //     profile?.picture?.uri ??
+  //     getStampFyiURL(profile?.ownedBy ?? ZERO_ADDRESS)
+  // );
+  return getIPFSLink(profile?.picture?.original?.url);
 };
 
 export default getAvatar;
