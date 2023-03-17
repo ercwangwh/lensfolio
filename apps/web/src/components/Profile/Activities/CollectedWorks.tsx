@@ -54,10 +54,6 @@ const CollectedWorks: FC<Props> = ({ profile }) => {
 
   if (loading) return <TimelineShimmer />;
 
-  // if (data?.publications?.items?.length === 0) {
-  //   return <NoDataFound isCenter withImage text="No videos found" />;
-  // }
-
   return (
     <div className="w-full">
       {!error && !loading && (

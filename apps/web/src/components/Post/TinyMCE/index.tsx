@@ -10,7 +10,7 @@ import { Loader } from '@components/UI/Loader';
 // type MyUploadHandler = (blobInfo: any, progress: (v: number) => void) => void;
 
 // type UploadHandler = (blobInfo: BlobInfo, progress: ProgressFn) => Promise<string>;
-const apiKey = process.env.TINYMCE_API_KEY as string;
+const apiKey = process.env.NEXT_PUBLIC_TINYMCE_API_KEY as string;
 
 export default function App() {
   // const editorRef = useRef<Editor | null>(null);
@@ -24,15 +24,15 @@ export default function App() {
     setUploadedWorks({ content: content });
   };
   // const { mounted } = useIsMounted();
-  // BlobInfo 转 File
+  // BlobInfo to File
   function blobInfoToFile(blobInfo: any): File {
     const blob = blobInfo.blob();
     return new File([blob], blobInfo.filename(), { type: blob.type });
   }
 
-  console.log(apiKey);
+  // console.log('env', apiKey);
   return (
-    <>
+    <div className="prose max-w-none">
       {loading && <Loader />}
       <Editor
         apiKey={apiKey}
@@ -43,12 +43,15 @@ export default function App() {
         }}
         init={{
           // auto_focus: true,
+          width: '100%',
           plugins: ['quickbars', 'autolink', 'link', 'lists', 'emoticons', 'code', 'image'],
-          placeholder: 'This is the initial content of the editor. Please type in your own content.',
+          placeholder:
+            'Please type in your own content. Press Enter to insert image & text. Select to edit content.',
           toolbar: false,
           menubar: false,
           inline: true,
-          content_css: '/tinymce.css',
+          content_style:
+            "*[contentEditable='true']:hover,*[contentEditable='true']:focus {outline: 1px solid #1976d2;}",
           quickbars_insert_toolbar: 'h2 h3 image',
           file_picker_types: 'image',
           quickbars_selection_toolbar:
@@ -70,6 +73,6 @@ export default function App() {
         }}
         onEditorChange={handleEditorChange}
       />
-    </>
+    </div>
   );
 }

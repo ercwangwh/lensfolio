@@ -67,13 +67,8 @@ const WorkCard: FC<Props> = ({ work }) => {
       : getIPFSLink(work.metadata.image);
   const createTime = work.createdAt;
 
-  // console.log('createTime', createTime);
-  // const thumbnailUrl = getIPFSLink(work.metadata.image);
-  // console.log(work.metadata.media);
-  // const thumbnailUrl = ;
-  // console.log('onchainuri,', work.onChainContentURI);
   const handleClick = () => {
-    setShowWorkDetailModal(true);
+    // setShowWorkDetailModal(true);
   };
 
   return (
@@ -87,7 +82,8 @@ const WorkCard: FC<Props> = ({ work }) => {
         <>
           {/* <ShareModal video={work} show={showShare} setShowShare={setShowShare} />
           <ReportModal video={work} show={showReport} setShowReport={setShowReport} /> */}
-          <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} scroll={false} onClick={handleClick}>
+          {/* <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} scroll={false} onClick={handleClick}> */}
+          <Link href={`/works/${work.id}`} scroll={false} onClick={handleClick}>
             <div className="relative overflow-hidden aspect-w-16 aspect-h-9">
               {work.metadata.image ? (
                 <img

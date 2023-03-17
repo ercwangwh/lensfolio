@@ -58,7 +58,7 @@ const Activities: FC<Props> = ({ profile }) => {
             <BookOpenIcon className="h-6 w-6" />
             <span>All Works</span>
           </Tab>
-          <Tab
+          {/* <Tab
             //   onClick={() => Analytics.track(TRACK.CHANNEL.CLICK_CHANNEL_VIDEOS)}
             className={({ selected }) =>
               clsx(
@@ -69,7 +69,7 @@ const Activities: FC<Props> = ({ profile }) => {
           >
             <InboxIcon className="h-6 w-6" />
             <span>Collected</span>
-          </Tab>
+          </Tab> */}
           {/* <Tab
           //   onClick={() => Analytics.track(TRACK.CHANNEL.CLICK_CHANNEL_VIDEOS)}
           className={({ selected }) =>
@@ -124,9 +124,9 @@ const Activities: FC<Props> = ({ profile }) => {
         <Tab.Panel className="py-4 focus:outline-none">
           <AllWorks profile={profile} />
         </Tab.Panel>
-        <Tab.Panel className="py-4 focus:outline-none">
+        {/* <Tab.Panel className="py-4 focus:outline-none">
           <CollectedWorks profile={profile} />
-        </Tab.Panel>
+        </Tab.Panel> */}
         {/* <Tab.Panel className="py-3 focus:outline-none">mirror</Tab.Panel>
         <Tab.Panel className="py-3 focus:outline-none">comment</Tab.Panel>
         <Tab.Panel className="py-3 focus:outline-none">

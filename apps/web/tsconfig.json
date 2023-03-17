@@ -16,7 +16,6 @@
     "**/*.ts",
     "**/*.tsx",
     "src/styles/global.css",
-    // "src/styles/editor.css",
     "../../packages/utils/hooks/useProxyActionStatus.ts"
   ]
 }

@@ -34,18 +34,11 @@ const NavItems: FC = () => {
       </button>
       {/* <button
         onClick={() => {
-          router.push('/explore');
-        }}
-      >
-        <NavItem name="Explore" />
-      </button> */}
-      <button
-        onClick={() => {
           router.push('/subscription');
         }}
       >
         <NavItem name="Subscription" />
-      </button>
+      </button> */}
     </div>
   );
 };
