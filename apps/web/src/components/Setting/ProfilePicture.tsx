@@ -18,7 +18,7 @@ import { ERROR_MESSAGE, LENSHUB_PROXY_ADDRESS, RELAYER_ENABLED } from 'utils';
 import omit from '@lib/omit';
 import { useContractWrite, useSignTypedData } from 'wagmi';
 import getAvatar from '@lib/getAvatar';
-import uploadToIPFS from '@lib/uploadToIPFS';
+import { uploadFileToIPFS } from '@lib/uploadToIPFS';
 import getIPFSLink from '@lib/getIPFSLink';
 
 interface Props {
@@ -130,18 +130,18 @@ const ProfilePicture: FC<Props> = ({ profile }) => {
         setLoading(true);
         console.log('upload file:', e.target.files[0]);
 
-        const result: LensfolioAttachment[] = await uploadToIPFS(e.target.files);
+        const result: LensfolioAttachment = await uploadFileToIPFS(e.target.files[0]);
         // const result = await uploadImage(e.target.files);
         console.log('upload result', result);
-        for (const r of result) {
-          // setUploadedWorks({ attachment: result });
-          console.log(r.item, r.type, r.altTag);
-        }
+        // for (const r of result) {
+        //   // setUploadedWorks({ attachment: result });
+        //   console.log(r.item, r.type, r.altTag);
+        // }
         const request = {
           profileId: currentProfile?.id,
-          url: result[0]?.item
+          url: result.item
         };
-        setSelectedPfp(result[0]?.item);
+        setSelectedPfp(result.item);
         console.log('selected pfp', selectedPfp);
         const canUseDispatcher = currentProfile?.dispatcher?.canUseRelay;
         console.log('can use dispatcher: ', canUseDispatcher);
