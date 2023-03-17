@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 // import relativeTime from 'dayjs/plugin/relativeTime';
 import Link from 'next/link';
 import type { FC } from 'react';
@@ -25,6 +25,10 @@ import { useGlobalModalStateStore } from 'src/store/modals';
 import Like from '@components/Work/Actions/Like';
 import nFormatter from '@lib/nFormatter';
 import { getRelativeTime } from '@lib/formatTime';
+import { shortenAddress } from '@lib/shortenAddress';
+import getContent from '@lib/getContent';
+import parse from 'html-react-parser';
+import { join } from 'path';
 // dayjs.extend(relativeTime);
 
 interface Props {
@@ -32,7 +36,7 @@ interface Props {
 }
 
 const WorkCard: FC<Props> = ({ work }) => {
-  //   const [showShare, setShowShare] = useState(false);
+  // const [content, setContent] = useState<string[]>([]);
   //   const [showReport, setShowReport] = useState(false);
   //   const isSensitiveContent = getIsSensitiveContent(video.metadata, video.id);
   //   const isByte = video.appId === LENSTUBE_BYTES_APP_ID;
@@ -49,20 +53,27 @@ const WorkCard: FC<Props> = ({ work }) => {
   //     ? getIPFSLink(work.metadata.media[0].original.url)
   //     : getIPFSLink(work.metadata.image);
   // if()
+  // const workContent = async () => {
+  //   return await getContent(work.metadata?.content);
+  // };
+
+  // getContent(work.metadata?.content).then((data) => {
+  //   setContent(data);
+  // });
+  const content = work.metadata.content as string;
   const thumbnailUrl =
     work.metadata.media.length > 0
       ? getIPFSLink(work.metadata.media[0].original.url)
       : getIPFSLink(work.metadata.image);
-  // const thumbnailUrl = getIPFSLink(work.metadata.image);
-  // console.log(work.metadata.media);
-  // const thumbnailUrl = ;
+  const createTime = work.createdAt;
+
   const handleClick = () => {
-    setShowWorkDetailModal(true);
+    // setShowWorkDetailModal(true);
   };
 
   return (
     // <div onClick={() => Analytics.track(TRACK.CLICK_VIDEO)} className="group" role="button">
-    <div>
+    <div className=" bg-white rounded-xl border">
       {work.hidden ? (
         <div className="grid h-full place-items-center">
           <span className="text-xs">Hidden by User</span>
@@ -71,59 +82,64 @@ const WorkCard: FC<Props> = ({ work }) => {
         <>
           {/* <ShareModal video={work} show={showShare} setShowShare={setShowShare} />
           <ReportModal video={work} show={showReport} setShowReport={setShowReport} /> */}
-          <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} scroll={false}>
+          {/* <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} scroll={false} onClick={handleClick}> */}
+          <Link href={`/works/${work.id}`} scroll={false} onClick={handleClick}>
             <div className="relative overflow-hidden aspect-w-16 aspect-h-9">
-              <img
-                src={thumbnailUrl}
-                draggable={false}
-                className="object-center bg-gray-100 dark:bg-gray-900 w-full h-full md:rounded-xl lg:w-full lg:h-full object-cover"
-                alt="thumbnail"
-                onClick={handleClick}
-              />
-              {/* <ThumbnailOverlays video={video} /> */}
-            </div>
-          </Link>
-          <div className="py-2">
-            <div className="flex items-start space-x-2.5">
-              <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} className="flex-none mt-0.5">
+              {work.metadata.image ? (
                 <img
-                  className="w-8 h-8 rounded-full"
-                  src={getAvatar(work.profile, false)}
-                  alt={work.profile?.handle}
+                  src={thumbnailUrl}
                   draggable={false}
+                  className="object-center bg-gray-100 dark:bg-gray-900 rounded-t-xl w-full h-full lg:w-full lg:h-full object-cover"
+                  alt="thumbnail"
                   onClick={handleClick}
                 />
-              </Link>
-              <div className="grid flex-1">
-                <div className="flex pb-1 w-full items-start justify-between space-x-1.5 min-w-0">
-                  <Link
-                    href={`/?id=${work.id}`}
-                    as={`/works/${work.id}`}
-                    className="text-sm font-semibold line-clamp-2 break-words"
-                    onClick={handleClick}
-                  >
+              ) : (
+                <div className="w-full flex flex-col justify-center">
+                  <span className=" text-blue-500 w-full px-2 text-xl text-center">
                     {work.metadata?.name}
-                  </Link>
-                  {/* <VideoOptions video={work} setShowShare={setShowShare} setShowReport={setShowReport} /> */}
+                  </span>
                 </div>
-                <Link
-                  href={`/user/${work.profile?.handle}`}
-                  className="flex w-fit items-center space-x-0.5 text-[13px] hover:opacity-100 opacity-70"
-                >
-                  <span>{`${work.profile?.handle} ${getRelativeTime(work.createdAt)}`}</span>
-
-                  {/* <IsVerified id={work.profile?.id} size="xs" /> */}
-                </Link>
-              </div>
-              <Like work={work} isFullPublication={false}></Like>
-              <span className="flex items-center space-x-1 cursor-pointer">
-                <span className="p-1.5 rounded-full hover:bg-gray-300 hover:bg-opacity-20">
-                  <ChatBubbleBottomCenterIcon className={'h-4 w-4'} />
-                </span>
-                <span className="text-[11px] sm:text-xs">{nFormatter(work.stats.totalAmountOfComments)}</span>
-              </span>
+              )}
             </div>
-          </div>
+            <div className="py-2 border-t">
+              <div className="flex flex-col items-start space-y-3 px-4">
+                <div className="flex pb-1 w-full items-start justify-between space-x-1.5 min-w-0 overflow-ellipsis overflow-hidden whitespace-nowrap">
+                  <span className=" font-semibold line-clamp-2 break-words">{work.metadata?.name}</span>
+                  {/* </Link> */}
+                </div>
+                <span className=" bg-gray-200 text-[13px] px-1 hover:opacity-100 opacity-70 rounded-md">
+                  {dayjs(createTime).locale('en').format('MMM DD, YYYY')}
+                </span>
+                <div className="line-clamp-5 overflow-hidden text-sm text-gray-500">{parse(content)}</div>
+                <div className="flex flex-row justify-start space-x-2">
+                  {/* <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} className="flex-none mt-0.5"> */}
+                  <img
+                    className="w-5 h-5 rounded-full"
+                    src={getAvatar(work.profile, false)}
+                    alt={work.profile?.handle}
+                    draggable={false}
+                    onClick={handleClick}
+                  />
+                  {/* </Link> */}
+                  <span className="text-[13px] px-1 hover:opacity-100 opacity-70 rounded-md self-center">
+                    {work.profile.handle}
+                  </span>
+                  <span className="bg-gray-200 text-[13px] px-1 hover:opacity-100 opacity-70 rounded-md self-center">
+                    {shortenAddress(work.profile.ownedBy)}
+                  </span>
+                </div>
+                <div className="grid flex-1">
+                  {/* <Link
+                    href={`/user/${work.profile?.handle}`}
+                    className="flex w-fit items-center space-x-0.5 text-[13px] hover:opacity-100 opacity-70"
+                  > */}
+                  {/* <span>{`${work.profile?.handle} ${getRelativeTime(work.createdAt)}`}</span> */}
+                  {/* <IsVerified id={work.profile?.id} size="xs" /> */}
+                  {/* </Link> */}
+                </div>
+              </div>
+            </div>
+          </Link>
         </>
       )}
     </div>

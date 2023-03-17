@@ -40,8 +40,9 @@ import useBroadcast from '@utils/hooks/useBroadcast';
 import { Modal } from '@components/UI/Modal';
 import { BeakerIcon } from '@heroicons/react/24/outline';
 import { Button } from '@components/UI/Button';
-import DropZone from './DropZone';
-import uploadToIPFS, { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
+import DropZone from './TitleArea';
+import { uploadMetadataToIPFS } from '@lib/uploadToIPFS';
+import uploadContentToIPFS from '@lib/uploadToIPFS';
 import getSignature from '@lib/getSignature';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { url } from 'inspector';
@@ -50,6 +51,12 @@ import { getCollectModule } from '@lib/getCollectModule';
 import { useRouter } from 'next/router';
 
 import { Loader } from '@components/UI/Loader';
+import getTags from '@lib/getTags';
+
+import edjsHTML from 'editorjs-html';
+import parse from 'html-react-parser';
+// import { OutputData } from '@editorjs/editorjs';
+import { extractText } from '@lib/extractText';
 // const router = useRouter();
 // interface Props {
 //   publication: LensfolioPublication;
@@ -76,6 +83,7 @@ const UploadToLens: FC = () => {
   // const [showUploadModal, setUploadModal] = useState(false);
   // const [inputData, setInputData] = useState<Object>({});
   // const isComment = false;
+  const edjsParser = edjsHTML();
 
   // const { data: signer } = useSigner();
 
@@ -219,6 +227,10 @@ const UploadToLens: FC = () => {
     return await uploadMetadataToIPFS(metadata);
   };
 
+  // const createContent = async (data: OutputData) => {
+  //   return await uploadContentToIPFS(data);
+  // };
+
   const createPublication = async () => {
     if (!currentProfile) {
       return toast.error(SIGN_IN_REQUIRED_MESSAGE);
@@ -230,14 +242,17 @@ const UploadToLens: FC = () => {
         buttonText: 'Storing metadata...',
         loading: true
       });
-      if (!uploadedWorks.title || !uploadedWorks.coverImg || !uploadedWorks.content) {
+      console.log('uploadedWorks', uploadedWorks);
+      if (!uploadedWorks.title || !uploadedWorks.content) {
         setUploadedWorks({
           loading: false
         });
-        return toast.error('Title, Description & Cover Image should not be empty!');
+        return toast.error('Title & Content should not be empty!');
       }
       console.log('UploadedWorks: ', uploadedWorks);
 
+      // const htmlContent = edjsParser.parse(uploadedWorks.content).join();
+      // console.log('content', htmlContent);
       // setPublicationContentError('');
       // let textNftImageUrl = null;
       // if (!attachments.length && selectedCollectModule !== CollectModules.RevertCollectModule) {
@@ -259,23 +274,31 @@ const UploadToLens: FC = () => {
       //   if (!uploadedWorks.attachment.item) return [uploadedWorks.coverImg];
       //   else return [uploadedWorks.coverImg, uploadedWorks.attachment];
       // };
-      const mediaInput = (): LensfolioAttachment[] => {
-        return !uploadedWorks.attachment.item
-          ? [uploadedWorks.coverImg]
-          : [uploadedWorks.coverImg, uploadedWorks.attachment];
+      const mediaInput = (): LensfolioAttachment[] | null => {
+        return uploadedWorks.coverImg.item ? [uploadedWorks.coverImg] : null;
       };
+      setUploadedWorks({
+        buttonText: 'Uploading Content File ...',
+        loading: true
+      });
+      // const contentFile = await createContent(uploadedWorks.content);
 
       const metadata: PublicationMetadataV2Input = {
         version: '2.0.0',
         metadata_id: uuid(),
         description: trimify(uploadedWorks.title),
-        content: trimify(uploadedWorks.content),
+        content: extractText(uploadedWorks.content),
         locale: 'en-US',
-        tags: ['lenfolio_example'],
+        tags: [],
         mainContentFocus: PublicationMainFocus.Article,
         external_url: null,
         name: trimify(uploadedWorks.title),
-        attributes: [],
+        attributes: [
+          {
+            traitType: 'content_html',
+            value: uploadedWorks.content
+          }
+        ],
         image: uploadedWorks.coverImg.item,
         imageMimeType: uploadedWorks.coverImg.type,
         media: mediaInput(),
@@ -329,14 +352,14 @@ const UploadToLens: FC = () => {
       }
       router.push('/');
     } catch (error) {
-      toast.error(`[Error Store & Post Video]${error}`);
+      toast.error(`[Error Store & Post Work]${error}`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-center">
       {/* <Modal
         title="Upload"
         icon={<BeakerIcon className="w-5 h-5 text-brand" />}
@@ -356,9 +379,9 @@ const UploadToLens: FC = () => {
       >
         Upload
       </Button> */}
-      <Button disabled={uploadedWorks.loading} onClick={resetToDefaults}>
+      {/* <Button disabled={uploadedWorks.loading} onClick={resetToDefaults}>
         Cancle
-      </Button>
+      </Button> */}
       <Button
         disabled={uploadedWorks.loading}
         icon={isSubmitting ? <Loader /> : null}

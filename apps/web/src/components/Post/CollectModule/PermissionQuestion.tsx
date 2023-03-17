@@ -12,7 +12,7 @@ interface Props {
 const PermissionQuestion: FC<Props> = ({ uploadedWork, setCollectType }) => {
   return (
     <div className="space-y-2">
-      <h6>Who can collect this video?</h6>
+      <h6>Who can collect this work?</h6>
       <div className="flex flex-wrap gap-1.5 md:flex-nowrap">
         <button
           type="button"

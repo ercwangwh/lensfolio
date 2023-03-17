@@ -1,4 +1,4 @@
-// import MetaTags from '@components/Common/MetaTags';
+import MetaTags from '@components/Common/MetaTags';
 import SettingsShimmer from '@components/Common/Shimmer/SettingsShimmer';
 import { useAppStore } from 'src/store/app';
 import type { MediaSet, Profile } from 'lens';
@@ -52,7 +52,7 @@ const Setting = () => {
 
   return (
     <div className="container max-w-7xl mx-auto">
-      {/* <MetaTags title="Setting" /> */}
+      <MetaTags title="Setting" />
       {!loading && !error && profile ? (
         <div className="grid gap-4 md:grid-cols-4">
           <div className="md:col-span-1">

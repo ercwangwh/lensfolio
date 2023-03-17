@@ -125,6 +125,7 @@ export interface LensfolioWorks {
   attachment: LensfolioAttachment;
   content: string;
   percent: number;
+  workCategory: { tag: string; name: string };
   title: string;
   coverImg: LensfolioWorkCoverImg;
   loading: boolean;

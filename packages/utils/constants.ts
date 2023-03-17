@@ -1,9 +1,10 @@
 import { CustomFiltersTypes } from 'lens';
 import getEnvConfig from './functions/getEnvConfig';
 
-export const LENSFOLIO_APP_NAME = 'Lensfoliio';
+export const LENSFOLIO_APP_NAME = 'Lensfolio';
 export const LENSFOLIO_APP_DESCRIPTION =
   'Lensfolio is a decentralized creator platform built with Lens protocol.';
+export const LENSFOLIO_OG_IMAGE = '/banner.png';
 
 export const LENS_ENV = process.env.NEXT_PUBLIC_ENVIRONMENT;
 export const IS_MAINNET = LENS_ENV === 'mainnet';
@@ -38,7 +39,8 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 // Lensfolio Serverless API
 export const SERVERLESS_MAINNET_API_URL = 'https://api.lensfolio.xyz';
 export const SERVERLESS_TESTNET_API_URL = 'https://api-testnet.lensfolio.xyz';
-export const SERVERLESS_DEVELOPMENT_API_URL = 'http://localhost:4784';
+export const SERVERLESS_DEVELOPMENT_API_URL = 'https://api-testnet.lensfolio.xyz';
+// export const SERVERLESS_DEVELOPMENT_API_URL = 'http://localhost:4784';
 export const SERVERLESS_URL = getEnvConfig().serverlessEndpoint;
 
 // polygon
@@ -79,7 +81,8 @@ export const BUNDLR_PRIVATE_KEY = process.env.BUNDLR_PRIVATE_KEY as string;
 export const BUNDLR_CONNECT_MESSAGE = 'Sign to initialize & estimate upload...';
 
 // App Ids
-export const LENSFOLIO_APP_ID = 'lensfolio';
+// export const LENSFOLIO_APP_ID = 'Lensfolio-test1';
+export const LENSFOLIO_APP_ID = 'Lensfolio-test2';
 
 // admin
 export const ADMIN_IDS = IS_MAINNET ? ['0x2d'] : ['0x2f'];

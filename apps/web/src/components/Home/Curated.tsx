@@ -22,6 +22,7 @@ const Curated: FC = () => {
     variables: { request }
   });
 
+  console.log(request);
   const pageInfo = data?.explorePublications?.pageInfo;
   const works = data?.explorePublications?.items as LensfolioPublication[];
 

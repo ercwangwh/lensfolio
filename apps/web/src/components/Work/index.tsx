@@ -49,7 +49,7 @@ const Work: FC = () => {
       {/* <WorkHeader work={workData} /> */}
       {!error && !loading && workData && (
         <div>
-          <WorkHeader work={workData} />
+          {/* <WorkHeader work={workData} /> */}
           <WorkDetail work={workData} />
           <Comments work={workData} />
         </div>

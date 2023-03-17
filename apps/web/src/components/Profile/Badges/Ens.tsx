@@ -1,4 +1,5 @@
 // import { Tooltip } from "@components/UI/Tooltip";
+import Tooltip from '@components/UI/Tooltip';
 import { STATIC_IMAGES_URL } from 'utils';
 import type { Profile } from 'lens';
 import type { FC } from 'react';
@@ -13,7 +14,11 @@ const Ens: FC<Props> = ({ profile }) => {
     return null;
   }
 
-  return <img className="drop-shadow-xl" height={24} width={24} src={`/ENS.svg`} alt="ENS Badge" />;
+  return (
+    <Tooltip content={profile?.onChainIdentity?.ens?.name} placement="top">
+      <img className="drop-shadow-xl" height={32} width={32} src={`/ENS.svg`} alt="ENS Badge" />
+    </Tooltip>
+  );
 };
 
 export default Ens;

@@ -1,4 +1,4 @@
-/* pages/index.js */
+import MetaTags from '@components/Common/MetaTags';
 import { useEffect, useState } from 'react';
 // import { client, exploreProfiles } from "../api";
 import client from '../../apollo';
@@ -91,10 +91,13 @@ function Home() {
   // }
   return (
     <div>
-      {/* <CategoryFilters /> */}
-      <div className="flex flex-row pb-8">
-        <SortCriteriaFilters />
+      <MetaTags />
+      <div className="pb-3">
+        <CategoryFilters />
       </div>
+      {/* <div className="flex flex-row pb-8">
+        <SortCriteriaFilters />
+      </div> */}
       {/* <GridLayout>
         {data?.publications.items.map((item, index) => {
           return (

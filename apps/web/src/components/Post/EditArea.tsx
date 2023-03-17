@@ -4,23 +4,48 @@ import { TextArea } from '@components/UI/TextArea';
 import { ChangeEvent, FC, ReactNode, useState } from 'react';
 import { useAppStore } from 'src/store/app';
 import { LensfolioWorks } from 'utils';
-import DropZone from './DropZone';
-import PostSetting from './PostSetting';
+import TitleArea from './TitleArea';
+import dynamic from 'next/dynamic';
 import { Attachments } from './Attachments';
 import CollectModule from './CollectModule';
 import ReferenceModule from './ReferenceModule';
 import UploadToLens from './UploadToLens';
+import Category from './Category';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+import PostSetting from './PostSetting';
+import getAvatar from '@lib/getAvatar';
+import clsx from 'clsx';
+import { shortenAddress } from '@lib/shortenAddress';
+
+import { UserInfo } from './UserInfo';
+import TextareaAutosize from 'react-textarea-autosize';
+import { TagsInput } from '@components/UI/TagsInput';
+
+import TinyMCEEditor from './TinyMCE';
+import useIsMounted from 'utils/hooks/useIsMounted';
+import Loading from '@components/Common/Loading';
+// import { SlateEditor } from './SlateEditor';
 // import uploadToIPFS from '@lib/uploadToIPFS';
 // interface Props {
 //   // onUpload: (data: VideoFormData) => void;
 //   // onCancel: () => void;
 //   uploadedWorks: LensfolioWorks | null;
 // }
+// important that we use dynamic loading here
+// editorjs should only be rendered on the client side.
+// const EditorBlock = dynamic(() => import('./ContentEditor/Editor'), {
+//   ssr: false
+// });
 
 const EditArea: FC = () => {
-  const [title, setTitle] = useState('');
+  // const { mounted } = useIsMounted();
   // uploadedWorks?.title;
   // setUploadedWorks()
+  const currentProfile = useAppStore((state) => state.currentProfile);
   const uploadedWorks = useAppStore((state) => state.uploadedWorks);
   const setUploadedWorks = useAppStore((state) => state.setUploadedWorks);
   // setUploadedWorks({title:})
@@ -53,41 +78,24 @@ const EditArea: FC = () => {
   //   // setUploadedWorks({ ...uploadedWorks });
   // };
 
+  // if (!mounted) return <Loading />;
+
   return (
-    <div className="m-auto py-6">
+    <div className="m-auto">
       {/* <div className="flex justify-between">
         <Button>Cancle</Button>
         <PostSetting></PostSetting>
       </div> */}
       <div>
-        <h1 className="text-center font-bold my-6 text-2xl">What are you working on?</h1>
-        <p className="text-center my-2 text-lg">Talk is cheap, show your works.</p>
-        <div className="flex flex-col space-y-2 md:w-1/2 mx-auto mt-8">
-          <TextArea
-            prefix={'Title'}
-            onChange={(evt) => {
-              const data = evt.target.value;
-              // setTitle(data);
-              setUploadedWorks({ title: data });
-            }}
-            placeholder="Your title"
-            rows={1}
-          ></TextArea>
-          {/* <div> {title}</div> */}
-          <DropZone></DropZone>
-          <TextArea
-            prefix={'Content'}
-            onChange={(evt) => {
-              const data = evt.target.value;
-              setUploadedWorks({ content: data });
-              // console.log(uploadedWorks);
-            }}
-            placeholder="Your content of your design works"
-            rows={5}
-          ></TextArea>
-          <Attachments />
-          <CollectModule />
-          <ReferenceModule />
+        <div className="flex flex-col space-y-6 md:w-1/2 mx-auto">
+          <TitleArea />
+          <UserInfo />
+          {/* <TagsInput /> */}
+          {/* <div className=" prose"> */}
+          <TinyMCEEditor />
+          {/* </div> */}
+          {/* <LexicalEditor /> */}
+          {/* <EditorBlock onChange={onEditorDataChange} holder="editorjs-container" /> */}
           <UploadToLens />
         </div>
       </div>

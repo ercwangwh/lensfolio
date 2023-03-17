@@ -45,11 +45,11 @@ const UserProfile: FC<Props> = ({
   const currentProfile = useAppStore((state) => state.currentProfile);
   console.log('Current Profile:', currentProfile);
   const UserAvatar = () => (
-    <div className="flex-none z-[1] mr-4 md:mr-6">
+    <div className="flex-none z-[1] ">
       <img
         src={getAvatar(profile, false)}
         loading="lazy"
-        className="object-cover w-24 h-24 bg-white border-4 border-white dark:border-black rounded-xl dark:bg-gray-900 md:-mt-10 md:w-32 md:h-32"
+        className="object-cover w-24 h-24 bg-white border-4 border-white dark:border-black rounded-xl dark:bg-gray-900 md:-mt-10 md:w-44 md:h-44"
         draggable={false}
         alt={profile?.handle}
       />
@@ -57,29 +57,24 @@ const UserProfile: FC<Props> = ({
   );
 
   const UserInfo = () => (
-    <div className="flex flex-col items-start mr-3">
+    <div className="flex flex-col items-center space-y-2">
+      {/* <div className="flex items-center "> */}
+      <h1 className="max-w-sm truncate font-semibold md:text-3xl">{profile?.handle}</h1>
+      {/* </div> */}
+      <p className="max-w-sm text-gray-600 md:text-base">{profile.bio}</p>
       <div className="flex items-center max-w-sm truncate">
-        <h1 className="flex items-center space-x-1.5 font-semibold md:text-2xl">
-          <span>{profile?.handle}</span>
-        </h1>
+        <span className="px-2 py-0.5 text-sm">{profile?.stats?.totalFollowing} Following</span>
+        <span className="px-2 py-0.5 text-sm">{profile?.stats?.totalFollowers} Followers</span>
       </div>
-      <div className="flex items-center max-w-sm truncate">
-        <span className="px-2 py-0.5 text-xs dark:bg-gray-700 bg-gray-200 rounded-full">
-          {profile?.stats?.totalFollowing} Following
-        </span>
-        <span className="px-2 py-0.5 text-xs dark:bg-gray-700 bg-gray-200 rounded-full">
-          {profile?.stats?.totalFollowers} Followers
-        </span>
-      </div>
-      <Badges profile={profile} />
+      {/* <Badges profile={profile} /> */}
     </div>
   );
 
   return (
-    <div className="flex justify-start items-center pt-2 md:pt-0 md:pl-4">
+    <div className="flex flex-col space-y-3 justify-center items-center pt-2 md:pt-0">
       <UserAvatar />
       <UserInfo />
-      <FollowActions profile={profile}></FollowActions>
+      {/* <FollowActions profile={profile}></FollowActions> */}
     </div>
   );
 };

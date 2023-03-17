@@ -1,5 +1,6 @@
+import MetaTags from '@components/Common/MetaTags';
 import { Button } from '@components/UI/Button';
-import Head from 'next/head';
+import { LENSFOLIO_APP_NAME } from 'utils';
 import Link from 'next/link';
 import React from 'react';
 import { STATIC_ASSETS } from 'utils';
@@ -7,9 +8,7 @@ import { STATIC_ASSETS } from 'utils';
 export default function Custom500() {
   return (
     <>
-      <Head>
-        <title>500 - Server Error</title>
-      </Head>
+      <MetaTags title={`500 • ${LENSFOLIO_APP_NAME}`} />
       <div className="flex flex-col items-center justify-start h-full mt-10 md:mt-20">
         <img
           src={`${STATIC_ASSETS}/images/brand/lenstube.svg`}

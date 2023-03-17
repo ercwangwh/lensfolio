@@ -18,7 +18,7 @@ const AllWorks: FC<Props> = ({ profile }) => {
   const request = {
     publicationTypes: [PublicationTypes.Post],
     limit: 32,
-    metadata: { mainContentFocus: [PublicationMainFocus.Image] },
+    metadata: { mainContentFocus: [PublicationMainFocus.Article] },
     // customFilters: LENS_CUSTOM_FILTERS,
     profileId: profile?.id,
     sources: [LENSFOLIO_APP_ID]
@@ -53,7 +53,7 @@ const AllWorks: FC<Props> = ({ profile }) => {
   // if (data?.publications?.items?.length === 0) {
   //   return <NoDataFound isCenter withImage text="No videos found" />;
   // }
-
+  console.log(data);
   return (
     <div className="w-full">
       {!error && !loading && (

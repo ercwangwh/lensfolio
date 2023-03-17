@@ -4,6 +4,8 @@ import type { Profile } from 'lens';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { WMATIC_TOKEN_ADDRESS } from 'utils';
+import { CREATOR_WORK_CATEGORIES } from 'utils/categories';
+// import { OutputData } from '@editorjs/editorjs';
 
 interface AppState {
   profiles: Profile[] | [];
@@ -14,6 +16,8 @@ interface AppState {
   setUserSigNonce: (userSigNonce: number) => void;
   uploadedWorks: LensfolioWorks;
   setUploadedWorks: (works: { [k: string]: any }) => void;
+  activeTagFilter: string;
+  setActiveTagFilter: (activeTagFilter: string) => void;
 }
 
 export const LENSFOLIO_ATTACHMENT_DEFAULT = {
@@ -34,6 +38,7 @@ export const UPLOADED_WORKS_DEAFULT = {
   content: '',
   percent: 0,
   title: '',
+  workCategory: CREATOR_WORK_CATEGORIES[0],
   coverImg: LENSFOLIO_WORK_COVER_IMG_DEFAULT,
   loading: false,
   statusText: '',
@@ -62,7 +67,9 @@ export const useAppStore = create<AppState>((set) => ({
   setUserSigNonce: (userSigNonce) => set(() => ({ userSigNonce })),
   uploadedWorks: UPLOADED_WORKS_DEAFULT,
   setUploadedWorks: (uploadedData) =>
-    set((state) => ({ uploadedWorks: { ...state.uploadedWorks, ...uploadedData } }))
+    set((state) => ({ uploadedWorks: { ...state.uploadedWorks, ...uploadedData } })),
+  activeTagFilter: 'all',
+  setActiveTagFilter: (activeTagFilter) => set({ activeTagFilter })
 }));
 
 interface AppPersistState {

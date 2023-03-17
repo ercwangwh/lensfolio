@@ -32,26 +32,21 @@ const GlobalModals: FC = () => {
       >
         <SwitchProfile />
       </Modal>
-      <Modal
-        title={`Work Detail`}
-        show={showWorkDetailModal}
-        onClose={() => setShowWorkDetailModal(false)}
-        size="full"
-      >
+      <Modal title={``} show={showWorkDetailModal} onClose={() => setShowWorkDetailModal(false)} size="full">
         <Work />
       </Modal>
       <Modal
         title={`Collect Setting`}
         show={showCollectModuleModal}
-        onClose={() => setShowCollectModuleModal(false)}
+        // onClose={() => setShowCollectModuleModal(false)}
         size="lg"
       >
         <CollectSettingDetail />
       </Modal>
       <Modal
-        title={`Reference Setting`}
+        title={`Comment & Mirror Setting`}
         show={showReferenceModuleModal}
-        onClose={() => setShowReferenceModuleModal(false)}
+        // onClose={() => setShowReferenceModuleModal(false)}
         size="lg"
       >
         <ReferenceSettingDetail />
