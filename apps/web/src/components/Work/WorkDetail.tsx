@@ -48,21 +48,21 @@ const WorkDetail: FC<Props> = ({ work }) => {
   //   setContent(data);
   // });
   const contentDetail = work.metadata.attributes.find((item) => item.traitType === 'content_html');
-  async function downloadFile(url: string) {
-    setDownloading(true);
-    const filename = url.substring(url.lastIndexOf('/') + 1);
-    const file = await fetch(url);
-    const fileBlob = await file.blob();
-    const fileUrl = URL.createObjectURL(fileBlob);
+  // async function downloadFile(url: string) {
+  //   setDownloading(true);
+  //   const filename = url.substring(url.lastIndexOf('/') + 1);
+  //   const file = await fetch(url);
+  //   const fileBlob = await file.blob();
+  //   const fileUrl = URL.createObjectURL(fileBlob);
 
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setDownloading(false);
-  }
+  //   const link = document.createElement('a');
+  //   link.href = fileUrl;
+  //   link.download = filename;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  //   setDownloading(false);
+  // }
 
   return (
     <div className="mx-auto">
@@ -97,7 +97,7 @@ const WorkDetail: FC<Props> = ({ work }) => {
           {/* <EditorBlock onChange={onEditorDataChange} holder="editorjs-container" /> */}
           <div className="prose max-w-full">{contentDetail?.value ? parse(contentDetail?.value) : null}</div>
 
-          {fileAttachmentlUrl ? (
+          {/* {fileAttachmentlUrl ? (
             <Button
               onClick={() => {
                 downloadFile(fileAttachmentlUrl);
@@ -108,7 +108,7 @@ const WorkDetail: FC<Props> = ({ work }) => {
             >
               {work.hasCollectedByMe ? 'Download Attachment' : 'Collect To Download Attachment'}
             </Button>
-          ) : null}
+          ) : null} */}
         </div>
       </div>
       <div className="mt-4 md:mt-6"></div>
