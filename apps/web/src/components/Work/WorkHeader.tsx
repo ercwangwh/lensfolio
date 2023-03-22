@@ -63,7 +63,6 @@ const WorkHeader: FC<Props> = ({ work }) => {
         </div>
         <div className="mt-4 md:mt-6"></div>
       </div>
-      {/* <WorkDetailShimmer /> */}
     </div>
   );
 };

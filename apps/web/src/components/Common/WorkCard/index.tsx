@@ -67,9 +67,9 @@ const WorkCard: FC<Props> = ({ work }) => {
       : getIPFSLink(work.metadata.image);
   const createTime = work.createdAt;
 
-  const handleClick = () => {
-    // setShowWorkDetailModal(true);
-  };
+  // const handleClick = () => {
+  //   // setShowWorkDetailModal(true);
+  // };
 
   return (
     // <div onClick={() => Analytics.track(TRACK.CLICK_VIDEO)} className="group" role="button">
@@ -83,7 +83,7 @@ const WorkCard: FC<Props> = ({ work }) => {
           {/* <ShareModal video={work} show={showShare} setShowShare={setShowShare} />
           <ReportModal video={work} show={showReport} setShowReport={setShowReport} /> */}
           {/* <Link href={`/?id=${work.id}`} as={`/works/${work.id}`} scroll={false} onClick={handleClick}> */}
-          <Link href={`/works/${work.id}`} scroll={false} onClick={handleClick}>
+          <Link href={`/works/${work.id}`}>
             <div className="relative overflow-hidden aspect-w-16 aspect-h-9">
               {work.metadata.image ? (
                 <img
@@ -91,7 +91,7 @@ const WorkCard: FC<Props> = ({ work }) => {
                   draggable={false}
                   className="object-center bg-gray-100 dark:bg-gray-900 rounded-t-xl w-full h-full lg:w-full lg:h-full object-cover"
                   alt="thumbnail"
-                  onClick={handleClick}
+                  // onClick={handleClick}
                 />
               ) : (
                 <div className="w-full flex flex-col justify-center">
@@ -118,7 +118,7 @@ const WorkCard: FC<Props> = ({ work }) => {
                     src={getAvatar(work.profile, false)}
                     alt={work.profile?.handle}
                     draggable={false}
-                    onClick={handleClick}
+                    // onClick={handleClick}
                   />
                   {/* </Link> */}
                   <span className="text-[13px] px-1 hover:opacity-100 opacity-70 rounded-md self-center">

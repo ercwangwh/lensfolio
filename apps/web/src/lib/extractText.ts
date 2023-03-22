@@ -10,6 +10,6 @@ export function extractText(html: string) {
   html = html.trim();
 
   // 返回纯文本
-  html = html.replace(/\n/g, '').substring(0, 1000);
+  html = html.replace(/\n/g, '')?.substring(0, 1000);
   return html;
 }
