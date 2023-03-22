@@ -12,10 +12,8 @@ import getIPFSLink from '@lib/getIPFSLink';
 import { Loader } from '@components/UI/Loader';
 import { IPFS_GATEWAY, LensfolioPublication } from 'utils';
 import WorkHeader from './WorkHeader';
-import dynamic from 'next/dynamic';
-import edjsHTML from 'editorjs-html';
+
 import parse from 'html-react-parser';
-import getContent from '@lib/getContent';
 
 // const EditorBlock = dynamic(() => import('@components/Post/ContentEditor/Editor'), {
 //   ssr: false
@@ -26,7 +24,7 @@ interface Props {
 }
 
 const WorkDetail: FC<Props> = ({ work }) => {
-  const [content, setContent] = useState<string[]>([]);
+  // const [content, setContent] = useState<string[]>([]);
   //   const selectedProfile = useAppStore((state) => state.selectedProfile);
   // const thumbnailUrl = getIPFSLink(work.metadata.media[0].original.url);
   // const thumbnailUrl = getIPFSLink(work.metadata.image);
@@ -35,14 +33,14 @@ const WorkDetail: FC<Props> = ({ work }) => {
   // const html = edjsParser.parse(JSON.parse(work.metadata.content));
   // console.log('content', html);
 
-  const [downloading, setDownloading] = useState(false);
+  // const [downloading, setDownloading] = useState(false);
   const thumbnailUrl =
     work.metadata.media.length > 0
       ? getIPFSLink(work.metadata.media[0].original.url)
       : getIPFSLink(work.metadata.image);
 
-  const fileAttachmentlUrl =
-    work.metadata.media.length > 1 ? getIPFSLink(work.metadata.media[1].original.url) : null;
+  // const fileAttachmentlUrl =
+  //   work.metadata.media.length > 1 ? getIPFSLink(work.metadata.media[1].original.url) : null;
 
   // getContent(work.metadata?.content).then((data) => {
   //   setContent(data);
