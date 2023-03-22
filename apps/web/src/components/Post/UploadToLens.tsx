@@ -53,7 +53,7 @@ import { useRouter } from 'next/router';
 import { Loader } from '@components/UI/Loader';
 import getTags from '@lib/getTags';
 
-import edjsHTML from 'editorjs-html';
+// import edjsHTML from 'editorjs-html';
 import parse from 'html-react-parser';
 // import { OutputData } from '@editorjs/editorjs';
 import { extractText } from '@lib/extractText';
@@ -83,7 +83,7 @@ const UploadToLens: FC = () => {
   // const [showUploadModal, setUploadModal] = useState(false);
   // const [inputData, setInputData] = useState<Object>({});
   // const isComment = false;
-  const edjsParser = edjsHTML();
+  // const edjsParser = edjsHTML();
 
   // const { data: signer } = useSigner();
 
