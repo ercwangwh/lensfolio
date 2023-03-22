@@ -26,7 +26,7 @@ import Like from '@components/Work/Actions/Like';
 import nFormatter from '@lib/nFormatter';
 import { getRelativeTime } from '@lib/formatTime';
 import { shortenAddress } from '@lib/shortenAddress';
-import getContent from '@lib/getContent';
+
 import parse from 'html-react-parser';
 import { join } from 'path';
 // dayjs.extend(relativeTime);
